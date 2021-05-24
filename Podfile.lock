@@ -1,0 +1,28 @@
+PODS:
+  - AcknowList (2.0.1)
+  - Colorful (3.0.0)
+  - iOSDFULibrary (4.10.3):
+    - ZIPFoundation (= 0.9.11)
+  - ZIPFoundation (0.9.11)
+
+DEPENDENCIES:
+  - AcknowList
+  - Colorful
+  - iOSDFULibrary
+
+SPEC REPOS:
+  trunk:
+    - AcknowList
+    - Colorful
+    - iOSDFULibrary
+    - ZIPFoundation
+
+SPEC CHECKSUMS:
+  AcknowList: d5476fd33f5c4614c676933ab79d05775e5e20b7
+  Colorful: 9e093edacaa9fb73512ad9da157f0707b82d2542
+  iOSDFULibrary: 7aade51a907d01ca9a87055003cd232b09efd78f
+  ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
+
+PODFILE CHECKSUM: f067eed01f635bf3c4d7aafaf63febab6cff25cf
+
+COCOAPODS: 1.10.1
