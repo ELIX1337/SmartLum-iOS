@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  SmartLum
+
+  Created by Tim on 25.03.2021.
+  Copyright © 2021 SmartLum. All rights reserved.
+*/
+"NSBluetoothAlwaysUsageDescription" = "Приложение использует Bluetooth для управления переферийными устройствами";
+"NSBluetoothPeripheralUsageDescription" = "Приложение использует Bluetooth для управления переферийными устройствами";

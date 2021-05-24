@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FirmwareUpdateViewController" customModule="StairsLight" customModuleProvider="target">
+            <connections>
+                <outlet property="activityIndicator" destination="ZSg-GY-Sjm" id="pb4-Df-6O5"/>
+                <outlet property="cancelButton" destination="TFP-MA-0Ol" id="K1a-tn-la7"/>
+                <outlet property="progressIndicator" destination="dxb-gf-hJj" id="Kuz-1P-qS3"/>
+                <outlet property="progressLabel" destination="h6T-r5-PAg" id="2zA-M1-Iwa"/>
+                <outlet property="speedLabel" destination="nT7-uu-xdM" id="7f2-Og-ZdX"/>
+                <outlet property="statusLabel" destination="QZI-ET-KO0" id="A5W-f8-fle"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="ZSg-GY-Sjm">
+                    <rect key="frame" x="197" y="438" width="20" height="20"/>
+                </activityIndicatorView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Updating firmware..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QZI-ET-KO0">
+                    <rect key="frame" x="130" y="508" width="154.5" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dxb-gf-hJj">
+                    <rect key="frame" x="0.0" y="615" width="414" height="4"/>
+                </progressView>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Progress" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h6T-r5-PAg">
+                    <rect key="frame" x="0.0" y="579" width="414" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" systemColor="linkColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 kb/s" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nT7-uu-xdM">
+                    <rect key="frame" x="0.0" y="634" width="414" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" systemColor="opaqueSeparatorColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TFP-MA-0Ol">
+                    <rect key="frame" x="176.5" y="776" width="61" height="36"/>
+                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="20"/>
+                    <state key="normal" title="Cancel"/>
+                    <connections>
+                        <action selector="onCancelTapped:" destination="-1" eventType="touchUpInside" id="dBF-IL-nWJ"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="dxb-gf-hJj" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="0yr-kx-Dog"/>
+                <constraint firstItem="dxb-gf-hJj" firstAttribute="top" secondItem="h6T-r5-PAg" secondAttribute="bottom" constant="15" id="BS8-Fl-t4a"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="TFP-MA-0Ol" secondAttribute="bottom" constant="50" id="Bjj-cz-Hxg"/>
+                <constraint firstItem="QZI-ET-KO0" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Csi-VE-N1x"/>
+                <constraint firstItem="h6T-r5-PAg" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Gbq-Pd-REn"/>
+                <constraint firstItem="QZI-ET-KO0" firstAttribute="top" secondItem="ZSg-GY-Sjm" secondAttribute="bottom" constant="50" id="O2M-Ou-452"/>
+                <constraint firstItem="TFP-MA-0Ol" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="a2X-eJ-zIn"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="nT7-uu-xdM" secondAttribute="trailing" id="cqy-aQ-vAB"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="h6T-r5-PAg" secondAttribute="trailing" id="dle-bS-8t8"/>
+                <constraint firstItem="ZSg-GY-Sjm" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="erb-Xf-stx"/>
+                <constraint firstItem="h6T-r5-PAg" firstAttribute="top" secondItem="QZI-ET-KO0" secondAttribute="bottom" constant="50" id="iYh-ua-3iF"/>
+                <constraint firstItem="nT7-uu-xdM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="lEy-tk-CeR"/>
+                <constraint firstItem="nT7-uu-xdM" firstAttribute="top" secondItem="dxb-gf-hJj" secondAttribute="bottom" constant="15" id="oc9-8B-BoF"/>
+                <constraint firstItem="ZSg-GY-Sjm" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="rVd-tQ-BbK"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="dxb-gf-hJj" secondAttribute="trailing" id="uhf-1k-ZLw"/>
+            </constraints>
+            <point key="canvasLocation" x="-23" y="109"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

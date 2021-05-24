@@ -1,0 +1,37 @@
+/*
+  Localizable.strings
+  SmartLum
+
+  Created by Google Translate on 07/12/2020.
+  Copyright © 2019 SmartLum. All rights reserved.
+*/
+"ON" = "ВКЛ";
+"OFF" = "ВЫКЛ";
+"Unknown Device" = "Неизвестное устройство";
+"Terms & Conditions" = "Условия использования";
+"Third Party" = "Сторонние библиотеки";
+"Privacy" = "Политика конфиденциальности";
+"About" = "О программе";
+"Nearby Devices" = "Найденные устройства";
+"Third party libraries" = "Сторонние библиотеки";
+"Open source libraries" = "Библиотеки с открытым исходным кодом";
+"Specify your strip type" = "Укажите тип используемой ленты";
+"Set bottom sensor trigger distance" = "Установите расстояние срабатывания нижнего датчика";
+"Set top sensor trigger distance" = "Установите расстояние срабатывания верхнего датчика";
+"Distance" = "Дистанция";
+
+"Random color" = "Случайный цвет";
+
+"Animation" = "Анимация";
+"Tetris" = "Тетрис";
+"Wave" = "Волна";
+"Transfusion" = "Переливание";
+"Full Rainbow" = "Переливание по радуге";
+"Rainbow" = "Радуга";
+"Static" = "Статика";
+
+"Direction" = "Направление";
+"From bottom" = "Снизу";
+"From top" = "Сверху";
+"To center" = "К центру";
+"From center" = "Из центра";

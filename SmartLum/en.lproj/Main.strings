@@ -1,0 +1,18 @@
+
+/* Class = "UIBarButtonItem"; title = "Scanner"; ObjectID = "K05-ZQ-Swb"; */
+"K05-ZQ-Swb.title" = "SmartLum";
+
+/* Class = "UILabel"; text = "1. Make sure it's switched on."; ObjectID = "bcI-yv-RmI"; */
+"bcI-yv-RmI.text" = "1. Make sure it's switched on.";
+
+/* Class = "UILabel"; text = "CAN'T SEE DEVICE?"; ObjectID = "eor-wV-hOm"; */
+"eor-wV-hOm.text" = "CAN'T SEE DEVICE?";
+
+/* Class = "UINavigationItem"; title = "SmartLum"; ObjectID = "mCo-A8-H1i"; */
+"mCo-A8-H1i.title" = "SmartLum";
+
+/* Class = "UILabel"; text = "UNKNOWN"; ObjectID = "oaQ-Ex-coH"; */
+"oaQ-Ex-coH.text" = "UNKNOWN";
+
+/* Class = "UITableViewController"; title = "SmartLum"; ObjectID = "pK8-7d-htc"; */
+"pK8-7d-htc.title" = "SmartLum";

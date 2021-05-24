@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AboutViewController" customModule="SmartLum" customModuleProvider="target">
+            <connections>
+                <outlet property="btnInstagram" destination="ltH-gC-A6B" id="uyK-KN-ROl"/>
+                <outlet property="btnPrivacy" destination="IjG-Ba-KiE" id="ylY-wZ-tTZ"/>
+                <outlet property="btnTerms" destination="S1L-5M-gIR" id="RUa-CG-0cL"/>
+                <outlet property="btnThirdParty" destination="nhf-pU-B6B" id="VRb-XS-Jl4"/>
+                <outlet property="btnVK" destination="EuN-Ua-HNg" id="ftk-kT-dGx"/>
+                <outlet property="btnWEB" destination="aW9-ii-wo3" id="7Vi-HL-dUe"/>
+                <outlet property="btnYoutube" destination="b82-lf-G9q" id="lBP-q8-Iz0"/>
+                <outlet property="versionLabel" destination="ega-pW-oCz" id="sMB-It-NNR"/>
+                <outlet property="view" destination="KqW-QY-Pb8" id="jsE-cs-uns"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="KqW-QY-Pb8">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="smartlum_logo_big" translatesAutoresizingMaskIntoConstraints="NO" id="jF2-SE-Jtn">
+                    <rect key="frame" x="40" y="64" width="334" height="111.5"/>
+                    <color key="tintColor" name="SmartLum Primary Text"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="jF2-SE-Jtn" secondAttribute="height" multiplier="3:1" id="4aM-J2-pVl"/>
+                    </constraints>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nhf-pU-B6B">
+                    <rect key="frame" x="169" y="433" width="76" height="30"/>
+                    <color key="backgroundColor" name="SmartLum Background"/>
+                    <color key="tintColor" name="SmartLum Primary Text"/>
+                    <state key="normal" title="Third party"/>
+                    <connections>
+                        <action selector="onButtonTappedWithSender:" destination="-1" eventType="touchUpInside" id="C6x-oP-BHT"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S1L-5M-gIR">
+                    <rect key="frame" x="139.5" y="383" width="135" height="30"/>
+                    <color key="backgroundColor" name="SmartLum Background"/>
+                    <color key="tintColor" name="SmartLum Primary Text"/>
+                    <state key="normal" title="Terms &amp; Conditions"/>
+                    <connections>
+                        <action selector="onButtonTappedWithSender:" destination="-1" eventType="touchUpInside" id="5Tq-dw-ECw"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IjG-Ba-KiE">
+                    <rect key="frame" x="182" y="483" width="50" height="30"/>
+                    <color key="backgroundColor" name="SmartLum Background"/>
+                    <color key="tintColor" name="SmartLum Primary Text"/>
+                    <state key="normal" title="Privacy"/>
+                    <connections>
+                        <action selector="onButtonTappedWithSender:" destination="-1" eventType="touchUpInside" id="F7a-cR-hCx"/>
+                    </connections>
+                </button>
+                <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" alignment="center" spacing="44" translatesAutoresizingMaskIntoConstraints="NO" id="NOV-tx-Gy7">
+                    <rect key="frame" x="80" y="756.5" width="254" height="55.5"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ltH-gC-A6B" userLabel="Instagram">
+                            <rect key="frame" x="0.0" y="0.0" width="55.5" height="55.5"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="ltH-gC-A6B" secondAttribute="height" multiplier="1:1" id="Chs-rU-JHH"/>
+                            </constraints>
+                            <state key="normal" image="smartlum_instagram"/>
+                            <connections>
+                                <action selector="onButtonTappedWithSender:" destination="-1" eventType="touchUpInside" id="2DI-qg-RcT"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EuN-Ua-HNg" userLabel="VK">
+                            <rect key="frame" x="99.5" y="0.0" width="55" height="55.5"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="EuN-Ua-HNg" secondAttribute="height" multiplier="1:1" id="MCG-On-KDY"/>
+                            </constraints>
+                            <state key="normal" image="smartlum_vk"/>
+                            <connections>
+                                <action selector="onButtonTappedWithSender:" destination="-1" eventType="touchUpInside" id="1NN-Yx-cNR"/>
+                            </connections>
+                        </button>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b82-lf-G9q" userLabel="Youtube">
+                            <rect key="frame" x="176.5" y="28" width="0.0" height="0.0"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="b82-lf-G9q" secondAttribute="height" multiplier="1:1" id="aZl-6M-HKD"/>
+                            </constraints>
+                            <state key="normal" image="smartlum_youtube"/>
+                            <connections>
+                                <action selector="onButtonTappedWithSender:" destination="-1" eventType="touchUpInside" id="1GT-xb-3QM"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aW9-ii-wo3" userLabel="WEB">
+                            <rect key="frame" x="198.5" y="0.0" width="55.5" height="55.5"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="aW9-ii-wo3" secondAttribute="height" multiplier="1:1" id="bkT-G8-dQI"/>
+                            </constraints>
+                            <state key="normal" image="smartlum_web"/>
+                            <connections>
+                                <action selector="onButtonTappedWithSender:" destination="-1" eventType="touchUpInside" id="zvw-kG-LFH"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ega-pW-oCz">
+                    <rect key="frame" x="178.5" y="195.5" width="57" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" name="SmartLum Default Text Color"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="U0A-0O-qoi"/>
+            <color key="backgroundColor" name="SmartLum Background"/>
+            <constraints>
+                <constraint firstItem="NOV-tx-Gy7" firstAttribute="leading" secondItem="U0A-0O-qoi" secondAttribute="leading" constant="80" id="2Th-KJ-TqX"/>
+                <constraint firstItem="nhf-pU-B6B" firstAttribute="top" secondItem="S1L-5M-gIR" secondAttribute="bottom" constant="20" id="2ya-RG-5wp"/>
+                <constraint firstItem="U0A-0O-qoi" firstAttribute="trailing" secondItem="jF2-SE-Jtn" secondAttribute="trailing" constant="40" id="861-Lm-upy"/>
+                <constraint firstItem="ega-pW-oCz" firstAttribute="centerX" secondItem="KqW-QY-Pb8" secondAttribute="centerX" id="KKf-kU-hwA"/>
+                <constraint firstItem="U0A-0O-qoi" firstAttribute="trailing" secondItem="NOV-tx-Gy7" secondAttribute="trailing" constant="80" id="Q3k-MO-SD4"/>
+                <constraint firstItem="nhf-pU-B6B" firstAttribute="centerY" secondItem="KqW-QY-Pb8" secondAttribute="centerY" id="Rbw-5M-GDz"/>
+                <constraint firstItem="S1L-5M-gIR" firstAttribute="centerX" secondItem="KqW-QY-Pb8" secondAttribute="centerX" id="fQv-jw-p0g"/>
+                <constraint firstItem="jF2-SE-Jtn" firstAttribute="top" secondItem="U0A-0O-qoi" secondAttribute="top" constant="20" id="fpt-bZ-3pi"/>
+                <constraint firstItem="ega-pW-oCz" firstAttribute="top" secondItem="jF2-SE-Jtn" secondAttribute="bottom" constant="20" id="gMY-G4-2JW"/>
+                <constraint firstItem="U0A-0O-qoi" firstAttribute="bottom" secondItem="NOV-tx-Gy7" secondAttribute="bottom" constant="50" id="hiw-Pb-XUj"/>
+                <constraint firstItem="nhf-pU-B6B" firstAttribute="centerX" secondItem="KqW-QY-Pb8" secondAttribute="centerX" id="mF4-4d-Myv"/>
+                <constraint firstItem="IjG-Ba-KiE" firstAttribute="top" secondItem="nhf-pU-B6B" secondAttribute="bottom" constant="20" id="nlR-o9-T4U"/>
+                <constraint firstItem="IjG-Ba-KiE" firstAttribute="centerX" secondItem="KqW-QY-Pb8" secondAttribute="centerX" id="v4s-lp-h4u"/>
+                <constraint firstItem="jF2-SE-Jtn" firstAttribute="leading" secondItem="U0A-0O-qoi" secondAttribute="leading" constant="40" id="xsi-Qo-dPC"/>
+            </constraints>
+            <point key="canvasLocation" x="-375" y="106"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="smartlum_instagram" width="22" height="22"/>
+        <image name="smartlum_logo_big" width="480" height="118"/>
+        <image name="smartlum_vk" width="22" height="22"/>
+        <image name="smartlum_web" width="22" height="22"/>
+        <image name="smartlum_youtube" width="22" height="22"/>
+        <namedColor name="SmartLum Background">
+            <color red="0.96700000762939453" green="0.96700000762939453" blue="0.96700000762939453" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="SmartLum Default Text Color">
+            <color red="0.11400000005960464" green="0.14499999582767487" blue="0.17599999904632568" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="SmartLum Primary Text">
+            <color red="0.11372549019607843" green="0.14509803921568626" blue="0.1764705882352941" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

@@ -1,0 +1,37 @@
+/* 
+  Localizable.strings
+  SmartLum
+
+  Created by Tim on 25/11/2020.
+  Copyright © 2020 SmartLum. All rights reserved.
+*/
+"ON" = "ON";
+"OFF" = "OFF";
+"Unknown Device" = "Unknown Device";
+"Terms & Conditions" = "Terms & Conditions";
+"Third Party" = "Third Party";
+"Privacy" = "Privacy";
+"About" = "About";
+"Nearby Devices" = "Nearby Devices";
+"Third party libraries" = "Third party libraries";
+"Open source libraries" = "Open source libraries";
+"Specify your strip type" = "Specify your strip type";
+"Set bottom sensor trigger distance" = "Set bottom sensor trigger distance";
+"Set top sensor trigger distance" = "Set top sensor trigger distance";
+"Distance" = "Distance";
+
+"Random color" = "Random color";
+
+"Animation" = "Animation";
+"Tetris" = "Tetris";
+"Wave" = "Wave";
+"Transfusion" = "Transfusion";
+"Full Rainbow" = "Rainbow transfusion";
+"Rainbow" = "Rainbow";
+"Static" = "Static";
+
+"Direction" = "Direction";
+"From bottom" = "From bottom";
+"From top" = "From top";
+"To center" = "To center";
+"From center" = "From center";

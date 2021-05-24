@@ -1,0 +1,13 @@
+/*
+  Localizable.strings
+  StairsLight
+
+  Created by Google Translate on 07/12/2020.
+  Copyright © 2019 StairsLight. All rights reserved.
+*/
+"ON" = "BẬT";
+"OFF" = "TẮT";
+"PRESSED" = "ĐÃ ẤN";
+"RELEASED" = "ĐÃ NHẢ";
+"Reading..." = "Đang đọc...";
+"Unknown Device" = "Thiết bị chưa nhận dạng";

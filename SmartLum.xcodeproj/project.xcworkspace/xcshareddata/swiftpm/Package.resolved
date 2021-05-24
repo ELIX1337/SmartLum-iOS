@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Colorful",
+        "repositoryURL": "https://github.com/hayashi311/Color-Picker-for-iOS.git",
+        "state": {
+          "branch": "master",
+          "revision": "65c2d32a6c47c16668c9d9e066302207ded31478",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

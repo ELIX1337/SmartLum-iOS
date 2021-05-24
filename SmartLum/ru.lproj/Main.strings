@@ -1,0 +1,168 @@
+
+/* Class = "UILabel"; text = "Off speed"; ObjectID = "02q-qo-X6U"; */
+"02q-qo-X6U.text" = "Скорость выключения";
+
+/* Class = "UILabel"; text = "cm"; ObjectID = "5Wu-iF-tc7"; */
+"5Wu-iF-tc7.text" = "см";
+
+/* Class = "UILabel"; text = "Off"; ObjectID = "Ccp-Gb-fy2"; */
+"Ccp-Gb-fy2.text" = "Выкл";
+
+/* Class = "UILabel"; text = "Animation"; ObjectID = "DSR-UW-yap"; */
+"DSR-UW-yap.text" = "Анимация";
+
+/* Class = "UILabel"; text = "Animation"; ObjectID = "E3N-VK-wUd"; */
+"E3N-VK-wUd.text" = "Анимация";
+
+/* Class = "UILabel"; text = "On speed"; ObjectID = "F7n-Px-5VL"; */
+"F7n-Px-5VL.text" = "Скорость включения";
+
+/* Class = "UILabel"; text = "Toggle the switch next to the micro USB port to switch it on."; ObjectID = "IAE-tV-Psp"; */
+"IAE-tV-Psp.text" = "Устройство должно быть подключено к сети.";
+
+/* Class = "UIBarButtonItem"; title = "Scanner"; ObjectID = "K05-ZQ-Swb"; */
+"K05-ZQ-Swb.title" = "Сканер";
+
+/* Class = "UILabel"; text = "N/A"; ObjectID = "KNg-lH-Zbo"; */
+"KNg-lH-Zbo.text" = "N/A";
+
+/* Class = "UILabel"; text = "If not, connect it to a PC or a charger using a micro USB cable. Coin cell battery is on the bottom side of the dev kit."; ObjectID = "MCd-9i-lIO"; */
+"MCd-9i-lIO.text" = "Рекомендуется находиться в прямой видимости от устройства.";
+
+/* Class = "UILabel"; text = "Secondary"; ObjectID = "N7F-z7-eze"; */
+"N7F-z7-eze.text" = "Дополнительный";
+
+/* Class = "UILabel"; text = "Off"; ObjectID = "Ow1-bk-3vF"; */
+"Ow1-bk-3vF.text" = "Выкл";
+
+/* Class = "UITableViewSection"; footerTitle = "Choose random color mode"; ObjectID = "PvK-Lr-qNI"; */
+"PvK-Lr-qNI.footerTitle" = "Выберите режим случайного цвета";
+
+/* Class = "UITableViewSection"; headerTitle = "Random color mode"; ObjectID = "PvK-Lr-qNI"; */
+"PvK-Lr-qNI.headerTitle" = "Режим случайного цвета";
+
+/* Class = "UITableViewSection"; footerTitle = "Select animation and its speed"; ObjectID = "SF6-mg-plU"; */
+"SF6-mg-plU.footerTitle" = "Выберите режим анимации и скорость";
+
+/* Class = "UITableViewSection"; headerTitle = "Animation"; ObjectID = "SF6-mg-plU"; */
+"SF6-mg-plU.headerTitle" = "Анимация";
+
+/* Class = "UILabel"; text = "N/A"; ObjectID = "TFw-cv-GNq"; */
+"TFw-cv-GNq.text" = "N/A";
+
+/* Class = "UIButton"; normalTitle = "RESET"; ObjectID = "VM5-I4-rwb"; */
+"VM5-I4-rwb.normalTitle" = "СБРОС";
+
+/* Class = "UISegmentedControl"; Yds-5V-dLl.segmentTitles[0] = "Default"; ObjectID = "Yds-5V-dLl"; */
+"Yds-5V-dLl.segmentTitles[0]" = "Обычная";
+
+/* Class = "UISegmentedControl"; Yds-5V-dLl.segmentTitles[1] = "RGB"; ObjectID = "Yds-5V-dLl"; */
+"Yds-5V-dLl.segmentTitles[1]" = "RGB";
+
+/* Class = "UITableViewSection"; footerTitle = "Distances at which motion sensors are triggered"; ObjectID = "aKK-UA-w3O"; */
+"aKK-UA-w3O.footerTitle" = "Дистанция срабатывания датчиков движения";
+
+/* Class = "UITableViewSection"; headerTitle = "Sensors trigger distance"; ObjectID = "aKK-UA-w3O"; */
+"aKK-UA-w3O.headerTitle" = "Дистанция срабатывания";
+
+/* Class = "UILabel"; text = "1. Make sure it's switched on."; ObjectID = "bcI-yv-RmI"; */
+"bcI-yv-RmI.text" = "1. Убедитесь, что устройство включено.";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "bk1-uT-59Q"; */
+"bk1-uT-59Q.text" = "0";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "cuT-9d-xTc"; */
+"cuT-9d-xTc.title" = "Item";
+
+/* Class = "UILabel"; text = "Wave"; ObjectID = "dcf-Ur-NdN"; */
+"dcf-Ur-NdN.text" = "Волна";
+
+/* Class = "UILabel"; text = "Step"; ObjectID = "ddz-G3-PyQ"; */
+"ddz-G3-PyQ.text" = "Шаг";
+
+/* Class = "UIBarButtonItem"; title = "REQUEST"; ObjectID = "eks-PZ-Gr0"; */
+"eks-PZ-Gr0.title" = "REQUEST";
+
+/* Class = "UILabel"; text = "CAN'T SEE YOUR DEVICE?"; ObjectID = "eor-wV-hOm"; */
+"eor-wV-hOm.text" = "НЕ ВИДИТЕ ВАШЕ УСТРОЙСТВО?";
+
+/* Class = "UILabel"; text = "Random Color Mode"; ObjectID = "gyY-bb-9Gg"; */
+"gyY-bb-9Gg.text" = "Random Color Mode";
+
+/* Class = "UILabel"; text = "N/A"; ObjectID = "iBy-ha-RNO"; */
+"iBy-ha-RNO.text" = "N/A";
+
+/* Class = "UILabel"; text = "Primary"; ObjectID = "jBY-kS-pu1"; */
+"jBY-kS-pu1.text" = "Основной";
+
+/* Class = "UITableViewSection"; footerTitle = "The number of steps that was determined by the device"; ObjectID = "lX7-wx-xaQ"; */
+"lX7-wx-xaQ.footerTitle" = "The number of steps that was determined by the device";
+
+/* Class = "UITableViewSection"; headerTitle = "Number of steps"; ObjectID = "lX7-wx-xaQ"; */
+"lX7-wx-xaQ.headerTitle" = "Number of steps";
+
+/* Class = "UINavigationItem"; title = "Scanner"; ObjectID = "mCo-A8-H1i"; */
+"mCo-A8-H1i.title" = "SmartLum";
+
+/* Class = "UIButton"; normalTitle = "Update device firmware"; ObjectID = "mRG-kf-PSa"; */
+"mRG-kf-PSa.normalTitle" = "Update device firmware";
+
+/* Class = "UILabel"; text = "N/A"; ObjectID = "n9M-3a-f5Q"; */
+"n9M-3a-f5Q.text" = "N/A";
+
+/* Class = "UITableViewSection"; footerTitle = "Specify the type of LED strip used"; ObjectID = "nzl-0P-4tZ"; */
+"nzl-0P-4tZ.footerTitle" = "Specify the type of LED strip used";
+
+/* Class = "UITableViewSection"; headerTitle = "Strip type"; ObjectID = "nzl-0P-4tZ"; */
+"nzl-0P-4tZ.headerTitle" = "Strip type";
+
+/* Class = "UITableViewSection"; headerTitle = "Animation"; ObjectID = "pAE-Yi-41R"; */
+"pAE-Yi-41R.headerTitle" = "Анимации";
+
+/* Class = "UILabel"; text = "Direction"; ObjectID = "pef-YP-JZP"; */
+"pef-YP-JZP.text" = "Направление";
+
+/* Class = "UITableViewSection"; headerTitle = "Adaptive brightness"; ObjectID = "r1E-RI-mdm"; */
+"r1E-RI-mdm.headerTitle" = "Adaptive brightness";
+
+/* Class = "UILabel"; text = "cm"; ObjectID = "rJA-1f-oK9"; */
+"rJA-1f-oK9.text" = "cm";
+
+/* Class = "UILabel"; text = "2. Make sure the coin cell battery has power."; ObjectID = "rmw-BF-cDo"; */
+"rmw-BF-cDo.text" = "2. Убедитесь, что вы находитесь на достаточном расстоянии от устройства.";
+
+/* Class = "UITableViewSection"; footerTitle = "Handle brightness with slider"; ObjectID = "ryk-Go-wcs"; */
+"ryk-Go-wcs.footerTitle" = "Handle brightness with slider";
+
+/* Class = "UITableViewSection"; headerTitle = "Brightness"; ObjectID = "ryk-Go-wcs"; */
+"ryk-Go-wcs.headerTitle" = "Brightness";
+
+/* Class = "UITableViewSection"; headerTitle = "Colors"; ObjectID = "tvW-Jq-z2H"; */
+"tvW-Jq-z2H.headerTitle" = "Цвета";
+
+/* Class = "UIBarButtonItem"; title = "Settings"; ObjectID = "tzg-s5-7P5"; */
+"tzg-s5-7P5.title" = "Настройки";
+
+/* Class = "UILabel"; text = "Day/Night mode"; ObjectID = "uEb-9C-NWg"; */
+"uEb-9C-NWg.text" = "Day/Night mode";
+
+/* Class = "UILabel"; text = "N/A"; ObjectID = "uKV-Zk-Xkb"; */
+"uKV-Zk-Xkb.text" = "N/A";
+
+/* Class = "UILabel"; text = "Peripheral"; ObjectID = "ufl-Iw-mhn"; */
+"ufl-Iw-mhn.text" = "Peripheral";
+
+/* Class = "UILabel"; text = "Adaptive brightness"; ObjectID = "ugE-D2-AYM"; */
+"ugE-D2-AYM.text" = "Adaptive brightness";
+
+/* Class = "UILabel"; text = "Speed"; ObjectID = "vYw-ji-sAJ"; */
+"vYw-ji-sAJ.text" = "Скорость";
+
+/* Class = "UITableViewSection"; footerTitle = "Reset the device"; ObjectID = "wbm-34-hqT"; */
+"wbm-34-hqT.footerTitle" = "Reset the device";
+
+/* Class = "UITableViewSection"; headerTitle = "Device firmware"; ObjectID = "wbm-34-hqT"; */
+"wbm-34-hqT.headerTitle" = "Device firmware";
+
+/* Class = "UITableViewSection"; headerTitle = "Day/Night mode"; ObjectID = "zWo-ww-gfg"; */
+"zWo-ww-gfg.headerTitle" = "Day/Night mode";

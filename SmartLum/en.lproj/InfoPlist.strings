@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  SmartLum
+
+  Created by Tim on 25.03.2021.
+  Copyright © 2021 SmartLum. All rights reserved.
+*/
+"NSBluetoothAlwaysUsageDescription" = "The app uses Bluetooth to control peripheral devices";
+"NSBluetoothPeripheralUsageDescription" = "The app uses Bluetooth to control peripheral devices";
