@@ -103,6 +103,7 @@
 		22EB5D5825F8FD42003FC31D /* AbstractPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractPeripheral.swift; sourceTree = "<group>"; };
 		22EB5D7625FA013A003FC31D /* TorchereViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorchereViewController.swift; sourceTree = "<group>"; };
 		22EB5D8325FB5077003FC31D /* TablePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TablePickerViewController.swift; sourceTree = "<group>"; };
+		2C41FC2F265BC68000B81197 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		30B664411FCD6E65003C8B55 /* SmartLum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartLum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30B664441FCD6E65003C8B55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		30B664491FCD6E65003C8B55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -228,6 +229,7 @@
 		30B664381FCD6E65003C8B55 = {
 			isa = PBXGroup;
 			children = (
+				2C41FC2F265BC68000B81197 /* README.md */,
 				30B664431FCD6E65003C8B55 /* SmartLum */,
 				30B664581FCD6E65003C8B55 /* SmartLumTests */,
 				30B664631FCD6E65003C8B55 /* SmartLumUITests */,
