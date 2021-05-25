@@ -9,7 +9,6 @@
 import UIKit
 import CoreBluetooth
 
-@available(iOS 14.0, *)
 class ScannerTableViewController: UITableViewController, CBCentralManagerDelegate {
     
     // MARK: - Outlets and Actions
@@ -19,7 +18,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     
     @IBOutlet weak var emptyViewHeader: UILabel!
     
-    public static let BLINKY_SERVICE_UUID    = CBUUID.init(string: "00001523-1212-EFDE-1523-785FEABCD123")
+    public static let BLINKY_SERVICE_UUID = CBUUID.init(string: "00001523-1212-EFDE-1523-785FEABCD123")
     
     // MARK: - Properties
     
@@ -44,7 +43,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
         centralManager.delegate = self
         if centralManager.state == .poweredOn {
             activityIndicator.startAnimating()
-            centralManager.scanForPeripherals(withServices: [EasyPeripheral.UART_serviceUUID, TorcherePeripheral.TORCHERE_SERVICE_UUID, ScannerTableViewController.BLINKY_SERVICE_UUID],
+            centralManager.scanForPeripherals(withServices: [TorcherePeripheral.TORCHERE_SERVICE_UUID],
                                               options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
         }
     }
@@ -133,9 +132,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
         centralManager.stopScan()
         activityIndicator.stopAnimating()
         tableView.deselectRow(at: indexPath, animated: true)
-        //performSegue(withIdentifier: "PushDeviceControl", sender: discoveredPeripherals[indexPath.row])
         performSegue(withIdentifier: "PushTorchereControl", sender: discoveredPeripherals[indexPath.row])
-        //discoveredPeripherals[indexPath.row].connect()
     }
     
     // MARK: - CBCentralManagerDelegate
@@ -166,7 +163,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
             print("Central is not powered on")
         } else {
             activityIndicator.startAnimating()
-            centralManager.scanForPeripherals(withServices: [EasyPeripheral.UART_serviceUUID, TorcherePeripheral.TORCHERE_SERVICE_UUID, ScannerTableViewController.BLINKY_SERVICE_UUID],
+            centralManager.scanForPeripherals(withServices: [TorcherePeripheral.TORCHERE_SERVICE_UUID],
                                               options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
         }
     }
