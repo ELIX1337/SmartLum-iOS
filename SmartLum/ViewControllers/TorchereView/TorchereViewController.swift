@@ -164,7 +164,6 @@ class TorchereViewController: UITableViewController,
             hidingCells.append(tableView.indexPath(for: directionCell)!)
             hidingCells.append(tableView.indexPath(for: secondaryColorCell)!)
             hidingCells.append(tableView.indexPath(for: primaryColorCell)!)
-            hidingCells.append(tableView.indexPath(for: directionCell)!)
             hidingSections = 0
             randomColorSupport = false
             break

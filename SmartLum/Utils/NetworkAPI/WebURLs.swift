@@ -16,5 +16,5 @@ struct WebURLs {
     public static let Website    = URL(string: "https://smart-lum.com/")
     public static let Terms      = URL(string: "https://smartlum.flycricket.io/terms.html")
     //public static let ThirdParty = URL(string: "https://stairs-light.ru/")
-    public static let Privacy    = URL(string: "https://smart-lum.com/bitrix/templates/smart/images/policy.pdf")
+    public static let Privacy    = URL(string: "https://smart-lum.com/etc/terms.pdf")
 }

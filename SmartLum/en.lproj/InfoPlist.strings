@@ -7,3 +7,4 @@
 */
 "NSBluetoothAlwaysUsageDescription" = "The app uses Bluetooth to control peripheral devices";
 "NSBluetoothPeripheralUsageDescription" = "The app uses Bluetooth to control peripheral devices";
+//"NSUserTrackingUsageDescription" = "Can we use your activity data? If you allow it, this will help us to improve our products so that you get the best user experience";

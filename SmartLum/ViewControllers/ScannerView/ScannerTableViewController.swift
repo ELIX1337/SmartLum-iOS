@@ -51,9 +51,8 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         centralManager = CBCentralManager()
-        NetworkPermissionTrigger.triggerPermission()
+        //NetworkPermissionTrigger.triggerPermission()
         self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
-        self.refreshControl?.addTarget(self, action: #selector(pull), for: UIControl.Event.touchDown)
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -70,33 +69,19 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
         self.refreshControl?.endRefreshing()
     }
     
-    @objc func pull(sender:AnyObject) {
-        print("PULL")
-    }
-    
     override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         UIView.animate(withDuration: 0.2, animations: {
             self.activityIndicator.alpha = 0
         })
     }
     
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print(activityIndicator.alpha)
-    }
-    
     override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        print("Scroll view end dragging")
         UIView.animate(withDuration: 0.2, animations: {
             self.activityIndicator.alpha = 0.5
         })
     }
     
-    override func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        print("End Scrolling Animation")
-    }
-    
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        print("End decelerating")
         UIView.animate(withDuration: 0.2, animations: {
             self.activityIndicator.alpha = 1
         })
