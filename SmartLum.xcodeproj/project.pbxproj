@@ -35,6 +35,8 @@
 		22EB5D5925F8FD42003FC31D /* AbstractPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB5D5825F8FD42003FC31D /* AbstractPeripheral.swift */; };
 		22EB5D7825FA013A003FC31D /* TorchereViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB5D7625FA013A003FC31D /* TorchereViewController.swift */; };
 		22EB5D8425FB5077003FC31D /* TablePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB5D8325FB5077003FC31D /* TablePickerViewController.swift */; };
+		2C9F9D81266A088F00CCF8E2 /* SLPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F9D80266A088F00CCF8E2 /* SLPeripheral.swift */; };
+		2C9F9D83266A481700CCF8E2 /* SLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F9D82266A481700CCF8E2 /* SLViewController.swift */; };
 		30B664451FCD6E65003C8B55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B664441FCD6E65003C8B55 /* AppDelegate.swift */; };
 		30B6644A1FCD6E65003C8B55 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30B664481FCD6E65003C8B55 /* Main.storyboard */; };
 		30B6644C1FCD6E65003C8B55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30B6644B1FCD6E65003C8B55 /* Assets.xcassets */; };
@@ -104,6 +106,8 @@
 		22EB5D7625FA013A003FC31D /* TorchereViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorchereViewController.swift; sourceTree = "<group>"; };
 		22EB5D8325FB5077003FC31D /* TablePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TablePickerViewController.swift; sourceTree = "<group>"; };
 		2C41FC2F265BC68000B81197 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		2C9F9D80266A088F00CCF8E2 /* SLPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLPeripheral.swift; sourceTree = "<group>"; };
+		2C9F9D82266A481700CCF8E2 /* SLViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLViewController.swift; sourceTree = "<group>"; };
 		30B664411FCD6E65003C8B55 /* SmartLum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartLum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30B664441FCD6E65003C8B55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		30B664491FCD6E65003C8B55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -299,6 +303,7 @@
 				22DCAD3F25FF392200BB30D3 /* ColorPickerViewController.xib */,
 				2240D22B260CAF490037D304 /* AboutViewController.swift */,
 				2240D22C260CAF490037D304 /* AboutViewController.xib */,
+				2C9F9D82266A481700CCF8E2 /* SLViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -319,6 +324,7 @@
 				22B851DD254FEAEC00B485CC /* Sratocol.swift */,
 				22EB5D5325F23E79003FC31D /* TorcherePeripheral.swift */,
 				22EB5D5825F8FD42003FC31D /* AbstractPeripheral.swift */,
+				2C9F9D80266A088F00CCF8E2 /* SLPeripheral.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -620,6 +626,7 @@
 				2240D233260CAFC50037D304 /* WebURLs.swift in Sources */,
 				22A46D9525E1418E003F4200 /* FirmwareUpdateViewController.swift in Sources */,
 				30B664851FCDA0FC003C8B55 /* PeripheralTableViewCell.swift in Sources */,
+				2C9F9D83266A481700CCF8E2 /* SLViewController.swift in Sources */,
 				30B664831FCDA0EB003C8B55 /* ScannerTableViewController.swift in Sources */,
 				22A46DE225E91104003F4200 /* FirmwareDownloader.swift in Sources */,
 				22EB5D5425F23E79003FC31D /* TorcherePeripheral.swift in Sources */,
@@ -639,6 +646,7 @@
 				2240D22D260CAF490037D304 /* AboutViewController.swift in Sources */,
 				22A46E0425EE6B3C003F4200 /* EasySetupViewController.swift in Sources */,
 				22EB5D5925F8FD42003FC31D /* AbstractPeripheral.swift in Sources */,
+				2C9F9D81266A088F00CCF8E2 /* SLPeripheral.swift in Sources */,
 				22A46E1D25EF5E58003F4200 /* EasySensorDirectionSetupViewController.swift in Sources */,
 				22EB5D8425FB5077003FC31D /* TablePickerViewController.swift in Sources */,
 				52FB0AF022131B7D00B1E575 /* UIColors.swift in Sources */,

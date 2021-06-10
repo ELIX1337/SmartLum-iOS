@@ -122,6 +122,7 @@
                         <outlet property="emptyViewHeader" destination="eor-wV-hOm" id="1FT-a4-RvL"/>
                         <segue destination="htS-3R-mRO" kind="show" identifier="PushDeviceControl" id="YFG-HZ-zhH"/>
                         <segue destination="bNs-61-OKg" kind="show" identifier="PushTorchereControl" id="iuS-OV-zcL"/>
+                        <segue destination="tYl-X3-2Bs" kind="show" identifier="PushSLViewController" id="ZKF-Qz-qbY"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5K2-BE-53J" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -191,6 +192,22 @@
                 </view>
             </objects>
             <point key="canvasLocation" x="474" y="17"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="fHm-yg-4ZT">
+            <objects>
+                <viewController id="tYl-X3-2Bs" customClass="SLViewController" customModule="SmartLum" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8It-0n-czY">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="qZy-Qv-xDp"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="A8U-6V-cSu"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="drI-Sb-ctE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1391" y="28"/>
         </scene>
         <!--Easy Table View Controller-->
         <scene sceneID="7yU-Nt-xJY">
@@ -1002,6 +1019,9 @@
         </namedColor>
         <systemColor name="linkColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

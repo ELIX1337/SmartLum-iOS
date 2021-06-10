@@ -24,7 +24,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     
     private var centralManager: CBCentralManager!
     //private var discoveredPeripherals = [EasyPeripheral]()
-    private var discoveredPeripherals = [TorcherePeripheral]()
+    private var discoveredPeripherals = [SLPeripheral]()
     
     // MARK: - UIViewController
     @IBAction func pushAbout(_ sender: Any) {
@@ -43,7 +43,8 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
         centralManager.delegate = self
         if centralManager.state == .poweredOn {
             activityIndicator.startAnimating()
-            centralManager.scanForPeripherals(withServices: [TorcherePeripheral.TORCHERE_SERVICE_UUID],
+            centralManager.scanForPeripherals(withServices: [FirstPeripheral.ADVERTISING_UUID,
+                                                             SecondPeripheral.ADVERTISING_UUID],
                                               options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
         }
     }
@@ -117,14 +118,13 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
         centralManager.stopScan()
         activityIndicator.stopAnimating()
         tableView.deselectRow(at: indexPath, animated: true)
-        performSegue(withIdentifier: "PushTorchereControl", sender: discoveredPeripherals[indexPath.row])
+        performSegue(withIdentifier: "PushSLViewController", sender: discoveredPeripherals[indexPath.row])
     }
     
     // MARK: - CBCentralManagerDelegate
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        //let newPeripheral = EasyPeripheral(withPeripheral: peripheral, advertisementData: advertisementData, andRSSI: RSSI, using: centralManager)
-        let newPeripheral = TorcherePeripheral(withPeripheral: peripheral, advertisementData: advertisementData, andRSSI: RSSI, using: centralManager)
+        let newPeripheral = SLPeripheral(withPeripheral: peripheral, advertisementData: advertisementData, andRSSI: RSSI, using: centralManager)
 
         if !discoveredPeripherals.contains(newPeripheral) {
             discoveredPeripherals.append(newPeripheral)
@@ -148,7 +148,8 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
             print("Central is not powered on")
         } else {
             activityIndicator.startAnimating()
-            centralManager.scanForPeripherals(withServices: [TorcherePeripheral.TORCHERE_SERVICE_UUID],
+            centralManager.scanForPeripherals(withServices: [FirstPeripheral.ADVERTISING_UUID,
+                                                             SecondPeripheral.ADVERTISING_UUID],
                                               options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
         }
     }
@@ -183,9 +184,9 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     // MARK: - Segue and navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "PushDeviceControl" {
-            if let peripheral = sender as? EasyPeripheral {
-            let destinationView = segue.destination as! EasyTableViewController
+        if segue.identifier == "PushSLViewController" {
+            if let peripheral = sender as? SLPeripheral {
+            let destinationView = segue.destination as! SLViewController
                 destinationView.setPeripheral(peripheral)
             }
         } else if segue.identifier == "PushTorchereControl" {
