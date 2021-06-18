@@ -10,8 +10,7 @@ import UIKit
 
 class SLViewController: UIViewController {
     
-    
-    private var peripheral: SLPeripheral!
+    private var peripheral: BasePeripheral!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,11 +30,11 @@ class SLViewController: UIViewController {
     
     // MARK: - Implementation
     
-    public func setPeripheral(_ peripheral: SLPeripheral) {
+    public func setPeripheral(_ peripheral: BasePeripheral) {
         if peripheral.type == FirstPeripheral.self {
-            self.peripheral = FirstPeripheral(superPeripheral: peripheral)
+            self.peripheral = FirstPeripheral()
         } else if peripheral.type == SecondPeripheral.self {
-            self.peripheral = SecondPeripheral(superPeripheral: peripheral)
+            self.peripheral = SecondPeripheral(peripheral: peripheral.peripheral)
         } else {
             self.peripheral = peripheral
         }

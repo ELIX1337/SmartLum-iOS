@@ -23,8 +23,8 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     // MARK: - Properties
     
     private var centralManager: CBCentralManager!
-    //private var discoveredPeripherals = [EasyPeripheral]()
-    private var discoveredPeripherals = [SLPeripheral]()
+    //private var discoveredPeripherals = [BasePeripheral]()
+    private var discoveredPeripherals = [AdvData]()
     
     // MARK: - UIViewController
     @IBAction func pushAbout(_ sender: Any) {
@@ -43,8 +43,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
         centralManager.delegate = self
         if centralManager.state == .poweredOn {
             activityIndicator.startAnimating()
-            centralManager.scanForPeripherals(withServices: [FirstPeripheral.ADVERTISING_UUID,
-                                                             SecondPeripheral.ADVERTISING_UUID],
+            centralManager.scanForPeripherals(withServices: Array(UUIDs.advServices.keys),
                                               options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
         }
     }
@@ -124,10 +123,11 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     // MARK: - CBCentralManagerDelegate
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        let newPeripheral = SLPeripheral(withPeripheral: peripheral, advertisementData: advertisementData, andRSSI: RSSI, using: centralManager)
+        let newPeripheral = BasePeripheral(withPeripheral: peripheral, advertisementData: advertisementData, andRSSI: RSSI, using: centralManager)
+        let advData = AdvData(peripheral, advertisementData, RSSI)
 
-        if !discoveredPeripherals.contains(newPeripheral) {
-            discoveredPeripherals.append(newPeripheral)
+        if !discoveredPeripherals.contains(advData) {
+            discoveredPeripherals.append(advData)
             tableView.beginUpdates()
             if discoveredPeripherals.count == 1 {
                 tableView.insertSections(IndexSet(integer: 0), with: .fade)
@@ -135,7 +135,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
             tableView.insertRows(at: [IndexPath(row: discoveredPeripherals.count - 1, section: 0)], with: .fade)
             tableView.endUpdates()
         } else {
-            if let index = discoveredPeripherals.firstIndex(of: newPeripheral) {
+            if let index = discoveredPeripherals.firstIndex(of: advData) {
                 if let aCell = tableView.cellForRow(at: [0, index]) as? PeripheralTableViewCell {
                     aCell.peripheralUpdatedAdvertisementData(newPeripheral)
                 }
@@ -148,8 +148,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
             print("Central is not powered on")
         } else {
             activityIndicator.startAnimating()
-            centralManager.scanForPeripherals(withServices: [FirstPeripheral.ADVERTISING_UUID,
-                                                             SecondPeripheral.ADVERTISING_UUID],
+            centralManager.scanForPeripherals(withServices: Array(UUIDs.advServices.keys),
                                               options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
         }
     }
@@ -185,7 +184,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "PushSLViewController" {
-            if let peripheral = sender as? SLPeripheral {
+            if let peripheral = sender as? BasePeripheral {
             let destinationView = segue.destination as! SLViewController
                 destinationView.setPeripheral(peripheral)
             }

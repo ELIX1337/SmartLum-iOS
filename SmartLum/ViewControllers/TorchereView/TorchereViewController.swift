@@ -82,6 +82,7 @@ class TorchereViewController: UITableViewController,
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        #warning("TODO: Hide colorpicker")
         super.viewWillDisappear(animated)
     }
     
