@@ -33,6 +33,7 @@ class TorcherePeripheral: NSObject,
     // MARK: - Torchere sevices and characteristics Identifiers
     
     public static let TORCHERE_SERVICE_UUID    = CBUUID.init(string: "BB930001-3CE1-4720-A753-28C0159DC777")
+    public static let FL_MINI_SERVICE_UUID     = CBUUID.init(string: "BB930002-3CE1-4720-A753-28C0159DC777")
     public static let DEVICE_INFO_SERVICE_UUID = CBUUID.init(string: "BB93FFFF-3CE1-4720-A753-28C0159DC777")
     public static let COLOR_SERVICE_UUID       = CBUUID.init(string: "BB930B00-3CE1-4720-A753-28C0159DC777")
     public static let ANIMATION_SERVICE_UUID   = CBUUID.init(string: "BB930A00-3CE1-4720-A753-28C0159DC777")

@@ -43,7 +43,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
         centralManager.delegate = self
         if centralManager.state == .poweredOn {
             activityIndicator.startAnimating()
-            centralManager.scanForPeripherals(withServices: [TorcherePeripheral.TORCHERE_SERVICE_UUID],
+            centralManager.scanForPeripherals(withServices: [TorcherePeripheral.TORCHERE_SERVICE_UUID, TorcherePeripheral.FL_MINI_SERVICE_UUID],
                                               options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
         }
     }
@@ -148,7 +148,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
             print("Central is not powered on")
         } else {
             activityIndicator.startAnimating()
-            centralManager.scanForPeripherals(withServices: [TorcherePeripheral.TORCHERE_SERVICE_UUID],
+            centralManager.scanForPeripherals(withServices: [TorcherePeripheral.TORCHERE_SERVICE_UUID, TorcherePeripheral.FL_MINI_SERVICE_UUID],
                                               options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
         }
     }
