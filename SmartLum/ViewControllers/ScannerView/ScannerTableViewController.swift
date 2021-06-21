@@ -123,11 +123,10 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     // MARK: - CBCentralManagerDelegate
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        let newPeripheral = BasePeripheral(withPeripheral: peripheral, advertisementData: advertisementData, andRSSI: RSSI, using: centralManager)
-        let advData = AdvData(peripheral, advertisementData, RSSI)
+        let newPeripheral = AdvData(withPeripheral: peripheral, advertisementData: advertisementData, andRSSI: RSSI, using: centralManager)
 
-        if !discoveredPeripherals.contains(advData) {
-            discoveredPeripherals.append(advData)
+        if !discoveredPeripherals.contains(newPeripheral) {
+            discoveredPeripherals.append(newPeripheral)
             tableView.beginUpdates()
             if discoveredPeripherals.count == 1 {
                 tableView.insertSections(IndexSet(integer: 0), with: .fade)
@@ -135,7 +134,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
             tableView.insertRows(at: [IndexPath(row: discoveredPeripherals.count - 1, section: 0)], with: .fade)
             tableView.endUpdates()
         } else {
-            if let index = discoveredPeripherals.firstIndex(of: advData) {
+            if let index = discoveredPeripherals.firstIndex(of: newPeripheral) {
                 if let aCell = tableView.cellForRow(at: [0, index]) as? PeripheralTableViewCell {
                     aCell.peripheralUpdatedAdvertisementData(newPeripheral)
                 }
@@ -184,7 +183,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "PushSLViewController" {
-            if let peripheral = sender as? BasePeripheral {
+            if let peripheral = sender as? AdvData {
             let destinationView = segue.destination as! SLViewController
                 destinationView.setPeripheral(peripheral)
             }

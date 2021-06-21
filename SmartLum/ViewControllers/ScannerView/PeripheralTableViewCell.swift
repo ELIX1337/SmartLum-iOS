@@ -23,21 +23,21 @@ class PeripheralTableViewCell: UITableViewCell {
     
     // MARK: - Implementation
     
-    public func setupView(withPeripheral aPeripheral: BasePeripheral) {
-        peripheralName.text = aPeripheral.advertisedName
-
-        if aPeripheral.RSSI.decimalValue < -60 {
-            peripheralRSSIIcon.image = #imageLiteral(resourceName: "rssi_2")
-        } else if aPeripheral.RSSI.decimalValue < -50 {
-            peripheralRSSIIcon.image = #imageLiteral(resourceName: "rssi_3")
-        } else if aPeripheral.RSSI.decimalValue < -30 {
-            peripheralRSSIIcon.image = #imageLiteral(resourceName: "rssi_4")
-        } else {
-            peripheralRSSIIcon.image = #imageLiteral(resourceName: "rssi_1")
-        }
-        
-        print("Found a \(aPeripheral.advertisedName ?? "Unknown peripheral")")
-    }
+//    public func setupView(withPeripheral aPeripheral: BasePeripheral) {
+//        peripheralName.text = aPeripheral.advertisedName
+//
+//        if aPeripheral.RSSI.decimalValue < -60 {
+//            peripheralRSSIIcon.image = #imageLiteral(resourceName: "rssi_2")
+//        } else if aPeripheral.RSSI.decimalValue < -50 {
+//            peripheralRSSIIcon.image = #imageLiteral(resourceName: "rssi_3")
+//        } else if aPeripheral.RSSI.decimalValue < -30 {
+//            peripheralRSSIIcon.image = #imageLiteral(resourceName: "rssi_4")
+//        } else {
+//            peripheralRSSIIcon.image = #imageLiteral(resourceName: "rssi_1")
+//        }
+//
+//        print("Found a \(aPeripheral.advertisedName ?? "Unknown peripheral")")
+//    }
     
     public func setupView(withPeripheral aPeripheral: AdvData) {
         peripheralName.text = aPeripheral.advertisedName
@@ -83,7 +83,7 @@ class PeripheralTableViewCell: UITableViewCell {
         }
     }
     
-    public func peripheralUpdatedAdvertisementData(_ aPeripheral: BasePeripheral) {
+    public func peripheralUpdatedAdvertisementData(_ aPeripheral: AdvData) {
         if Date().timeIntervalSince(lastUpdateTimestamp) > 1.0 {
             lastUpdateTimestamp = Date()
             setupView(withPeripheral: aPeripheral)

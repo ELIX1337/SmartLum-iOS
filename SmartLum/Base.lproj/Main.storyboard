@@ -200,10 +200,35 @@
                     <view key="view" contentMode="scaleToFill" id="8It-0n-czY">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F34-3U-5C9">
+                                <rect key="frame" x="188.5" y="433" width="37" height="30"/>
+                                <state key="normal" title="Color"/>
+                                <connections>
+                                    <action selector="onColorButton:" destination="tYl-X3-2Bs" eventType="touchUpInside" id="oad-VS-wdm"/>
+                                </connections>
+                            </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aM5-bl-Nd4">
+                                <rect key="frame" x="182.5" y="507" width="51" height="31"/>
+                                <connections>
+                                    <action selector="onAnimationSwitch:" destination="tYl-X3-2Bs" eventType="valueChanged" id="KNu-Cf-RHi"/>
+                                </connections>
+                            </switch>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="qZy-Qv-xDp"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="F34-3U-5C9" firstAttribute="centerY" secondItem="8It-0n-czY" secondAttribute="centerY" id="LZi-rB-Ikd"/>
+                            <constraint firstItem="aM5-bl-Nd4" firstAttribute="centerX" secondItem="8It-0n-czY" secondAttribute="centerX" id="iCy-wp-D3W"/>
+                            <constraint firstItem="F34-3U-5C9" firstAttribute="centerX" secondItem="8It-0n-czY" secondAttribute="centerX" id="o6i-9x-QPu"/>
+                            <constraint firstItem="aM5-bl-Nd4" firstAttribute="top" secondItem="F34-3U-5C9" secondAttribute="bottom" constant="44" id="u9k-DF-scb"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="A8U-6V-cSu"/>
+                    <connections>
+                        <outlet property="btnColor" destination="F34-3U-5C9" id="hxc-yA-16n"/>
+                        <outlet property="switchAnimation" destination="aM5-bl-Nd4" id="gGn-hJ-gwi"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="drI-Sb-ctE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

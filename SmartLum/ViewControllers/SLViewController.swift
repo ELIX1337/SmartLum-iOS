@@ -11,6 +11,10 @@ import UIKit
 class SLViewController: UIViewController {
     
     private var peripheral: BasePeripheral!
+    private var firstPeripheral: FirstPeripheral!
+    
+    @IBOutlet weak var btnColor: UIButton!
+    @IBOutlet weak var switchAnimation: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,19 +32,40 @@ class SLViewController: UIViewController {
         }
     }
     
+    @IBAction func onColorButton(_ sender: Any) {
+        
+    }
+    
+    @IBAction func onAnimationSwitch(_ sender: UISwitch) {
+        print("zero")
+        if peripheral.type == SecondPeripheral.self {
+            sender.isOn ?
+                (peripheral as? SecondPeripheral)?.writePrimaryColor(UIColor.red)
+                :
+                (peripheral as? SecondPeripheral)?.writePrimaryColor(UIColor.white)
+            print("second")
+        } else  {
+            print("first")
+            sender.isOn ?
+                firstPeripheral.writePrimaryColor(UIColor.red)
+                :
+                firstPeripheral.writePrimaryColor(UIColor.white)
+        }
+    }
+    
     // MARK: - Implementation
     
-    public func setPeripheral(_ peripheral: BasePeripheral) {
+    public func setPeripheral(_ peripheral: AdvData) {
         if peripheral.type == FirstPeripheral.self {
-            self.peripheral = FirstPeripheral()
+            self.peripheral = FirstPeripheral(peripheral.peripheral, peripheral.centralManager)
+            self.firstPeripheral = FirstPeripheral(peripheral.peripheral, peripheral.centralManager)
         } else if peripheral.type == SecondPeripheral.self {
-            self.peripheral = SecondPeripheral(peripheral: peripheral.peripheral)
+            self.peripheral = SecondPeripheral(peripheral.peripheral, peripheral.centralManager)
         } else {
-            self.peripheral = peripheral
+            self.peripheral = BasePeripheral(peripheral.peripheral, peripheral.centralManager)
         }
-        print("TYPE \(peripheral.type)")
+        print("TYPE \(String(describing: peripheral.type))")
         title = peripheral.advertisedName
-        print("Services \(peripheral.services)")
     }
     
 }
