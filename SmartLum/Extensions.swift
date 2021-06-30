@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreBluetooth
 
 extension UIColor {
     
@@ -15,7 +16,6 @@ extension UIColor {
                                UInt8(self.rgb()!.green * 255),
                                UInt8(self.rgb()!.blue  * 255)]
         return Data(bytes: packet, count: packet.count)
-        
     }
     
     func rgb() -> (red:Float, green:Float, blue:Float)? {
@@ -51,6 +51,20 @@ extension UIColor {
     static let SLTest = #colorLiteral(red: 1, green: 0.8117647059, blue: 0.2509803922, alpha: 1)
 }
 
+extension Numeric {
+    func toData() -> Data {
+        var source = self
+        return .init(bytes: &source, count: MemoryLayout<Self>.size)
+    }
+    
+    init<D: DataProtocol>(_ data: D) {
+        var value: Self = .zero
+        let size = withUnsafeMutableBytes(of: &value, { data.copyBytes(to: $0)} )
+        assert(size == MemoryLayout.size(ofValue: value))
+        self = value
+    }
+}
+
 extension Bool {
     func toData() -> Data {
         var value = self ? Data([0x1]) : Data([0x0])
@@ -58,9 +72,33 @@ extension Bool {
     }
 }
 
-extension Int {
+extension StringProtocol {
     func toData() -> Data {
-        var value = UInt8(self)
-        return Data(bytes: &value, count: 1)
+        return .init(utf8)
     }
+}
+
+extension DataProtocol {
+    func toString(encoding: String.Encoding?) -> String? {
+        return String(bytes: self, encoding: encoding ?? .utf8)
+    }
+    
+    func toUIColor() -> UIColor {
+
+        return UIColor(
+            red:   CGFloat(self[0 as! Self.Index])/255,
+            green: CGFloat(self[1 as! Self.Index])/255,
+            blue:  CGFloat(self[2 as! Self.Index])/255,
+            alpha: 1.0)
+    }
+    
+    func value<N: Numeric>() -> N { .init(self) }
+    
+    func toInt() -> Int { value() }
+    func toInt32() -> Int32 { value() }
+    func toUInt8() -> UInt8 { value() }
+    func toFloat() -> Float { value() }
+    func toCGFloat() -> CGFloat { value() }
+    func toDouble() -> Double { value() }
+    func toDecimal() -> Decimal { value() }
 }
