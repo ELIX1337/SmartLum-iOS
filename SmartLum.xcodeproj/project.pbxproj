@@ -38,6 +38,11 @@
 		2C9F9D81266A088F00CCF8E2 /* BasePeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F9D80266A088F00CCF8E2 /* BasePeripheral.swift */; };
 		2C9F9D83266A481700CCF8E2 /* SLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F9D82266A481700CCF8E2 /* SLViewController.swift */; };
 		2CC665CF2678C6F0009059BD /* UUIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC665CE2678C6F0009059BD /* UUIDs.swift */; };
+		2CDE95CF268C70CE0025276A /* BluetoothEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95CE268C70CD0025276A /* BluetoothEndpoint.swift */; };
+		2CDE95D1268C71760025276A /* ColorPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95D0268C71760025276A /* ColorPeripheral.swift */; };
+		2CDE95D3268C71D40025276A /* AnimationPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95D2268C71D40025276A /* AnimationPeripheral.swift */; };
+		2CDE95D7268C77D30025276A /* AdvertisedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95D6268C77D30025276A /* AdvertisedData.swift */; };
+		2CDE95D9268C7BA00025276A /* DiplomPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95D8268C7BA00025276A /* DiplomPeripheral.swift */; };
 		30B664451FCD6E65003C8B55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B664441FCD6E65003C8B55 /* AppDelegate.swift */; };
 		30B6644A1FCD6E65003C8B55 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30B664481FCD6E65003C8B55 /* Main.storyboard */; };
 		30B6644C1FCD6E65003C8B55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30B6644B1FCD6E65003C8B55 /* Assets.xcassets */; };
@@ -50,7 +55,7 @@
 		30B664881FCDA2E0003C8B55 /* EasyPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B664871FCDA2E0003C8B55 /* EasyPeripheral.swift */; };
 		52A637C0220DDECD00F5308D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52A637C2220DDECD00F5308D /* Localizable.strings */; };
 		52A637C5220DE11200F5308D /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A637C4220DE11200F5308D /* String+Localization.swift */; };
-		52FB0AF022131B7D00B1E575 /* UIColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FB0AEF22131B7D00B1E575 /* UIColors.swift */; };
+		52FB0AF022131B7D00B1E575 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FB0AEF22131B7D00B1E575 /* Extensions.swift */; };
 		9D248822D675F30B604D3075 /* Pods_SmartLumTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE54BBBC908EC0C8FACA680D /* Pods_SmartLumTests.framework */; };
 		D3313BDDB618A9B3B887A771 /* Pods_SmartLum.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A443132127CFF8E24499F6AA /* Pods_SmartLum.framework */; };
 		E1B45F3855DA84DD9A57A062 /* Pods_SmartLum_SmartLumUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3C46ED1A2E142833D4B46E3 /* Pods_SmartLum_SmartLumUITests.framework */; };
@@ -110,6 +115,11 @@
 		2C9F9D80266A088F00CCF8E2 /* BasePeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePeripheral.swift; sourceTree = "<group>"; };
 		2C9F9D82266A481700CCF8E2 /* SLViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLViewController.swift; sourceTree = "<group>"; };
 		2CC665CE2678C6F0009059BD /* UUIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDs.swift; sourceTree = "<group>"; };
+		2CDE95CE268C70CD0025276A /* BluetoothEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothEndpoint.swift; sourceTree = "<group>"; };
+		2CDE95D0268C71760025276A /* ColorPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPeripheral.swift; sourceTree = "<group>"; };
+		2CDE95D2268C71D40025276A /* AnimationPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationPeripheral.swift; sourceTree = "<group>"; };
+		2CDE95D6268C77D30025276A /* AdvertisedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisedData.swift; sourceTree = "<group>"; };
+		2CDE95D8268C7BA00025276A /* DiplomPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiplomPeripheral.swift; sourceTree = "<group>"; };
 		30B664411FCD6E65003C8B55 /* SmartLum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartLum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30B664441FCD6E65003C8B55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		30B664491FCD6E65003C8B55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -133,7 +143,7 @@
 		52A637C3220DDEDF00F5308D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		52A637C4220DE11200F5308D /* String+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localization.swift"; sourceTree = "<group>"; };
 		52FB0AEA2212D67100B1E575 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
-		52FB0AEF22131B7D00B1E575 /* UIColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColors.swift; sourceTree = "<group>"; };
+		52FB0AEF22131B7D00B1E575 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		9EB2910E6F0D4EE26C06DD48 /* Pods-SmartLumTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartLumTests.debug.xcconfig"; path = "Target Support Files/Pods-SmartLumTests/Pods-SmartLumTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A443132127CFF8E24499F6AA /* Pods_SmartLum.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartLum.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3C46ED1A2E142833D4B46E3 /* Pods_SmartLum_SmartLumUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartLum_SmartLumUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -232,6 +242,24 @@
 			path = TorchereView;
 			sourceTree = "<group>";
 		};
+		2CDE95D4268C722E0025276A /* Peripherals */ = {
+			isa = PBXGroup;
+			children = (
+				2CDE95D5268C72780025276A /* Protocols */,
+			);
+			path = Peripherals;
+			sourceTree = "<group>";
+		};
+		2CDE95D5268C72780025276A /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				2CDE95D0268C71760025276A /* ColorPeripheral.swift */,
+				2CDE95D2268C71D40025276A /* AnimationPeripheral.swift */,
+				2CDE95D8268C7BA00025276A /* DiplomPeripheral.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		30B664381FCD6E65003C8B55 = {
 			isa = PBXGroup;
 			children = (
@@ -263,7 +291,7 @@
 				30B664791FCD722A003C8B55 /* ViewControllers */,
 				30B664441FCD6E65003C8B55 /* AppDelegate.swift */,
 				52A637C4220DE11200F5308D /* String+Localization.swift */,
-				52FB0AEF22131B7D00B1E575 /* UIColors.swift */,
+				52FB0AEF22131B7D00B1E575 /* Extensions.swift */,
 				30B664481FCD6E65003C8B55 /* Main.storyboard */,
 				30B6644D1FCD6E65003C8B55 /* LaunchScreen.storyboard */,
 				52A637C2220DDECD00F5308D /* Localizable.strings */,
@@ -322,12 +350,15 @@
 		30B664861FCDA2C5003C8B55 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2CDE95D6268C77D30025276A /* AdvertisedData.swift */,
 				30B664871FCDA2E0003C8B55 /* EasyPeripheral.swift */,
 				22B851DD254FEAEC00B485CC /* Sratocol.swift */,
 				22EB5D5325F23E79003FC31D /* TorcherePeripheral.swift */,
 				22EB5D5825F8FD42003FC31D /* AbstractPeripheral.swift */,
 				2C9F9D80266A088F00CCF8E2 /* BasePeripheral.swift */,
 				2CC665CE2678C6F0009059BD /* UUIDs.swift */,
+				2CDE95CE268C70CD0025276A /* BluetoothEndpoint.swift */,
+				2CDE95D4268C722E0025276A /* Peripherals */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -626,6 +657,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CDE95D3268C71D40025276A /* AnimationPeripheral.swift in Sources */,
 				2240D233260CAFC50037D304 /* WebURLs.swift in Sources */,
 				22A46D9525E1418E003F4200 /* FirmwareUpdateViewController.swift in Sources */,
 				30B664851FCDA0FC003C8B55 /* PeripheralTableViewCell.swift in Sources */,
@@ -634,7 +666,9 @@
 				22A46DE225E91104003F4200 /* FirmwareDownloader.swift in Sources */,
 				22EB5D5425F23E79003FC31D /* TorcherePeripheral.swift in Sources */,
 				30B664881FCDA2E0003C8B55 /* EasyPeripheral.swift in Sources */,
+				2CDE95D7268C77D30025276A /* AdvertisedData.swift in Sources */,
 				30B664801FCD9638003C8B55 /* RootViewController.swift in Sources */,
+				2CDE95D1268C71760025276A /* ColorPeripheral.swift in Sources */,
 				22EB5D3D25EFBFB0003FC31D /* EasyStripTypeSetupViewController.swift in Sources */,
 				22EB5D4F25F23012003FC31D /* NetworkPermissionTrigger.swift in Sources */,
 				22EB5D7825FA013A003FC31D /* TorchereViewController.swift in Sources */,
@@ -643,6 +677,7 @@
 				22A46DD725E7A9EC003F4200 /* QuickError.swift in Sources */,
 				22A46E2425EF5E6F003F4200 /* EasySensorDistanceSetupViewController.swift in Sources */,
 				30B664451FCD6E65003C8B55 /* AppDelegate.swift in Sources */,
+				2CDE95CF268C70CE0025276A /* BluetoothEndpoint.swift in Sources */,
 				22A46D5925E0F8EC003F4200 /* EasyInfoViewController.swift in Sources */,
 				22DCAD4025FF392300BB30D3 /* ColorPickerViewController.swift in Sources */,
 				52A637C5220DE11200F5308D /* String+Localization.swift in Sources */,
@@ -650,10 +685,11 @@
 				22A46E0425EE6B3C003F4200 /* EasySetupViewController.swift in Sources */,
 				2CC665CF2678C6F0009059BD /* UUIDs.swift in Sources */,
 				22EB5D5925F8FD42003FC31D /* AbstractPeripheral.swift in Sources */,
+				2CDE95D9268C7BA00025276A /* DiplomPeripheral.swift in Sources */,
 				2C9F9D81266A088F00CCF8E2 /* BasePeripheral.swift in Sources */,
 				22A46E1D25EF5E58003F4200 /* EasySensorDirectionSetupViewController.swift in Sources */,
 				22EB5D8425FB5077003FC31D /* TablePickerViewController.swift in Sources */,
-				52FB0AF022131B7D00B1E575 /* UIColors.swift in Sources */,
+				52FB0AF022131B7D00B1E575 /* Extensions.swift in Sources */,
 				22B851DE254FEAEC00B485CC /* Sratocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

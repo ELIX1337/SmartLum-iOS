@@ -16,7 +16,8 @@ public class UUIDs {
     public static let DIPLOM_ADVERTISING_UUID   = CBUUID.init(string: "00001523-1212-EFDE-1523-785FEABCD123")
 
     // MARK: - Services UUIDs
-    public static let DEVICE_INFO_SERVICE_UUID = CBUUID.init(string: "BB93FFFF-3CE1-4720-A753-28C0159DC777")
+//    public static let DEVICE_INFO_SERVICE_UUID = CBUUID.init(string: "BB93FFFF-3CE1-4720-A753-28C0159DC777")
+    public static let DEVICE_INFO_SERVICE_UUID = CBUUID.init(string: "00001526-1212-EFDE-1523-785FEABCD123")
     public static let COLOR_SERVICE_UUID       = CBUUID.init(string: "BB930B00-3CE1-4720-A753-28C0159DC777")
     public static let ANIMATION_SERVICE_UUID   = CBUUID.init(string: "BB930A00-3CE1-4720-A753-28C0159DC777")
     public static let ENVIRONMENT_SERVICE_UUID = CBUUID.init(string: "00001527-1212-EFDE-1523-785FEABCD123")
@@ -25,7 +26,8 @@ public class UUIDs {
 
     // MARK: - Characteristics UUIDs
     // Device info service
-    public static let DEVICE_FIRMWARE_VERSION_CHARACTERISTIC_UUID = CBUUID.init(string: "BB93FFFE-3CE1-4720-A753-28C0159DC777")
+    //public static let DEVICE_FIRMWARE_VERSION_CHARACTERISTIC_UUID = CBUUID.init(string: "BB93FFFE-3CE1-4720-A753-28C0159DC777")
+    public static let DEVICE_FIRMWARE_VERSION_CHARACTERISTIC_UUID = CBUUID.init(string: "00001530-1212-EFDE-1523-785FEABCD123")
     public static let DEVICE_DFU_CHARACTERISTIC_UUID              = CBUUID.init(string: "BB93FFFD-3CE1-4720-A753-28C0159DC777")
     
     // Color service
@@ -41,16 +43,20 @@ public class UUIDs {
     public static let ANIMATION_STEP_CHARACTERISTIC_UUID      = CBUUID.init(string: "BB930A05-3CE1-4720-A753-28C0159DC777")
     
     // Distance service
-    public static let DISTANCE_CHARACTERISTIC_UUID = CBUUID.init(string: "BB930A06-3CE1-4720-A753-28C0159DC777")
+    public static let DISTANCE_CHARACTERISTIC_UUID         = CBUUID.init(string: "00001544-1212-EFDE-1523-785FEABCD123")
     
     // Indication service
-    public static let INDICATION_CHARACTERISTIC_UUID = CBUUID.init(string: "BB930A07-3CE1-4720-A753-28C0159DC777")
+    public static let BUTTON_STATE_CHARACTERISTIC_UUID     = CBUUID.init(string: "00001524-1212-EFDE-1523-785FEABCD123")
+    public static let LED_STATE_CHARACTERISTIC_UUID        = CBUUID.init(string: "00001525-1212-EFDE-1523-785FEABCD123")
 
+    // Environment service
+    public static let TEMPERATURE_CHARACTERISTIC_UUID      = CBUUID.init(string: "00001542-1212-EFDE-1523-785FEABCD123")
+    public static let LIGHTNESS_CHARACTERISTIC_UUID        = CBUUID.init(string: "00001533-1212-EFDE-1523-785FEABCD123")
 
 }
 
 extension UUIDs {
-    static let advServices:[CBUUID:BasePeripheral.Type] = [UUIDs.TORCHERE_ADVERTISING_UUID : FirstPeripheral.self,
-                                                           UUIDs.DIPLOM_ADVERTISING_UUID   : SecondPeripheral.self,
-                                                           UUIDs.FL_MINI_ADVERTISING_UUID  : FirstPeripheral.self]
+    static let advServices:[CBUUID:BasePeripheral.Type] = [BluetoothEndpoint.AdvertisingServices.flClassic.uuid : FirstPeripheral.self,
+                                                           BluetoothEndpoint.AdvertisingServices.flMini.uuid   : FirstPeripheral.self,
+                                                           BluetoothEndpoint.AdvertisingServices.diplom.uuid : FirstPeripheral.self]
 }

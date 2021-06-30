@@ -18,7 +18,7 @@ class SLViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        peripheral.connect()
+        firstPeripheral.connect()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -28,26 +28,27 @@ class SLViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         if self.isMovingFromParent {
-            peripheral.disconnect()
+            firstPeripheral.disconnect()
         }
     }
     
     @IBAction func onColorButton(_ sender: Any) {
-        
+        firstPeripheral.setAnimationMode(1)
     }
     
     @IBAction func onAnimationSwitch(_ sender: UISwitch) {
         print("zero")
-        if peripheral.type == SecondPeripheral.self {
+        if firstPeripheral.type == SecondPeripheral.self {
             sender.isOn ?
-                (peripheral as? SecondPeripheral)?.writePrimaryColor(UIColor.red)
+                (firstPeripheral as? SecondPeripheral)?.writePrimaryColor(UIColor.red)
                 :
-                (peripheral as? SecondPeripheral)?.writePrimaryColor(UIColor.white)
+                (firstPeripheral as? SecondPeripheral)?.writePrimaryColor(UIColor.white)
             print("second")
         } else  {
             print("first")
             sender.isOn ?
-                firstPeripheral.writePrimaryColor(UIColor.red)
+                //firstPeripheral.writePrimaryColor(UIColor.red)
+                firstPeripheral.setPrimaryColor(UIColor.red)
                 :
                 firstPeripheral.writePrimaryColor(UIColor.white)
         }
@@ -55,9 +56,9 @@ class SLViewController: UIViewController {
     
     // MARK: - Implementation
     
-    public func setPeripheral(_ peripheral: AdvData) {
+    public func setPeripheral(_ peripheral: AdvertisedData) {
         if peripheral.type == FirstPeripheral.self {
-            self.peripheral = FirstPeripheral(peripheral.peripheral, peripheral.centralManager)
+            //self.peripheral = FirstPeripheral(peripheral.peripheral, peripheral.centralManager)
             self.firstPeripheral = FirstPeripheral(peripheral.peripheral, peripheral.centralManager)
         } else if peripheral.type == SecondPeripheral.self {
             self.peripheral = SecondPeripheral(peripheral.peripheral, peripheral.centralManager)

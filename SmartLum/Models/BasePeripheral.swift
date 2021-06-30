@@ -9,160 +9,11 @@
 import CoreBluetooth
 import UIKit
 
-struct BluetoothEndpoints {
-    enum ServiceEndpoint: CaseIterable {
-        case colorService
-        case animationService
-        
-        var serviceID: String {
-            switch self {
-            case .colorService:     return "BB930B00-3CE1-4720-A753-28C0159DC777"
-            case .animationService: return "BB930A00-3CE1-4720-A753-28C0159DC777"
-            }
-        }
-    }
-    
-    enum CharacteristicEndpoint: CaseIterable {
-        case primaryColorCharacteristic
-        case secondaryColorCharacteristic
-        case randomColorCharacteristic
-        case animationModeCharacteristic
-        case animationOnSpeedCharacteristic
-        case animationOffSpeedCharacteristic
-        case animationDirectionCharacteristic
-        case animationStepCharacteristic
-        
-        var characteristicID: String {
-            switch self {
-            case .primaryColorCharacteristic:       return "BB930B01-3CE1-4720-A753-28C0159DC777"
-            case .secondaryColorCharacteristic:     return "BB930B02-3CE1-4720-A753-28C0159DC777"
-            case .randomColorCharacteristic:        return "BB930B03-3CE1-4720-A753-28C0159DC777"
-            case .animationModeCharacteristic:      return "BB930A01-3CE1-4720-A753-28C0159DC777"
-            case .animationOnSpeedCharacteristic:   return "BB930A02-3CE1-4720-A753-28C0159DC777"
-            case .animationOffSpeedCharacteristic:  return "BB930A03-3CE1-4720-A753-28C0159DC777"
-            case .animationDirectionCharacteristic: return "BB930A04-3CE1-4720-A753-28C0159DC777"
-            case .animationStepCharacteristic:      return "BB930A05-3CE1-4720-A753-28C0159DC777"
-            }
-        }
-    }
-    
-    static func find(serviceID: String, characteristicID: String) -> [CharacteristicEndpoint] {
-    }
-}
-
-enum BluetoothEendpoint: CaseIterable {
-    
-    case color1
-    case color2
-    
-    case mode1
-    case mode2
-    
-    var serviceID: String {
-        switch self {
-        case .color1: return "A018"
-        case .color2: return "A018"
-        case .mode1: return "A018"
-        case .mode2: return "A017"
-        }
-    }
-    
-    var characteristicID: String {
-        switch self {
-        case .color1: return "A"
-        case .color2: return "B"
-        case .mode1: return "C"
-        case .mode2: return "B"
-        }
-    }
-    
-    static func find(serviceID: String, characteristicID: String) -> [BluetoothEendpoint] {
-        self.allCases.filter { $0.serviceID == serviceID && $0.characteristicID == characteristicID }
-    }
-    
-}
-
-var characteristics: [BluetoothEendpoint: CBCharacteristic] = [:]
-
-func extractCharacteristics(peripheral: CBPeripheral) {
-    peripheral.services?.forEach { service in
-        service.characteristics?.forEach { characteristic in
-            BluetoothEendpoint.find(serviceID: service.uuid.uuidString, characteristicID: characteristic.uuid.uuidString).forEach { endpoint in
-                characteristics[endpoint] = characteristic
-            }
-        }
-    }
-}
-        
 protocol BasePeripheralProtocol {
-    var peripheral: CBPeripheral { get }
-    var servicesDictionary: [CBUUID : CBService] { get set }
-    var characteristicsDictionary: [CBUUID : CBCharacteristic] { get set }
-}
-
-protocol ColorPeripheral {
-    func writePrimaryColor(_ color: UIColor)
-    func writeSecondaryColor(_ color: UIColor)
-    func writeRandomColor(_ state: Bool)
-}
-
-extension ColorPeripheral where Self:BasePeripheralProtocol {
-    var primaryColorCharacteristic: CBCharacteristic? { get { return characteristicsDictionary[UUIDs.COLOR_PRIMARY_CHARACTERISTIC_UUID] }  }
-    var secondaryColorCharacteristic: CBCharacteristic? { get { return self.characteristicsDictionary[UUIDs.COLOR_SECONDARY_CHARACTERISTIC_UUID] } }
-    var randomColorCharacteristic   : CBCharacteristic? { get { return self.characteristicsDictionary[UUIDs.COLOR_RANDOM_CHARACTERISTIC_UUID] } }
-
-    func writePrimaryColor(_ color: UIColor) {
-        if let characteristic = primaryColorCharacteristic {
-            peripheral.writeValue(color.toData(), for: characteristic, type: .withoutResponse)
-        }
-    }
-    
-    func writeSecondaryColor(_ color: UIColor) {
-        if let characteristic = secondaryColorCharacteristic {
-            peripheral.writeValue(color.toData(), for: characteristic, type: .withoutResponse)
-        }
-    }
-    
-    func writeRandomColor(_ state: Bool) {
-        if let characteristic = randomColorCharacteristic {
-            peripheral.writeValue(state.toData(), for: characteristic, type: .withoutResponse)
-        }
-    }
-}
-
-protocol AnimationPeripheral {
-    func writeAnimationMode(_ animation: Int)
-    func writeAnimationOnSpeed(_ speed: Int)
-    func writeAnimationOffSpeed(_ speed: Int)
-    func writeAnimationDirection(_ direction: Int)
-}
-
-extension AnimationPeripheral where Self:BasePeripheralProtocol {
-    var animationModeCharacteristic: CBCharacteristic? { get { self.characteristicsDictionary[UUIDs.ANIMATION_MODE_CHARACTERISTIC_UUID] } }
-    var animationOnSpeedCharacteristic: CBCharacteristic? { get { self.characteristicsDictionary[UUIDs.ANIMATION_ON_SPEED_CHARACTERISTIC_UUID] } }
-    var animationOffSpeedCharacteristic: CBCharacteristic? { get { self.characteristicsDictionary[UUIDs.ANIMATION_OFF_SPEED_CHARACTERISTIC_UUID] } }
-    var animationDirectionCharacteristic: CBCharacteristic? { get { self.characteristicsDictionary[UUIDs.ANIMATION_DIRECTION_CHARACTERISTIC_UUID] } }
-    
-    func writeAnimationMode(_ animation: Int) {
-        if let characteristic = animationModeCharacteristic {
-            peripheral.writeValue(animation.toData(), for: characteristic, type: .withoutResponse)
-        }
-    }
-    func writeAnimationOnSpeed(_ speed: Int) {
-        if let characteristic = animationOnSpeedCharacteristic {
-            peripheral.writeValue(speed.toData(), for: characteristic, type: .withoutResponse)
-        }
-    }
-    func writeAnimationOffSpeed(_ speed: Int) {
-        if let characteristic = animationOffSpeedCharacteristic {
-            peripheral.writeValue(speed.toData(), for: characteristic, type: .withoutResponse)
-        }
-    }
-    func writeAnimationDirection(_ direction: Int) {
-        if let characteristic = animationDirectionCharacteristic {
-            peripheral.writeValue(direction.toData(), for: characteristic, type: .withoutResponse)
-        }
-    }
+    var peripheral: CBPeripheral { get set }
+    var someDict: [[BluetoothEndpoint.Services:BluetoothEndpoint.Characteristics] : CBCharacteristic] { get set }
+    var incomingData: [[BluetoothEndpoint.Services:BluetoothEndpoint.Characteristics] : Data] { get set }
+    func readValue(_ value:Data, _ characteristic: BluetoothEndpoint.Characteristics)
 }
 
 class BasePeripheral: NSObject,
@@ -170,12 +21,16 @@ class BasePeripheral: NSObject,
                       CBPeripheralDelegate,
                       BasePeripheralProtocol {
     
+    func readValue(_ value: Data, _ characteristic: BluetoothEndpoint.Characteristics) {
+        print("Base readValue")
+    }
+    
     let centralManager: CBCentralManager
-    let peripheral: CBPeripheral
+    var peripheral: CBPeripheral
     var type : BasePeripheral.Type?
     var name: String
-    var servicesDictionary: [CBUUID : CBService] = Dictionary()
-    var characteristicsDictionary: [CBUUID : CBCharacteristic] = Dictionary()
+    var someDict: [[BluetoothEndpoint.Services : BluetoothEndpoint.Characteristics] : CBCharacteristic] = [:]
+    var incomingData: [[BluetoothEndpoint.Services : BluetoothEndpoint.Characteristics] : Data] = [:]
     
     init(_ peripheral: CBPeripheral,_ manager: CBCentralManager) {
         self.peripheral = peripheral
@@ -216,20 +71,34 @@ class BasePeripheral: NSObject,
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let services = peripheral.services {
             for service in services {
-                self.servicesDictionary[service.uuid] = service
                 peripheral.discoverCharacteristics(nil, for: service)
                 print("Service found - \(service.uuid)")
             }
         }
     }
-    
+        
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         if let characteristics = service.characteristics {
             for characteristic in characteristics {
-                self.characteristicsDictionary[characteristic.uuid] = characteristic
                 peripheral.setNotifyValue(true, for: characteristic)
                 peripheral.readValue(for: characteristic)
+                if let cases = BluetoothEndpoint.getCases(service, characteristic) {
+                    self.someDict[cases] = characteristic
+                } else {
+                    print("NO MATCH - \(characteristic.uuid) : \(service.uuid.uuidString)")
+                }
             }
+        }
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        print("new value - \(characteristic.value)")
+        if let value = characteristic.value,
+           let char = BluetoothEndpoint.getCharacteristic(characteristic: characteristic) {
+            readValue(value, char)
+        }
+        if let cases = BluetoothEndpoint.getCases(characteristic.service, characteristic) {
+            self.incomingData[cases] = characteristic.value
         }
     }
         
@@ -248,24 +117,42 @@ class BasePeripheral: NSObject,
     
 }
 
-class FirstPeripheral: BasePeripheral, ColorPeripheral, AnimationPeripheral {
+class FirstPeripheral: BasePeripheral, ColorPeripheral, AnimationPeripheral, DiplomPeripheral {
 
     override init(_ peripheral: CBPeripheral, _ manager: CBCentralManager) {
+        print("init")
         super.init(peripheral, manager)
     }
     
     public func setPrimaryColor(_ color: UIColor) {
+        print("writing")
         writePrimaryColor(color)
     }
     
     public func setAnimationMode(_ mode: Int) {
-        writeAnimationMode(mode)
+        print("GO - \n\(someDict.description)")
+        peripheral.services?.forEach { c in
+            c.characteristics?.forEach{ b in
+                print("\(b.uuid) - \(b.service.uuid)")
+            }
+        }
     }
     
     public func setAnimationOnSpeed(_ speed: Int) {
         writeAnimationOnSpeed(speed)
     }
     
+    func readPrimaryColor(_ color: UIColor) {
+        print("HAHAHAHA Primary color is \(color)")
+    }
+    
+    func readSecondaryColor(_ color: UIColor) {
+        print("HAHAHAHA Secondary color \(color)")
+    }
+    
+    func readRandomColor(_ color: Bool) {
+        print("HAHAHAHA random is \(color)")
+    }
 }
 
 class SecondPeripheral: BasePeripheral, ColorPeripheral {
@@ -288,58 +175,3 @@ class SecondPeripheral: BasePeripheral, ColorPeripheral {
     
 }
 
-class AdvData: NSObject {
-    
-    let centralManager: CBCentralManager
-    let peripheral: CBPeripheral
-    let advertisingData: [String : Any]
-    public private(set) var advertisedName: String = "Unknown Device".localized
-    public private(set) var RSSI          : NSNumber
-    public var type : BasePeripheral.Type?
-    
-    init(withPeripheral peripheral: CBPeripheral,
-         advertisementData advertisementDictionary: [String : Any],
-         andRSSI currentRSSI: NSNumber,
-         using manager: CBCentralManager) {
-        self.centralManager = manager
-        self.peripheral = peripheral
-        self.advertisingData = advertisementDictionary
-        self.RSSI = currentRSSI
-        super.init()
-        self.advertisedName = getAdvertisedName(advertisementDictionary)
-        self.type = getAdvertisedService(advertisementDictionary)
-    }
-    
-    private func getAdvertisedName(_ advertisementDictionary: [String : Any]) -> String {
-        var advertisedName: String
-        if let name = advertisementDictionary[CBAdvertisementDataLocalNameKey] as? String {
-            advertisedName = name
-        } else {
-            advertisedName = "Unknown Device".localized
-        }
-        return advertisedName
-    }
-    
-    private func getAdvertisedService(_ advertisementDictionary: [String : Any]) -> BasePeripheral.Type? {
-        if let advUUID = advertisementDictionary[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID] {
-            for uuid in advUUID {
-                if let service = UUIDs.advServices[uuid] {
-                    return service
-                }
-            }
-        }
-        return nil
-    }
-    
-    override func isEqual(_ object: Any?) -> Bool {
-        if object is AdvData {
-            let peripheralObject = object as! AdvData
-            return peripheralObject.peripheral.identifier == peripheral.identifier
-        } else if object is CBPeripheral {
-            let peripheralObject = object as! CBPeripheral
-            return peripheralObject.identifier == peripheral.identifier
-        } else {
-            return false
-        }
-    }
-}
