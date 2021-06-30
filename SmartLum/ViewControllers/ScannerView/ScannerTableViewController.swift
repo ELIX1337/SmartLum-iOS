@@ -24,7 +24,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     
     private var centralManager: CBCentralManager!
     //private var discoveredPeripherals = [BasePeripheral]()
-    private var discoveredPeripherals = [AdvData]()
+    private var discoveredPeripherals = [AdvertisedData]()
     
     // MARK: - UIViewController
     @IBAction func pushAbout(_ sender: Any) {
@@ -123,7 +123,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     // MARK: - CBCentralManagerDelegate
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        let newPeripheral = AdvData(withPeripheral: peripheral, advertisementData: advertisementData, andRSSI: RSSI, using: centralManager)
+        let newPeripheral = AdvertisedData(withPeripheral: peripheral, advertisementData: advertisementData, andRSSI: RSSI, using: centralManager)
 
         if !discoveredPeripherals.contains(newPeripheral) {
             discoveredPeripherals.append(newPeripheral)
@@ -183,7 +183,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "PushSLViewController" {
-            if let peripheral = sender as? AdvData {
+            if let peripheral = sender as? AdvertisedData {
             let destinationView = segue.destination as! SLViewController
                 destinationView.setPeripheral(peripheral)
             }
