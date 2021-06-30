@@ -39,7 +39,7 @@ class PeripheralTableViewCell: UITableViewCell {
 //        print("Found a \(aPeripheral.advertisedName ?? "Unknown peripheral")")
 //    }
     
-    public func setupView(withPeripheral aPeripheral: AdvData) {
+    public func setupView(withPeripheral aPeripheral: AdvertisedData) {
         peripheralName.text = aPeripheral.advertisedName
 
         if aPeripheral.RSSI.decimalValue < -60 {
@@ -83,7 +83,7 @@ class PeripheralTableViewCell: UITableViewCell {
         }
     }
     
-    public func peripheralUpdatedAdvertisementData(_ aPeripheral: AdvData) {
+    public func peripheralUpdatedAdvertisementData(_ aPeripheral: AdvertisedData) {
         if Date().timeIntervalSince(lastUpdateTimestamp) > 1.0 {
             lastUpdateTimestamp = Date()
             setupView(withPeripheral: aPeripheral)
