@@ -220,6 +220,9 @@ class TorchereViewController: UITableViewController,
         case 5:
             print("Animation - Rainbow")
             hidingCells.append(tableView.indexPath(for: stepCell)!)
+            hidingCells.append(tableView.indexPath(for: primaryColorCell)!)
+            hidingCells.append(tableView.indexPath(for: secondaryColorCell)!)
+            hidingSections = 0
             randomColorSupport = false
             break
         case 6:
