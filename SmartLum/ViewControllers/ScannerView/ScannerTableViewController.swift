@@ -117,7 +117,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
         centralManager.stopScan()
         activityIndicator.stopAnimating()
         tableView.deselectRow(at: indexPath, animated: true)
-        performSegue(withIdentifier: "PushSLViewController", sender: discoveredPeripherals[indexPath.row])
+        performSegue(withIdentifier: "PushTorchereControl", sender: discoveredPeripherals[indexPath.row])
     }
     
     // MARK: - CBCentralManagerDelegate
@@ -188,9 +188,14 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
                 destinationView.setPeripheral(peripheral)
             }
         } else if segue.identifier == "PushTorchereControl" {
-            if let peripheral = sender as? TorcherePeripheral {
-                let destinationView = segue.destination as! TorchereViewController
-                destinationView.setPeripheral(peripheral)
+            print("GEGEGE")
+            if let advertisingData = sender as? AdvertisedData {
+                if advertisingData.peripheralType == TorcherePeripheral.self {
+                    print("GAGAG")
+                    let peripheral = TorcherePeripheral.init(advertisingData.peripheral, centralManager)
+                    let destinationView = segue.destination as! TorchereViewController
+                    destinationView.setPeripheral(peripheral)
+                }
             }
         }
     }
