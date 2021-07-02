@@ -123,7 +123,7 @@ class BasePeripheral: NSObject,
     
 }
 
-class FirstPeripheral: BasePeripheral, ColorPeripheralProtocol, AnimationPeripheralProtocol, DiplomPeripheral {
+class FirstPeripheral: BasePeripheral, ColorPeripheralProtocol, AnimationPeripheralProtocol {
     
     public var delegate: (ColorPeripheralDelegate & AnimationPeripheralDelegate)?
 
