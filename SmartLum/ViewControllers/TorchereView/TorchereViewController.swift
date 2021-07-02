@@ -11,7 +11,55 @@ import UIKit
 class TorchereViewController: UITableViewController,
                               TablePickerDelegate,
                               ColorDelegate,
-                              TorchereDelegate {
+                              ColorPeripheralDelegate,
+                              AnimationPeripheralDelegate {
+    
+    func getPrimaryColor(_ color: UIColor) {
+        currentPrimaryColor = color
+        setColorIndication(for: primaryColorCell, with: color)
+        print("Primary color \(color)")
+    }
+    
+    func getSecondaryColor(_ color: UIColor) {
+        currentSecondaryColor = color
+        setColorIndication(for: secondaryColorCell, with: color)
+        print("Secondary color \(color)")
+    }
+    
+    func getRandomColor(_ state: Bool) {
+        currentRandomColor = state
+        print("Random color \(state)")
+    }
+    
+    func getAnimationMode(mode: Int) {
+        currentAnimation = mode
+        setAnimationUI(for: mode)
+        tableView.reloadData()
+        print("Animation \(mode)")
+    }
+    
+    func getAnimationOnSpeed(speed: Int) {
+        currentAnimationSpeed = speed
+        animationSpeedSlider.setValue(Float(speed), animated: true)
+        print("Animation on speed \(speed)")
+    }
+    
+    func getAnimationOffSpeed(speed: Int) {
+        print("Animation off speed \(speed)")
+    }
+    
+    func getAnimationDirection(direction: Int) {
+        currentAnimationDirection = direction
+        directionCell.detailTextLabel?.text = TorchereData.animationDirection[direction]?.localized
+        print("Animation direction \(direction)")
+    }
+    
+    func getAnimationStep(step: Int) {
+        animationStepStepper.value = Double(step)
+        animationStepLabel.text = String(step)
+        print("Animation step \(step)")
+    }
+    
     
     @IBOutlet private weak var primaryColorCell: UITableViewCell!
     @IBOutlet private weak var secondaryColorCell: UITableViewCell!
@@ -82,6 +130,7 @@ class TorchereViewController: UITableViewController,
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        #warning("TODO: Hide colorpicker")
         super.viewWillDisappear(animated)
     }
     
@@ -96,17 +145,18 @@ class TorchereViewController: UITableViewController,
     
     public func setPeripheral(_ peripheral: TorcherePeripheral) {
         self.peripheral = peripheral
-        title = peripheral.advertisedName
+        title = peripheral.name
         peripheral.delegate = self
+        //peripheral.baseDelegate = self
     }
     
     @IBAction func onAnimationSliderValueChange(_ sender: UISlider) {
-        peripheral.setAnimationOnSpeed(Int(sender.value))
+        peripheral.writeAnimationOnSpeed(Int(sender.value))
     }
     
     @IBAction func onAnimationStepValueChange(_ sender: UIStepper) {
         animationStepLabel.text = String(Int(sender.value))
-        peripheral.setAnimationStep(Int(sender.value))
+        peripheral.writeAnimationStep(Int(sender.value))
     }
     
     private func pushColorPicker(_ sender: Any) {
@@ -203,17 +253,17 @@ class TorchereViewController: UITableViewController,
         if pickColorFor == ColorSelection.primary {
             currentPrimaryColor = color
             setColorIndication(for: primaryColorCell, with: color)
-            peripheral.setPrimaryColor(color)
+            peripheral.writePrimaryColor(color)
         } else if pickColorFor == ColorSelection.secodary {
             currentSecondaryColor = color
             setColorIndication(for: secondaryColorCell, with: color)
-            peripheral.setSecondaryColor(color)
+            peripheral.writeSecondaryColor(color)
         }
     }
     
     func randomColor(enabled: Bool) {
         currentRandomColor = enabled
-        peripheral.setRandomColor(enabled)
+        peripheral.writeRandomColor(enabled)
     }
     
     // MARK: - TablePicker Delegate
@@ -223,13 +273,13 @@ class TorchereViewController: UITableViewController,
         case TorchereData.animationModes:
             currentAnimation = index
             //animationCell.detailTextLabel?.text = array[index]
-            peripheral.setAnimation(index)
+            peripheral.writeAnimationMode(index)
             setAnimationUI(for: index)
             break
         case TorchereData.animationDirection:
             currentAnimationDirection = index
             directionCell.detailTextLabel?.text = array[index]?.localized
-            peripheral.setAnimationDirection(index)
+            peripheral.writeAnimationDirection(index)
             break
         default:
             print("Unknown selection at \(array) - \(index)")
@@ -280,12 +330,12 @@ class TorchereViewController: UITableViewController,
     // MARK: - Peripheral Delegate
     
     func peripheralDidConnect() {
-        print("ZConnected to \(peripheral.advertisedName ?? "Device")")
+        print("ZConnected to \(peripheral.name ?? "Device")")
         hideAlert()
     }
     
     func peripheralDidDisconnect() {
-        print("Disconnected from \(peripheral.advertisedName ?? "Device")")
+        print("Disconnected from \(peripheral.name ?? "Device")")
         self.navigationController?.popToRootViewController(animated: true)
     }
     
@@ -299,52 +349,6 @@ class TorchereViewController: UITableViewController,
     
     func peripheralOnDFUMode() {
         #warning("TODO: Handle peripheral DFU mode state")
-    }
-    
-    func peripheralPrimaryColor(_ color: UIColor) {
-        currentPrimaryColor = color
-        setColorIndication(for: primaryColorCell, with: color)
-        print("Primary color \(color)")
-    }
-    
-    func peripheralSecondaryColor(_ color: UIColor) {
-        currentSecondaryColor = color
-        setColorIndication(for: secondaryColorCell, with: color)
-        print("Secondary color \(color)")
-    }
-    
-    func peripheralRandomColor(_ state: Bool) {
-        currentRandomColor = state
-        print("Random color \(state)")
-    }
-    
-    func peripheralAnimation(_ mode: Int) {
-        currentAnimation = mode
-        setAnimationUI(for: mode)
-        tableView.reloadData()
-        print("Animation \(mode)")
-    }
-    
-    func peripheralAnimationOnSpeed(_ speed: Int) {
-        currentAnimationSpeed = speed
-        animationSpeedSlider.setValue(Float(speed), animated: true)
-        print("Animation on speed \(speed)")
-    }
-    
-    func peripheralAnimationOffSpeed(_ speed: Int) {
-        print("Animation off speed \(speed)")
-    }
-    
-    func peripheralAnimationDirection(_ direction: Int) {
-        currentAnimationDirection = direction
-        directionCell.detailTextLabel?.text = TorchereData.animationDirection[direction]?.localized
-        print("Animation direction \(direction)")
-    }
-    
-    func peripheralAnimationStep(_ step: Int) {
-        animationStepStepper.value = Double(step)
-        animationStepLabel.text = String(step)
-        print("Animation step \(step)")
     }
 
 }

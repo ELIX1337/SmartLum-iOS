@@ -99,21 +99,3 @@ class ColorPickerViewController: UIViewController {
 extension ColorDelegate {
     func randomColor(enabled: Bool) {}
 }
-
-extension UIColor {
-
-    func rgb() -> (red:Float, green:Float, blue:Float)? {
-        var fRed   : CGFloat = 0
-        var fGreen : CGFloat = 0
-        var fBlue  : CGFloat = 0
-        var fAlpha : CGFloat = 0
-        if self.getRed(&fRed, green: &fGreen, blue: &fBlue, alpha: &fAlpha) {
-            let iRed   = Float(fRed)
-            let iGreen = Float(fGreen)
-            let iBlue  = Float(fBlue)
-            return (red:iRed, green:iGreen, blue:iBlue)
-        } else {
-            return nil
-        }
-    }
-}

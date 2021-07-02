@@ -23,7 +23,8 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     // MARK: - Properties
     
     private var centralManager: CBCentralManager!
-    private var discoveredPeripherals = [TorcherePeripheral]()
+    //private var discoveredPeripherals = [BasePeripheral]()
+    private var discoveredPeripherals = [AdvertisedData]()
     
     // MARK: - UIViewController
     @IBAction func pushAbout(_ sender: Any) {
@@ -42,7 +43,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
         centralManager.delegate = self
         if centralManager.state == .poweredOn {
             activityIndicator.startAnimating()
-            centralManager.scanForPeripherals(withServices: [TorcherePeripheral.TORCHERE_SERVICE_UUID, TorcherePeripheral.FL_MINI_SERVICE_UUID],
+            centralManager.scanForPeripherals(withServices: Array(UUIDs.advServices.keys),
                                               options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
         }
     }
@@ -122,7 +123,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     // MARK: - CBCentralManagerDelegate
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        let newPeripheral = TorcherePeripheral(withPeripheral: peripheral, advertisementData: advertisementData, andRSSI: RSSI, using: centralManager)
+        let newPeripheral = AdvertisedData(withPeripheral: peripheral, advertisementData: advertisementData, andRSSI: RSSI, using: centralManager)
 
         if !discoveredPeripherals.contains(newPeripheral) {
             discoveredPeripherals.append(newPeripheral)
@@ -146,7 +147,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
             print("Central is not powered on")
         } else {
             activityIndicator.startAnimating()
-            centralManager.scanForPeripherals(withServices: [TorcherePeripheral.TORCHERE_SERVICE_UUID, TorcherePeripheral.FL_MINI_SERVICE_UUID],
+            centralManager.scanForPeripherals(withServices: Array(UUIDs.advServices.keys),
                                               options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
         }
     }
@@ -182,9 +183,12 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "PushTorchereControl" {
-            if let peripheral = sender as? TorcherePeripheral {
-                let destinationView = segue.destination as! TorchereViewController
-                destinationView.setPeripheral(peripheral)
+            if let advertisingData = sender as? AdvertisedData {
+                if advertisingData.peripheralType == TorcherePeripheral.self {
+                    let peripheral = TorcherePeripheral.init(advertisingData.peripheral, centralManager)
+                    let destinationView = segue.destination as! TorchereViewController
+                    destinationView.setPeripheral(peripheral)
+                }
             }
         }
     }
