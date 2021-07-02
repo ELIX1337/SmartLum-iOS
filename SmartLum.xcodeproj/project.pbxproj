@@ -32,17 +32,14 @@
 		22EB5D3E25EFBFB0003FC31D /* EasyStripTypeSetupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22EB5D3C25EFBFB0003FC31D /* EasyStripTypeSetupViewController.xib */; };
 		22EB5D4F25F23012003FC31D /* NetworkPermissionTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB5D4E25F23012003FC31D /* NetworkPermissionTrigger.swift */; };
 		22EB5D5425F23E79003FC31D /* TorcherePeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB5D5325F23E79003FC31D /* TorcherePeripheral.swift */; };
-		22EB5D5925F8FD42003FC31D /* AbstractPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB5D5825F8FD42003FC31D /* AbstractPeripheral.swift */; };
 		22EB5D7825FA013A003FC31D /* TorchereViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB5D7625FA013A003FC31D /* TorchereViewController.swift */; };
 		22EB5D8425FB5077003FC31D /* TablePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB5D8325FB5077003FC31D /* TablePickerViewController.swift */; };
 		2C9F9D81266A088F00CCF8E2 /* BasePeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F9D80266A088F00CCF8E2 /* BasePeripheral.swift */; };
-		2C9F9D83266A481700CCF8E2 /* SLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F9D82266A481700CCF8E2 /* SLViewController.swift */; };
 		2CC665CF2678C6F0009059BD /* UUIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC665CE2678C6F0009059BD /* UUIDs.swift */; };
 		2CDE95CF268C70CE0025276A /* BluetoothEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95CE268C70CD0025276A /* BluetoothEndpoint.swift */; };
 		2CDE95D1268C71760025276A /* ColorPeripheralProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95D0268C71760025276A /* ColorPeripheralProtocol.swift */; };
 		2CDE95D3268C71D40025276A /* AnimationPeripheralProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95D2268C71D40025276A /* AnimationPeripheralProtocol.swift */; };
 		2CDE95D7268C77D30025276A /* AdvertisedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95D6268C77D30025276A /* AdvertisedData.swift */; };
-		2CDE95D9268C7BA00025276A /* DiplomPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95D8268C7BA00025276A /* DiplomPeripheral.swift */; };
 		30B664451FCD6E65003C8B55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B664441FCD6E65003C8B55 /* AppDelegate.swift */; };
 		30B6644A1FCD6E65003C8B55 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30B664481FCD6E65003C8B55 /* Main.storyboard */; };
 		30B6644C1FCD6E65003C8B55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30B6644B1FCD6E65003C8B55 /* Assets.xcassets */; };
@@ -108,18 +105,15 @@
 		22EB5D3C25EFBFB0003FC31D /* EasyStripTypeSetupViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EasyStripTypeSetupViewController.xib; sourceTree = "<group>"; };
 		22EB5D4E25F23012003FC31D /* NetworkPermissionTrigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPermissionTrigger.swift; sourceTree = "<group>"; };
 		22EB5D5325F23E79003FC31D /* TorcherePeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorcherePeripheral.swift; sourceTree = "<group>"; };
-		22EB5D5825F8FD42003FC31D /* AbstractPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractPeripheral.swift; sourceTree = "<group>"; };
 		22EB5D7625FA013A003FC31D /* TorchereViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorchereViewController.swift; sourceTree = "<group>"; };
 		22EB5D8325FB5077003FC31D /* TablePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TablePickerViewController.swift; sourceTree = "<group>"; };
 		2C41FC2F265BC68000B81197 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2C9F9D80266A088F00CCF8E2 /* BasePeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePeripheral.swift; sourceTree = "<group>"; };
-		2C9F9D82266A481700CCF8E2 /* SLViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLViewController.swift; sourceTree = "<group>"; };
 		2CC665CE2678C6F0009059BD /* UUIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDs.swift; sourceTree = "<group>"; };
 		2CDE95CE268C70CD0025276A /* BluetoothEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothEndpoint.swift; sourceTree = "<group>"; };
 		2CDE95D0268C71760025276A /* ColorPeripheralProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPeripheralProtocol.swift; sourceTree = "<group>"; };
 		2CDE95D2268C71D40025276A /* AnimationPeripheralProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationPeripheralProtocol.swift; sourceTree = "<group>"; };
 		2CDE95D6268C77D30025276A /* AdvertisedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisedData.swift; sourceTree = "<group>"; };
-		2CDE95D8268C7BA00025276A /* DiplomPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiplomPeripheral.swift; sourceTree = "<group>"; };
 		30B664411FCD6E65003C8B55 /* SmartLum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartLum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30B664441FCD6E65003C8B55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		30B664491FCD6E65003C8B55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -255,7 +249,6 @@
 			children = (
 				2CDE95D0268C71760025276A /* ColorPeripheralProtocol.swift */,
 				2CDE95D2268C71D40025276A /* AnimationPeripheralProtocol.swift */,
-				2CDE95D8268C7BA00025276A /* DiplomPeripheral.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -333,7 +326,6 @@
 				22DCAD3F25FF392200BB30D3 /* ColorPickerViewController.xib */,
 				2240D22B260CAF490037D304 /* AboutViewController.swift */,
 				2240D22C260CAF490037D304 /* AboutViewController.xib */,
-				2C9F9D82266A481700CCF8E2 /* SLViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -354,7 +346,6 @@
 				30B664871FCDA2E0003C8B55 /* EasyPeripheral.swift */,
 				22B851DD254FEAEC00B485CC /* Sratocol.swift */,
 				22EB5D5325F23E79003FC31D /* TorcherePeripheral.swift */,
-				22EB5D5825F8FD42003FC31D /* AbstractPeripheral.swift */,
 				2C9F9D80266A088F00CCF8E2 /* BasePeripheral.swift */,
 				2CC665CE2678C6F0009059BD /* UUIDs.swift */,
 				2CDE95CE268C70CD0025276A /* BluetoothEndpoint.swift */,
@@ -661,7 +652,6 @@
 				2240D233260CAFC50037D304 /* WebURLs.swift in Sources */,
 				22A46D9525E1418E003F4200 /* FirmwareUpdateViewController.swift in Sources */,
 				30B664851FCDA0FC003C8B55 /* PeripheralTableViewCell.swift in Sources */,
-				2C9F9D83266A481700CCF8E2 /* SLViewController.swift in Sources */,
 				30B664831FCDA0EB003C8B55 /* ScannerTableViewController.swift in Sources */,
 				22A46DE225E91104003F4200 /* FirmwareDownloader.swift in Sources */,
 				22EB5D5425F23E79003FC31D /* TorcherePeripheral.swift in Sources */,
@@ -684,8 +674,6 @@
 				2240D22D260CAF490037D304 /* AboutViewController.swift in Sources */,
 				22A46E0425EE6B3C003F4200 /* EasySetupViewController.swift in Sources */,
 				2CC665CF2678C6F0009059BD /* UUIDs.swift in Sources */,
-				22EB5D5925F8FD42003FC31D /* AbstractPeripheral.swift in Sources */,
-				2CDE95D9268C7BA00025276A /* DiplomPeripheral.swift in Sources */,
 				2C9F9D81266A088F00CCF8E2 /* BasePeripheral.swift in Sources */,
 				22A46E1D25EF5E58003F4200 /* EasySensorDirectionSetupViewController.swift in Sources */,
 				22EB5D8425FB5077003FC31D /* TablePickerViewController.swift in Sources */,

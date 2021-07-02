@@ -182,16 +182,9 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     // MARK: - Segue and navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "PushSLViewController" {
-            if let peripheral = sender as? AdvertisedData {
-            let destinationView = segue.destination as! SLViewController
-                destinationView.setPeripheral(peripheral)
-            }
-        } else if segue.identifier == "PushTorchereControl" {
-            print("GEGEGE")
+        if segue.identifier == "PushTorchereControl" {
             if let advertisingData = sender as? AdvertisedData {
                 if advertisingData.peripheralType == TorcherePeripheral.self {
-                    print("GAGAG")
                     let peripheral = TorcherePeripheral.init(advertisingData.peripheral, centralManager)
                     let destinationView = segue.destination as! TorchereViewController
                     destinationView.setPeripheral(peripheral)
