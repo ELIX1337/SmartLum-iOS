@@ -92,6 +92,10 @@ extension DataProtocol {
             alpha: 1.0)
     }
     
+    func toBool() -> Bool { 
+        return self[0 as! Self.Index] == 0x1
+    }
+    
     func value<N: Numeric>() -> N { .init(self) }
     
     func toInt() -> Int { value() }
