@@ -39,8 +39,8 @@
 		2C9F9D83266A481700CCF8E2 /* SLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F9D82266A481700CCF8E2 /* SLViewController.swift */; };
 		2CC665CF2678C6F0009059BD /* UUIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC665CE2678C6F0009059BD /* UUIDs.swift */; };
 		2CDE95CF268C70CE0025276A /* BluetoothEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95CE268C70CD0025276A /* BluetoothEndpoint.swift */; };
-		2CDE95D1268C71760025276A /* ColorPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95D0268C71760025276A /* ColorPeripheral.swift */; };
-		2CDE95D3268C71D40025276A /* AnimationPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95D2268C71D40025276A /* AnimationPeripheral.swift */; };
+		2CDE95D1268C71760025276A /* ColorPeripheralProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95D0268C71760025276A /* ColorPeripheralProtocol.swift */; };
+		2CDE95D3268C71D40025276A /* AnimationPeripheralProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95D2268C71D40025276A /* AnimationPeripheralProtocol.swift */; };
 		2CDE95D7268C77D30025276A /* AdvertisedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95D6268C77D30025276A /* AdvertisedData.swift */; };
 		2CDE95D9268C7BA00025276A /* DiplomPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95D8268C7BA00025276A /* DiplomPeripheral.swift */; };
 		30B664451FCD6E65003C8B55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B664441FCD6E65003C8B55 /* AppDelegate.swift */; };
@@ -116,8 +116,8 @@
 		2C9F9D82266A481700CCF8E2 /* SLViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLViewController.swift; sourceTree = "<group>"; };
 		2CC665CE2678C6F0009059BD /* UUIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDs.swift; sourceTree = "<group>"; };
 		2CDE95CE268C70CD0025276A /* BluetoothEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothEndpoint.swift; sourceTree = "<group>"; };
-		2CDE95D0268C71760025276A /* ColorPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPeripheral.swift; sourceTree = "<group>"; };
-		2CDE95D2268C71D40025276A /* AnimationPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationPeripheral.swift; sourceTree = "<group>"; };
+		2CDE95D0268C71760025276A /* ColorPeripheralProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPeripheralProtocol.swift; sourceTree = "<group>"; };
+		2CDE95D2268C71D40025276A /* AnimationPeripheralProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationPeripheralProtocol.swift; sourceTree = "<group>"; };
 		2CDE95D6268C77D30025276A /* AdvertisedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisedData.swift; sourceTree = "<group>"; };
 		2CDE95D8268C7BA00025276A /* DiplomPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiplomPeripheral.swift; sourceTree = "<group>"; };
 		30B664411FCD6E65003C8B55 /* SmartLum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartLum.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -253,8 +253,8 @@
 		2CDE95D5268C72780025276A /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				2CDE95D0268C71760025276A /* ColorPeripheral.swift */,
-				2CDE95D2268C71D40025276A /* AnimationPeripheral.swift */,
+				2CDE95D0268C71760025276A /* ColorPeripheralProtocol.swift */,
+				2CDE95D2268C71D40025276A /* AnimationPeripheralProtocol.swift */,
 				2CDE95D8268C7BA00025276A /* DiplomPeripheral.swift */,
 			);
 			path = Protocols;
@@ -657,7 +657,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CDE95D3268C71D40025276A /* AnimationPeripheral.swift in Sources */,
+				2CDE95D3268C71D40025276A /* AnimationPeripheralProtocol.swift in Sources */,
 				2240D233260CAFC50037D304 /* WebURLs.swift in Sources */,
 				22A46D9525E1418E003F4200 /* FirmwareUpdateViewController.swift in Sources */,
 				30B664851FCDA0FC003C8B55 /* PeripheralTableViewCell.swift in Sources */,
@@ -668,7 +668,7 @@
 				30B664881FCDA2E0003C8B55 /* EasyPeripheral.swift in Sources */,
 				2CDE95D7268C77D30025276A /* AdvertisedData.swift in Sources */,
 				30B664801FCD9638003C8B55 /* RootViewController.swift in Sources */,
-				2CDE95D1268C71760025276A /* ColorPeripheral.swift in Sources */,
+				2CDE95D1268C71760025276A /* ColorPeripheralProtocol.swift in Sources */,
 				22EB5D3D25EFBFB0003FC31D /* EasyStripTypeSetupViewController.swift in Sources */,
 				22EB5D4F25F23012003FC31D /* NetworkPermissionTrigger.swift in Sources */,
 				22EB5D7825FA013A003FC31D /* TorchereViewController.swift in Sources */,
