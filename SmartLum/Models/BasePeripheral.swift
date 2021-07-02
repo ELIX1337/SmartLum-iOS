@@ -11,9 +11,16 @@ import UIKit
 
 protocol BasePeripheralProtocol {
     var peripheral: CBPeripheral { get set }
-    var someDict: [[BluetoothEndpoint.Services:BluetoothEndpoint.Characteristics] : CBCharacteristic] { get set }
-    var incomingData: [[BluetoothEndpoint.Services:BluetoothEndpoint.Characteristics] : Data] { get set }
-    func readValue(_ value:Data, _ characteristic: BluetoothEndpoint.Characteristics)
+    var endpoints: [[BluetoothEndpoint.Services:BluetoothEndpoint.Characteristics] : CBCharacteristic] { get set }
+    //var baseDelegate: BasePeripheralDelegate? { get set }
+}
+
+protocol BasePeripheralDelegate {
+    func peripheralDidConnect()
+    func peripheralDidDisconnect()
+    func peripheralIsReady()
+    func peripheralFirmwareVersion(_ version: Int)
+    func peripheralOnDFUMode()
 }
 
 class BasePeripheral: NSObject,
@@ -21,16 +28,13 @@ class BasePeripheral: NSObject,
                       CBPeripheralDelegate,
                       BasePeripheralProtocol {
     
-    func readValue(_ value: Data, _ characteristic: BluetoothEndpoint.Characteristics) {
-        print("Base readValue")
-    }
-    
     let centralManager: CBCentralManager
     var peripheral: CBPeripheral
     var type : BasePeripheral.Type?
     var name: String
-    var someDict: [[BluetoothEndpoint.Services : BluetoothEndpoint.Characteristics] : CBCharacteristic] = [:]
-    var incomingData: [[BluetoothEndpoint.Services : BluetoothEndpoint.Characteristics] : Data] = [:]
+    var endpoints: [[BluetoothEndpoint.Services : BluetoothEndpoint.Characteristics] : CBCharacteristic] = [:]
+    public var isConnected: Bool { peripheral.state == .connected }
+    var baseDelegate: BasePeripheralDelegate?
     
     init(_ peripheral: CBPeripheral,_ manager: CBCentralManager) {
         self.peripheral = peripheral
@@ -61,6 +65,7 @@ class BasePeripheral: NSObject,
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         print("Connected to \(name)")
+        baseDelegate?.peripheralDidConnect()
         peripheral.discoverServices(nil)
     }
     
@@ -76,6 +81,10 @@ class BasePeripheral: NSObject,
             }
         }
     }
+    
+    func readData(data: Data,from characteristic: BluetoothEndpoint.Characteristics, in service:BluetoothEndpoint.Services, error: Error?) {
+        
+    }
         
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         if let characteristics = service.characteristics {
@@ -83,7 +92,7 @@ class BasePeripheral: NSObject,
                 peripheral.setNotifyValue(true, for: characteristic)
                 peripheral.readValue(for: characteristic)
                 if let cases = BluetoothEndpoint.getCases(service, characteristic) {
-                    self.someDict[cases] = characteristic
+                    self.endpoints[cases] = characteristic
                 } else {
                     print("NO MATCH - \(characteristic.uuid) : \(service.uuid.uuidString)")
                 }
@@ -92,13 +101,10 @@ class BasePeripheral: NSObject,
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        print("new value - \(characteristic.value)")
         if let value = characteristic.value,
-           let char = BluetoothEndpoint.getCharacteristic(characteristic: characteristic) {
-            readValue(value, char)
-        }
-        if let cases = BluetoothEndpoint.getCases(characteristic.service, characteristic) {
-            self.incomingData[cases] = characteristic.value
+           let char = BluetoothEndpoint.getCharacteristic(characteristic: characteristic),
+           let serv = BluetoothEndpoint.getService(characteristic.service) {
+            readData(data: value, from: char, in: serv, error: error)
         }
     }
         
@@ -117,7 +123,9 @@ class BasePeripheral: NSObject,
     
 }
 
-class FirstPeripheral: BasePeripheral, ColorPeripheral, AnimationPeripheral, DiplomPeripheral {
+class FirstPeripheral: BasePeripheral, ColorPeripheralProtocol, AnimationPeripheralProtocol, DiplomPeripheral {
+    
+    public var delegate: (ColorPeripheralDelegate & AnimationPeripheralDelegate)?
 
     override init(_ peripheral: CBPeripheral, _ manager: CBCentralManager) {
         print("init")
@@ -130,11 +138,8 @@ class FirstPeripheral: BasePeripheral, ColorPeripheral, AnimationPeripheral, Dip
     }
     
     public func setAnimationMode(_ mode: Int) {
-        print("GO - \n\(someDict.description)")
-        peripheral.services?.forEach { c in
-            c.characteristics?.forEach{ b in
-                print("\(b.uuid) - \(b.service.uuid)")
-            }
+        if let char = endpoints[[.animation:.animationMode]] {
+            peripheral.readValue(for: char)
         }
     }
     
@@ -142,20 +147,22 @@ class FirstPeripheral: BasePeripheral, ColorPeripheral, AnimationPeripheral, Dip
         writeAnimationOnSpeed(speed)
     }
     
-    func readPrimaryColor(_ color: UIColor) {
-        print("HAHAHAHA Primary color is \(color)")
-    }
-    
-    func readSecondaryColor(_ color: UIColor) {
-        print("HAHAHAHA Secondary color \(color)")
-    }
-    
-    func readRandomColor(_ color: Bool) {
-        print("HAHAHAHA random is \(color)")
+    override func readData(data: Data, from characteristic: BluetoothEndpoint.Characteristics, in service: BluetoothEndpoint.Services, error: Error?) {
+        switch (service, characteristic) {
+        case (.animation,.animationMode):
+            delegate?.getAnimationMode(mode: Int(data.toUInt8()))
+            print("Animation service - animation mode: \(data.toUInt8())")
+            break
+        case (.color,.primaryColor):
+            delegate?.getPrimaryColor(data.toUIColor())
+            break
+        default:
+            print("Unknown data")
+        }
     }
 }
 
-class SecondPeripheral: BasePeripheral, ColorPeripheral {
+class SecondPeripheral: BasePeripheral, ColorPeripheralProtocol {
         
     override init(_ peripheral: CBPeripheral, _ manager: CBCentralManager) {
         super.init(peripheral, manager)
