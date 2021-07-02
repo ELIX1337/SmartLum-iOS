@@ -9,24 +9,16 @@
 import CoreBluetooth
 import UIKit
 
-protocol ColorPeripheral {
+protocol ColorPeripheralProtocol {
     func writePrimaryColor(_ color: UIColor)
     func writeSecondaryColor(_ color: UIColor)
     func writeRandomColor(_ state: Bool)
-    
-    func readPrimaryColor(_ color: UIColor)
-    func readSecondaryColor(_ color: UIColor)
-    func readRandomColor(_ color: Bool)
 }
 
-extension ColorPeripheral where Self:BasePeripheralProtocol {
-    var randomColorCharacteristic   : CBCharacteristic? { get { return self.someDict[[.color:.randomColor]] } }
-    var primaryColorCharacteristic  : CBCharacteristic? { get { return self.someDict[[.color:.primaryColor]] }  }
-    var secondaryColorCharacteristic: CBCharacteristic? { get { return self.someDict[[.color:.secondaryColor]] } }
-    
-    var primaryColorValue: Data? { get { return self.incomingData[[.color:.primaryColor]]}}
-    var secondaryColorValue: Data? { get { return self.incomingData[[.color:.primaryColor]]}}
-    var randomColorValue: Data? { get { return self.incomingData[[.color:.primaryColor]]}}
+extension ColorPeripheralProtocol where Self:BasePeripheralProtocol {
+    var randomColorCharacteristic   : CBCharacteristic? { get { return self.endpoints[[.color:.randomColor]] } }
+    var primaryColorCharacteristic  : CBCharacteristic? { get { return self.endpoints[[.color:.primaryColor]] }  }
+    var secondaryColorCharacteristic: CBCharacteristic? { get { return self.endpoints[[.color:.secondaryColor]] } }
 
     func writePrimaryColor(_ color: UIColor) {
         print("char check \(String(describing: primaryColorCharacteristic))")
@@ -47,15 +39,13 @@ extension ColorPeripheral where Self:BasePeripheralProtocol {
             peripheral.writeValue(state.toData(), for: characteristic, type: .withoutResponse)
         }
     }
-    
-    func readPrimaryColor(_ color: UIColor) {
-    }
-    func readSecondaryColor(_ color: UIColor) {}
-    func readRandomColor(_ color: Bool) {}
-    
-    func readData(c:CBCharacteristic) {
-        print("Dickhead")
-    }
-    
+
 }
+
+protocol ColorPeripheralDelegate: BasePeripheralDelegate {
+    func getPrimaryColor(_ color: UIColor)
+    func getSecondaryColor(_ color: UIColor)
+    func getRandomColor(_ state: Bool)
+}
+
 
