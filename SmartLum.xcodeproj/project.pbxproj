@@ -187,6 +187,16 @@
 			path = TorchereView;
 			sourceTree = "<group>";
 		};
+		2C720285268F1C860079BEEA /* Pickers */ = {
+			isa = PBXGroup;
+			children = (
+				22EB5D8325FB5077003FC31D /* TablePickerViewController.swift */,
+				22DCAD3E25FF392200BB30D3 /* ColorPickerViewController.swift */,
+				22DCAD3F25FF392200BB30D3 /* ColorPickerViewController.xib */,
+			);
+			path = Pickers;
+			sourceTree = "<group>";
+		};
 		2CDE95D4268C722E0025276A /* Peripherals */ = {
 			isa = PBXGroup;
 			children = (
@@ -270,14 +280,12 @@
 		30B664791FCD722A003C8B55 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				22EB5D6825F9F812003FC31D /* TorchereView */,
-				30B664811FCDA0DE003C8B55 /* ScannerView */,
 				30B6647F1FCD9638003C8B55 /* RootViewController.swift */,
-				22EB5D8325FB5077003FC31D /* TablePickerViewController.swift */,
-				22DCAD3E25FF392200BB30D3 /* ColorPickerViewController.swift */,
-				22DCAD3F25FF392200BB30D3 /* ColorPickerViewController.xib */,
 				2240D22B260CAF490037D304 /* AboutViewController.swift */,
 				2240D22C260CAF490037D304 /* AboutViewController.xib */,
+				22EB5D6825F9F812003FC31D /* TorchereView */,
+				30B664811FCDA0DE003C8B55 /* ScannerView */,
+				2C720285268F1C860079BEEA /* Pickers */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -296,8 +304,8 @@
 			children = (
 				2CDE95D6268C77D30025276A /* AdvertisedData.swift */,
 				2CDE95CE268C70CD0025276A /* BluetoothEndpoint.swift */,
-				2CDE95D4268C722E0025276A /* Peripherals */,
 				2C720283268F1A190079BEEA /* UUIDs.swift */,
+				2CDE95D4268C722E0025276A /* Peripherals */,
 			);
 			path = Models;
 			sourceTree = "<group>";
