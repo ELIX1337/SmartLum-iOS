@@ -16,7 +16,7 @@ class AdvertisedData: NSObject {
     let advertisingData: [String : Any]
     public private(set) var advertisedName: String = "Unknown Device".localized
     public private(set) var RSSI          : NSNumber
-    public var type : BasePeripheral.Type?
+    public var peripheralType : BasePeripheral.Type?
     
     init(withPeripheral peripheral: CBPeripheral,
          advertisementData advertisementDictionary: [String : Any],
@@ -28,7 +28,7 @@ class AdvertisedData: NSObject {
         self.RSSI = currentRSSI
         super.init()
         self.advertisedName = getAdvertisedName(advertisementDictionary)
-        self.type = getAdvertisedService(advertisementDictionary)
+        self.peripheralType = getAdvertisedService(advertisementDictionary)
     }
     
     private func getAdvertisedName(_ advertisementDictionary: [String : Any]) -> String {
