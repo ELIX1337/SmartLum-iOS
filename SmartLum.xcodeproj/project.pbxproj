@@ -7,29 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		22100F9825553D5100E8BD88 /* EasyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22100F9725553D5100E8BD88 /* EasyTableViewController.swift */; };
 		2240D20D260CAC520037D304 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2240D20F260CAC520037D304 /* InfoPlist.strings */; };
 		2240D22D260CAF490037D304 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2240D22B260CAF490037D304 /* AboutViewController.swift */; };
 		2240D22E260CAF490037D304 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2240D22C260CAF490037D304 /* AboutViewController.xib */; };
 		2240D233260CAFC50037D304 /* WebURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2240D232260CAFC50037D304 /* WebURLs.swift */; };
 		2264CAB0260CCBEA00CB54B0 /* Pods-SmartLum-acknowledgements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2264CAAF260CCBEA00CB54B0 /* Pods-SmartLum-acknowledgements.plist */; };
-		22A46D5925E0F8EC003F4200 /* EasyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A46D5825E0F8EC003F4200 /* EasyInfoViewController.swift */; };
 		22A46D9525E1418E003F4200 /* FirmwareUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A46D9325E1418E003F4200 /* FirmwareUpdateViewController.swift */; };
 		22A46D9625E1418E003F4200 /* FirmwareUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22A46D9425E1418E003F4200 /* FirmwareUpdateViewController.xib */; };
 		22A46DD225E7A931003F4200 /* DFUDocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A46DD125E7A931003F4200 /* DFUDocumentPicker.swift */; };
 		22A46DD725E7A9EC003F4200 /* QuickError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A46DD625E7A9EC003F4200 /* QuickError.swift */; };
 		22A46DE225E91104003F4200 /* FirmwareDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A46DE125E91103003F4200 /* FirmwareDownloader.swift */; };
-		22A46E0425EE6B3C003F4200 /* EasySetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A46E0225EE6B3C003F4200 /* EasySetupViewController.swift */; };
-		22A46E0525EE6B3C003F4200 /* EasySetupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22A46E0325EE6B3C003F4200 /* EasySetupViewController.xib */; };
-		22A46E1D25EF5E58003F4200 /* EasySensorDirectionSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A46E1B25EF5E58003F4200 /* EasySensorDirectionSetupViewController.swift */; };
-		22A46E1E25EF5E58003F4200 /* EasySensorDirectionSetupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22A46E1C25EF5E58003F4200 /* EasySensorDirectionSetupViewController.xib */; };
-		22A46E2425EF5E6F003F4200 /* EasySensorDistanceSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A46E2225EF5E6F003F4200 /* EasySensorDistanceSetupViewController.swift */; };
-		22A46E2525EF5E6F003F4200 /* EasySensorDistanceSetupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22A46E2325EF5E6F003F4200 /* EasySensorDistanceSetupViewController.xib */; };
-		22B851DE254FEAEC00B485CC /* Sratocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B851DD254FEAEC00B485CC /* Sratocol.swift */; };
 		22DCAD4025FF392300BB30D3 /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DCAD3E25FF392200BB30D3 /* ColorPickerViewController.swift */; };
 		22DCAD4125FF392300BB30D3 /* ColorPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22DCAD3F25FF392200BB30D3 /* ColorPickerViewController.xib */; };
-		22EB5D3D25EFBFB0003FC31D /* EasyStripTypeSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB5D3B25EFBFB0003FC31D /* EasyStripTypeSetupViewController.swift */; };
-		22EB5D3E25EFBFB0003FC31D /* EasyStripTypeSetupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22EB5D3C25EFBFB0003FC31D /* EasyStripTypeSetupViewController.xib */; };
 		22EB5D4F25F23012003FC31D /* NetworkPermissionTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB5D4E25F23012003FC31D /* NetworkPermissionTrigger.swift */; };
 		22EB5D5425F23E79003FC31D /* TorcherePeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB5D5325F23E79003FC31D /* TorcherePeripheral.swift */; };
 		22EB5D5925F8FD42003FC31D /* AbstractPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB5D5825F8FD42003FC31D /* AbstractPeripheral.swift */; };
@@ -44,7 +33,6 @@
 		30B664801FCD9638003C8B55 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B6647F1FCD9638003C8B55 /* RootViewController.swift */; };
 		30B664831FCDA0EB003C8B55 /* ScannerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B664821FCDA0EB003C8B55 /* ScannerTableViewController.swift */; };
 		30B664851FCDA0FC003C8B55 /* PeripheralTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B664841FCDA0FC003C8B55 /* PeripheralTableViewCell.swift */; };
-		30B664881FCDA2E0003C8B55 /* EasyPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B664871FCDA2E0003C8B55 /* EasyPeripheral.swift */; };
 		52A637C0220DDECD00F5308D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52A637C2220DDECD00F5308D /* Localizable.strings */; };
 		52A637C5220DE11200F5308D /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A637C4220DE11200F5308D /* String+Localization.swift */; };
 		52FB0AF022131B7D00B1E575 /* UIColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FB0AEF22131B7D00B1E575 /* UIColors.swift */; };
@@ -72,32 +60,21 @@
 
 /* Begin PBXFileReference section */
 		1F496839E3FC64DE9062887A /* Pods-SmartLumTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartLumTests.release.xcconfig"; path = "Target Support Files/Pods-SmartLumTests/Pods-SmartLumTests.release.xcconfig"; sourceTree = "<group>"; };
-		22100F9725553D5100E8BD88 /* EasyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyTableViewController.swift; sourceTree = "<group>"; };
 		2240D20E260CAC520037D304 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2240D213260CAC580037D304 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2240D22B260CAF490037D304 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		2240D22C260CAF490037D304 /* AboutViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
 		2240D232260CAFC50037D304 /* WebURLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebURLs.swift; sourceTree = "<group>"; };
 		2264CAAF260CCBEA00CB54B0 /* Pods-SmartLum-acknowledgements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Pods-SmartLum-acknowledgements.plist"; sourceTree = "<group>"; };
-		22A46D5825E0F8EC003F4200 /* EasyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyInfoViewController.swift; sourceTree = "<group>"; };
 		22A46D9325E1418E003F4200 /* FirmwareUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirmwareUpdateViewController.swift; sourceTree = "<group>"; };
 		22A46D9425E1418E003F4200 /* FirmwareUpdateViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FirmwareUpdateViewController.xib; sourceTree = "<group>"; };
 		22A46DAE25E773FF003F4200 /* iOSDFULibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = iOSDFULibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		22A46DD125E7A931003F4200 /* DFUDocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DFUDocumentPicker.swift; sourceTree = "<group>"; };
 		22A46DD625E7A9EC003F4200 /* QuickError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickError.swift; sourceTree = "<group>"; };
 		22A46DE125E91103003F4200 /* FirmwareDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirmwareDownloader.swift; sourceTree = "<group>"; };
-		22A46E0225EE6B3C003F4200 /* EasySetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasySetupViewController.swift; sourceTree = "<group>"; };
-		22A46E0325EE6B3C003F4200 /* EasySetupViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EasySetupViewController.xib; sourceTree = "<group>"; };
-		22A46E1B25EF5E58003F4200 /* EasySensorDirectionSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasySensorDirectionSetupViewController.swift; sourceTree = "<group>"; };
-		22A46E1C25EF5E58003F4200 /* EasySensorDirectionSetupViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EasySensorDirectionSetupViewController.xib; sourceTree = "<group>"; };
-		22A46E2225EF5E6F003F4200 /* EasySensorDistanceSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasySensorDistanceSetupViewController.swift; sourceTree = "<group>"; };
-		22A46E2325EF5E6F003F4200 /* EasySensorDistanceSetupViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EasySensorDistanceSetupViewController.xib; sourceTree = "<group>"; };
-		22B851DD254FEAEC00B485CC /* Sratocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sratocol.swift; sourceTree = "<group>"; };
 		22DCAD3E25FF392200BB30D3 /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
 		22DCAD3F25FF392200BB30D3 /* ColorPickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPickerViewController.xib; sourceTree = "<group>"; };
 		22DCAE40260A12A400BB30D3 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
-		22EB5D3B25EFBFB0003FC31D /* EasyStripTypeSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyStripTypeSetupViewController.swift; sourceTree = "<group>"; };
-		22EB5D3C25EFBFB0003FC31D /* EasyStripTypeSetupViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EasyStripTypeSetupViewController.xib; sourceTree = "<group>"; };
 		22EB5D4E25F23012003FC31D /* NetworkPermissionTrigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPermissionTrigger.swift; sourceTree = "<group>"; };
 		22EB5D5325F23E79003FC31D /* TorcherePeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorcherePeripheral.swift; sourceTree = "<group>"; };
 		22EB5D5825F8FD42003FC31D /* AbstractPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractPeripheral.swift; sourceTree = "<group>"; };
@@ -119,7 +96,6 @@
 		30B6647F1FCD9638003C8B55 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		30B664821FCDA0EB003C8B55 /* ScannerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerTableViewController.swift; sourceTree = "<group>"; };
 		30B664841FCDA0FC003C8B55 /* PeripheralTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralTableViewCell.swift; sourceTree = "<group>"; };
-		30B664871FCDA2E0003C8B55 /* EasyPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyPeripheral.swift; sourceTree = "<group>"; };
 		3CAE88F9324080774EBCCC02 /* Pods-SmartLum-SmartLumUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartLum-SmartLumUITests.release.xcconfig"; path = "Target Support Files/Pods-SmartLum-SmartLumUITests/Pods-SmartLum-SmartLumUITests.release.xcconfig"; sourceTree = "<group>"; };
 		4ECD7F437B0FE3E34C0C5BE1 /* Pods-SmartLum-SmartLumUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartLum-SmartLumUITests.debug.xcconfig"; path = "Target Support Files/Pods-SmartLum-SmartLumUITests/Pods-SmartLum-SmartLumUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		502F8065F13CED8A6A9CE27D /* Pods-SmartLum.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartLum.release.xcconfig"; path = "Target Support Files/Pods-SmartLum/Pods-SmartLum.release.xcconfig"; sourceTree = "<group>"; };
@@ -163,16 +139,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		22A46D6325E10391003F4200 /* EasyView */ = {
-			isa = PBXGroup;
-			children = (
-				22100F9725553D5100E8BD88 /* EasyTableViewController.swift */,
-				22A46D5825E0F8EC003F4200 /* EasyInfoViewController.swift */,
-				22A46E1725EF5E19003F4200 /* SetupView */,
-			);
-			path = EasyView;
-			sourceTree = "<group>";
-		};
 		22A46DCC25E7A857003F4200 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -201,21 +167,6 @@
 				2240D232260CAFC50037D304 /* WebURLs.swift */,
 			);
 			path = NetworkAPI;
-			sourceTree = "<group>";
-		};
-		22A46E1725EF5E19003F4200 /* SetupView */ = {
-			isa = PBXGroup;
-			children = (
-				22A46E0225EE6B3C003F4200 /* EasySetupViewController.swift */,
-				22A46E0325EE6B3C003F4200 /* EasySetupViewController.xib */,
-				22A46E1B25EF5E58003F4200 /* EasySensorDirectionSetupViewController.swift */,
-				22A46E1C25EF5E58003F4200 /* EasySensorDirectionSetupViewController.xib */,
-				22A46E2225EF5E6F003F4200 /* EasySensorDistanceSetupViewController.swift */,
-				22A46E2325EF5E6F003F4200 /* EasySensorDistanceSetupViewController.xib */,
-				22EB5D3B25EFBFB0003FC31D /* EasyStripTypeSetupViewController.swift */,
-				22EB5D3C25EFBFB0003FC31D /* EasyStripTypeSetupViewController.xib */,
-			);
-			path = SetupView;
 			sourceTree = "<group>";
 		};
 		22EB5D6825F9F812003FC31D /* TorchereView */ = {
@@ -291,7 +242,6 @@
 			isa = PBXGroup;
 			children = (
 				22EB5D6825F9F812003FC31D /* TorchereView */,
-				22A46D6325E10391003F4200 /* EasyView */,
 				30B664811FCDA0DE003C8B55 /* ScannerView */,
 				30B6647F1FCD9638003C8B55 /* RootViewController.swift */,
 				22EB5D8325FB5077003FC31D /* TablePickerViewController.swift */,
@@ -315,8 +265,6 @@
 		30B664861FCDA2C5003C8B55 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				30B664871FCDA2E0003C8B55 /* EasyPeripheral.swift */,
-				22B851DD254FEAEC00B485CC /* Sratocol.swift */,
 				22EB5D5325F23E79003FC31D /* TorcherePeripheral.swift */,
 				22EB5D5825F8FD42003FC31D /* AbstractPeripheral.swift */,
 			);
@@ -463,11 +411,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22A46E2525EF5E6F003F4200 /* EasySensorDistanceSetupViewController.xib in Resources */,
-				22A46E1E25EF5E58003F4200 /* EasySensorDirectionSetupViewController.xib in Resources */,
-				22A46E0525EE6B3C003F4200 /* EasySetupViewController.xib in Resources */,
 				30B6644F1FCD6E65003C8B55 /* LaunchScreen.storyboard in Resources */,
-				22EB5D3E25EFBFB0003FC31D /* EasyStripTypeSetupViewController.xib in Resources */,
 				52A637C0220DDECD00F5308D /* Localizable.strings in Resources */,
 				22DCAD4125FF392300BB30D3 /* ColorPickerViewController.xib in Resources */,
 				22A46D9625E1418E003F4200 /* FirmwareUpdateViewController.xib in Resources */,
@@ -623,26 +567,18 @@
 				30B664831FCDA0EB003C8B55 /* ScannerTableViewController.swift in Sources */,
 				22A46DE225E91104003F4200 /* FirmwareDownloader.swift in Sources */,
 				22EB5D5425F23E79003FC31D /* TorcherePeripheral.swift in Sources */,
-				30B664881FCDA2E0003C8B55 /* EasyPeripheral.swift in Sources */,
 				30B664801FCD9638003C8B55 /* RootViewController.swift in Sources */,
-				22EB5D3D25EFBFB0003FC31D /* EasyStripTypeSetupViewController.swift in Sources */,
 				22EB5D4F25F23012003FC31D /* NetworkPermissionTrigger.swift in Sources */,
 				22EB5D7825FA013A003FC31D /* TorchereViewController.swift in Sources */,
 				22A46DD225E7A931003F4200 /* DFUDocumentPicker.swift in Sources */,
-				22100F9825553D5100E8BD88 /* EasyTableViewController.swift in Sources */,
 				22A46DD725E7A9EC003F4200 /* QuickError.swift in Sources */,
-				22A46E2425EF5E6F003F4200 /* EasySensorDistanceSetupViewController.swift in Sources */,
 				30B664451FCD6E65003C8B55 /* AppDelegate.swift in Sources */,
-				22A46D5925E0F8EC003F4200 /* EasyInfoViewController.swift in Sources */,
 				22DCAD4025FF392300BB30D3 /* ColorPickerViewController.swift in Sources */,
 				52A637C5220DE11200F5308D /* String+Localization.swift in Sources */,
 				2240D22D260CAF490037D304 /* AboutViewController.swift in Sources */,
-				22A46E0425EE6B3C003F4200 /* EasySetupViewController.swift in Sources */,
 				22EB5D5925F8FD42003FC31D /* AbstractPeripheral.swift in Sources */,
-				22A46E1D25EF5E58003F4200 /* EasySensorDirectionSetupViewController.swift in Sources */,
 				22EB5D8425FB5077003FC31D /* TablePickerViewController.swift in Sources */,
 				52FB0AF022131B7D00B1E575 /* UIColors.swift in Sources */,
-				22B851DE254FEAEC00B485CC /* Sratocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

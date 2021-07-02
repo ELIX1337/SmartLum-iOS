@@ -23,7 +23,6 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     // MARK: - Properties
     
     private var centralManager: CBCentralManager!
-    //private var discoveredPeripherals = [EasyPeripheral]()
     private var discoveredPeripherals = [TorcherePeripheral]()
     
     // MARK: - UIViewController
@@ -123,7 +122,6 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     // MARK: - CBCentralManagerDelegate
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        //let newPeripheral = EasyPeripheral(withPeripheral: peripheral, advertisementData: advertisementData, andRSSI: RSSI, using: centralManager)
         let newPeripheral = TorcherePeripheral(withPeripheral: peripheral, advertisementData: advertisementData, andRSSI: RSSI, using: centralManager)
 
         if !discoveredPeripherals.contains(newPeripheral) {
@@ -183,12 +181,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     // MARK: - Segue and navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "PushDeviceControl" {
-            if let peripheral = sender as? EasyPeripheral {
-            let destinationView = segue.destination as! EasyTableViewController
-                destinationView.setPeripheral(peripheral)
-            }
-        } else if segue.identifier == "PushTorchereControl" {
+        if segue.identifier == "PushTorchereControl" {
             if let peripheral = sender as? TorcherePeripheral {
                 let destinationView = segue.destination as! TorchereViewController
                 destinationView.setPeripheral(peripheral)
