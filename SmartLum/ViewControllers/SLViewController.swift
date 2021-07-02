@@ -8,7 +8,61 @@
 
 import UIKit
 
-class SLViewController: UIViewController {
+class SLViewController: UIViewController, ColorPeripheralDelegate, AnimationPeripheralDelegate {
+    
+    func peripheralDidConnect() {
+        //
+    }
+    
+    func peripheralDidDisconnect() {
+        //
+    }
+    
+    func peripheralIsReady() {
+        //
+    }
+    
+    func peripheralFirmwareVersion(_ version: Int) {
+        //
+    }
+    
+    func peripheralOnDFUMode() {
+        //
+    }
+    
+    func getAnimationOffSpeed(speed: Int) {
+        //
+    }
+    
+    func getAnimationDirection(direction: Int) {
+        //
+    }
+    
+    func getAnimationStep(step: Int) {
+        //
+    }
+    
+    
+    func getPrimaryColor(_ color: UIColor) {
+        print("Delegate color")
+    }
+    
+    func getSecondaryColor(_ color: UIColor) {
+        print("Delegate color")
+    }
+    
+    func getRandomColor(_ color: Bool) {
+        print("Delegate color")
+    }
+    
+    func getAnimationMode(mode: Int) {
+        print("Delegate anim")
+    }
+    
+    func getAnimationOnSpeed(speed: Int) {
+        print("Delegate anim")
+    }
+    
     
     private var peripheral: BasePeripheral!
     private var firstPeripheral: FirstPeripheral!
@@ -57,15 +111,15 @@ class SLViewController: UIViewController {
     // MARK: - Implementation
     
     public func setPeripheral(_ peripheral: AdvertisedData) {
-        if peripheral.type == FirstPeripheral.self {
-            //self.peripheral = FirstPeripheral(peripheral.peripheral, peripheral.centralManager)
+        if peripheral.peripheralType == FirstPeripheral.self {
             self.firstPeripheral = FirstPeripheral(peripheral.peripheral, peripheral.centralManager)
-        } else if peripheral.type == SecondPeripheral.self {
+            self.firstPeripheral.delegate = self
+        } else if peripheral.peripheralType == SecondPeripheral.self {
             self.peripheral = SecondPeripheral(peripheral.peripheral, peripheral.centralManager)
         } else {
             self.peripheral = BasePeripheral(peripheral.peripheral, peripheral.centralManager)
         }
-        print("TYPE \(String(describing: peripheral.type))")
+        print("TYPE \(String(describing: peripheral.peripheralType))")
         title = peripheral.advertisedName
     }
     
