@@ -199,6 +199,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" name="SmartLum Background"/>
+                        <textField key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" id="t2S-LV-BxI">
+                            <rect key="frame" x="0.0" y="378.5" width="414" height="34"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
                         <sections>
                             <tableViewSection headerTitle="Colors" id="tvW-Jq-z2H">
                                 <cells>
@@ -404,12 +410,13 @@
                         <outlet property="secondaryColorIndicator" destination="Bhr-wZ-rYs" id="YhZ-UX-J8q"/>
                         <outlet property="speedCell" destination="MIq-wa-rEr" id="uEd-rG-1Vz"/>
                         <outlet property="stepCell" destination="RfC-Wq-Xvb" id="5Zr-sJ-eAO"/>
+                        <outlet property="textField" destination="t2S-LV-BxI" id="4Ct-De-1Tq"/>
                         <segue destination="XWo-wv-Fo8" kind="show" identifier="PushTorchereInfo" id="ssX-Yw-xST"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ju5-tr-UUg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1267" y="743"/>
+            <point key="canvasLocation" x="1266.6666666666667" y="742.63392857142856"/>
         </scene>
         <!--Settings-->
         <scene sceneID="4e8-Au-Zow">

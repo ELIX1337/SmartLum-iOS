@@ -25,6 +25,7 @@
 		22EB5D8425FB5077003FC31D /* TablePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB5D8325FB5077003FC31D /* TablePickerViewController.swift */; };
 		2C720282268F191F0079BEEA /* BasePeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F9D80266A088F00CCF8E2 /* BasePeripheral.swift */; };
 		2C720284268F1A190079BEEA /* UUIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C720283268F1A190079BEEA /* UUIDs.swift */; };
+		2C720287268F259A0079BEEA /* GenericPickerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C720286268F259A0079BEEA /* GenericPickerDataSource.swift */; };
 		2CDE95CF268C70CE0025276A /* BluetoothEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95CE268C70CD0025276A /* BluetoothEndpoint.swift */; };
 		2CDE95D1268C71760025276A /* ColorPeripheralProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95D0268C71760025276A /* ColorPeripheralProtocol.swift */; };
 		2CDE95D3268C71D40025276A /* AnimationPeripheralProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95D2268C71D40025276A /* AnimationPeripheralProtocol.swift */; };
@@ -86,6 +87,7 @@
 		22EB5D8325FB5077003FC31D /* TablePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TablePickerViewController.swift; sourceTree = "<group>"; };
 		2C41FC2F265BC68000B81197 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2C720283268F1A190079BEEA /* UUIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDs.swift; sourceTree = "<group>"; };
+		2C720286268F259A0079BEEA /* GenericPickerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPickerDataSource.swift; sourceTree = "<group>"; };
 		2C9F9D80266A088F00CCF8E2 /* BasePeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePeripheral.swift; sourceTree = "<group>"; };
 		2CDE95CE268C70CD0025276A /* BluetoothEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothEndpoint.swift; sourceTree = "<group>"; };
 		2CDE95D0268C71760025276A /* ColorPeripheralProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPeripheralProtocol.swift; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 				2CDE95CE268C70CD0025276A /* BluetoothEndpoint.swift */,
 				2C720283268F1A190079BEEA /* UUIDs.swift */,
 				2CDE95D4268C722E0025276A /* Peripherals */,
+				2C720286268F259A0079BEEA /* GenericPickerDataSource.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -614,6 +617,7 @@
 				22EB5D4F25F23012003FC31D /* NetworkPermissionTrigger.swift in Sources */,
 				22EB5D7825FA013A003FC31D /* TorchereViewController.swift in Sources */,
 				2C720282268F191F0079BEEA /* BasePeripheral.swift in Sources */,
+				2C720287268F259A0079BEEA /* GenericPickerDataSource.swift in Sources */,
 				22A46DD225E7A931003F4200 /* DFUDocumentPicker.swift in Sources */,
 				22A46DD725E7A9EC003F4200 /* QuickError.swift in Sources */,
 				30B664451FCD6E65003C8B55 /* AppDelegate.swift in Sources */,

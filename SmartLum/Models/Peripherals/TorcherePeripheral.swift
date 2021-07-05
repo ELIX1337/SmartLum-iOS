@@ -52,15 +52,6 @@ class TorcherePeripheral: BasePeripheral, ColorPeripheralProtocol, AnimationPeri
     
 }
 
-enum TorchereAnimations: CaseIterable {
-    case tetris
-    case wave
-    case transfusion
-    case fullRainbow
-    case rainbow
-    case `static`
-}
-
 struct TorchereData {
     static let animationModes     : [Int:String] = [1: "Tetris",
                                                     2: "Wave",
@@ -72,4 +63,52 @@ struct TorchereData {
                                                     2: "From top",
                                                     3: "To center",
                                                     4: "From center"]
+}
+
+protocol PeripheralDataRow {
+    var code: Int    { get }
+    var name: String { get }
+}
+
+enum PeripheralAnimations: String, CaseIterable, PeripheralDataRow {
+    
+    case tetris      = "Tetris"
+    case wave        = "Wave"
+    case transfusion = "Transfusion"
+    case fullRainbow = "Full Rainbow"
+    case rainbow     = "Rainbow"
+    case `static`    = "Static"
+
+    var code: Int {
+        switch self {
+        case .tetris:       return 1
+        case .wave:         return 2
+        case .transfusion:  return 3
+        case .fullRainbow:  return 4
+        case .rainbow:      return 5
+        case .static:       return 6
+        }
+    }
+    var name: String {{ return self.rawValue }()}
+    
+}
+
+enum PeripheralAnimationDirections: String, CaseIterable, PeripheralDataRow {
+    
+    case fromBottom = "From bottom"
+    case fromTop    = "From top"
+    case toCenter   = "To center"
+    case fromCenter = "From center"
+    
+    var code: Int {
+        switch self {
+        case .fromBottom: return 1
+        case .fromTop:    return 2
+        case .toCenter:   return 3
+        case .fromCenter: return 4
+        }
+    }
+    
+    var name: String {{ return self.rawValue }()}
+    
 }
