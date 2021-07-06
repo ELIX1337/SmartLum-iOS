@@ -12,22 +12,7 @@ class TorchereViewController: UITableViewController,
                               TablePickerDelegate,
                               ColorDelegate,
                               ColorPeripheralDelegate,
-                              AnimationPeripheralDelegate,
-                              GenericPickerDataSourceDelegate {
-    
-    @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var pickerView: UIPickerView!
-        
-    func selected(item: Any) {
-        if let selectedItem = item as? TorchereItems.TorchereAnimations {
-            print(selectedItem.rawValue)
-            peripheral.writeAnimationMode(selectedItem.code)
-        }
-        if let selectedItem = item as? TorchereItems.TorchereAnimationsDirection {
-            print(selectedItem.rawValue)
-            peripheral.writeAnimationDirection(selectedItem.code)
-        }
-    }
+                              AnimationPeripheralDelegate {
     
     @IBOutlet private weak var primaryColorCell: UITableViewCell!
     @IBOutlet private weak var secondaryColorCell: UITableViewCell!
@@ -51,6 +36,9 @@ class TorchereViewController: UITableViewController,
     private var hidingCells = [IndexPath]()
     private var hidingSections: Int?
     
+    var dataSource: PickerViewDataSource<PeripheralDataRow>?
+    var tableDataSource: TablePickerViewDataSource<PeripheralDataRow>?
+    
     private let alert = UIAlertController(title: "Connecting", message: "Connecting to device...", preferredStyle: .actionSheet)
     
     private enum ColorSelection {
@@ -63,26 +51,48 @@ class TorchereViewController: UITableViewController,
     @IBOutlet private weak var secondaryColorIndicator: UIView!
     
     private var peripheral: TorcherePeripheral!
-    var dataSource: GenericPickerDataSource<PeripheralDataRow>?
     
-    func initDataSource<T: PeripheralDataRow>(with data: [T]) {
-        self.dataSource = GenericPickerDataSource<PeripheralDataRow>(
+    func initPickerDataSource<T: PeripheralDataRow>(with data: [T]) {
+        self.dataSource = PickerViewDataSource<PeripheralDataRow>(
             withItems: data,
             withRowTitle: { $0.name.localized },
-            didSelect: {
-                print("Animation \($0.name.localized) was selected !")
+            didSelect: { [self] selection in
+                if ((selection as? PeripheralAnimations) != nil) {
+                    animationCell.detailTextLabel?.text = selection.name.localized
+                    peripheral.writeAnimationMode(selection.code)
+                    setAnimationUI(for: selection.code)
+                } else if ((selection as? PeripheralAnimationDirections) != nil) {
+                    directionCell.detailTextLabel?.text = selection.name.localized
+                    peripheral.writeAnimationDirection(selection.code)
+                }
             }
         )
-        textField.setupPickerField(withDataSource: dataSource!)
-        //pickerView.delegate = dataSource
-       // pickerView.dataSource = dataSource
+    }
+    
+    func initTableDataSource<T: PeripheralDataRow>(with data: [T]) {
+        self.tableDataSource = TablePickerViewDataSource<PeripheralDataRow>(
+            withItems: data,
+            withRowTitle: { $0.name.localized },
+            didSelect: { [self] selection in
+                if ((selection as? PeripheralAnimations) != nil) {
+                    animationCell.detailTextLabel?.text = selection.name.localized
+                    peripheral.writeAnimationMode(selection.code)
+                    setAnimationUI(for: selection.code)
+                } else if ((selection as? PeripheralAnimationDirections) != nil) {
+                    directionCell.detailTextLabel?.text = selection.name.localized
+                    peripheral.writeAnimationDirection(selection.code)
+                }
+
+            }
+        )
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         peripheral.connect()
         let blurEffect:UIBlurEffect!
-        initDataSource(with: PeripheralAnimationDirections.allCases)
+        initPickerDataSource(with: PeripheralAnimationDirections.allCases)
+        initTableDataSource(with: PeripheralAnimations.allCases)
         if #available(iOS 13.0, *) {
             blurEffect = UIBlurEffect(style: .systemUltraThinMaterial)
         } else {
@@ -156,12 +166,13 @@ class TorchereViewController: UITableViewController,
         self.navigationController?.present(vc, animated: true, completion: nil)
     }
     
-    private func pushTablePicker(_ dataArray: [Int:String], _ selected: Int, _ title: String) {
-        let vc = TablePickerViewController()
-        vc.title = title
-        vc.delegate = self
-        vc.dataArray = (dataArray, selected)
-        self.navigationController?.pushViewController(vc, animated: true)
+    private func pushPicker<T: PeripheralDataRow>(_ dataArray: [T]) {
+        let vc = PickerViewController()
+        initTableDataSource(with: dataArray)
+        initPickerDataSource(with: dataArray)
+        vc.delegate = dataSource
+        vc.dataSource = dataSource
+        self.navigationController?.present(vc, animated: true, completion: nil)
     }
     
     private func setColorIndication(for indicator: UIView, with color: UIColor) {
@@ -218,7 +229,10 @@ class TorchereViewController: UITableViewController,
         default:
             print("Unknown animation selection")
         }
-        //tableView.reloadData()
+        let range = NSMakeRange(0, self.tableView.numberOfSections)
+        let sections = NSIndexSet(indexesIn: range)
+        tableView.reloadData()
+        tableView.reloadSections(sections as IndexSet, with: .middle)
         print("Hidden cell \(hidingCells)")
     }
     
@@ -286,13 +300,11 @@ class TorchereViewController: UITableViewController,
             break
         case animationCell:
             print("Animation cell")
-            let dataArray = TorchereItems.TorchereAnimations.allCases.count
-            let selectedName = TorchereItems.TorchereAnimations.fullRainbow
-            pushTablePicker(TorchereData.animationModes, currentAnimation ?? 1, "Animation".localized)
+            pushPicker(PeripheralAnimations.allCases)
             break
         case directionCell:
             print("Direction cell")
-            pushTablePicker(TorchereData.animationDirection, currentAnimationDirection ?? 1, "Direction".localized)
+            pushPicker(PeripheralAnimationDirections.allCases)
             break
         default:
             print("Unknown cell at \(indexPath)")

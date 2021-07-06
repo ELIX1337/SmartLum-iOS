@@ -52,7 +52,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" name="SmartLum Background"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="Ac2-wd-qxR" secondAttribute="bottom" constant="25" id="2Q3-aO-zHL"/>
                         <constraint firstItem="Ac2-wd-qxR" firstAttribute="top" secondItem="Cft-CK-brz" secondAttribute="bottom" constant="20" id="3m0-LW-2NT"/>
@@ -88,9 +88,6 @@
         </tapGestureRecognizer>
     </objects>
     <resources>
-        <namedColor name="SmartLum Background">
-            <color red="0.96700000762939453" green="0.96700000762939453" blue="0.96700000762939453" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
         <namedColor name="SmartLum Primary Text">
             <color red="0.11400000005960464" green="0.14499999582767487" blue="0.17599999904632568" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

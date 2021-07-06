@@ -25,7 +25,7 @@ protocol GenericPickerDataSourceDelegate: AnyObject {
  The aim of this class is to use a set of enums as a pickerView data source, instead of creating multiple classes
  We use generics to populate this class.
  */
-class GenericPickerDataSource<T>: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
+class PickerViewDataSource<T>: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
 
     public var originalItems: [T]
     public var items: [GenericRow<T>]
@@ -59,7 +59,7 @@ class GenericPickerDataSource<T>: NSObject, UIPickerViewDelegate, UIPickerViewDa
 
 extension UITextField {
 
-    func setupPickerField<T>(withDataSource dataSource: GenericPickerDataSource<T>) {
+    func setupPickerField<T>(withDataSource dataSource: PickerViewDataSource<T>) {
 
         let pickerView = UIPickerView()
         self.inputView = pickerView
