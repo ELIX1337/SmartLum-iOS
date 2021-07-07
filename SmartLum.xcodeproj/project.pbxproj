@@ -28,6 +28,7 @@
 		2C720287268F259A0079BEEA /* PickerViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C720286268F259A0079BEEA /* PickerViewDataSource.swift */; };
 		2C72028B269434180079BEEA /* WheelPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C72028A269434180079BEEA /* WheelPickerViewController.swift */; };
 		2C720292269440260079BEEA /* PopupPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C720290269440260079BEEA /* PopupPickerViewController.swift */; };
+		2C7202962695ADA10079BEEA /* DeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7202952695ADA10079BEEA /* DeviceViewController.swift */; };
 		2CDE95CF268C70CE0025276A /* BluetoothEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95CE268C70CD0025276A /* BluetoothEndpoint.swift */; };
 		2CDE95D1268C71760025276A /* ColorPeripheralProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95D0268C71760025276A /* ColorPeripheralProtocol.swift */; };
 		2CDE95D3268C71D40025276A /* AnimationPeripheralProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95D2268C71D40025276A /* AnimationPeripheralProtocol.swift */; };
@@ -92,6 +93,7 @@
 		2C720286268F259A0079BEEA /* PickerViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewDataSource.swift; sourceTree = "<group>"; };
 		2C72028A269434180079BEEA /* WheelPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelPickerViewController.swift; sourceTree = "<group>"; };
 		2C720290269440260079BEEA /* PopupPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupPickerViewController.swift; sourceTree = "<group>"; };
+		2C7202952695ADA10079BEEA /* DeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceViewController.swift; sourceTree = "<group>"; };
 		2C9F9D80266A088F00CCF8E2 /* BasePeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePeripheral.swift; sourceTree = "<group>"; };
 		2CDE95CE268C70CD0025276A /* BluetoothEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothEndpoint.swift; sourceTree = "<group>"; };
 		2CDE95D0268C71760025276A /* ColorPeripheralProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPeripheralProtocol.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				30B6647F1FCD9638003C8B55 /* RootViewController.swift */,
 				2240D22B260CAF490037D304 /* AboutViewController.swift */,
 				2240D22C260CAF490037D304 /* AboutViewController.xib */,
+				2C7202952695ADA10079BEEA /* DeviceViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -222,9 +225,9 @@
 		2CDE95D4268C722E0025276A /* Peripherals */ = {
 			isa = PBXGroup;
 			children = (
+				2CDE95D5268C72780025276A /* Protocols */,
 				2C9F9D80266A088F00CCF8E2 /* BasePeripheral.swift */,
 				22EB5D5325F23E79003FC31D /* TorcherePeripheral.swift */,
-				2CDE95D5268C72780025276A /* Protocols */,
 			);
 			path = Peripherals;
 			sourceTree = "<group>";
@@ -643,6 +646,7 @@
 				2240D22D260CAF490037D304 /* AboutViewController.swift in Sources */,
 				22EB5D8425FB5077003FC31D /* TablePickerViewController.swift in Sources */,
 				52FB0AF022131B7D00B1E575 /* Extensions.swift in Sources */,
+				2C7202962695ADA10079BEEA /* DeviceViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

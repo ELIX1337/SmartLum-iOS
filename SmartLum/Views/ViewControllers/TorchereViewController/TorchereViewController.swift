@@ -138,7 +138,6 @@ class TorchereViewController: UITableViewController,
         self.peripheral = peripheral
         title = peripheral.name
         peripheral.delegate = self
-        //peripheral.baseDelegate = self
     }
     
     @IBAction func onAnimationSliderValueChange(_ sender: UISlider) {

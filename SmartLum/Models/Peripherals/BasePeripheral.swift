@@ -41,6 +41,7 @@ class BasePeripheral: NSObject,
         self.centralManager = manager
         self.name = peripheral.name ?? "Unknown Device".localized
         super.init()
+        self.peripheral.delegate = self
     }
     
     func connect() {

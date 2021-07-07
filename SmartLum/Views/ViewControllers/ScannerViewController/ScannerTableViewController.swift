@@ -117,7 +117,13 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
         centralManager.stopScan()
         activityIndicator.stopAnimating()
         tableView.deselectRow(at: indexPath, animated: true)
-        performSegue(withIdentifier: "PushTorchereControl", sender: discoveredPeripherals[indexPath.row])
+        //performSegue(withIdentifier: "PushTorchereControl", sender: discoveredPeripherals[indexPath.row])
+        let advData = discoveredPeripherals[indexPath.row]
+        let vc = DeviceViewController()
+        vc.torcherePeripheral = TorcherePeripheral.init(advData.peripheral, centralManager)
+        let peripheralViewModel = PeripheralPageViewModel(advData: advData, manager: centralManager)
+        vc.peripheral = peripheralViewModel
+        self.navigationController?.present(vc, animated: true, completion: nil)
     }
     
     // MARK: - CBCentralManagerDelegate
