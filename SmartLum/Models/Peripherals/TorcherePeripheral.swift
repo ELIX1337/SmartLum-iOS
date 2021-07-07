@@ -18,7 +18,6 @@ class TorcherePeripheral: BasePeripheral, ColorPeripheralProtocol, AnimationPeri
     }
     
     override init(_ peripheral: CBPeripheral, _ manager: CBCentralManager) {
-        print("torchere init")
         super.init(peripheral, manager)
     }
     
@@ -52,63 +51,50 @@ class TorcherePeripheral: BasePeripheral, ColorPeripheralProtocol, AnimationPeri
     
 }
 
-struct TorchereData {
-    static let animationModes     : [Int:String] = [1: "Tetris",
-                                                    2: "Wave",
-                                                    3: "Transfusion",
-                                                    4: "Full Rainbow",
-                                                    5: "Rainbow",
-                                                    6: "Static"]
-    static let animationDirection : [Int:String] = [1: "From bottom",
-                                                    2: "From top",
-                                                    3: "To center",
-                                                    4: "From center"]
-}
-
 protocol PeripheralDataRow {
     var code: Int    { get }
     var name: String { get }
 }
 
-enum PeripheralAnimations: String, CaseIterable, PeripheralDataRow {
+enum PeripheralAnimations: Int, CaseIterable, PeripheralDataRow {
     
-    case tetris      = "Tetris"
-    case wave        = "Wave"
-    case transfusion = "Transfusion"
-    case fullRainbow = "Full Rainbow"
-    case rainbow     = "Rainbow"
-    case `static`    = "Static"
+    case tetris             = 1
+    case wave               = 2
+    case transfusion        = 3
+    case rainbowTransfusion = 4
+    case rainbow            = 5
+    case `static`           = 6
 
-    var code: Int {
+    var name: String {
         switch self {
-        case .tetris:       return 1
-        case .wave:         return 2
-        case .transfusion:  return 3
-        case .fullRainbow:  return 4
-        case .rainbow:      return 5
-        case .static:       return 6
+        case .tetris:               return "Tetris"
+        case .wave:                 return "Wave"
+        case .transfusion:          return "Transfusion"
+        case .rainbowTransfusion:   return "Rainbow transfusion"
+        case .rainbow:              return "Rainbow"
+        case .static:               return "Static"
         }
     }
-    var name: String {{ return self.rawValue }()}
+    var code: Int {{ return self.rawValue }()}
     
 }
 
-enum PeripheralAnimationDirections: String, CaseIterable, PeripheralDataRow {
+enum PeripheralAnimationDirections: Int, CaseIterable, PeripheralDataRow {
     
-    case fromBottom = "From bottom"
-    case fromTop    = "From top"
-    case toCenter   = "To center"
-    case fromCenter = "From center"
+    case fromBottom = 1
+    case fromTop    = 2
+    case toCenter   = 3
+    case fromCenter = 4
     
-    var code: Int {
+    var name: String {
         switch self {
-        case .fromBottom: return 1
-        case .fromTop:    return 2
-        case .toCenter:   return 3
-        case .fromCenter: return 4
+        case .fromBottom: return "From bottom"
+        case .fromTop:    return "From top"
+        case .toCenter:   return "To center"
+        case .fromCenter: return "From center"
         }
     }
     
-    var name: String {{ return self.rawValue }()}
+    var code: Int {{ return self.rawValue }()}
     
 }

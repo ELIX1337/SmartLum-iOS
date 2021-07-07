@@ -9,7 +9,6 @@
 import UIKit
 
 class TorchereViewController: UITableViewController,
-                              TablePickerDelegate,
                               ColorDelegate,
                               ColorPeripheralDelegate,
                               AnimationPeripheralDelegate {
@@ -29,7 +28,7 @@ class TorchereViewController: UITableViewController,
     private var currentSecondaryColor: UIColor?
     private var randomColorSupport: Bool?
     private var currentRandomColor: Bool?
-    private var currentAnimation: Int?
+    private var currentAnimationCode: Int?
     private var currentAnimationSpeed: Int?
     private var currentAnimationDirection: Int?
     
@@ -60,7 +59,7 @@ class TorchereViewController: UITableViewController,
                 if ((selection as? PeripheralAnimations) != nil) {
                     animationCell.detailTextLabel?.text = selection.name.localized
                     peripheral.writeAnimationMode(selection.code)
-                    setAnimationUI(for: selection.code)
+                    setAnimationUI(for: selection as! PeripheralAnimations)
                 } else if ((selection as? PeripheralAnimationDirections) != nil) {
                     directionCell.detailTextLabel?.text = selection.name.localized
                     peripheral.writeAnimationDirection(selection.code)
@@ -77,7 +76,7 @@ class TorchereViewController: UITableViewController,
                 if ((selection as? PeripheralAnimations) != nil) {
                     animationCell.detailTextLabel?.text = selection.name.localized
                     peripheral.writeAnimationMode(selection.code)
-                    setAnimationUI(for: selection.code)
+                    setAnimationUI(for: selection as! PeripheralAnimations)
                 } else if ((selection as? PeripheralAnimationDirections) != nil) {
                     directionCell.detailTextLabel?.text = selection.name.localized
                     peripheral.writeAnimationDirection(selection.code)
@@ -167,7 +166,7 @@ class TorchereViewController: UITableViewController,
     }
     
     private func pushPicker<T: PeripheralDataRow>(_ dataArray: [T]) {
-        let vc = PickerViewController()
+        let vc = WheelPickerViewController()
         initTableDataSource(with: dataArray)
         initPickerDataSource(with: dataArray)
         vc.delegate = dataSource
@@ -181,27 +180,27 @@ class TorchereViewController: UITableViewController,
             dark: color.withAlphaComponent(0.5))
     }
     
-    private func setAnimationUI(for animation: Int) {
+    private func setAnimationUI(for animation: PeripheralAnimations) {
         hidingCells.removeAll()
         hidingSections = nil
-        animationCell.detailTextLabel?.text = TorchereData.animationModes[animation]?.localized
+        animationCell.detailTextLabel?.text = animation.name.localized
         switch animation {
-        case 1:
+        case .tetris:
             print("Animation - Tetris")
             hidingCells.append(tableView.indexPath(for: stepCell)!)
             randomColorSupport = true
             break
-        case 2:
+        case .wave:
             print("Animation - Wave")
             randomColorSupport = false
             break
-        case 3:
+        case .transfusion:
             print("Animation - Transfusion")
             hidingCells.append(tableView.indexPath(for: stepCell)!)
             hidingCells.append(tableView.indexPath(for: directionCell)!)
             randomColorSupport = true
             break
-        case 4:
+        case .rainbowTransfusion:
             print("Animation - Rainbow Transfusion")
             hidingCells.append(tableView.indexPath(for: stepCell)!)
             hidingCells.append(tableView.indexPath(for: directionCell)!)
@@ -210,7 +209,7 @@ class TorchereViewController: UITableViewController,
             hidingSections = 0
             randomColorSupport = false
             break
-        case 5:
+        case .rainbow:
             print("Animation - Rainbow")
             hidingCells.append(tableView.indexPath(for: stepCell)!)
             hidingCells.append(tableView.indexPath(for: primaryColorCell)!)
@@ -218,7 +217,7 @@ class TorchereViewController: UITableViewController,
             hidingSections = 0
             randomColorSupport = false
             break
-        case 6:
+        case .static:
             print("Animation - Static")
             hidingCells.append(tableView.indexPath(for: stepCell)!)
             hidingCells.append(tableView.indexPath(for: speedCell)!)
@@ -265,26 +264,6 @@ class TorchereViewController: UITableViewController,
         peripheral.writeRandomColor(enabled)
     }
     
-    // MARK: - TablePicker Delegate
-    
-    func getSelection(at index: Int, in array: [Int : String]) {
-        switch array {
-        case TorchereData.animationModes:
-            currentAnimation = index
-            //animationCell.detailTextLabel?.text = array[index]
-            peripheral.writeAnimationMode(index)
-            setAnimationUI(for: index)
-            break
-        case TorchereData.animationDirection:
-            currentAnimationDirection = index
-            directionCell.detailTextLabel?.text = array[index]?.localized
-            peripheral.writeAnimationDirection(index)
-            break
-        default:
-            print("Unknown selection at \(array) - \(index)")
-        }
-    }
-    
     // MARK: - TableView Delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -329,12 +308,12 @@ class TorchereViewController: UITableViewController,
     // MARK: - Peripheral Delegate
     
     func peripheralDidConnect() {
-        print("ZConnected to \(peripheral.name ?? "Device")")
+        print("ZConnected to \(peripheral.name)")
         hideAlert()
     }
     
     func peripheralDidDisconnect() {
-        print("Disconnected from \(peripheral.name ?? "Device")")
+        print("Disconnected from \(peripheral.name)")
         self.navigationController?.popToRootViewController(animated: true)
     }
     
@@ -368,8 +347,8 @@ class TorchereViewController: UITableViewController,
     }
     
     func getAnimationMode(mode: Int) {
-        currentAnimation = mode
-        setAnimationUI(for: mode)
+        currentAnimationCode = mode
+        setAnimationUI(for: PeripheralAnimations.init(rawValue: mode) ?? .static)
         tableView.reloadData()
         print("Animation \(mode)")
     }
@@ -386,7 +365,7 @@ class TorchereViewController: UITableViewController,
     
     func getAnimationDirection(direction: Int) {
         currentAnimationDirection = direction
-        directionCell.detailTextLabel?.text = TorchereData.animationDirection[direction]?.localized
+        directionCell.detailTextLabel?.text = PeripheralAnimationDirections.init(rawValue: direction)?.name.localized
         print("Animation direction \(direction)")
     }
     
