@@ -57,6 +57,5 @@ public class UUIDs {
 
 extension UUIDs {
     static let advServices:[CBUUID:BasePeripheral.Type] = [BluetoothEndpoint.AdvertisingServices.flClassic.uuid : TorcherePeripheral.self,
-                                                           BluetoothEndpoint.AdvertisingServices.flMini.uuid   : TorcherePeripheral.self,
-                                                           BluetoothEndpoint.AdvertisingServices.diplom.uuid : FirstPeripheral.self]
+                                                           BluetoothEndpoint.AdvertisingServices.flMini.uuid   : TorcherePeripheral.self]
 }

@@ -41,7 +41,6 @@ class BasePeripheral: NSObject,
         self.centralManager = manager
         self.name = peripheral.name ?? "Unknown Device".localized
         super.init()
-        self.peripheral.delegate = self
     }
     
     func connect() {
@@ -55,7 +54,10 @@ class BasePeripheral: NSObject,
         print("Disconnecting from \(name)")
     }
     
-    // MARK: - CBCentralManagerDelegate
+    func readData(data: Data,from characteristic: BluetoothEndpoint.Characteristics, in service:BluetoothEndpoint.Services, error: Error?) {}
+
+    
+    // MARK: - CBCentralManagerDelegate & CBPeripheralDelegate
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if central.state != .poweredOn {
@@ -81,11 +83,7 @@ class BasePeripheral: NSObject,
             }
         }
     }
-    
-    func readData(data: Data,from characteristic: BluetoothEndpoint.Characteristics, in service:BluetoothEndpoint.Services, error: Error?) {
-        
-    }
-        
+            
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         if let characteristics = service.characteristics {
             for characteristic in characteristics {
@@ -122,63 +120,3 @@ class BasePeripheral: NSObject,
     }
     
 }
-
-class FirstPeripheral: BasePeripheral, ColorPeripheralProtocol, AnimationPeripheralProtocol {
-    
-    public var delegate: (ColorPeripheralDelegate & AnimationPeripheralDelegate)?
-
-    override init(_ peripheral: CBPeripheral, _ manager: CBCentralManager) {
-        print("init")
-        super.init(peripheral, manager)
-    }
-    
-    public func setPrimaryColor(_ color: UIColor) {
-        print("writing")
-        writePrimaryColor(color)
-    }
-    
-    public func setAnimationMode(_ mode: Int) {
-        if let char = endpoints[[.animation:.animationMode]] {
-            peripheral.readValue(for: char)
-        }
-    }
-    
-    public func setAnimationOnSpeed(_ speed: Int) {
-        writeAnimationOnSpeed(speed)
-    }
-    
-    override func readData(data: Data, from characteristic: BluetoothEndpoint.Characteristics, in service: BluetoothEndpoint.Services, error: Error?) {
-        switch (service, characteristic) {
-        case (.animation,.animationMode):
-            delegate?.getAnimationMode(mode: Int(data.toUInt8()))
-            print("Animation service - animation mode: \(data.toUInt8())")
-            break
-        case (.color,.primaryColor):
-            delegate?.getPrimaryColor(data.toUIColor())
-            break
-        default:
-            print("Unknown data")
-        }
-    }
-}
-
-class SecondPeripheral: BasePeripheral, ColorPeripheralProtocol {
-        
-    override init(_ peripheral: CBPeripheral, _ manager: CBCentralManager) {
-        super.init(peripheral, manager)
-    }
-    
-    public func setPrimaryColor(_ color: UIColor) {
-        writePrimaryColor(color)
-    }
-    
-    public func setSecondaryColor(_ color: UIColor) {
-        writeSecondaryColor(color)
-    }
-    
-    public func setRandomColor(_ isEnabled: Bool) {
-        writeRandomColor(isEnabled)
-    }
-    
-}
-
