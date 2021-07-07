@@ -26,9 +26,8 @@
 		2C720282268F191F0079BEEA /* BasePeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F9D80266A088F00CCF8E2 /* BasePeripheral.swift */; };
 		2C720284268F1A190079BEEA /* UUIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C720283268F1A190079BEEA /* UUIDs.swift */; };
 		2C720287268F259A0079BEEA /* PickerViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C720286268F259A0079BEEA /* PickerViewDataSource.swift */; };
-		2C72028B269434180079BEEA /* PickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C72028A269434180079BEEA /* PickerViewController.swift */; };
+		2C72028B269434180079BEEA /* WheelPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C72028A269434180079BEEA /* WheelPickerViewController.swift */; };
 		2C720292269440260079BEEA /* PopupPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C720290269440260079BEEA /* PopupPickerViewController.swift */; };
-		2C720293269440260079BEEA /* PopupPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C720291269440260079BEEA /* PopupPickerViewController.xib */; };
 		2CDE95CF268C70CE0025276A /* BluetoothEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95CE268C70CD0025276A /* BluetoothEndpoint.swift */; };
 		2CDE95D1268C71760025276A /* ColorPeripheralProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95D0268C71760025276A /* ColorPeripheralProtocol.swift */; };
 		2CDE95D3268C71D40025276A /* AnimationPeripheralProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95D2268C71D40025276A /* AnimationPeripheralProtocol.swift */; };
@@ -91,9 +90,8 @@
 		2C41FC2F265BC68000B81197 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2C720283268F1A190079BEEA /* UUIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDs.swift; sourceTree = "<group>"; };
 		2C720286268F259A0079BEEA /* PickerViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewDataSource.swift; sourceTree = "<group>"; };
-		2C72028A269434180079BEEA /* PickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewController.swift; sourceTree = "<group>"; };
+		2C72028A269434180079BEEA /* WheelPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelPickerViewController.swift; sourceTree = "<group>"; };
 		2C720290269440260079BEEA /* PopupPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupPickerViewController.swift; sourceTree = "<group>"; };
-		2C720291269440260079BEEA /* PopupPickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopupPickerViewController.xib; sourceTree = "<group>"; };
 		2C9F9D80266A088F00CCF8E2 /* BasePeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePeripheral.swift; sourceTree = "<group>"; };
 		2CDE95CE268C70CD0025276A /* BluetoothEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothEndpoint.swift; sourceTree = "<group>"; };
 		2CDE95D0268C71760025276A /* ColorPeripheralProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPeripheralProtocol.swift; sourceTree = "<group>"; };
@@ -163,6 +161,7 @@
 				22A46DE025E910C3003F4200 /* NetworkAPI */,
 				22A46DCD25E7A86B003F4200 /* DFU */,
 				22A46DD625E7A9EC003F4200 /* QuickError.swift */,
+				52FB0AEF22131B7D00B1E575 /* Extensions.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -187,25 +186,37 @@
 			path = NetworkAPI;
 			sourceTree = "<group>";
 		};
-		22EB5D6825F9F812003FC31D /* TorchereView */ = {
+		22EB5D6825F9F812003FC31D /* TorchereViewController */ = {
 			isa = PBXGroup;
 			children = (
 				22EB5D7625FA013A003FC31D /* TorchereViewController.swift */,
 			);
-			path = TorchereView;
+			path = TorchereViewController;
 			sourceTree = "<group>";
 		};
 		2C720285268F1C860079BEEA /* Pickers */ = {
 			isa = PBXGroup;
 			children = (
+				2C720290269440260079BEEA /* PopupPickerViewController.swift */,
 				22EB5D8325FB5077003FC31D /* TablePickerViewController.swift */,
+				2C72028A269434180079BEEA /* WheelPickerViewController.swift */,
 				22DCAD3E25FF392200BB30D3 /* ColorPickerViewController.swift */,
 				22DCAD3F25FF392200BB30D3 /* ColorPickerViewController.xib */,
-				2C72028A269434180079BEEA /* PickerViewController.swift */,
-				2C720290269440260079BEEA /* PopupPickerViewController.swift */,
-				2C720291269440260079BEEA /* PopupPickerViewController.xib */,
 			);
 			path = Pickers;
+			sourceTree = "<group>";
+		};
+		2C7202942695888B0079BEEA /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				2C720285268F1C860079BEEA /* Pickers */,
+				30B664811FCDA0DE003C8B55 /* ScannerViewController */,
+				22EB5D6825F9F812003FC31D /* TorchereViewController */,
+				30B6647F1FCD9638003C8B55 /* RootViewController.swift */,
+				2240D22B260CAF490037D304 /* AboutViewController.swift */,
+				2240D22C260CAF490037D304 /* AboutViewController.xib */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		2CDE95D4268C722E0025276A /* Peripherals */ = {
@@ -255,17 +266,16 @@
 			children = (
 				22A46DCC25E7A857003F4200 /* Utils */,
 				30B664861FCDA2C5003C8B55 /* Models */,
-				30B664791FCD722A003C8B55 /* ViewControllers */,
+				30B664791FCD722A003C8B55 /* Views */,
 				30B664441FCD6E65003C8B55 /* AppDelegate.swift */,
-				52A637C4220DE11200F5308D /* String+Localization.swift */,
-				52FB0AEF22131B7D00B1E575 /* Extensions.swift */,
 				30B664481FCD6E65003C8B55 /* Main.storyboard */,
 				30B6644D1FCD6E65003C8B55 /* LaunchScreen.storyboard */,
+				52A637C4220DE11200F5308D /* String+Localization.swift */,
 				52A637C2220DDECD00F5308D /* Localizable.strings */,
-				30B6644B1FCD6E65003C8B55 /* Assets.xcassets */,
 				30B664501FCD6E65003C8B55 /* Info.plist */,
-				2264CAAF260CCBEA00CB54B0 /* Pods-SmartLum-acknowledgements.plist */,
 				2240D20F260CAC520037D304 /* InfoPlist.strings */,
+				2264CAAF260CCBEA00CB54B0 /* Pods-SmartLum-acknowledgements.plist */,
+				30B6644B1FCD6E65003C8B55 /* Assets.xcassets */,
 			);
 			path = SmartLum;
 			sourceTree = "<group>";
@@ -288,35 +298,30 @@
 			path = SmartLumUITests;
 			sourceTree = "<group>";
 		};
-		30B664791FCD722A003C8B55 /* ViewControllers */ = {
+		30B664791FCD722A003C8B55 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				30B6647F1FCD9638003C8B55 /* RootViewController.swift */,
-				2240D22B260CAF490037D304 /* AboutViewController.swift */,
-				2240D22C260CAF490037D304 /* AboutViewController.xib */,
-				22EB5D6825F9F812003FC31D /* TorchereView */,
-				30B664811FCDA0DE003C8B55 /* ScannerView */,
-				2C720285268F1C860079BEEA /* Pickers */,
+				2C7202942695888B0079BEEA /* ViewControllers */,
 			);
-			path = ViewControllers;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		30B664811FCDA0DE003C8B55 /* ScannerView */ = {
+		30B664811FCDA0DE003C8B55 /* ScannerViewController */ = {
 			isa = PBXGroup;
 			children = (
 				30B664821FCDA0EB003C8B55 /* ScannerTableViewController.swift */,
 				30B664841FCDA0FC003C8B55 /* PeripheralTableViewCell.swift */,
 			);
-			path = ScannerView;
+			path = ScannerViewController;
 			sourceTree = "<group>";
 		};
 		30B664861FCDA2C5003C8B55 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2CDE95D4268C722E0025276A /* Peripherals */,
 				2CDE95D6268C77D30025276A /* AdvertisedData.swift */,
 				2CDE95CE268C70CD0025276A /* BluetoothEndpoint.swift */,
 				2C720283268F1A190079BEEA /* UUIDs.swift */,
-				2CDE95D4268C722E0025276A /* Peripherals */,
 				2C720286268F259A0079BEEA /* PickerViewDataSource.swift */,
 			);
 			path = Models;
@@ -470,7 +475,6 @@
 				2264CAB0260CCBEA00CB54B0 /* Pods-SmartLum-acknowledgements.plist in Resources */,
 				2240D20D260CAC520037D304 /* InfoPlist.strings in Resources */,
 				2240D22E260CAF490037D304 /* AboutViewController.xib in Resources */,
-				2C720293269440260079BEEA /* PopupPickerViewController.xib in Resources */,
 				30B6644A1FCD6E65003C8B55 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -628,7 +632,7 @@
 				22EB5D7825FA013A003FC31D /* TorchereViewController.swift in Sources */,
 				2C720282268F191F0079BEEA /* BasePeripheral.swift in Sources */,
 				2C720287268F259A0079BEEA /* PickerViewDataSource.swift in Sources */,
-				2C72028B269434180079BEEA /* PickerViewController.swift in Sources */,
+				2C72028B269434180079BEEA /* WheelPickerViewController.swift in Sources */,
 				22A46DD225E7A931003F4200 /* DFUDocumentPicker.swift in Sources */,
 				22A46DD725E7A9EC003F4200 /* QuickError.swift in Sources */,
 				30B664451FCD6E65003C8B55 /* AppDelegate.swift in Sources */,
