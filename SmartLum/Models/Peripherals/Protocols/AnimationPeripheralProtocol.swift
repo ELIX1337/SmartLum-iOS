@@ -9,10 +9,10 @@
 import CoreBluetooth
 
 protocol AnimationPeripheralProtocol {
-    func writeAnimationMode(_ animation: Int)
+    func writeAnimationMode(_ animation: PeripheralAnimations)
     func writeAnimationOnSpeed(_ speed: Int)
     func writeAnimationOffSpeed(_ speed: Int)
-    func writeAnimationDirection(_ direction: Int)
+    func writeAnimationDirection(_ direction: PeripheralAnimationDirections)
     func writeAnimationStep(_ step: Int)
 }
 
@@ -23,10 +23,10 @@ extension AnimationPeripheralProtocol where Self:BasePeripheralProtocol {
     var animationDirectionCharacteristic: CBCharacteristic? { get { self.endpoints[[.animation:.animationDirection]] } }
     var animationStepCharacteristic:      CBCharacteristic? { get { self.endpoints[[.animation:.animationStep]]}}
     
-    func writeAnimationMode(_ animation: Int) {
+    func writeAnimationMode(_ animation: PeripheralAnimations) {
         if let characteristic = animationModeCharacteristic {
             print("Writing animation mode \(animation)")
-            peripheral.writeValue(UInt8(animation).toData(), for: characteristic, type: .withoutResponse)
+            peripheral.writeValue(UInt8(animation.code).toData(), for: characteristic, type: .withoutResponse)
         }
     }
     func writeAnimationOnSpeed(_ speed: Int) {
@@ -39,9 +39,9 @@ extension AnimationPeripheralProtocol where Self:BasePeripheralProtocol {
             peripheral.writeValue(UInt8(speed).toData(), for: characteristic, type: .withoutResponse)
         }
     }
-    func writeAnimationDirection(_ direction: Int) {
+    func writeAnimationDirection(_ direction: PeripheralAnimationDirections) {
         if let characteristic = animationDirectionCharacteristic {
-            peripheral.writeValue(UInt8(direction).toData(), for: characteristic, type: .withoutResponse)
+            peripheral.writeValue(direction.code.toData(), for: characteristic, type: .withoutResponse)
         }
     }
     func writeAnimationStep(_ step: Int) {
@@ -52,10 +52,10 @@ extension AnimationPeripheralProtocol where Self:BasePeripheralProtocol {
 
 }
 
-protocol AnimationPeripheralDelegate: BasePeripheralDelegate {
-    func getAnimationMode(mode: Int)
+protocol AnimationPeripheralDelegate {
+    func getAnimationMode(mode: PeripheralAnimations)
     func getAnimationOnSpeed(speed: Int)
     func getAnimationOffSpeed(speed: Int)
-    func getAnimationDirection(direction: Int)
+    func getAnimationDirection(direction: PeripheralAnimationDirections)
     func getAnimationStep(step: Int)
 }

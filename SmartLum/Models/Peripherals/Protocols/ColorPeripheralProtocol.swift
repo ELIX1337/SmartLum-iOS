@@ -21,10 +21,8 @@ extension ColorPeripheralProtocol where Self:BasePeripheralProtocol {
     var secondaryColorCharacteristic: CBCharacteristic? { get { return self.endpoints[[.color:.secondaryColor]] } }
 
     func writePrimaryColor(_ color: UIColor) {
-        print("char check \(String(describing: primaryColorCharacteristic))")
         if let characteristic = primaryColorCharacteristic {
             peripheral.writeValue(color.toData(), for: characteristic, type: .withoutResponse)
-            print("Second")
         }
     }
     
@@ -42,7 +40,7 @@ extension ColorPeripheralProtocol where Self:BasePeripheralProtocol {
 
 }
 
-protocol ColorPeripheralDelegate: BasePeripheralDelegate {
+protocol ColorPeripheralDelegate {
     func getPrimaryColor(_ color: UIColor)
     func getSecondaryColor(_ color: UIColor)
     func getRandomColor(_ state: Bool)
