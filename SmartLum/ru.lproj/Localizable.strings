@@ -20,6 +20,9 @@
 "Set top sensor trigger distance" = "Установите расстояние срабатывания верхнего датчика";
 "Distance" = "Дистанция";
 
+"Color" = "Цвет";
+"Primary" = "Основной";
+"Secondary" = "Дополнительный";
 "Random color" = "Случайный цвет";
 
 "Animation" = "Анимация";
@@ -35,3 +38,6 @@
 "From top" = "Сверху";
 "To center" = "К центру";
 "From center" = "Из центра";
+
+"Speed" = "Скорость";
+"Step" = "Шаг";

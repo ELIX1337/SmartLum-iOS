@@ -20,6 +20,9 @@
 "Set top sensor trigger distance" = "Set top sensor trigger distance";
 "Distance" = "Distance";
 
+"Color" = "Color";
+"Primary" = "Primary";
+"Secondary" = "Secondary";
 "Random color" = "Random color";
 
 "Animation" = "Animation";
@@ -35,3 +38,7 @@
 "From top" = "From top";
 "To center" = "To center";
 "From center" = "From center";
+
+"Speed" = "Speed";
+"Step" = "Step";
+
