@@ -17,13 +17,10 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var emptyViewHeader: UILabel!
-    
-    public static let BLINKY_SERVICE_UUID = CBUUID.init(string: "00001523-1212-EFDE-1523-785FEABCD123")
-    
+        
     // MARK: - Properties
     
     private var centralManager: CBCentralManager!
-    //private var discoveredPeripherals = [BasePeripheral]()
     private var discoveredPeripherals = [AdvertisedData]()
     
     // MARK: - UIViewController
@@ -117,13 +114,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
         centralManager.stopScan()
         activityIndicator.stopAnimating()
         tableView.deselectRow(at: indexPath, animated: true)
-        //performSegue(withIdentifier: "PushTorchereControl", sender: discoveredPeripherals[indexPath.row])
-        let advData = discoveredPeripherals[indexPath.row]
-        let vc = DeviceViewController()
-        vc.torcherePeripheral = TorcherePeripheral.init(advData.peripheral, centralManager)
-        let peripheralViewModel = PeripheralPageViewModel(advData: advData, manager: centralManager)
-        vc.peripheral = peripheralViewModel
-        self.navigationController?.present(vc, animated: true, completion: nil)
+        pushViewController(advertisedData: discoveredPeripherals[indexPath.row])
     }
     
     // MARK: - CBCentralManagerDelegate
@@ -187,15 +178,10 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
 
     // MARK: - Segue and navigation
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "PushTorchereControl" {
-            if let advertisingData = sender as? AdvertisedData {
-                if advertisingData.peripheralType == TorcherePeripheral.self {
-                    let peripheral = TorcherePeripheral.init(advertisingData.peripheral, centralManager)
-                    let destinationView = segue.destination as! TorchereViewController
-                    destinationView.setPeripheral(peripheral)
-                }
-            }
-        }
+    private func pushViewController(advertisedData: AdvertisedData) {
+        let advData = advertisedData
+        let vc = TorchereViewController()
+        vc.configure(withPeripheral: BasePeripheral.init(advData.peripheral, centralManager))
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SwitchCellID" id="KGk-i7-Jjw" customClass="SwitchTableViewCell" customModule="SmartLum" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ud-OE-DQK">
+                        <rect key="frame" x="16" y="11" width="42" height="22"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q7u-FG-EQB">
+                        <rect key="frame" x="255" y="11" width="51" height="22"/>
+                        <connections>
+                            <action selector="onSwitchValueChange:" destination="KGk-i7-Jjw" eventType="valueChanged" id="hHO-kR-VMr"/>
+                        </connections>
+                    </switch>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailingMargin" secondItem="Q7u-FG-EQB" secondAttribute="trailing" id="8bd-tQ-ch7"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Q7u-FG-EQB" secondAttribute="bottom" id="AlD-vB-juK"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="5Ud-OE-DQK" secondAttribute="bottom" id="SS6-CE-gtO"/>
+                    <constraint firstItem="Q7u-FG-EQB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="e5p-6p-DFW"/>
+                    <constraint firstItem="5Ud-OE-DQK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="faq-vY-QmD"/>
+                    <constraint firstItem="5Ud-OE-DQK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="jqX-b9-3my"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="cellSwitch" destination="Q7u-FG-EQB" id="f3F-D3-tRQ"/>
+                <outlet property="titleLabel" destination="5Ud-OE-DQK" id="L8B-MG-PUe"/>
+            </connections>
+            <point key="canvasLocation" x="-145" y="-21"/>
+        </tableViewCell>
+    </objects>
+</document>
