@@ -22,7 +22,7 @@ class TablePickerViewController: PopupPickerViewController {
         tableView.backgroundColor = UIColor.clear
         tableView.tableFooterView = UIView()
         tableView.allowsMultipleSelection = false
-
+        self.containerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3).isActive = true
         self.containerView.addSubview(tableView)
         NSLayoutConstraint(item: tableView,
                            attribute: NSLayoutConstraint.Attribute.bottom,
@@ -71,9 +71,11 @@ class TablePickerViewDataSource<T>: NSObject, UITableViewDelegate, UITableViewDa
     public var originalItems: [T]
     public var items: [GenericRow<T>]
     public var selected: (T) -> Void
-    private var selectedIndexPath:IndexPath = IndexPath.init(row: 1, section: 0)
+    //private var selectedIndexPath:IndexPath = IndexPath.init(row: 0, section: 0)
+    #warning("TODO: FIX SELECTION")
     
     public init(withItems originalItems: [T],
+                withSelection: T,
                 withRowTitle generateRowTitile: (T) -> String,
                 didSelect selected: @escaping (T) -> Void) {
         self.originalItems = originalItems
@@ -98,11 +100,11 @@ class TablePickerViewDataSource<T>: NSObject, UITableViewDelegate, UITableViewDa
              }
              return cell
          }()
-        if indexPath == selectedIndexPath {
-            cell.accessoryType = UITableViewCell.AccessoryType.checkmark
-        } else {
-            cell.accessoryType = UITableViewCell.AccessoryType.none
-        }
+//        if indexPath == selectedIndexPath {
+//            cell.accessoryType = UITableViewCell.AccessoryType.checkmark
+//        } else {
+//            cell.accessoryType = UITableViewCell.AccessoryType.none
+//        }
         cell.textLabel?.text = items[indexPath.row].title.localized
         cell.backgroundColor = UIColor.clear
         return cell
@@ -110,16 +112,16 @@ class TablePickerViewDataSource<T>: NSObject, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if indexPath == selectedIndexPath { return }
-        let newCell = tableView.cellForRow(at: indexPath)
-        if newCell?.accessoryType == UITableViewCell.AccessoryType.none {
-            newCell?.accessoryType = UITableViewCell.AccessoryType.checkmark
-        }
-        let oldCell = tableView.cellForRow(at: selectedIndexPath)
-        if oldCell?.accessoryType == UITableViewCell.AccessoryType.checkmark {
-            oldCell?.accessoryType = UITableViewCell.AccessoryType.none
-        }
-        selectedIndexPath = indexPath
+//        if indexPath == selectedIndexPath { return }
+//        let newCell = tableView.cellForRow(at: indexPath)
+//        if newCell?.accessoryType == UITableViewCell.AccessoryType.none {
+//            newCell?.accessoryType = UITableViewCell.AccessoryType.checkmark
+//        }
+//        let oldCell = tableView.cellForRow(at: selectedIndexPath)
+//        if oldCell?.accessoryType == UITableViewCell.AccessoryType.checkmark {
+//            oldCell?.accessoryType = UITableViewCell.AccessoryType.none
+//        }
+//        selectedIndexPath = indexPath
         self.selected(items[indexPath.row].type)
     }
     

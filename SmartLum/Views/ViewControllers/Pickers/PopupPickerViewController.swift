@@ -55,6 +55,15 @@ class PopupPickerViewController: UIViewController {
                            multiplier: 1.0,
                            constant: 0.0).isActive = true
         
+//        self.containerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 1).isActive = true
+
+//        NSLayoutConstraint(item: containerView!,
+//                           attribute: NSLayoutConstraint.Attribute.top,
+//                           relatedBy: NSLayoutConstraint.Relation.equal,
+//                           toItem: view,
+//                           attribute: NSLayoutConstraint.Attribute.topMargin,
+//                           multiplier: 1.0,
+//                           constant: 0).isActive = true
         NSLayoutConstraint(item: containerView!,
                            attribute: NSLayoutConstraint.Attribute.bottom,
                            relatedBy: NSLayoutConstraint.Relation.equal,
@@ -63,21 +72,21 @@ class PopupPickerViewController: UIViewController {
                            multiplier: 1.0,
                            constant: 0).isActive = true
         NSLayoutConstraint(item: containerView!,
-                           attribute: NSLayoutConstraint.Attribute.top,
+                           attribute: NSLayoutConstraint.Attribute.leading,
                            relatedBy: NSLayoutConstraint.Relation.equal,
                            toItem: view,
-                           attribute: NSLayoutConstraint.Attribute.topMargin,
+                           attribute: NSLayoutConstraint.Attribute.leading,
                            multiplier: 1.0,
-                           constant: view.bounds.height/1.5).isActive = true
+                           constant: 0).isActive = true
         NSLayoutConstraint(item: containerView!,
-                           attribute: NSLayoutConstraint.Attribute.width,
+                           attribute: NSLayoutConstraint.Attribute.trailing,
                            relatedBy: NSLayoutConstraint.Relation.equal,
                            toItem: view,
-                           attribute: NSLayoutConstraint.Attribute.width,
-                           multiplier: 1,
+                           attribute: NSLayoutConstraint.Attribute.trailing,
+                           multiplier: 1.0,
                            constant: 0).isActive = true
 
-        containerView.heightAnchor.constraint(equalToConstant: 700).isActive = true
+        //containerView.heightAnchor.constraint(equalToConstant: 700).isActive = true
 
         var blurEffect = UIBlurEffect()
         if #available(iOS 13.0, *) {
