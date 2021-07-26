@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreBluetooth
-public class UUIDs {
+public class UUIDs: Error {
     
     // MARK: - Advertising UUIDs
     public static let TORCHERE_ADVERTISING_UUID = CBUUID.init(string: "BB930001-3CE1-4720-A753-28C0159DC777")
@@ -16,8 +16,7 @@ public class UUIDs {
     public static let DIPLOM_ADVERTISING_UUID   = CBUUID.init(string: "00001523-1212-EFDE-1523-785FEABCD123")
 
     // MARK: - Services UUIDs
-//    public static let DEVICE_INFO_SERVICE_UUID = CBUUID.init(string: "BB93FFFF-3CE1-4720-A753-28C0159DC777")
-    public static let DEVICE_INFO_SERVICE_UUID = CBUUID.init(string: "00001526-1212-EFDE-1523-785FEABCD123")
+    public static let DEVICE_INFO_SERVICE_UUID = CBUUID.init(string: "BB93FFFF-3CE1-4720-A753-28C0159DC777")
     public static let COLOR_SERVICE_UUID       = CBUUID.init(string: "BB930B00-3CE1-4720-A753-28C0159DC777")
     public static let ANIMATION_SERVICE_UUID   = CBUUID.init(string: "BB930A00-3CE1-4720-A753-28C0159DC777")
     public static let ENVIRONMENT_SERVICE_UUID = CBUUID.init(string: "00001527-1212-EFDE-1523-785FEABCD123")
@@ -26,8 +25,7 @@ public class UUIDs {
 
     // MARK: - Characteristics UUIDs
     // Device info service
-    //public static let DEVICE_FIRMWARE_VERSION_CHARACTERISTIC_UUID = CBUUID.init(string: "BB93FFFE-3CE1-4720-A753-28C0159DC777")
-    public static let DEVICE_FIRMWARE_VERSION_CHARACTERISTIC_UUID = CBUUID.init(string: "00001530-1212-EFDE-1523-785FEABCD123")
+    public static let DEVICE_FIRMWARE_VERSION_CHARACTERISTIC_UUID = CBUUID.init(string: "BB93FFFE-3CE1-4720-A753-28C0159DC777")
     public static let DEVICE_DFU_CHARACTERISTIC_UUID              = CBUUID.init(string: "BB93FFFD-3CE1-4720-A753-28C0159DC777")
     
     // Color service
