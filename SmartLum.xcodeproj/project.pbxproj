@@ -18,7 +18,6 @@
 		22A46DD725E7A9EC003F4200 /* QuickError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A46DD625E7A9EC003F4200 /* QuickError.swift */; };
 		22A46DE225E91104003F4200 /* FirmwareDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A46DE125E91103003F4200 /* FirmwareDownloader.swift */; };
 		22DCAD4025FF392300BB30D3 /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DCAD3E25FF392200BB30D3 /* ColorPickerViewController.swift */; };
-		22DCAD4125FF392300BB30D3 /* ColorPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22DCAD3F25FF392200BB30D3 /* ColorPickerViewController.xib */; };
 		22EB5D4F25F23012003FC31D /* NetworkPermissionTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB5D4E25F23012003FC31D /* NetworkPermissionTrigger.swift */; };
 		22EB5D5425F23E79003FC31D /* TorcherePeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB5D5325F23E79003FC31D /* TorcherePeripheral.swift */; };
 		22EB5D8425FB5077003FC31D /* TablePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB5D8325FB5077003FC31D /* TablePickerViewController.swift */; };
@@ -96,7 +95,6 @@
 		22A46DD625E7A9EC003F4200 /* QuickError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickError.swift; sourceTree = "<group>"; };
 		22A46DE125E91103003F4200 /* FirmwareDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirmwareDownloader.swift; sourceTree = "<group>"; };
 		22DCAD3E25FF392200BB30D3 /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
-		22DCAD3F25FF392200BB30D3 /* ColorPickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPickerViewController.xib; sourceTree = "<group>"; };
 		22DCAE40260A12A400BB30D3 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		22EB5D4E25F23012003FC31D /* NetworkPermissionTrigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPermissionTrigger.swift; sourceTree = "<group>"; };
 		22EB5D5325F23E79003FC31D /* TorcherePeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorcherePeripheral.swift; sourceTree = "<group>"; };
@@ -232,7 +230,6 @@
 				22EB5D8325FB5077003FC31D /* TablePickerViewController.swift */,
 				2C72028A269434180079BEEA /* WheelPickerViewController.swift */,
 				22DCAD3E25FF392200BB30D3 /* ColorPickerViewController.swift */,
-				22DCAD3F25FF392200BB30D3 /* ColorPickerViewController.xib */,
 			);
 			path = Pickers;
 			sourceTree = "<group>";
@@ -524,7 +521,6 @@
 				2C7202CF26A985BC0079BEEA /* ColorTableViewCell.xib in Resources */,
 				52A637C0220DDECD00F5308D /* Localizable.strings in Resources */,
 				2C72029E269D5D1A0079BEEA /* PickerTableViewCell.xib in Resources */,
-				22DCAD4125FF392300BB30D3 /* ColorPickerViewController.xib in Resources */,
 				22A46D9625E1418E003F4200 /* FirmwareUpdateViewController.xib in Resources */,
 				30B6644C1FCD6E65003C8B55 /* Assets.xcassets in Resources */,
 				2264CAB0260CCBEA00CB54B0 /* Pods-SmartLum-acknowledgements.plist in Resources */,
