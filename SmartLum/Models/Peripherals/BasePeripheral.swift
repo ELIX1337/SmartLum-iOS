@@ -12,7 +12,16 @@ import UIKit
 protocol BasePeripheralProtocol {
     var peripheral: CBPeripheral { get set }
     var endpoints: [[BluetoothEndpoint.Services:BluetoothEndpoint.Characteristics] : CBCharacteristic] { get set }
+    func writeWithoutResponse(value: Data, to characteristic: CBCharacteristic)
     //var baseDelegate: BasePeripheralDelegate? { get set }
+}
+
+extension BasePeripheralProtocol {
+    func writeWithoutResponse(value: Data, to characteristic: CBCharacteristic) {
+        if peripheral.canSendWriteWithoutResponse {
+            self.peripheral.writeValue(value, for: characteristic, type: .withoutResponse)
+        }
+    }
 }
 
 protocol BasePeripheralDelegate {
@@ -35,6 +44,7 @@ class BasePeripheral: NSObject,
     var endpoints: [[BluetoothEndpoint.Services : BluetoothEndpoint.Characteristics] : CBCharacteristic] = [:]
     public var isConnected: Bool { peripheral.state == .connected }
     var baseDelegate: BasePeripheralDelegate?
+    var lastService: CBUUID?
     
     init(_ peripheral: CBPeripheral,_ manager: CBCentralManager) {
         self.peripheral = peripheral
@@ -74,6 +84,7 @@ class BasePeripheral: NSObject,
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         print("Disconnected from \(name) - \(String(describing: error?.localizedDescription))")
+        baseDelegate?.peripheralDidDisconnect()
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
@@ -81,6 +92,7 @@ class BasePeripheral: NSObject,
             for service in services {
                 peripheral.discoverCharacteristics(nil, for: service)
                 print("Service found - \(service.uuid)")
+                lastService = services.last?.uuid
             }
         }
     }
@@ -90,13 +102,28 @@ class BasePeripheral: NSObject,
             for characteristic in characteristics {
                 peripheral.setNotifyValue(true, for: characteristic)
                 peripheral.readValue(for: characteristic)
+                //peripheral.discoverDescriptors(for: characteristic)
                 if let cases = BluetoothEndpoint.getCases(service, characteristic) {
                     self.endpoints[cases] = characteristic
                 } else {
                     print("NO MATCH - \(characteristic.uuid) : \(service.uuid.uuidString)")
                 }
+                print("Discovered characteristic")
             }
         }
+        if service.uuid == lastService { baseDelegate?.peripheralIsReady() }
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverDescriptorsFor characteristic: CBCharacteristic, error: Error?) {
+        if let descriptors = characteristic.descriptors {
+            for descriptor in descriptors {
+                peripheral.readValue(for: descriptor)
+            }
+        }
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor descriptor: CBDescriptor, error: Error?) {
+        print("Descriptor in characteristic \(String(describing: BluetoothEndpoint.getCharacteristic(characteristic: descriptor.characteristic))) value - \(descriptor.uuid) = \(String(describing: descriptor.value))")
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
