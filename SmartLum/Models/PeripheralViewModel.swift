@@ -13,7 +13,7 @@ class PeripheralViewModel: NSObject {
     public var basePeripheral: BasePeripheral
     public var tableView: UITableView
     public var selection: (PeripheralRow) -> Void
-    public var dataModel = PeripheralDataModel()
+    public var dataModel = TorcherePeripheralDataModel()
     public var tableViewModel: PeripheralTableViewModel!
     public var hiddenIndexPath = HiddenIndexPath()
 

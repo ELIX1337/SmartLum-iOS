@@ -73,7 +73,7 @@ enum PeripheralRow: Int, CaseIterable {
         }
     }
     
-    func cellValue(from model: PeripheralDataModel) -> Any? {
+    func cellValue(from model: TorcherePeripheralDataModel) -> Any? {
         switch self {
         case .primaryColor:       return model.primaryColor
         case .secondaryColor:     return model.secondaryColor

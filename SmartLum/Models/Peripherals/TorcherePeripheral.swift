@@ -20,7 +20,7 @@ class TorcherePeripheral: BasePeripheral, ColorPeripheralProtocol, AnimationPeri
 //        get { return self.delegate }
 //        set { self.delegate = newValue as! TorcherePeripheralDelegate?}
 //    }
-    private var model = PeripheralDataModel()
+    private var model = TorcherePeripheralDataModel()
 
     override init(_ peripheral: CBPeripheral, _ manager: CBCentralManager) {
         super.init(peripheral, manager)
