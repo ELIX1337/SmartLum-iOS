@@ -7,7 +7,7 @@
 //
 import UIKit
 
-struct PeripheralDataModel {
+struct TorcherePeripheralDataModel {
     var primaryColor:       UIColor?
     var secondaryColor:     UIColor?
     var randomColor:        Bool?
@@ -16,6 +16,11 @@ struct PeripheralDataModel {
     var animationOnSpeed:   Int?
     var animationOffSpeed:  Int?
     var animationStep:      Int?
+}
+
+struct SlBasePeripheralDataModel {
+    var topSensorTriggerDistance: Int?
+    var botSensorTriggerDistance: Int?
 }
 
 protocol PeripheralDataElement {
