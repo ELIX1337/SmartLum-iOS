@@ -22,13 +22,13 @@ struct BluetoothEndpoint {
     enum AdvertisingServices: CaseIterable, StringToUUID {
         case flClassic
         case flMini
-        case diplom
+        case slBase
         
         var uuidString: String {
             switch self {
-            case .flClassic: return "BB930001-3CE1-4720-A753-28C0159DC777"
-            case .flMini:    return "BB930002-3CE1-4720-A753-28C0159DC777"
-            case .diplom:    return "00001523-1212-EFDE-1523-785FEABCD123"
+            case .flClassic: return UUIDs.TORCHERE_ADVERTISING_UUID.uuidString
+            case .flMini:    return UUIDs.FL_MINI_ADVERTISING_UUID.uuidString
+            case .slBase:    return UUIDs.SL_BASE_ADVERTISING_UUID.uuidString
             }
         }
     }
@@ -37,26 +37,28 @@ struct BluetoothEndpoint {
         case info
         case color
         case animation
-        
-        case environment
-        case distance
-        case indication
+        case led
+        case sensor
+        case event
         
         var uuidString: String {
             switch self {
-            case .info:        return "00001526-1212-EFDE-1523-785FEABCD123"
-            case .color:       return "BB930B00-3CE1-4720-A753-28C0159DC777"
-            case .animation:   return "BB930A00-3CE1-4720-A753-28C0159DC777"
-            case .environment: return "00001527-1212-EFDE-1523-785FEABCD123"
-            case .distance:    return "00001528-1212-EFDE-1523-785FEABCD123"
-            case .indication:  return "00001529-1212-EFDE-1523-785FEABCD123"
+            case .info:        return UUIDs.DEVICE_INFO_SERVICE_UUID.uuidString
+            case .color:       return UUIDs.COLOR_SERVICE_UUID.uuidString
+            case .animation:   return UUIDs.ANIMATION_SERVICE_UUID.uuidString
+            case .led:         return UUIDs.LED_SERVICE_UUID.uuidString
+            case .sensor:      return UUIDs.SENSOR_SERVICE_UUID.uuidString
+            case .event:       return UUIDs.EVENT_SERVICE_UUID.uuidString
             }
         }
     }
 
     enum Characteristics: CaseIterable {
         case firmwareVersion
+        case factorySettings
+        case initState
         case dfu
+        case error
         case primaryColor
         case secondaryColor
         case randomColor
@@ -65,31 +67,26 @@ struct BluetoothEndpoint {
         case animationOffSpeed
         case animationDirection
         case animationStep
-        
-        case distance
-        case button
-        case led
-        case temperature
-        case lightness
+        case topSensorTriggerDistance
+        case botSensorTriggerDistance
         
         var uuidString: String {
             switch self {
-            case .firmwareVersion:      return "00001530-1212-EFDE-1523-785FEABCD123"
-            case .dfu:                  return "BB93FFFD-3CE1-4720-A753-28C0159DC777"
-            case .primaryColor:         return "BB930B01-3CE1-4720-A753-28C0159DC777"
-            case .secondaryColor:       return "BB930B02-3CE1-4720-A753-28C0159DC777"
-            case .randomColor:          return "BB930B03-3CE1-4720-A753-28C0159DC777"
-            case .animationMode:        return "BB930A01-3CE1-4720-A753-28C0159DC777"
-            case .animationOnSpeed:     return "BB930A02-3CE1-4720-A753-28C0159DC777"
-            case .animationOffSpeed:    return "BB930A03-3CE1-4720-A753-28C0159DC777"
-            case .animationDirection:   return "BB930A04-3CE1-4720-A753-28C0159DC777"
-            case .animationStep:        return "BB930A05-3CE1-4720-A753-28C0159DC777"
-                
-            case .distance:    return "00001544-1212-EFDE-1523-785FEABCD123"
-            case .button:      return "00001524-1212-EFDE-1523-785FEABCD123"
-            case .led:         return "00001525-1212-EFDE-1523-785FEABCD123"
-            case .temperature: return "00001542-1212-EFDE-1523-785FEABCD123"
-            case .lightness:   return "00001533-1212-EFDE-1523-785FEABCD123"
+            case .firmwareVersion:      return UUIDs.DEVICE_FIRMWARE_VERSION_CHARACTERISTIC_UUID.uuidString
+            case .factorySettings:      return UUIDs.FACTORY_SETTINGS_CHARACTERISTIC_UUID.uuidString
+            case .initState:            return UUIDs.DEVICE_INIT_STATE_CHARACTERISTIC_UUID.uuidString
+            case .dfu:                  return UUIDs.DEVICE_DFU_CHARACTERISTIC_UUID.uuidString
+            case .error:                return UUIDs.EVENT_ERROR_CHARACTERISTIC_UUID.uuidString
+            case .primaryColor:         return UUIDs.COLOR_PRIMARY_CHARACTERISTIC_UUID.uuidString
+            case .secondaryColor:       return UUIDs.COLOR_SECONDARY_CHARACTERISTIC_UUID.uuidString
+            case .randomColor:          return UUIDs.COLOR_RANDOM_CHARACTERISTIC_UUID.uuidString
+            case .animationMode:        return UUIDs.ANIMATION_MODE_CHARACTERISTIC_UUID.uuidString
+            case .animationOnSpeed:     return UUIDs.ANIMATION_ON_SPEED_CHARACTERISTIC_UUID.uuidString
+            case .animationOffSpeed:    return UUIDs.ANIMATION_OFF_SPEED_CHARACTERISTIC_UUID.uuidString
+            case .animationDirection:   return UUIDs.ANIMATION_DIRECTION_CHARACTERISTIC_UUID.uuidString
+            case .animationStep:        return UUIDs.ANIMATION_STEP_CHARACTERISTIC_UUID.uuidString
+            case .topSensorTriggerDistance: return UUIDs.TOP_SENSOR_TRIGGER_DISTANCE_CHARACTERISTIC_UUID.uuidString
+            case .botSensorTriggerDistance: return UUIDs.BOT_SENSOR_TRIGGER_DISTANCE_CHARACTERISTIC_UUID.uuidString
             }
         }
     }
