@@ -1,7 +1,7 @@
 PODS:
-  - AcknowList (2.0.1)
+  - AcknowList (2.0.3)
   - Colorful (3.0.0)
-  - iOSDFULibrary (4.10.3):
+  - iOSDFULibrary (4.11.1):
     - ZIPFoundation (= 0.9.11)
   - ZIPFoundation (0.9.11)
 
@@ -18,9 +18,9 @@ SPEC REPOS:
     - ZIPFoundation
 
 SPEC CHECKSUMS:
-  AcknowList: d5476fd33f5c4614c676933ab79d05775e5e20b7
+  AcknowList: 6d4faca4c3e0173377fe5649e086d627cd60b003
   Colorful: 9e093edacaa9fb73512ad9da157f0707b82d2542
-  iOSDFULibrary: 7aade51a907d01ca9a87055003cd232b09efd78f
+  iOSDFULibrary: 3500ac00451aa7d8ec48a752e91099669a2c1d27
   ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
 
 PODFILE CHECKSUM: f067eed01f635bf3c4d7aafaf63febab6cff25cf
