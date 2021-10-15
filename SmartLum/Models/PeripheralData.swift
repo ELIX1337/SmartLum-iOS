@@ -7,20 +7,23 @@
 //
 import UIKit
 
-struct TorcherePeripheralDataModel {
+struct PeripheralDataModel {
+    
+    var animationOnSpeed:  (value: Int?, minValue: Int?, maxValue: Int?)
+    var animationOffSpeed: (value: Int?, minValue: Int?, maxValue: Int?)
+    var animationStep:     (value: Int?, minValue: Int?, maxValue: Int?)
+    var ledTimeout:        (value: Int?, minValue: Int?, maxValue: Int?)
+    var ledBrightness:     (value: Int?, minValue: Int?, maxValue: Int?)
+    var topSensorTriggerDistance: (value: Int?, minValue: Int?, maxValue: Int?)
+    var botSensorTriggerDistance: (value: Int?, minValue: Int?, maxValue: Int?)
+    
     var primaryColor:       UIColor?
     var secondaryColor:     UIColor?
     var randomColor:        Bool?
     var animationMode:      PeripheralAnimations?
     var animationDirection: PeripheralAnimationDirections?
-    var animationOnSpeed:   Int?
-    var animationOffSpeed:  Int?
-    var animationStep:      Int?
-}
-
-struct SlBasePeripheralDataModel {
-    var topSensorTriggerDistance: Int?
-    var botSensorTriggerDistance: Int?
+    
+    var ledState: Bool?
 }
 
 protocol PeripheralDataElement {

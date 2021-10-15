@@ -179,9 +179,23 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     // MARK: - Segue and navigation
     
     private func pushViewController(advertisedData: AdvertisedData) {
-        let advData = advertisedData
-        let vc = TorchereViewController()
-        vc.configure(withPeripheral: BasePeripheral.init(advData.peripheral, centralManager))
-        self.navigationController?.pushViewController(vc, animated: true)
+        //let advData = advertisedData
+
+        switch advertisedData.peripheralType {
+        case .FlClassic:
+            let vc = TorchereViewController()
+            vc.configure(withPeripheral: BasePeripheral.init(advertisedData.peripheral, centralManager))
+            self.navigationController?.pushViewController(vc, animated: true)
+        case .FlMini:
+            let vc = TorchereViewController()
+            vc.configure(withPeripheral: BasePeripheral.init(advertisedData.peripheral, centralManager))
+            self.navigationController?.pushViewController(vc, animated: true)
+        case .SlBase:
+            let vc = SlBaseViewController()
+            vc.viewModelInit(peripheral: BasePeripheral.init(advertisedData.peripheral, centralManager))
+            self.navigationController?.pushViewController(vc, animated: true)
+        case .none:
+            print("No vc")
+        }
     }
 }

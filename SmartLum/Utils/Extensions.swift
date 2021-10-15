@@ -9,6 +9,42 @@
 import UIKit
 import CoreBluetooth
 
+func bytes<U: FixedWidthInteger,V: FixedWidthInteger>(
+    of value    : U,
+    to type     : V.Type,
+    droppingZeros: Bool
+    ) -> [V]{
+
+    let sizeInput = MemoryLayout<U>.size
+    let sizeOutput = MemoryLayout<V>.size
+
+    precondition(sizeInput >= sizeOutput, "The input memory size should be greater than the output memory size")
+
+    var value = value
+    let a =  withUnsafePointer(to: &value, {
+        $0.withMemoryRebound(
+            to: V.self,
+            capacity: sizeInput,
+            {
+                Array(UnsafeBufferPointer(start: $0, count: sizeInput/sizeOutput))
+        })
+    })
+
+    let lastNonZeroIndex =
+        (droppingZeros ? a.lastIndex { $0 != 0 } : a.indices.last) ?? a.startIndex
+
+    return Array(a[...lastNonZeroIndex].reversed())
+}
+
+extension Data {
+    func toInt() -> Int {
+        let decimalValue = self.reduce(0) { v, byte in
+            return v << 8 | Int(byte)
+        }
+        return decimalValue
+    }
+}
+
 extension UIColor {
     
     func toData() -> Data {
@@ -62,6 +98,21 @@ extension Numeric {
         let size = withUnsafeMutableBytes(of: &value, { data.copyBytes(to: $0)} )
         assert(size == MemoryLayout.size(ofValue: value))
         self = value
+    }
+}
+
+extension UnsignedInteger {
+    init(_ bytes: [UInt8]) {
+        precondition(bytes.count <= MemoryLayout<Self>.size)
+
+        var value: UInt64 = 0
+
+        for byte in bytes {
+            value <<= 8
+            value |= UInt64(byte)
+        }
+
+        self.init(value)
     }
 }
 

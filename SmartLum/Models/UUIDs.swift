@@ -9,6 +9,7 @@
 import Foundation
 import CoreBluetooth
 public class UUIDs: Error {
+    public static let TORCHERE_ADVERTISING_UUID_STRING = "BB930001-3CE1-4720-A753-28C0159DC777"
     
     // MARK: - Advertising UUIDs
     public static let TORCHERE_ADVERTISING_UUID = CBUUID.init(string: "BB930001-3CE1-4720-A753-28C0159DC777")
@@ -58,5 +59,6 @@ public class UUIDs: Error {
 
 extension UUIDs {
     static let advServices:[CBUUID:BasePeripheral.Type] = [BluetoothEndpoint.AdvertisingServices.flClassic.uuid : TorcherePeripheral.self,
-                                                           BluetoothEndpoint.AdvertisingServices.flMini.uuid   : TorcherePeripheral.self]
+                                                           BluetoothEndpoint.AdvertisingServices.flMini.uuid : TorcherePeripheral.self,
+                                                           BluetoothEndpoint.AdvertisingServices.slBase.uuid : SlBasePeripheral.self]
 }

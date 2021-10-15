@@ -52,7 +52,7 @@ struct BluetoothEndpoint {
             }
         }
     }
-
+    
     enum Characteristics: CaseIterable {
         case firmwareVersion
         case factorySettings
@@ -69,6 +69,9 @@ struct BluetoothEndpoint {
         case animationStep
         case topSensorTriggerDistance
         case botSensorTriggerDistance
+        case ledState
+        case ledBrightness
+        case ledTimeout
         
         var uuidString: String {
             switch self {
@@ -87,10 +90,13 @@ struct BluetoothEndpoint {
             case .animationStep:        return UUIDs.ANIMATION_STEP_CHARACTERISTIC_UUID.uuidString
             case .topSensorTriggerDistance: return UUIDs.TOP_SENSOR_TRIGGER_DISTANCE_CHARACTERISTIC_UUID.uuidString
             case .botSensorTriggerDistance: return UUIDs.BOT_SENSOR_TRIGGER_DISTANCE_CHARACTERISTIC_UUID.uuidString
+            case .ledState:                 return UUIDs.LED_STATE_CHARACTERISTIC_UUID.uuidString
+            case .ledBrightness:            return UUIDs.LED_BRIGHTNESS_CHARACTERISTIC_UUID.uuidString
+            case .ledTimeout:               return UUIDs.LED_TIMEOUT_CHARACTERISTIC_UUID.uuidString
             }
         }
     }
-
+    
     static func getCases(_ service: CBService, _ characteristic: CBCharacteristic) -> [Services:Characteristics]? {
         guard let s = Services.allCases.filter({ $0.uuidString == service.uuid.uuidString }).first else { return nil }
         guard let c = Characteristics.allCases.filter({ $0.uuidString == characteristic.uuid.uuidString }).first else { return nil }

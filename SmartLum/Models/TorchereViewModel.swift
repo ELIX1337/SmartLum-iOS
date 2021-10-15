@@ -33,6 +33,10 @@ class TorchereViewModel: PeripheralViewModel {
         self.selection = selected
         self.torcherePeripheral.delegate = self
         self.basePeripheral.baseDelegate = baseDelegate
+        self.dataModel.animationOnSpeed.minValue = 0
+        self.dataModel.animationOnSpeed.maxValue = 30
+        self.dataModel.animationStep.minValue = 0
+        self.dataModel.animationStep.maxValue = 10
         self.tableViewModel = PeripheralTableViewModel.init(sections: [PeripheralSection.init(headerText: "Color",
                                                                                               footerText: "Choose and handle colors",
                                                                                               rows: [.primaryColor,
@@ -52,7 +56,7 @@ class TorchereViewModel: PeripheralViewModel {
             print("Speed - \(String(describing: withValue))")
             if let value = withValue as? Float {
                 torcherePeripheral.writeAnimationOnSpeed(Int(value))
-                dataModel.animationOnSpeed = Int(value)
+                dataModel.animationOnSpeed.value = Int(value)
             }
             break
         case .randomColor:
@@ -67,7 +71,7 @@ class TorchereViewModel: PeripheralViewModel {
             print("Animation step - \(String(describing: withValue))")
             if let value = withValue as? Int {
                 torcherePeripheral.writeAnimationStep(value)
-                dataModel.animationStep = value
+                dataModel.animationStep.value = value
             }
             break
         default:
@@ -137,17 +141,17 @@ class TorchereViewModel: PeripheralViewModel {
     
     public func writeAnimationOnSpeed(speed: Int) {
         torcherePeripheral.writeAnimationOnSpeed(speed)
-        dataModel.animationOnSpeed = speed
+        dataModel.animationOnSpeed.value = speed
     }
     
     public func writeAnimationOffSpeed(speed: Int) {
         torcherePeripheral.writeAnimationOffSpeed(speed)
-        dataModel.animationOffSpeed = speed
+        dataModel.animationOffSpeed.value = speed
     }
     
     public func writeAnimationStep(step: Int) {
         torcherePeripheral.writeAnimationStep(step)
-        dataModel.animationStep = step
+        dataModel.animationStep.value = step
     }
     
 }
@@ -175,12 +179,12 @@ extension TorchereViewModel: TorcherePeripheralDelegate {
     }
     
     func getAnimationOnSpeed(speed: Int) {
-        dataModel.animationOnSpeed = speed
+        dataModel.animationOnSpeed.value = speed
         reloadCell(for: .animationOnSpeed, with: .middle)
     }
     
     func getAnimationOffSpeed(speed: Int) {
-        dataModel.animationOffSpeed = speed
+        dataModel.animationOffSpeed.value = speed
     }
     
     func getAnimationDirection(direction: PeripheralAnimationDirections) {
@@ -189,7 +193,7 @@ extension TorchereViewModel: TorcherePeripheralDelegate {
     }
     
     func getAnimationStep(step: Int) {
-        dataModel.animationStep = step
+        dataModel.animationStep.value = step
         reloadCell(for: .animationStep, with: .middle)
     }
 }

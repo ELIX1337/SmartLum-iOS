@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import iOSDFULibrary
 
 class RootViewController: UINavigationController {
     
@@ -28,4 +29,12 @@ class RootViewController: UINavigationController {
        // }
     }
 
+}
+
+func getPeripheralVC(peripheralType: PeripheralProfile) -> UIViewController {
+    switch peripheralType {
+    case .FlClassic: return TorchereViewController()
+    case .FlMini: return TorchereViewController()
+    case .SlBase: return SlBaseViewController()
+    }
 }

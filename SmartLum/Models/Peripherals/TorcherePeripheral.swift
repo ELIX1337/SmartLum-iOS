@@ -20,7 +20,7 @@ class TorcherePeripheral: BasePeripheral, ColorPeripheralProtocol, AnimationPeri
 //        get { return self.delegate }
 //        set { self.delegate = newValue as! TorcherePeripheralDelegate?}
 //    }
-    private var model = TorcherePeripheralDataModel()
+    private var model = PeripheralDataModel()
 
     override init(_ peripheral: CBPeripheral, _ manager: CBCentralManager) {
         super.init(peripheral, manager)
@@ -46,7 +46,7 @@ class TorcherePeripheral: BasePeripheral, ColorPeripheralProtocol, AnimationPeri
             break
         case (.animation,.animationOnSpeed):
             delegate?.getAnimationOnSpeed(speed: Int(data.toUInt8()))
-            model.animationOnSpeed = Int(data.toUInt8())
+            model.animationOnSpeed.value = Int(data.toUInt8())
             break
         case (.animation,.animationDirection):
             delegate?.getAnimationDirection(direction: PeripheralAnimationDirections.init(rawValue: data.toUInt8()) ?? .fromTop)
@@ -54,7 +54,7 @@ class TorcherePeripheral: BasePeripheral, ColorPeripheralProtocol, AnimationPeri
             break
         case (.animation,.animationStep):
             delegate?.getAnimationStep(step: Int(data.toUInt8()))
-            model.animationStep = Int(data.toUInt8())
+            model.animationStep.value = Int(data.toUInt8())
             break
         default:
             break

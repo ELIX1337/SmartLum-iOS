@@ -19,8 +19,6 @@ class SliderTableViewCell: UITableViewCell, BaseTableViewCell {
     func configure(title: String?, value: Any?) {
         self.titleLabel.text = title?.localized
         self.slider.value = value as? Float ?? 0.0
-        self.slider.minimumValue = 0
-        self.slider.maximumValue = 30
         if let value = value as? Int {
             self.slider.setValue(Float(value), animated: true)
         }

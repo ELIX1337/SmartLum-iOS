@@ -13,7 +13,7 @@ class PeripheralViewModel: NSObject {
     public var basePeripheral: BasePeripheral
     public var tableView: UITableView
     public var selection: (PeripheralRow) -> Void
-    public var dataModel = TorcherePeripheralDataModel()
+    public var dataModel = PeripheralDataModel()
     public var tableViewModel: PeripheralTableViewModel!
     public var hiddenIndexPath = HiddenIndexPath()
 
@@ -119,14 +119,14 @@ extension PeripheralViewModel: UITableViewDataSource {
         let row = tableViewModel.sections[indexPath.section].rows[indexPath.row]
         tableView.register(UINib.init(nibName: row.nibName, bundle: nil), forCellReuseIdentifier: row.cellReuseID)
         let cell = tableView.dequeueReusableCell(withIdentifier: row.cellReuseID, for: indexPath) as! BaseTableViewCell
-        cell.configure(title: row.name, value: row.cellValue(from: dataModel))
+        //cell.configure(title: row.name, value: row.cellValue(from: dataModel))
+        row.setupCell(cell: cell, with: dataModel)
         cell.returnValue = { value in self.cellCallback(fromRow: row, withValue: value) }
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if hiddenIndexPath.section.contains(indexPath.section) {
-            
             return 0
         }
         guard hiddenIndexPath.row.contains(indexPath) else {

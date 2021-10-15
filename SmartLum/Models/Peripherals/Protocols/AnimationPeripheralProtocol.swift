@@ -25,13 +25,17 @@ extension AnimationPeripheralProtocol where Self:BasePeripheralProtocol {
     
     func writeAnimationMode(_ animation: PeripheralAnimations) {
         if let characteristic = animationModeCharacteristic {
-            print("Writing animation mode \(animation)")
             peripheral.writeValue(UInt8(animation.code).toData(), for: characteristic, type: .withoutResponse)
         }
     }
     func writeAnimationOnSpeed(_ speed: Int) {
         if let characteristic = animationOnSpeedCharacteristic {
-            peripheral.writeValue(UInt8(speed).toData(), for: characteristic, type: .withoutResponse)
+            if characteristic.properties.contains(.writeWithoutResponse) {
+                peripheral.writeValue(UInt8(speed).toData(), for: characteristic, type: .withoutResponse)
+            } else {
+                peripheral.writeValue(UInt8(speed).toData(), for: characteristic, type: .withResponse)
+            }
+            print("Writing speed - \(speed) - \(characteristic.uuid.uuidString)")
         }
     }
     func writeAnimationOffSpeed(_ speed: Int) {
