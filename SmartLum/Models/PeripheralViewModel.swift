@@ -39,52 +39,64 @@ class PeripheralViewModel: NSObject {
     
     public func hideRows(rows: [PeripheralRow]) {
         tableView.beginUpdates()
-        for row in rows {
-            if let rowIndex = tableViewModel.getIndexPath(forRow: row) {
-                hiddenIndexPath.row.append(rowIndex)
+        tableView.performBatchUpdates({
+            for row in rows {
+                if let rowIndex = tableViewModel.getIndexPath(forRow: row) {
+                    hiddenIndexPath.row.append(rowIndex)
+                }
             }
-        }
+        }, completion: nil)
         tableView.endUpdates()
+        //tableView.reloadData()
     }
     
     public func showRows(rows: [PeripheralRow]?) {
         tableView.beginUpdates()
-        guard let array = rows else {
-            hiddenIndexPath.row.removeAll()
-            tableView.endUpdates()
-            return
-        }
-        for row in array {
-            if let rowIndex = tableViewModel.getIndexPath(forRow: row) {
-                hiddenIndexPath.row = hiddenIndexPath.row.filter { $0 != rowIndex }
+        tableView.performBatchUpdates({
+            guard let array = rows else {
+                hiddenIndexPath.row.removeAll()
+                tableView.endUpdates()
+                return
             }
-        }
+            for row in array {
+                if let rowIndex = tableViewModel.getIndexPath(forRow: row) {
+                    hiddenIndexPath.row = hiddenIndexPath.row.filter { $0 != rowIndex }
+                }
+            }
+        }, completion: nil)
         tableView.endUpdates()
+        //tableView.reloadData()
     }
     
     public func hideSections(of: [PeripheralRow]) {
         tableView.beginUpdates()
-        for section in of {
-            if let sectionIndex = tableViewModel.getIndexPath(forRow: section)?.section {
-                hiddenIndexPath.section.append(sectionIndex)
+        tableView.performBatchUpdates({
+            for section in of {
+                if let sectionIndex = tableViewModel.getIndexPath(forRow: section)?.section {
+                    hiddenIndexPath.section.append(sectionIndex)
+                }
             }
-        }
+        }, completion: nil)
         tableView.endUpdates()
+        //tableView.reloadData()
     }
     
     public func showSections(of: [PeripheralRow]?) {
         tableView.beginUpdates()
-        guard let array = of else {
-            hiddenIndexPath.section.removeAll()
-            tableView.endUpdates()
-            return
-        }
-        for section in array {
-            if let sectionIndex = tableViewModel.getIndexPath(forRow: section)?.section {
-                hiddenIndexPath.section = hiddenIndexPath.section.filter { $0 != sectionIndex }
+        tableView.performBatchUpdates({
+            guard let array = of else {
+                hiddenIndexPath.section.removeAll()
+                tableView.endUpdates()
+                return
             }
-        }
+            for section in array {
+                if let sectionIndex = tableViewModel.getIndexPath(forRow: section)?.section {
+                    hiddenIndexPath.section = hiddenIndexPath.section.filter { $0 != sectionIndex }
+                }
+            }
+        }, completion: nil)
         tableView.endUpdates()
+        //tableView.reloadData()
     }
     
     public func cellCallback(fromRow: PeripheralRow, withValue: Any?) { }
@@ -126,13 +138,26 @@ extension PeripheralViewModel: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if hiddenIndexPath.section.contains(indexPath.section) {
+        if (hiddenIndexPath.section.contains(indexPath.section)) {
+            print("CELL HEIGHT 0")
             return 0
         }
-        guard hiddenIndexPath.row.contains(indexPath) else {
-            return 44
+        if (hiddenIndexPath.row.contains(indexPath)) {
+            print("CELL HEIGHT 0")
+            return 0
         }
-        return 0
+        print("CELL HEIGHT 44")
+        return 44
+//        guard hiddenIndexPath.section.contains(indexPath.section) else {
+//            return 44
+//        }
+//        guard hiddenIndexPath.row.contains(indexPath) else {
+//            return 44
+//        }
+////        if hiddenIndexPath.section.contains(indexPath.section) {
+////            return 0
+////        }
+//        return 0
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

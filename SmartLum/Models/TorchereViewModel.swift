@@ -81,32 +81,35 @@ class TorchereViewModel: PeripheralViewModel {
     
     private func updateCellsFor(animation: PeripheralAnimations) {
         tableView.beginUpdates()
-        showRows(rows: nil)
-        showSections(of: nil)
-        reloadCell(for: .animationMode, with: .none)
-        switch animation {
-        case .tetris:
-            hideRows(rows: [.animationStep])
-            break
-        case .wave:
-            hideRows(rows: [.randomColor])
-            break
-        case .transfusion:
-            hideRows(rows: [.animationStep, .animationDirection])
-            break
-        case .rainbowTransfusion:
-            hideRows(rows: [.animationStep, .animationDirection])
-            hideSections(of: [.primaryColor])
-            break
-        case .rainbow:
-            hideRows(rows: [.animationStep])
-            hideSections(of: [.primaryColor])
-            break
-        case .static:
-            hideRows(rows: [.animationStep, .animationOnSpeed, .animationDirection, .secondaryColor, .randomColor])
-            break
-        }
+        tableView.performBatchUpdates({
+            showRows(rows: nil)
+            showSections(of: nil)
+            reloadCell(for: .animationMode, with: .none)
+            switch animation {
+            case .tetris:
+                hideRows(rows: [.animationStep])
+                break
+            case .wave:
+                hideRows(rows: [.randomColor])
+                break
+            case .transfusion:
+                hideRows(rows: [.animationStep, .animationDirection])
+                break
+            case .rainbowTransfusion:
+                hideRows(rows: [.animationStep, .animationDirection])
+                hideSections(of: [.primaryColor])
+                break
+            case .rainbow:
+                hideRows(rows: [.animationStep])
+                hideSections(of: [.primaryColor])
+                break
+            case .static:
+                hideRows(rows: [.animationStep, .animationOnSpeed, .animationDirection, .secondaryColor, .randomColor])
+                break
+            }
+        }, completion: nil)
         tableView.endUpdates()
+        tableView.reloadData()
     }
     
     public func writePrimaryColor(color: UIColor) {
