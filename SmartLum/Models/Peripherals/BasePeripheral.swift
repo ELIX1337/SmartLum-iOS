@@ -123,13 +123,14 @@ class BasePeripheral: NSObject,
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor descriptor: CBDescriptor, error: Error?) {
-        print("Descriptor in characteristic \(String(describing: BluetoothEndpoint.getCharacteristic(characteristic: descriptor.characteristic))) value - \(descriptor.uuid) = \(String(describing: descriptor.value))")
+        
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if let value = characteristic.value,
            let char = BluetoothEndpoint.getCharacteristic(characteristic: characteristic),
-           let serv = BluetoothEndpoint.getService(characteristic.service) {
+           let service = characteristic.service,
+           let serv = BluetoothEndpoint.getService(service) {
             readData(data: value, from: char, in: serv, error: error)
         }
     }
