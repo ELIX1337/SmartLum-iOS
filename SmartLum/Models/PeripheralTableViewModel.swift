@@ -200,6 +200,7 @@ enum PeripheralRow: Int, CaseIterable {
                 cell.stepper.maximumValue = Double(dataModel.animationStep.maxValue ?? 0)
                 cell.stepper.value        = Double(dataModel.animationStep.value ?? 0)
                 cell.titleLabel.text      = self.name.localized
+                cell.valueLabel.text      = String(describing: dataModel.animationStep.value ?? 0)
             }
         case .ledState:
             if let cell = cell as? SwitchTableViewCell {
