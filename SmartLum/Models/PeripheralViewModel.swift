@@ -39,20 +39,20 @@ class PeripheralViewModel: NSObject {
     
     public func hideRows(rows: [PeripheralRow]) {
         tableView.beginUpdates()
-        tableView.performBatchUpdates({
+        //tableView.performBatchUpdates({
             for row in rows {
                 if let rowIndex = tableViewModel.getIndexPath(forRow: row) {
                     hiddenIndexPath.row.append(rowIndex)
                 }
             }
-        }, completion: nil)
+        //}, completion: nil)
         tableView.endUpdates()
         //tableView.reloadData()
     }
     
     public func showRows(rows: [PeripheralRow]?) {
         tableView.beginUpdates()
-        tableView.performBatchUpdates({
+        //tableView.performBatchUpdates({
             guard let array = rows else {
                 hiddenIndexPath.row.removeAll()
                 tableView.endUpdates()
@@ -63,27 +63,27 @@ class PeripheralViewModel: NSObject {
                     hiddenIndexPath.row = hiddenIndexPath.row.filter { $0 != rowIndex }
                 }
             }
-        }, completion: nil)
+        //}, completion: nil)
         tableView.endUpdates()
         //tableView.reloadData()
     }
     
     public func hideSections(of: [PeripheralRow]) {
         tableView.beginUpdates()
-        tableView.performBatchUpdates({
+        //tableView.performBatchUpdates({
             for section in of {
                 if let sectionIndex = tableViewModel.getIndexPath(forRow: section)?.section {
                     hiddenIndexPath.section.append(sectionIndex)
                 }
             }
-        }, completion: nil)
+        //}, completion: nil)
         tableView.endUpdates()
         //tableView.reloadData()
     }
     
     public func showSections(of: [PeripheralRow]?) {
         tableView.beginUpdates()
-        tableView.performBatchUpdates({
+        //tableView.performBatchUpdates({
             guard let array = of else {
                 hiddenIndexPath.section.removeAll()
                 tableView.endUpdates()
@@ -94,7 +94,7 @@ class PeripheralViewModel: NSObject {
                     hiddenIndexPath.section = hiddenIndexPath.section.filter { $0 != sectionIndex }
                 }
             }
-        }, completion: nil)
+        //}, completion: nil)
         tableView.endUpdates()
         //tableView.reloadData()
     }
@@ -147,7 +147,7 @@ extension PeripheralViewModel: UITableViewDataSource {
             return 0
         }
         print("CELL HEIGHT 44")
-        return 44
+        return UITableView.automaticDimension
 //        guard hiddenIndexPath.section.contains(indexPath.section) else {
 //            return 44
 //        }
