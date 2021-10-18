@@ -33,7 +33,7 @@ class PeripheralViewModel: NSObject {
         if let indexPath = tableViewModel.getIndexPath(forRow: row) {
             tableView.reloadRows(at: [indexPath], with: animation)
         } else {
-            //tableView.reloadData()
+            tableView.reloadData()
         }
     }
     
