@@ -23,9 +23,9 @@ class PeripheralViewController: UIViewController {
         self.tableView.cellLayoutMarginsFollowReadableWidth = false
         
         self.view.addSubview(tableView)
-        if #available(iOS 15.0, *) {
-            self.tableView.sectionHeaderTopPadding = 0
-        } 
+//        if #available(iOS 15.0, *) {
+//            self.tableView.sectionHeaderTopPadding = 0
+//        } 
         NSLayoutConstraint(item: tableView,
                            attribute: NSLayoutConstraint.Attribute.bottom,
                            relatedBy: NSLayoutConstraint.Relation.equal,

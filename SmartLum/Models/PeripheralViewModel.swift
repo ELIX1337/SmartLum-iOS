@@ -33,26 +33,22 @@ class PeripheralViewModel: NSObject {
         if let indexPath = tableViewModel.getIndexPath(forRow: row) {
             tableView.reloadRows(at: [indexPath], with: animation)
         } else {
-            tableView.reloadData()
+            //tableView.reloadData()
         }
     }
     
     public func hideRows(rows: [PeripheralRow]) {
-        tableView.beginUpdates()
-        //tableView.performBatchUpdates({
+        //tableView.beginUpdates()
             for row in rows {
                 if let rowIndex = tableViewModel.getIndexPath(forRow: row) {
                     hiddenIndexPath.row.append(rowIndex)
                 }
             }
-        //}, completion: nil)
-        tableView.endUpdates()
-        //tableView.reloadData()
+        //tableView.endUpdates()
     }
     
     public func showRows(rows: [PeripheralRow]?) {
-        tableView.beginUpdates()
-        //tableView.performBatchUpdates({
+        //tableView.beginUpdates()
             guard let array = rows else {
                 hiddenIndexPath.row.removeAll()
                 tableView.endUpdates()
@@ -63,27 +59,21 @@ class PeripheralViewModel: NSObject {
                     hiddenIndexPath.row = hiddenIndexPath.row.filter { $0 != rowIndex }
                 }
             }
-        //}, completion: nil)
-        tableView.endUpdates()
-        //tableView.reloadData()
+        //tableView.endUpdates()
     }
     
     public func hideSections(of: [PeripheralRow]) {
-        tableView.beginUpdates()
-        //tableView.performBatchUpdates({
+        //tableView.beginUpdates()
             for section in of {
                 if let sectionIndex = tableViewModel.getIndexPath(forRow: section)?.section {
                     hiddenIndexPath.section.append(sectionIndex)
                 }
             }
-        //}, completion: nil)
-        tableView.endUpdates()
-        //tableView.reloadData()
+        //tableView.endUpdates()
     }
     
     public func showSections(of: [PeripheralRow]?) {
-        tableView.beginUpdates()
-        //tableView.performBatchUpdates({
+        //tableView.beginUpdates()
             guard let array = of else {
                 hiddenIndexPath.section.removeAll()
                 tableView.endUpdates()
@@ -94,9 +84,7 @@ class PeripheralViewModel: NSObject {
                     hiddenIndexPath.section = hiddenIndexPath.section.filter { $0 != sectionIndex }
                 }
             }
-        //}, completion: nil)
-        tableView.endUpdates()
-        //tableView.reloadData()
+        //tableView.endUpdates()
     }
     
     public func cellCallback(fromRow: PeripheralRow, withValue: Any?) { }
@@ -139,25 +127,12 @@ extension PeripheralViewModel: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if (hiddenIndexPath.section.contains(indexPath.section)) {
-            print("CELL HEIGHT 0")
             return 0
         }
         if (hiddenIndexPath.row.contains(indexPath)) {
-            print("CELL HEIGHT 0")
             return 0
         }
-        print("CELL HEIGHT 44")
         return UITableView.automaticDimension
-//        guard hiddenIndexPath.section.contains(indexPath.section) else {
-//            return 44
-//        }
-//        guard hiddenIndexPath.row.contains(indexPath) else {
-//            return 44
-//        }
-////        if hiddenIndexPath.section.contains(indexPath.section) {
-////            return 0
-////        }
-//        return 0
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

@@ -82,9 +82,9 @@ class TorchereViewModel: PeripheralViewModel {
     private func updateCellsFor(animation: PeripheralAnimations) {
         tableView.beginUpdates()
         //tableView.performBatchUpdates({
-            showRows(rows: nil)
-            showSections(of: nil)
-        reloadCell(for: .animationMode, with: .none)
+        showRows(rows: nil)
+        showSections(of: nil)
+        reloadCell(for: .animationMode, with: .middle)
             switch animation {
             case .tetris:
                 hideRows(rows: [.animationStep])
