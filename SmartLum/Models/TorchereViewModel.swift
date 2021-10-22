@@ -11,46 +11,36 @@ import UIKit
 class TorchereViewModel: PeripheralViewModel {
     
     var torcherePeripheral: TorcherePeripheral!
-    override var basePeripheral: BasePeripheral {
-        get {
-            return self.torcherePeripheral
-        }
-        set {
-            if let newPeripheral = newValue as? TorcherePeripheral {
-                torcherePeripheral = newPeripheral
-            }
-        }
-    }
     
     override init(_ withTableView: UITableView,
                   _ withPeripheral: BasePeripheral,
-                  _ baseDelegate: BasePeripheralDelegate,
+                  _ delegate: PeripheralViewModelDelegate,
                   _ selected: @escaping (PeripheralRow) -> Void) {
-        super.init(withTableView, withPeripheral, baseDelegate, selected)
+        super.init(withTableView, withPeripheral, delegate, selected)
         self.torcherePeripheral = TorcherePeripheral.init(withPeripheral.peripheral, withPeripheral.centralManager)
         self.basePeripheral = withPeripheral
         self.tableView = withTableView
         self.selection = selected
         self.torcherePeripheral.delegate = self
-        self.basePeripheral.baseDelegate = baseDelegate
         self.dataModel.animationOnSpeed.minValue = 0
         self.dataModel.animationOnSpeed.maxValue = 30
         self.dataModel.animationStep.minValue = 0
         self.dataModel.animationStep.maxValue = 10
-        self.tableViewModel = PeripheralTableViewModel.init(sections: [PeripheralSection.init(headerText: "Color",
-                                                                                              footerText: "Choose and handle colors",
-                                                                                              rows: [.primaryColor,
-                                                                                                     .secondaryColor,
-                                                                                                     .randomColor]),
-                                                                       PeripheralSection.init(headerText: "Animation",
-                                                                                              footerText: "Handle animation",
-                                                                                              rows: [.animationMode,
-                                                                                                     .animationOnSpeed,
-                                                                                                     .animationDirection,
-                                                                                                     .animationStep])])
+        self.peripheralReadyTableViewModel = PeripheralTableViewModel.init(sections: [PeripheralSection.init(headerText: "Color",
+                                                                                                             footerText: "Choose and handle colors",
+                                                                                                             rows: [.primaryColor,
+                                                                                                                    .secondaryColor,
+                                                                                                                    .randomColor]),
+                                                                                      PeripheralSection.init(headerText: "Animation",
+                                                                                                             footerText: "Handle animation",
+                                                                                                             rows: [.animationMode,
+                                                                                                                    .animationOnSpeed,
+                                                                                                                    .animationDirection,
+                                                                                                                    .animationStep])])
     }
     
-    override func cellCallback(fromRow: PeripheralRow, withValue: Any?) {
+    override func cellDataCallback(fromRow: PeripheralRow, withValue: Any?) {
+        super.cellDataCallback(fromRow: fromRow, withValue: withValue)
         switch fromRow {
         case .animationOnSpeed:
             print("Speed - \(String(describing: withValue))")
@@ -64,7 +54,7 @@ class TorchereViewModel: PeripheralViewModel {
             if let value = withValue as? Bool {
                 torcherePeripheral.writeRandomColor(value)
                 dataModel.randomColor = value
-                value ? hideRows(rows: [.primaryColor, .secondaryColor]) : showRows(rows: [.primaryColor, .secondaryColor])
+                //value ? hideCell(rows: [.primaryColor, .secondaryColor], rowsSection: nil) : showRows(rows: [.primaryColor, .secondaryColor])
             }
             break
         case .animationStep:
@@ -80,36 +70,28 @@ class TorchereViewModel: PeripheralViewModel {
     }
     
     private func updateCellsFor(animation: PeripheralAnimations) {
-        tableView.beginUpdates()
-        //tableView.performBatchUpdates({
-        showRows(rows: nil)
-        showSections(of: nil)
-        reloadCell(for: .animationMode, with: .none)
+        if (dataModel.animationMode != animation) {
             switch animation {
             case .tetris:
-                hideRows(rows: [.animationStep])
+                hideCell(rows: [.animationStep], rowsSection: nil)
                 break
             case .wave:
-                hideRows(rows: [.randomColor])
+                hideCell(rows: [.randomColor], rowsSection: nil)
                 break
             case .transfusion:
-                hideRows(rows: [.animationStep, .animationDirection])
+                hideCell(rows: [.animationStep, .animationDirection], rowsSection: nil)
                 break
             case .rainbowTransfusion:
-                hideRows(rows: [.animationStep, .animationDirection])
-                hideSections(of: [.primaryColor])
+                hideCell(rows: [.animationStep, .animationDirection], rowsSection: [.primaryColor])
                 break
             case .rainbow:
-                hideRows(rows: [.animationStep])
-                hideSections(of: [.primaryColor])
+                hideCell(rows: [.animationStep], rowsSection: [.primaryColor])
                 break
             case .static:
-                hideRows(rows: [.animationStep, .animationOnSpeed, .animationDirection, .secondaryColor, .randomColor])
+                hideCell(rows: [.animationStep, .animationOnSpeed, .animationDirection, .secondaryColor, .randomColor], rowsSection: nil)
                 break
             }
-        //}, completion: nil)
-        tableView.endUpdates()
-        tableView.reloadData()
+        }
     }
     
     public func writePrimaryColor(color: UIColor) {
@@ -124,16 +106,16 @@ class TorchereViewModel: PeripheralViewModel {
         reloadCell(for: .secondaryColor, with: .none)
     }
     
-//    public func writeRandomColorMode(state: Bool) {
-//        torcherePeripheral.writeRandomColor(state)
-//        dataModel.randomColor = state
-//        reloadCell(for: .randomColor, with: .fade)
-//    }
+    //    public func writeRandomColorMode(state: Bool) {
+    //        torcherePeripheral.writeRandomColor(state)
+    //        dataModel.randomColor = state
+    //        reloadCell(for: .randomColor, with: .fade)
+    //    }
     
     public func writeAnimationMode(mode: PeripheralAnimations) {
         torcherePeripheral.writeAnimationMode(mode)
-        dataModel.animationMode = mode
         updateCellsFor(animation: mode)
+        dataModel.animationMode = mode
     }
     
     public func writeAnimationDirection(direction: PeripheralAnimationDirections) {
@@ -160,7 +142,7 @@ class TorchereViewModel: PeripheralViewModel {
 }
 
 extension TorchereViewModel: TorcherePeripheralDelegate {
- 
+    
     func getPrimaryColor(_ color: UIColor) {
         dataModel.primaryColor = color
         reloadCell(for: .primaryColor, with: .middle)
