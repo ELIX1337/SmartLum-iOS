@@ -12,9 +12,23 @@ import CoreBluetooth
 class SlBaseViewController: PeripheralViewController, PeripheralViewControllerProtocol {
     
     func viewModelInit(peripheral: BasePeripheral) {
-        self.viewModel = SlBaseViewModel(self.tableView, peripheral,
-                                           self,
-                                           { _ in Void.self })
+        self.viewModel = SlBaseViewModel(self.tableView, peripheral, self, onCellSelected(cell:))
     }
     
+    func onCellSelected(cell: PeripheralRow) {
+        switch cell {
+        case .error:
+            showPeripheralErrorAlert()
+            break
+        default: break
+        }
+    }
+    
+}
+
+class SlBaseSetupViewController: PeripheralSetupViewController {
+    
+    override func confirmAction(_ sender: UIButton!) {
+        confirmButton.isEnabled = !(viewModel as! SlBaseViewModel).writeInitDistance()
+    }
 }

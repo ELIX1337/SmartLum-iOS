@@ -17,7 +17,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var emptyViewHeader: UILabel!
-        
+    
     // MARK: - Properties
     
     private var centralManager: CBCentralManager!
@@ -44,14 +44,14 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
                                               options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         centralManager = CBCentralManager()
         //NetworkPermissionTrigger.triggerPermission()
         self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
     }
-
+    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
     }
@@ -98,7 +98,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return NSLocalizedString("Nearby Devices", comment: "")
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return discoveredPeripherals.count
     }
@@ -121,7 +121,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         let newPeripheral = AdvertisedData(withPeripheral: peripheral, advertisementData: advertisementData, andRSSI: RSSI, using: centralManager)
-
+        
         if !discoveredPeripherals.contains(newPeripheral) {
             discoveredPeripherals.append(newPeripheral)
             tableView.beginUpdates()
@@ -138,7 +138,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
             }
         }
     }
-
+    
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if central.state != .poweredOn {
             print("Central is not powered on")
@@ -150,7 +150,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     }
     
     // MARK: - Implementation
-
+    
     private func showEmptyPeripheralsView() {
         if !view.subviews.contains(emptyPeripheralsView) {
             view.addSubview(emptyPeripheralsView)
@@ -175,27 +175,18 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
             })
         }
     }
-
+    
     // MARK: - Segue and navigation
     
     private func pushViewController(advertisedData: AdvertisedData) {
-        //let advData = advertisedData
-
-        switch advertisedData.peripheralType {
-        case .FlClassic:
-            let vc = TorchereViewController()
-            vc.configure(withPeripheral: BasePeripheral.init(advertisedData.peripheral, centralManager))
-            self.navigationController?.pushViewController(vc, animated: true)
-        case .FlMini:
-            let vc = TorchereViewController()
-            vc.configure(withPeripheral: BasePeripheral.init(advertisedData.peripheral, centralManager))
-            self.navigationController?.pushViewController(vc, animated: true)
-        case .SlBase:
-            let vc = SlBaseViewController()
-            vc.viewModelInit(peripheral: BasePeripheral.init(advertisedData.peripheral, centralManager))
-            self.navigationController?.pushViewController(vc, animated: true)
-        case .none:
-            print("No vc")
+        if let type = advertisedData.peripheralType {
+            let vc = getPeripheralVC(peripheral: type)
+            //let peripheral = BasePeripheral.init(advertisedData.peripheral, centralManager)
+            let peripheral = getPeripheralType(profile: type, peripheral: advertisedData.peripheral, manager: centralManager)
+            peripheral.type = advertisedData.peripheralType
+            vc.viewModelInit(peripheral: peripheral)
+            navigationController?.pushViewController(vc as! UIViewController, animated: true)
         }
     }
+
 }
