@@ -9,6 +9,10 @@ import UIKit
 
 struct PeripheralDataModel {
     
+    var isInitialized: Bool?
+    var firmwareVersion: Int?
+    var errorCode: Int?
+    
     var animationOnSpeed:  (value: Int?, minValue: Int?, maxValue: Int?)
     var animationOffSpeed: (value: Int?, minValue: Int?, maxValue: Int?)
     var animationStep:     (value: Int?, minValue: Int?, maxValue: Int?)
