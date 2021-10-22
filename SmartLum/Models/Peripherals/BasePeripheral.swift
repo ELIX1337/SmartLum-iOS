@@ -108,10 +108,12 @@ class BasePeripheral: NSObject,
                 } else {
                     print("NO MATCH - \(characteristic.uuid) : \(service.uuid.uuidString)")
                 }
-                print("Discovered characteristic")
             }
         }
-        if service.uuid == lastService { baseDelegate?.peripheralIsReady() }
+        if service.uuid == lastService {
+            baseDelegate?.peripheralIsReady()
+            //baseDelegate?.peripheralError(code: 5)
+        }
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverDescriptorsFor characteristic: CBCharacteristic, error: Error?) {
@@ -132,7 +134,10 @@ class BasePeripheral: NSObject,
             readData(data: value, from: char, in: serv, error: error)
         }
     }
-        
+    
+    func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
+    }
+    
     // MARK: - NSObject
     override func isEqual(_ object: Any?) -> Bool {
         if object is BasePeripheral {
