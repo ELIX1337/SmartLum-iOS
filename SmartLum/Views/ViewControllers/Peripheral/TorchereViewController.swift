@@ -46,36 +46,38 @@ class TorchereViewController: PeripheralViewController, PeripheralViewController
         self.navigationController?.present(vc, animated: true, completion: nil)
     }
     
-    func onCellSelected(_ selection: PeripheralRow) {
+    func onCellSelected(_ selection: PeripheralCell) {
+        if let viewModel = self.viewModel as? TorchereViewModel {
         switch selection {
-        case .primaryColor,
-                .secondaryColor:
+        case viewModel.primaryColorCell,
+            viewModel.secondaryColorCell:
             pushColorPicker(selection)
             break
-        case .animationMode:
+        case viewModel.animationModeCell:
             self.pushPicker(PeripheralAnimations.allCases)
             break
-        case .animationDirection:
+        case viewModel.animationDirectionCell:
             self.pushPicker(PeripheralAnimationDirections.allCases)
             break
-        case .animationStep:
+        case viewModel.animationStepCell:
             tableView.reloadData()
         default: print("default")
         }
+        }
     }
     
-    private func pushColorPicker(_ sender: PeripheralRow) {
+    private func pushColorPicker(_ sender: PeripheralCell) {
         if let viewModel = self.viewModel as? TorchereViewModel {
             let vc = ColorPickerViewController()
-            vc.configure(initColor: (sender.cellValue(from: viewModel.dataModel)) as? UIColor,
+            vc.configure(initColor: (viewModel.dataModel.getValue(key: sender.cellKey)) as? UIColor,
                          colorIndicator: nil,
                          sender: sender,
                          onColorChange: { color, sender in
-                switch sender as? PeripheralRow {
-                case .primaryColor:
+                switch sender as? PeripheralCell {
+                case viewModel.primaryColorCell:
                     viewModel.writePrimaryColor(color: color)
                     break
-                case .secondaryColor:
+                case viewModel.secondaryColorCell:
                     viewModel.writeSecondaryColor(color: color)
                     break
                 default:

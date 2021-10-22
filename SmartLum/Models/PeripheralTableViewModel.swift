@@ -10,7 +10,7 @@ import UIKit
 struct PeripheralTableViewModel {
     var sections: [PeripheralSection]
     
-    func getIndexPath(forRow: PeripheralRow) -> IndexPath? {
+    func getIndexPath(forRow: PeripheralCell) -> IndexPath? {
         if let section = sections.filter({ $0.rows.contains(forRow)}).first,
            let sectionIndex = sections.firstIndex(of: section),
            let rowIndex = sections[sectionIndex].rows.firstIndex(of: forRow) {
@@ -32,7 +32,7 @@ extension PeripheralTableViewModel {
             PeripheralSection.init(
                 headerText: "Error",
                 footerText: "Device error found",
-                rows: [.error])
+                rows: [.buttonCell(key: BasePeripheralData.errorKey, title: "Error")])
         }
     }
 }
@@ -48,26 +48,20 @@ struct HiddenIndexPath {
 }
 
 struct PeripheralSection: Equatable {
+    
     let headerText: String
     let footerText: String
-    var rows: [PeripheralRow]
+    var rows: [PeripheralCell]
 }
 
-enum PeripheralRow: CaseIterable {
-    case primaryColor
-    case secondaryColor
-    case randomColor
-    case animationMode
-    case animationDirection
-    case animationOnSpeed
-    case animationOffSpeed
-    case animationStep
-    case ledState
-    case ledBrightness
-    case ledTimeout
-    case topSensorTriggerDistance
-    case botSensorTriggerDistance
-    case error
+enum PeripheralCell: Equatable {
+        
+    case colorCell(key: String, title: String, initialValue : UIColor)
+    case pickerCell(key: String, title: String, initialValue: String)
+    case sliderCell(key: String, title: String, initialValue: Float, minValue: Float, maxValue: Float)
+    case switchCell(key: String, title: String, initialValue: Bool)
+    case stepperCell(key: String, title: String, initialValue: Double, minValue: Double, maxValue: Double)
+    case buttonCell(key: String, title: String)
     
     func updateCell(in tableView: UITableView, with tableViewModel: PeripheralTableViewModel) {
         if let indexPath = tableViewModel.getIndexPath(forRow: self) {
@@ -83,188 +77,92 @@ enum PeripheralRow: CaseIterable {
         return fromModel.getIndexPath(forRow: self)
     }
     
-    var name: String {
+    var cellKey: String {
         switch self {
-        case .primaryColor:             return "Primary"
-        case .secondaryColor:           return "Secondary"
-        case .randomColor:              return "Random color"
-        case .animationMode:            return "Animation"
-        case .animationDirection:       return "Direction"
-        case .animationOnSpeed:         return "Speed"
-        case .animationOffSpeed:        return "Animation off speed"
-        case .animationStep:            return "Step"
-        case .topSensorTriggerDistance: return "Top sensor trigger distance"
-        case .botSensorTriggerDistance: return "Bot sensor trigger distance"
-        case .ledState:                 return "Led state"
-        case .ledBrightness:            return "Led brightness"
-        case .ledTimeout:               return "Led timeout"
-        case .error:                    return "Error"
+        case .colorCell(let key, _, _):         return key
+        case .pickerCell(let key, _, _):        return key
+        case .sliderCell(let key, _, _, _, _):  return key
+        case .switchCell(let key, _, _):        return key
+        case .stepperCell(let key, _, _, _, _): return key
+        case .buttonCell(let key, _):           return key
         }
     }
     
-    func cellValue(from model: PeripheralDataModel) -> Any? {
-        switch self {
-        case .primaryColor:             return model.primaryColor
-        case .secondaryColor:           return model.secondaryColor
-        case .randomColor:              return model.randomColor
-        case .animationMode:            return model.animationMode?.name
-        case .animationDirection:       return model.animationDirection?.name
-        case .animationOnSpeed:         return model.animationOnSpeed.value
-        case .animationOffSpeed:        return model.animationOffSpeed.value
-        case .animationStep:            return model.animationStep.value
-        case .topSensorTriggerDistance: return model.topSensorTriggerDistance.value
-        case .botSensorTriggerDistance: return model.botSensorTriggerDistance.value
-        case .ledState:                 return model.ledState
-        case .ledBrightness:            return model.ledBrightness.value
-        case .ledTimeout:               return model.ledTimeout.value
-        case .error:                    return model.errorCode
-        }
+    func cellValue(from model: PeripheralData) -> Any? {
+        return model.getValue(key: cellKey)
     }
     
     var cellReuseID: String {
         switch self {
-        case .primaryColor:             return ColorTableViewCell.reuseIdentifier
-        case .secondaryColor:           return ColorTableViewCell.reuseIdentifier
-        case .randomColor:              return SwitchTableViewCell.reuseIdentifier
-        case .animationMode:            return PickerTableViewCell.reuseIdentifier
-        case .animationDirection:       return PickerTableViewCell.reuseIdentifier
-        case .animationOnSpeed:         return SliderTableViewCell.reuseIdentifier
-        case .animationOffSpeed:        return SliderTableViewCell.reuseIdentifier
-        case .animationStep:            return StepperTableViewCell.reuseIdentifier
-        case .topSensorTriggerDistance: return SliderTableViewCell.reuseIdentifier
-        case .botSensorTriggerDistance: return SliderTableViewCell.reuseIdentifier
-        case .ledState:                 return SwitchTableViewCell.reuseIdentifier
-        case .ledBrightness:            return SliderTableViewCell.reuseIdentifier
-        case .ledTimeout:               return StepperTableViewCell.reuseIdentifier
-        case .error:                    return PickerTableViewCell.reuseIdentifier
+        case .colorCell:   return ColorTableViewCell.reuseIdentifier
+        case .switchCell:  return SwitchTableViewCell.reuseIdentifier
+        case .pickerCell:  return PickerTableViewCell.reuseIdentifier
+        case .sliderCell:  return SliderTableViewCell.reuseIdentifier
+        case .stepperCell: return StepperTableViewCell.reuseIdentifier
+        case .buttonCell:  return ButtonTableViewCell.reuseIdentifier
         }
     }
     
     var nibName: String {
         switch self {
-        case .primaryColor:             return "ColorTableViewCell"
-        case .secondaryColor:           return "ColorTableViewCell"
-        case .randomColor:              return "SwitchTableViewCell"
-        case .animationMode:            return "PickerTableViewCell"
-        case .animationDirection:       return "PickerTableViewCell"
-        case .animationOnSpeed:         return "SliderTableViewCell"
-        case .animationOffSpeed:        return "SliderTableViewCell"
-        case .animationStep:            return "StepperTableViewCell"
-        case .topSensorTriggerDistance: return "SliderTableViewCell"
-        case .botSensorTriggerDistance: return "SliderTableViewCell"
-        case .ledState:                 return "SwitchTableViewCell"
-        case .ledBrightness:            return "SliderTableViewCell"
-        case .ledTimeout:               return "StepperTableViewCell"
-        case .error:                    return "PickerTableViewCell"
+        case .colorCell:   return "ColorTableViewCell"
+        case .switchCell:  return "SwitchTableViewCell"
+        case .pickerCell:  return "PickerTableViewCell"
+        case .sliderCell:  return "SliderTableViewCell"
+        case .stepperCell: return "StepperTableViewCell"
+        case .buttonCell:  return "ButtonTableViewCell"
         }
     }
     
     var cellClass: BaseTableViewCell.Type {
         switch self {
-        case .primaryColor:             return ColorTableViewCell.self
-        case .secondaryColor:           return ColorTableViewCell.self
-        case .randomColor:              return SwitchTableViewCell.self
-        case .animationMode:            return PickerTableViewCell.self
-        case .animationDirection:       return PickerTableViewCell.self
-        case .animationOnSpeed:         return SliderTableViewCell.self
-        case .animationOffSpeed:        return SliderTableViewCell.self
-        case .animationStep:            return StepperTableViewCell.self
-        case .topSensorTriggerDistance: return SliderTableViewCell.self
-        case .botSensorTriggerDistance: return SliderTableViewCell.self
-        case .ledState:                 return SwitchTableViewCell.self
-        case .ledBrightness:            return SliderTableViewCell.self
-        case .ledTimeout:               return StepperTableViewCell.self
-        case .error:                    return PickerTableViewCell.self
+        case .colorCell:   return ColorTableViewCell.self
+        case .pickerCell:  return PickerTableViewCell.self
+        case .sliderCell:  return SliderTableViewCell.self
+        case .switchCell:  return SwitchTableViewCell.self
+        case .stepperCell: return StepperTableViewCell.self
+        case .buttonCell:  return ButtonTableViewCell.self
         }
     }
     
-    func setupCell(cell: BaseTableViewCell, with dataModel: PeripheralDataModel) {
+    func configure(cell: BaseTableViewCell, with data: PeripheralData) {
         switch self {
-        case .primaryColor:
+        case .sliderCell(key: let key, title: let title, initialValue: let initialValue, minValue: let minValue, maxValue: let maxValue):
+            if let cell = cell as? SliderTableViewCell {
+                cell.slider.minimumValue = minValue
+                cell.slider.maximumValue = maxValue
+                cell.slider.value        = Float(data.getValue(key: key) as? Int ?? Int(initialValue))
+                cell.titleLabel.text     = title
+            }
+        case .colorCell(key: let key, title: let title, initialValue: _):
             if let cell = cell as? ColorTableViewCell {
-                cell.configure(title: self.name, value: dataModel.primaryColor)
+                cell.configure(title: title, value: data.getValue(key: key))
             }
-        case .secondaryColor:
-            if let cell = cell as? ColorTableViewCell {
-                cell.configure(title: self.name, value: dataModel.secondaryColor)
+        case .pickerCell(key: let key, title: let title, initialValue: let initialValue):
+            if let cell = cell as? PickerTableViewCell {
+                let dataValue = data.getValue(key: key) as? PeripheralDataElement
+                cell.titleLabel.text = title
+                cell.valueLabel.text = dataValue?.name ?? initialValue
             }
-        case .randomColor:
+        case .switchCell(key: let key, title: let title, initialValue: let initialValue):
             if let cell = cell as? SwitchTableViewCell {
-                cell.cellSwitch.isOn = dataModel.randomColor ?? false
-                cell.titleLabel.text     = self.name.localized
+                cell.titleLabel.text = title
+                cell.cellSwitch.isOn = data.getValue(key: key) as? Bool ?? initialValue
             }
-        case .animationMode:
-            if let cell = cell as? PickerTableViewCell {
-                cell.valueLabel.text = dataModel.animationMode?.name
-                cell.titleLabel.text     = self.name.localized
-            }
-        case .animationDirection:
-            if let cell = cell as? PickerTableViewCell {
-                cell.valueLabel.text = dataModel.animationDirection?.name
-                cell.titleLabel.text     = self.name.localized
-            }
-        case .animationOnSpeed:
-            if let cell = cell as? SliderTableViewCell {
-                cell.slider.minimumValue = Float(dataModel.animationOnSpeed.minValue ?? 0)
-                cell.slider.maximumValue = Float(dataModel.animationOnSpeed.maxValue ?? 100)
-                cell.slider.value        = Float(dataModel.animationOnSpeed.value ?? 0)
-                cell.titleLabel.text     = self.name.localized
-            }
-        case .animationOffSpeed:
-            if let cell = cell as? SliderTableViewCell {
-                cell.slider.minimumValue = Float(dataModel.animationOffSpeed.minValue ?? 0)
-                cell.slider.maximumValue = Float(dataModel.animationOffSpeed.maxValue ?? 100)
-                cell.slider.value        = Float(dataModel.animationOnSpeed.value ?? 0)
-                cell.titleLabel.text     = self.name.localized
-            }
-        case .animationStep:
+        case .stepperCell(key: let key, title: let title, initialValue: let initialValue, minValue: let minValue, maxValue: let maxValue):
             if let cell = cell as? StepperTableViewCell {
-                cell.stepper.minimumValue = Double(dataModel.animationStep.minValue ?? 0)
-                cell.stepper.maximumValue = Double(dataModel.animationStep.maxValue ?? 0)
-                cell.stepper.value        = Double(dataModel.animationStep.value ?? 0)
-                cell.titleLabel.text      = self.name.localized
-                cell.valueLabel.text      = String(describing: dataModel.animationStep.value ?? 0)
+                let dataValue = data.getValue(key: key) as? Int ?? Int(initialValue)
+                cell.titleLabel.text = title
+                cell.valueLabel.text = String(describing: dataValue)
+                cell.stepper.value = Double(dataValue)
+                cell.stepper.minimumValue = minValue
+                cell.stepper.maximumValue = maxValue
             }
-        case .ledState:
-            if let cell = cell as? SwitchTableViewCell {
-                cell.cellSwitch.isOn = dataModel.ledState ?? false
-                cell.titleLabel.text = self.name.localized
-            }
-        case .ledBrightness:
-            if let cell = cell as? SliderTableViewCell {
-                cell.slider.minimumValue = Float(dataModel.ledBrightness.minValue ?? 0)
-                cell.slider.maximumValue = Float(dataModel.ledBrightness.maxValue ?? 100)
-                cell.slider.value        = Float(dataModel.ledBrightness.value ?? 0)
-                cell.titleLabel.text     = self.name.localized
-            }
-        case .ledTimeout:
-            if let cell = cell as? StepperTableViewCell {
-                cell.stepper.minimumValue = Double(dataModel.ledTimeout.minValue ?? 0)
-                cell.stepper.maximumValue = Double(dataModel.ledTimeout.maxValue ?? 10)
-                cell.stepper.value        = Double(dataModel.ledTimeout.value ?? 0)
-                cell.valueLabel.text      = String(describing: dataModel.ledTimeout.value ?? 0)
-                cell.titleLabel.text      = self.name.localized
-            }
-        case .topSensorTriggerDistance:
-            if let cell = cell as? SliderTableViewCell {
-                cell.slider.minimumValue = Float(dataModel.topSensorTriggerDistance.minValue ?? 1)
-                cell.slider.maximumValue = Float(dataModel.topSensorTriggerDistance.maxValue ?? 100)
-                cell.slider.value        = Float(dataModel.topSensorTriggerDistance.value ?? 1)
-                cell.titleLabel.text     = self.name.localized
-            }
-        case .botSensorTriggerDistance:
-            if let cell = cell as? SliderTableViewCell {
-                cell.slider.minimumValue = Float(dataModel.botSensorTriggerDistance.maxValue ?? 1)
-                cell.slider.maximumValue = Float(dataModel.botSensorTriggerDistance.maxValue ?? 100)
-                cell.slider.value        = Float(dataModel.botSensorTriggerDistance.value ?? 1)
-                cell.titleLabel.text     = self.name.localized
-            }
-        case .error:
-            if let cell = cell as? PickerTableViewCell {
-                cell.titleLabel.text = self.name.localized
-                cell.valueLabel.text = "Details".localized
-                cell.backgroundColor = UIColor.SLRed
+        case .buttonCell(key:_, title: let title):
+            if let cell = cell as? ButtonTableViewCell {
+                cell.button.setTitle(title, for: .normal)
             }
         }
     }
+    
 }

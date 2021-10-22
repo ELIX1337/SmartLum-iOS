@@ -16,7 +16,7 @@ protocol BaseTableViewCell: UITableViewCell {
 }
 
 extension BaseTableViewCell {
-    var returnValue: ((_ value: Any) -> Void)? { get { returnValue } set { }}
+    //var returnValue: ((_ value: Any) -> Void)? { get { returnValue } set { }}
     func additionalData(closure: () -> Void) { }
 }
 

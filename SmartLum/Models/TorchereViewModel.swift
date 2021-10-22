@@ -12,56 +12,92 @@ class TorchereViewModel: PeripheralViewModel {
     
     var torcherePeripheral: TorcherePeripheral!
     
+    var primaryColorCell:       PeripheralCell!
+    var secondaryColorCell:     PeripheralCell!
+    var randomColorCell:        PeripheralCell!
+    var animationModeCell:      PeripheralCell!
+    var animationSpeedCell:     PeripheralCell!
+    var animationDirectionCell: PeripheralCell!
+    var animationStepCell:      PeripheralCell!
+    
     override init(_ withTableView: UITableView,
                   _ withPeripheral: BasePeripheral,
                   _ delegate: PeripheralViewModelDelegate,
-                  _ selected: @escaping (PeripheralRow) -> Void) {
+                  _ selected: @escaping (PeripheralCell) -> Void) {
         super.init(withTableView, withPeripheral, delegate, selected)
         self.torcherePeripheral = TorcherePeripheral.init(withPeripheral.peripheral, withPeripheral.centralManager)
         self.basePeripheral = withPeripheral
         self.tableView = withTableView
         self.selection = selected
         self.torcherePeripheral.delegate = self
-        self.dataModel.animationOnSpeed.minValue = 0
-        self.dataModel.animationOnSpeed.maxValue = 30
-        self.dataModel.animationStep.minValue = 0
-        self.dataModel.animationStep.maxValue = 10
-        self.peripheralReadyTableViewModel = PeripheralTableViewModel.init(sections: [PeripheralSection.init(headerText: "Color",
-                                                                                                             footerText: "Choose and handle colors",
-                                                                                                             rows: [.primaryColor,
-                                                                                                                    .secondaryColor,
-                                                                                                                    .randomColor]),
-                                                                                      PeripheralSection.init(headerText: "Animation",
-                                                                                                             footerText: "Handle animation",
-                                                                                                             rows: [.animationMode,
-                                                                                                                    .animationOnSpeed,
-                                                                                                                    .animationDirection,
-                                                                                                                    .animationStep])])
+        self.dataModel = FlClassicData.init(values: [:])
+        self.primaryColorCell = .colorCell(
+            key: FlClassicData.primaryColorKey,
+            title: "Primary color",
+            initialValue: dataModel.getValue(key: FlClassicData.primaryColorKey) as? UIColor ?? UIColor.SLWhite)
+        self.secondaryColorCell = .colorCell(
+            key: FlClassicData.secondaryColorKey,
+            title: "Secondary color",
+            initialValue: dataModel.getValue(key: FlClassicData.secondaryColorKey) as? UIColor ?? UIColor.SLWhite)
+        self.randomColorCell = .switchCell(
+            key: FlClassicData.randomColorKey,
+            title: "Random color",
+            initialValue: dataModel.getValue(key: FlClassicData.randomColorKey) as? Bool ?? false)
+        self.animationModeCell = .pickerCell(
+            key: FlClassicData.animationModeKey,
+            title: "Animation",
+            initialValue: dataModel.getValue(key: FlClassicData.animationModeKey) as? String ?? "")
+        self.animationSpeedCell = .sliderCell(
+            key: FlClassicData.animationSpeedKey,
+            title: "Speed",
+            initialValue: Float(dataModel.getValue(key: FlClassicData.animationSpeedKey) as? Int ?? 0),
+            minValue: Float(FlClassicData.animationMinSpeed),
+            maxValue: Float(FlClassicData.animationMaxSpeed))
+        self.animationDirectionCell = .pickerCell(
+            key: FlClassicData.animationDirectionKey,
+            title: "Direction",
+            initialValue: dataModel.getValue(key: FlClassicData.animationDirectionKey) as? String ?? "")
+        self.animationStepCell = .stepperCell(
+            key: FlClassicData.animationStepKey,
+            title: "Step",
+            initialValue: Double(dataModel.getValue(key: FlClassicData.animationStepKey) as? Int ?? 0),
+            minValue: Double(FlClassicData.animationMinStep),
+            maxValue: Double(FlClassicData.animationMaxStep))
+        self.peripheralReadyTableViewModel = PeripheralTableViewModel(
+            sections: [
+                PeripheralSection(
+                    headerText: "Color",
+                    footerText: "Choose and handle colors",
+                    rows: [primaryColorCell, secondaryColorCell, randomColorCell]),
+                PeripheralSection(
+                    headerText: "Animation",
+                    footerText: "Handle animation",
+                    rows: [animationModeCell, animationSpeedCell, animationDirectionCell, animationStepCell])
+            ])
     }
     
-    override func cellDataCallback(fromRow: PeripheralRow, withValue: Any?) {
+    override func cellDataCallback(fromRow: PeripheralCell, withValue: Any?) {
         super.cellDataCallback(fromRow: fromRow, withValue: withValue)
         switch fromRow {
-        case .animationOnSpeed:
+        case animationSpeedCell:
             print("Speed - \(String(describing: withValue))")
             if let value = withValue as? Float {
                 torcherePeripheral.writeAnimationOnSpeed(Int(value))
-                dataModel.animationOnSpeed.value = Int(value)
+                dataModel.setValue(key: FlClassicData.animationSpeedKey, value: value)
             }
             break
-        case .randomColor:
+        case randomColorCell:
             print("Random color - \(String(describing: withValue))")
             if let value = withValue as? Bool {
                 torcherePeripheral.writeRandomColor(value)
-                dataModel.randomColor = value
-                //value ? hideCell(rows: [.primaryColor, .secondaryColor], rowsSection: nil) : showRows(rows: [.primaryColor, .secondaryColor])
+                dataModel.setValue(key: FlClassicData.randomColorKey, value: value)
             }
             break
-        case .animationStep:
+        case animationStepCell:
             print("Animation step - \(String(describing: withValue))")
             if let value = withValue as? Int {
                 torcherePeripheral.writeAnimationStep(value)
-                dataModel.animationStep.value = value
+                dataModel.setValue(key: FlClassicData.animationStepKey, value: value)
             }
             break
         default:
@@ -70,73 +106,65 @@ class TorchereViewModel: PeripheralViewModel {
     }
     
     private func updateCellsFor(animation: PeripheralAnimations) {
-        if (dataModel.animationMode != animation) {
-            switch animation {
-            case .tetris:
-                hideCell(rows: [.animationStep], rowsSection: nil)
-                break
-            case .wave:
-                hideCell(rows: [.randomColor], rowsSection: nil)
-                break
-            case .transfusion:
-                hideCell(rows: [.animationStep, .animationDirection], rowsSection: nil)
-                break
-            case .rainbowTransfusion:
-                hideCell(rows: [.animationStep, .animationDirection], rowsSection: [.primaryColor])
-                break
-            case .rainbow:
-                hideCell(rows: [.animationStep], rowsSection: [.primaryColor])
-                break
-            case .static:
-                hideCell(rows: [.animationStep, .animationOnSpeed, .animationDirection, .secondaryColor, .randomColor], rowsSection: nil)
-                break
+        if let value = dataModel.getValue(key: FlClassicData.animationModeKey) as? PeripheralAnimations {
+            if (value != animation) {
+                switch animation {
+                case .tetris:
+                    hideCell(rows: [animationStepCell], rowsSection: nil)
+                    break
+                case .wave:
+                    hideCell(rows: [randomColorCell], rowsSection: nil)
+                    break
+                case .transfusion:
+                    hideCell(rows: [animationStepCell, animationDirectionCell], rowsSection: nil)
+                    break
+                case .rainbowTransfusion:
+                    hideCell(rows: [animationStepCell, animationDirectionCell], rowsSection: [primaryColorCell])
+                    break
+                case .rainbow:
+                    hideCell(rows: [animationStepCell], rowsSection: [primaryColorCell])
+                    break
+                case .static:
+                    hideCell(rows: [animationStepCell, animationSpeedCell, animationDirectionCell, secondaryColorCell, randomColorCell], rowsSection: nil)
+                    break
+                }
             }
         }
     }
     
     public func writePrimaryColor(color: UIColor) {
         torcherePeripheral.writePrimaryColor(color)
-        dataModel.primaryColor = color
-        reloadCell(for: .primaryColor, with: .none)
+        dataModel.setValue(key: FlClassicData.primaryColorKey, value: color)
+        reloadCell(for: primaryColorCell, with: .none)
     }
     
     public func writeSecondaryColor(color: UIColor) {
         torcherePeripheral.writeSecondaryColor(color)
-        dataModel.secondaryColor = color
-        reloadCell(for: .secondaryColor, with: .none)
+        dataModel.setValue(key: FlClassicData.secondaryColorKey, value: color)
+        reloadCell(for: secondaryColorCell, with: .none)
     }
-    
-    //    public func writeRandomColorMode(state: Bool) {
-    //        torcherePeripheral.writeRandomColor(state)
-    //        dataModel.randomColor = state
-    //        reloadCell(for: .randomColor, with: .fade)
-    //    }
     
     public func writeAnimationMode(mode: PeripheralAnimations) {
         torcherePeripheral.writeAnimationMode(mode)
         updateCellsFor(animation: mode)
-        dataModel.animationMode = mode
+        dataModel.setValue(key: FlClassicData.animationModeKey, value: mode)
+        reloadCell(for: animationModeCell, with: .none)
     }
     
     public func writeAnimationDirection(direction: PeripheralAnimationDirections) {
         torcherePeripheral.writeAnimationDirection(direction)
-        dataModel.animationDirection = direction
-        reloadCell(for: .animationDirection, with: .none)
+        dataModel.setValue(key: FlClassicData.animationDirectionKey, value: direction)
+        reloadCell(for: animationDirectionCell, with: .none)
     }
     
     public func writeAnimationOnSpeed(speed: Int) {
         torcherePeripheral.writeAnimationOnSpeed(speed)
-        dataModel.animationOnSpeed.value = speed
-    }
-    
-    public func writeAnimationOffSpeed(speed: Int) {
-        torcherePeripheral.writeAnimationOffSpeed(speed)
-        dataModel.animationOffSpeed.value = speed
+        dataModel.setValue(key: FlClassicData.animationSpeedKey, value: speed)
     }
     
     public func writeAnimationStep(step: Int) {
         torcherePeripheral.writeAnimationStep(step)
-        dataModel.animationStep.value = step
+        dataModel.setValue(key: FlClassicData.animationStepKey, value: step)
     }
     
 }
@@ -144,41 +172,40 @@ class TorchereViewModel: PeripheralViewModel {
 extension TorchereViewModel: TorcherePeripheralDelegate {
     
     func getPrimaryColor(_ color: UIColor) {
-        dataModel.primaryColor = color
-        reloadCell(for: .primaryColor, with: .middle)
+        dataModel.setValue(key: FlClassicData.primaryColorKey, value: color)
+        reloadCell(for: primaryColorCell, with: .middle)
     }
     
     func getSecondaryColor(_ color: UIColor) {
-        dataModel.secondaryColor = color
-        reloadCell(for: .secondaryColor, with: .middle)
+        dataModel.setValue(key: FlClassicData.secondaryColorKey, value: color)
+        reloadCell(for: secondaryColorCell, with: .middle)
     }
     
     func getRandomColor(_ state: Bool) {
-        dataModel.randomColor = state
-        reloadCell(for: .randomColor, with: .middle)
+        dataModel.setValue(key: FlClassicData.randomColorKey, value: state)
+        reloadCell(for: randomColorCell, with: .middle)
     }
     
     func getAnimationMode(mode: PeripheralAnimations) {
-        dataModel.animationMode = mode
         updateCellsFor(animation: mode)
+        dataModel.setValue(key: FlClassicData.animationModeKey, value: mode)
+        reloadCell(for: animationModeCell, with: .middle)
     }
     
     func getAnimationOnSpeed(speed: Int) {
-        dataModel.animationOnSpeed.value = speed
-        reloadCell(for: .animationOnSpeed, with: .middle)
+        dataModel.setValue(key: FlClassicData.animationSpeedKey, value: speed)
+        reloadCell(for: animationSpeedCell, with: .middle)
     }
     
-    func getAnimationOffSpeed(speed: Int) {
-        dataModel.animationOffSpeed.value = speed
-    }
+    func getAnimationOffSpeed(speed: Int) { }
     
     func getAnimationDirection(direction: PeripheralAnimationDirections) {
-        dataModel.animationDirection = direction
-        reloadCell(for: .animationDirection, with: .middle)
+        dataModel.setValue(key: FlClassicData.animationDirectionKey, value: direction)
+        reloadCell(for: animationDirectionCell, with: .middle)
     }
     
     func getAnimationStep(step: Int) {
-        dataModel.animationStep.value = step
-        reloadCell(for: .animationStep, with: .middle)
+        dataModel.setValue(key: FlClassicData.animationStepKey, value: step)
+        reloadCell(for: animationStepCell, with: .middle)
     }
 }

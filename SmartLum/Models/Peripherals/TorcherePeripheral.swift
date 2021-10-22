@@ -16,7 +16,8 @@ protocol TorcherePeripheralDelegate: ColorPeripheralDelegate, AnimationPeriphera
 class TorcherePeripheral: BasePeripheral, ColorPeripheralProtocol, AnimationPeripheralProtocol {
     
     var delegate: TorcherePeripheralDelegate?
-    private var model = PeripheralDataModel()
+    //private var model = PeripheralDataModel()
+    private var model = FlClassicData.init(values: [:])
 
     override init(_ peripheral: CBPeripheral, _ manager: CBCentralManager) {
         super.init(peripheral, manager)
@@ -27,31 +28,38 @@ class TorcherePeripheral: BasePeripheral, ColorPeripheralProtocol, AnimationPeri
         switch (service, characteristic) {
         case (.color,.primaryColor):
             delegate?.getPrimaryColor(data.toUIColor())
-            model.primaryColor = data.toUIColor()
+            //model.primaryColor = data.toUIColor()
+            model.setValue(key: FlClassicData.primaryColorKey, value: data.toUIColor())
             break
         case (.color,.secondaryColor):
             delegate?.getSecondaryColor(data.toUIColor())
-            model.secondaryColor = data.toUIColor()
+            //model.secondaryColor = data.toUIColor()
+            model.setValue(key: FlClassicData.secondaryColorKey, value: data.toUIColor())
             break
         case (.color,.randomColor):
             delegate?.getRandomColor(data.toBool())
-            model.randomColor = data.toBool()
+            //model.randomColor = data.toBool()
+            model.setValue(key: FlClassicData.randomColorKey, value: data.toBool())
             break
         case (.animation,.animationMode):
             delegate?.getAnimationMode(mode: PeripheralAnimations(rawValue: data.toUInt8()) ?? .static)
-            model.animationMode = PeripheralAnimations(rawValue: data.toUInt8())
+            //model.animationMode = PeripheralAnimations(rawValue: data.toUInt8())
+            model.setValue(key: FlClassicData.animationModeKey, value: data.toUInt8())
             break
         case (.animation,.animationOnSpeed):
             delegate?.getAnimationOnSpeed(speed: Int(data.toUInt8()))
-            model.animationOnSpeed.value = Int(data.toUInt8())
+            //model.animationOnSpeed.value = Int(data.toUInt8())
+            model.setValue(key: FlClassicData.animationSpeedKey, value: data.toUInt8())
             break
         case (.animation,.animationDirection):
             delegate?.getAnimationDirection(direction: PeripheralAnimationDirections.init(rawValue: data.toUInt8()) ?? .fromTop)
-            model.animationDirection = PeripheralAnimationDirections(rawValue: data.toUInt8())
+            //model.animationDirection = PeripheralAnimationDirections(rawValue: data.toUInt8())
+            model.setValue(key: FlClassicData.animationDirectionKey, value: data.toUInt8())
             break
         case (.animation,.animationStep):
             delegate?.getAnimationStep(step: Int(data.toUInt8()))
-            model.animationStep.value = Int(data.toUInt8())
+            //model.animationStep.value = Int(data.toUInt8())
+            model.setValue(key: FlClassicData.animationStepKey, value: data.toUInt8())
             break
         default:
             break

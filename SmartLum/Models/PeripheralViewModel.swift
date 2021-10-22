@@ -21,8 +21,8 @@ protocol PeripheralViewModelDelegate {
     public var basePeripheral: BasePeripheral!
     public var tableView: UITableView
     public var delegate: PeripheralViewModelDelegate
-    public var selection: (PeripheralRow) -> Void
-    public var dataModel = PeripheralDataModel()
+    public var selection: (PeripheralCell) -> Void
+    public var dataModel: PeripheralData!
     public var hiddenIndexPath = HiddenIndexPath()
     
     public var peripheralReadyTableViewModel: PeripheralTableViewModel?
@@ -41,7 +41,7 @@ protocol PeripheralViewModelDelegate {
     init(_ withTableView:  UITableView,
          _ withPeripheral: BasePeripheral,
          _ delegate:       PeripheralViewModelDelegate,
-         _ selected:       @escaping (PeripheralRow) -> Void) {
+         _ selected:       @escaping (PeripheralCell) -> Void) {
         self.tableView = withTableView
         self.selection = selected
         self.delegate  = delegate
@@ -59,7 +59,7 @@ protocol PeripheralViewModelDelegate {
         }
     }
     
-    public func reloadCell(for row: PeripheralRow, with animation: UITableView.RowAnimation) {
+    public func reloadCell(for row: PeripheralCell, with animation: UITableView.RowAnimation) {
         if let indexPath = getTableViewModel(type: tableView.tableViewType).getIndexPath(forRow: row) {
             tableView.reloadRows(at: [indexPath], with: animation)
         } else {
@@ -68,14 +68,14 @@ protocol PeripheralViewModelDelegate {
     }
     
     
-    public func hideCell(rows: [PeripheralRow], rowsSection: [PeripheralRow]?) {
+    public func hideCell(rows: [PeripheralCell], rowsSection: [PeripheralCell]?) {
         hideRows(rows: rows)
         if let section = rowsSection {
             hideSections(of: section)
         }
     }
     
-    private func hideRows(rows: [PeripheralRow]) {
+    private func hideRows(rows: [PeripheralCell]) {
         let indexPaths = rows.map { tableViewModel.getIndexPath(forRow: $0) }.compactMap { $0 }
         showRows(rows: nil)
         showSections(of: nil)
@@ -83,7 +83,7 @@ protocol PeripheralViewModelDelegate {
         tableView.reloadRows(at: indexPaths, with: .top)
     }
     
-    private func showRows(rows: [PeripheralRow]?) {
+    private func showRows(rows: [PeripheralCell]?) {
         guard let array = rows else {
             hiddenIndexPath.row.removeAll()
             tableView.reloadData()
@@ -97,13 +97,13 @@ protocol PeripheralViewModelDelegate {
         }
     }
     
-    private func hideSections(of: [PeripheralRow]) {
+    private func hideSections(of: [PeripheralCell]) {
         let indexPaths = of.map { tableViewModel.getIndexPath(forRow: $0) }.compactMap { $0?.section }
         hiddenIndexPath.section = indexPaths
         hiddenIndexPath.section.forEach { tableView.reloadSections(IndexSet(integer: $0), with: .top) }
     }
     
-    private func showSections(of: [PeripheralRow]?) {
+    private func showSections(of: [PeripheralCell]?) {
         guard let array = of else {
             hiddenIndexPath.section.removeAll()
             tableView.reloadData()
@@ -117,7 +117,14 @@ protocol PeripheralViewModelDelegate {
         }
     }
     
-    public func cellDataCallback(fromRow: PeripheralRow, withValue: Any?) { }
+    public func cellDataCallback(fromRow: PeripheralCell, withValue: Any?) {
+        switch fromRow.cellKey {
+        case BasePeripheralData.errorKey:
+            selection(fromRow)
+            break
+        default: break
+        }
+    }
     
     public func disconnect() { basePeripheral.disconnect() }
     
@@ -156,7 +163,7 @@ extension PeripheralViewModel: UITableViewDataSource {
         let row = getTableViewModel(type: tableView.tableViewType).sections[indexPath.section].rows[indexPath.row]
         tableView.register(UINib.init(nibName: row.nibName, bundle: nil), forCellReuseIdentifier: row.cellReuseID)
         let cell = tableView.dequeueReusableCell(withIdentifier: row.cellReuseID, for: indexPath) as! BaseTableViewCell
-        row.setupCell(cell: cell, with: dataModel)
+        row.configure(cell: cell, with: dataModel)
         cell.returnValue = { value in self.cellDataCallback(fromRow: row, withValue: value) }
         return cell
     }
@@ -199,7 +206,7 @@ extension PeripheralViewModel: UITableViewDelegate {
 extension PeripheralViewModel: BasePeripheralDelegate {
     
     func peripheralError(code: Int) {
-        dataModel.errorCode = code
+        dataModel.setValue(key: BasePeripheralData.errorKey, value: code)
         if (peripheralReadyTableViewModel != nil) {
             if (!peripheralReadyTableViewModel!.sections.contains(PeripheralTableViewModel.errorSection)) {
                 tableView.beginUpdates()
@@ -227,7 +234,8 @@ extension PeripheralViewModel: BasePeripheralDelegate {
     }
     
     func peripheralFirmwareVersion(_ version: Int) {
-        dataModel.firmwareVersion = version
+        dataModel.setValue(key: BasePeripheralData.firmwareVersionKey, value: version)
+
     }
     
     func peripheralOnDFUMode() {

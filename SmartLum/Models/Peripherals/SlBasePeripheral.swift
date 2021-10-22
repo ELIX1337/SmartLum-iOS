@@ -14,7 +14,8 @@ protocol SlBasePeripheralDelegate: DistanceSensorPeripheralDelegate, LedPeripher
 class SlBasePeripheral: BasePeripheral, DistanceSensorPeripheralProtocol, LedPeripheralProtocol, AnimationPeripheralProtocol {
     
     var delegate: SlBasePeripheralDelegate?
-    private var model = PeripheralDataModel()
+    //private var model = PeripheralDataModel()
+    //private var model = SlBaseData.init(values: [:])
 
     override init(_ peripheral: CBPeripheral, _ manager: CBCentralManager) {
         super.init(peripheral, manager)
@@ -24,33 +25,37 @@ class SlBasePeripheral: BasePeripheral, DistanceSensorPeripheralProtocol, LedPer
         super.readData(data: data, from: characteristic, in: service, error: error)
         switch (service, characteristic) {
         case (.sensor,.topSensorTriggerDistance):
-            // TODO: - Implement toInt() for double byte
             delegate?.getTopSensorTriggerDistance(distance: data.toInt())
-            model.topSensorTriggerDistance.value = data.toInt()
+            //model.topSensorTriggerDistance.value = data.toInt()
+            //model.setValue(key: SlBaseData.topTriggerDistanceKey, value: data.toInt())
             print("READING TOP SENSOR - \(data.toInt())")
             break
         case (.sensor,.botSensorTriggerDistance):
-            // TODO: - Implement toInt() for double byte
             delegate?.getBotSensorTriggerDistance(distance: data.toInt())
-            model.botSensorTriggerDistance.value = data.toInt()
+            //model.botSensorTriggerDistance.value = data.toInt()
+            //model.setValue(key: SlBaseData.botTriggerDistanceKey, value: data.toInt())
             print("READING BOT SENSOR - \(data.toInt())")
             break
         case (.led, .ledState):
             delegate?.getLedState(state: data.toBool())
-            model.ledState = data.toBool()
+            //model.ledState = data.toBool()
+            //model.setValue(key: SlBaseData.ledStateKey, value: data.toBool())
             break
         case (.led, .ledBrightness):
             delegate?.getLedBrightness(brightness: data.toInt())
-            model.ledBrightness.value = data.toInt()
+            //model.ledBrightness.value = data.toInt()
+            //model.setValue(key: SlBaseData.ledBrightnessKey, value: data.toInt())
             print("DECIMAL VALUE - \(data.toInt()) for CHARACTERISTIC - \(characteristic.uuidString)")
             break
         case (.led, .ledTimeout):
             delegate?.getLedTimeout(timeout: data.toInt())
-            model.ledTimeout.value = data.toInt()
+            //model.ledTimeout.value = data.toInt()
+            //model.setValue(key: SlBaseData.ledTimeout, value: data.toInt())
             break
         case (.animation, .animationOnSpeed):
             delegate?.getAnimationOnSpeed(speed: data.toInt())
-            model.animationOnSpeed.value = data.toInt()
+            //model.animationOnSpeed.value = data.toInt()
+            //model.setValue(key: SlBaseData.animationSpeedKey, value: data.toInt())
             break
         default:
             break

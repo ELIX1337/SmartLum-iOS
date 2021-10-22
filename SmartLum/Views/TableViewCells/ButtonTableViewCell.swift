@@ -10,7 +10,10 @@ import UIKit
 
 class ButtonTableViewCell: UITableViewCell, BaseTableViewCell {
     
-    static var reuseIdentifier: String = "ButtonCellID"
+    static let reuseIdentifier: String = "ButtonCellID"
+    var returnValue: ((Any) -> Void)?
+    
+    @IBOutlet weak var button: UIButton!
     
     func configure(title: String?, value: Any?) {
         
@@ -19,9 +22,6 @@ class ButtonTableViewCell: UITableViewCell, BaseTableViewCell {
     func defaultInit() {
         
     }
-    
-    
-    @IBOutlet weak var button: UIButton!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,12 +30,6 @@ class ButtonTableViewCell: UITableViewCell, BaseTableViewCell {
     
     @IBAction func onButtonClick(_ sender: UIButton) {
         self.returnValue?(true)
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
 }

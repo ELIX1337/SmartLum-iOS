@@ -15,10 +15,13 @@ class SlBaseViewController: PeripheralViewController, PeripheralViewControllerPr
         self.viewModel = SlBaseViewModel(self.tableView, peripheral, self, onCellSelected(cell:))
     }
     
-    func onCellSelected(cell: PeripheralRow) {
-        switch cell {
-        case .error:
+    func onCellSelected(cell: PeripheralCell) {
+        switch cell.cellKey {
+        case BasePeripheralData.errorKey:
             showPeripheralErrorAlert()
+            break
+        case BasePeripheralData.factoryResetKey:
+            showErrorAlert(title: "Device reset", message: "This action will reset device to factory settings")
             break
         default: break
         }

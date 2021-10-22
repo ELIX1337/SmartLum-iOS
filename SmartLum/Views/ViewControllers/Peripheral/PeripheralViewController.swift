@@ -11,11 +11,11 @@ import CoreBluetooth
 
 protocol PeripheralViewControllerProtocol {
     func viewModelInit(peripheral: BasePeripheral)
-    func onCellSelected(cell: PeripheralRow)
+    func onCellSelected(cell: PeripheralCell)
 }
 
 extension PeripheralViewControllerProtocol {
-    func onCellSelected(cell: PeripheralRow) { }
+    func onCellSelected(cell: PeripheralCell) { }
 }
 
 protocol PeripheralSetupViewControllerProtocol {
@@ -128,7 +128,8 @@ extension PeripheralViewController: PeripheralViewModelDelegate {
     
     func peripheralInitState(isInitialized: Bool) {
         print("is init \(isInitialized)")
-        viewModel.dataModel.isInitialized = isInitialized
+        //viewModel.dataModel.isInitialized = isInitialized
+        viewModel.dataModel.setValue(key: BasePeripheralData.initStateKey, value: isInitialized)
         viewModel.isInitialized = isInitialized
         if (!isInitialized) {
             hideConnectionAlert()
