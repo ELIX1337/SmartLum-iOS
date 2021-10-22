@@ -21,22 +21,22 @@ extension LedPeripheralProtocol where Self:BasePeripheralProtocol {
     func writeLedState(_ state: Bool) {
         if let characteristic = ledStateCharacteristic {
             print("Writing led state \(state)")
-            peripheral.writeValue(state.toData(), for: characteristic, type: .withResponse)
+            peripheral.writeValue(state.toData(), for: characteristic, type: .withoutResponse)
         }
     }
     
     func writeLedBrightness(_ brightness: Int) {
         if let characteristic = ledBrightnessCharacteristic {
-            let data = withUnsafeBytes(of: brightness) { Data($0) }
+            let data = brightness.toData()
             print("Writing led brightness \(data) for \(characteristic.uuid.uuidString)")
-            peripheral.writeValue(data, for: characteristic, type: .withResponse)
+            peripheral.writeValue(data, for: characteristic, type: .withoutResponse)
         }
     }
     
     func writeLedTimeout(_ timeout: Int) {
         if let characteristic = ledTimeoutCharacteristic {
             print("Writing led timeout \(timeout)")
-            peripheral.writeValue(timeout.toData(), for: characteristic, type: .withResponse)
+            peripheral.writeValue(timeout.toData(), for: characteristic, type: .withoutResponse)
         }
     }
 

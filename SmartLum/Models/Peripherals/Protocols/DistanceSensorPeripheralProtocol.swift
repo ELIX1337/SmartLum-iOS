@@ -20,13 +20,15 @@ extension DistanceSensorPeripheralProtocol where Self:BasePeripheralProtocol {
     func writeTopSensorTriggerDistance(_ distance: Int) {
         if let characteristic = topSensorTriggerDistanceCharacteristic {
         // TODO: - Implement toData() for double byte
-            peripheral.writeValue(distance.toData(), for: characteristic, type: .withoutResponse)
+            print("Writing top distance - \(distance)")
+            peripheral.writeValue(UInt8(distance).toDoubleData(), for: characteristic, type: .withoutResponse)
         }
     }
     func writeBotSensorTriggerDistance(_ distance: Int) {
         if let characteristic = botSensorTriggerDistanceCharacteristic {
         // TODO: - Implement toData() for double byte
-            peripheral.writeValue(distance.toData(), for: characteristic, type: .withoutResponse)
+            print("Writing bot distance - \(distance)")
+            peripheral.writeValue(UInt8(distance).toDoubleData(), for: characteristic, type: .withoutResponse)
         }
     }
 
