@@ -18,6 +18,23 @@ struct PeripheralTableViewModel {
         }
         return nil
     }
+    
+    enum TableViewType: Int {
+        case ready    = 1
+        case setup    = 2
+        case settings = 3
+    }
+}
+
+extension PeripheralTableViewModel {
+    static var errorSection: PeripheralSection {
+        get {
+            PeripheralSection.init(
+                headerText: "Error",
+                footerText: "Device error found",
+                rows: [.error])
+        }
+    }
 }
 
 struct HiddenIndexPath {
@@ -36,7 +53,7 @@ struct PeripheralSection: Equatable {
     var rows: [PeripheralRow]
 }
 
-enum PeripheralRow: Int, CaseIterable {
+enum PeripheralRow: CaseIterable {
     case primaryColor
     case secondaryColor
     case randomColor
@@ -50,6 +67,7 @@ enum PeripheralRow: Int, CaseIterable {
     case ledTimeout
     case topSensorTriggerDistance
     case botSensorTriggerDistance
+    case error
     
     func updateCell(in tableView: UITableView, with tableViewModel: PeripheralTableViewModel) {
         if let indexPath = tableViewModel.getIndexPath(forRow: self) {
@@ -80,6 +98,7 @@ enum PeripheralRow: Int, CaseIterable {
         case .ledState:                 return "Led state"
         case .ledBrightness:            return "Led brightness"
         case .ledTimeout:               return "Led timeout"
+        case .error:                    return "Error"
         }
     }
     
@@ -98,6 +117,7 @@ enum PeripheralRow: Int, CaseIterable {
         case .ledState:                 return model.ledState
         case .ledBrightness:            return model.ledBrightness.value
         case .ledTimeout:               return model.ledTimeout.value
+        case .error:                    return model.errorCode
         }
     }
     
@@ -116,6 +136,7 @@ enum PeripheralRow: Int, CaseIterable {
         case .ledState:                 return SwitchTableViewCell.reuseIdentifier
         case .ledBrightness:            return SliderTableViewCell.reuseIdentifier
         case .ledTimeout:               return StepperTableViewCell.reuseIdentifier
+        case .error:                    return PickerTableViewCell.reuseIdentifier
         }
     }
     
@@ -134,6 +155,7 @@ enum PeripheralRow: Int, CaseIterable {
         case .ledState:                 return "SwitchTableViewCell"
         case .ledBrightness:            return "SliderTableViewCell"
         case .ledTimeout:               return "StepperTableViewCell"
+        case .error:                    return "PickerTableViewCell"
         }
     }
     
@@ -152,6 +174,7 @@ enum PeripheralRow: Int, CaseIterable {
         case .ledState:                 return SwitchTableViewCell.self
         case .ledBrightness:            return SliderTableViewCell.self
         case .ledTimeout:               return StepperTableViewCell.self
+        case .error:                    return PickerTableViewCell.self
         }
     }
     
@@ -235,6 +258,12 @@ enum PeripheralRow: Int, CaseIterable {
                 cell.slider.maximumValue = Float(dataModel.botSensorTriggerDistance.maxValue ?? 100)
                 cell.slider.value        = Float(dataModel.botSensorTriggerDistance.value ?? 1)
                 cell.titleLabel.text     = self.name.localized
+            }
+        case .error:
+            if let cell = cell as? PickerTableViewCell {
+                cell.titleLabel.text = self.name.localized
+                cell.valueLabel.text = "Details".localized
+                cell.backgroundColor = UIColor.SLRed
             }
         }
     }
