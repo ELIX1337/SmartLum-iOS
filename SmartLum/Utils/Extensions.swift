@@ -114,6 +114,14 @@ extension UnsignedInteger {
 
         self.init(value)
     }
+    
+    func toDoubleData() -> Data {
+        var array = [UInt8](repeating: 0, count:2)
+        array[0] = UInt8(self >> 8)
+        array[1] = UInt8(self & 0xFF)
+        return Data(array)
+    }
+    
 }
 
 extension Bool {
@@ -156,4 +164,12 @@ extension DataProtocol {
     func toCGFloat() -> CGFloat { value() }
     func toDouble() -> Double { value() }
     func toDecimal() -> Decimal { value() }
+}
+
+extension Array where Element: Hashable {
+    func difference(from other: [Element]) -> [Element] {
+        let thisSet = Set(self)
+        let otherSet = Set(other)
+        return Array(thisSet.symmetricDifference(otherSet))
+    }
 }
