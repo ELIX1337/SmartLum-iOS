@@ -23,6 +23,7 @@ class TorcherePeripheral: BasePeripheral, ColorPeripheralProtocol, AnimationPeri
     }
     
     override func readData(data: Data, from characteristic: BluetoothEndpoint.Characteristics, in service: BluetoothEndpoint.Services, error: Error?) {
+        super.readData(data: data, from: characteristic, in: service, error: error)
         switch (service, characteristic) {
         case (.color,.primaryColor):
             delegate?.getPrimaryColor(data.toUIColor())
