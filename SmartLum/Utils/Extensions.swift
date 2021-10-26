@@ -173,3 +173,7 @@ extension Array where Element: Hashable {
         return Array(thisSet.symmetricDifference(otherSet))
     }
 }
+
+extension UIImage {
+    static var largeScale: SymbolConfiguration { UIImage.SymbolConfiguration(pointSize: 20, weight: .bold, scale: .large) }
+}

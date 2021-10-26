@@ -96,7 +96,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return NSLocalizedString("Nearby Devices", comment: "")
+        return "scanner_section_header".localized
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -104,7 +104,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let aCell = tableView.dequeueReusableCell(withIdentifier: PeripheralTableViewCell.reuseIdentifier, for: indexPath) as! PeripheralTableViewCell
+        let aCell = tableView.dequeueReusableCell(withIdentifier: ScannerTableViewCell.reuseIdentifier, for: indexPath) as! ScannerTableViewCell
         let peripheral = discoveredPeripherals[indexPath.row]
         aCell.setupView(withPeripheral: peripheral)
         return aCell
@@ -132,7 +132,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
             tableView.endUpdates()
         } else {
             if let index = discoveredPeripherals.firstIndex(of: newPeripheral) {
-                if let aCell = tableView.cellForRow(at: [0, index]) as? PeripheralTableViewCell {
+                if let aCell = tableView.cellForRow(at: [0, index]) as? ScannerTableViewCell {
                     aCell.peripheralUpdatedAdvertisementData(newPeripheral)
                 }
             }
@@ -181,7 +181,6 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     private func pushViewController(advertisedData: AdvertisedData) {
         if let type = advertisedData.peripheralType {
             let vc = getPeripheralVC(peripheral: type)
-            //let peripheral = BasePeripheral.init(advertisedData.peripheral, centralManager)
             let peripheral = getPeripheralType(profile: type, peripheral: advertisedData.peripheral, manager: centralManager)
             peripheral.type = advertisedData.peripheralType
             vc.viewModelInit(peripheral: peripheral)

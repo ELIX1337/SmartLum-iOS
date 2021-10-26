@@ -18,10 +18,10 @@ class SlBaseViewController: PeripheralViewController, PeripheralViewControllerPr
     func onCellSelected(cell: PeripheralCell) {
         switch cell.cellKey {
         case BasePeripheralData.errorKey:
-            showPeripheralErrorAlert()
+            openPeripheralSettings()
             break
         case BasePeripheralData.factoryResetKey:
-            showErrorAlert(title: "Device reset", message: "This action will reset device to factory settings")
+            showResetAlert()
             break
         default: break
         }

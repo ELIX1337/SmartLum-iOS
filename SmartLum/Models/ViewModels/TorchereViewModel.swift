@@ -33,45 +33,48 @@ class TorchereViewModel: PeripheralViewModel {
         self.dataModel = FlClassicData.init(values: [:])
         self.primaryColorCell = .colorCell(
             key: FlClassicData.primaryColorKey,
-            title: "Primary color",
+            title: "peripheral_primary_color_cell_title".localized,
             initialValue: dataModel.getValue(key: FlClassicData.primaryColorKey) as? UIColor ?? UIColor.SLWhite)
         self.secondaryColorCell = .colorCell(
             key: FlClassicData.secondaryColorKey,
-            title: "Secondary color",
+            title: "peripheral_secondary_color_cell_title".localized,
             initialValue: dataModel.getValue(key: FlClassicData.secondaryColorKey) as? UIColor ?? UIColor.SLWhite)
         self.randomColorCell = .switchCell(
             key: FlClassicData.randomColorKey,
-            title: "Random color",
+            title: "peripheral_random_color_cell_title".localized,
             initialValue: dataModel.getValue(key: FlClassicData.randomColorKey) as? Bool ?? false)
         self.animationModeCell = .pickerCell(
             key: FlClassicData.animationModeKey,
-            title: "Animation",
+            title: "periphetal_animation_mode_cell_title".localized,
             initialValue: dataModel.getValue(key: FlClassicData.animationModeKey) as? String ?? "")
         self.animationSpeedCell = .sliderCell(
             key: FlClassicData.animationSpeedKey,
-            title: "Speed",
+            title: "peripheral_animation_speed_cell_title".localized,
             initialValue: Float(dataModel.getValue(key: FlClassicData.animationSpeedKey) as? Int ?? 0),
             minValue: Float(FlClassicData.animationMinSpeed),
-            maxValue: Float(FlClassicData.animationMaxSpeed))
+            maxValue: Float(FlClassicData.animationMaxSpeed),
+            leftIcon: nil,
+            rightIcon: nil,
+            showValue: false)
         self.animationDirectionCell = .pickerCell(
             key: FlClassicData.animationDirectionKey,
-            title: "Direction",
+            title: "peripheral_animation_direction_cell_title".localized,
             initialValue: dataModel.getValue(key: FlClassicData.animationDirectionKey) as? String ?? "")
         self.animationStepCell = .stepperCell(
             key: FlClassicData.animationStepKey,
-            title: "Step",
+            title: "peripheral_animation_step_cell_title".localized,
             initialValue: Double(dataModel.getValue(key: FlClassicData.animationStepKey) as? Int ?? 0),
             minValue: Double(FlClassicData.animationMinStep),
             maxValue: Double(FlClassicData.animationMaxStep))
         self.peripheralReadyTableViewModel = PeripheralTableViewModel(
             sections: [
                 PeripheralSection(
-                    headerText: "Color",
-                    footerText: "Choose and handle colors",
+                    headerText: "peripheral_color_section_header".localized,
+                    footerText: "peripheral_color_section_footer".localized,
                     rows: [primaryColorCell, secondaryColorCell, randomColorCell]),
                 PeripheralSection(
-                    headerText: "Animation",
-                    footerText: "Handle animation",
+                    headerText: "peripheral_animation_section_header".localized,
+                    footerText: "peripheral_animation_section_footer".localized,
                     rows: [animationModeCell, animationSpeedCell, animationDirectionCell, animationStepCell])
             ])
     }
@@ -106,8 +109,8 @@ class TorchereViewModel: PeripheralViewModel {
     }
     
     private func updateCellsFor(animation: PeripheralAnimations) {
-        if let value = dataModel.getValue(key: FlClassicData.animationModeKey) as? PeripheralAnimations {
-            if (value != animation) {
+       // if let value = dataModel.getValue(key: FlClassicData.animationModeKey) as? PeripheralAnimations {
+           // if (value != animation) {
                 switch animation {
                 case .tetris:
                     hideCell(rows: [animationStepCell], rowsSection: nil)
@@ -127,8 +130,8 @@ class TorchereViewModel: PeripheralViewModel {
                 case .static:
                     hideCell(rows: [animationStepCell, animationSpeedCell, animationDirectionCell, secondaryColorCell, randomColorCell], rowsSection: nil)
                     break
-                }
-            }
+                //}
+            //}
         }
     }
     

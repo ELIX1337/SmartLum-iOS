@@ -14,7 +14,7 @@ class AdvertisedData: NSObject {
     let centralManager: CBCentralManager
     let peripheral: CBPeripheral
     let advertisingData: [String : Any]
-    public private(set) var advertisedName: String = "Unknown Device".localized
+    public private(set) var advertisedName: String = "peripheral_name_unknown".localized
     public private(set) var RSSI          : NSNumber
     public var peripheralType : PeripheralProfile?
     
@@ -37,7 +37,7 @@ class AdvertisedData: NSObject {
         if let name = advertisementDictionary[CBAdvertisementDataLocalNameKey] as? String {
             advertisedName = name
         } else {
-            advertisedName = "Unknown Device".localized
+            advertisedName = "peripheral_name_unknown".localized
         }
         return advertisedName
     }

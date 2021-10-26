@@ -29,6 +29,7 @@ struct BasePeripheralData {
     static var firmwareVersionKey: String { "PeripheralFirmwareVersion" }
     static var initStateKey:       String { "PeripheralInitState" }
     static var errorKey:           String { "PeripheralError" }
+    static var errorDetailKey:     String { "PeripheralErrorDetail" }
     static var factoryResetKey:    String { "PeripheralFactoryReset" }
 }
 
@@ -69,29 +70,6 @@ struct FlClassicData: PeripheralData {
     static let animationMaxStep  = 10
 }
 
-//struct PeripheralDataModel {
-//
-//    var isInitialized: Bool?
-//    var firmwareVersion: Int?
-//    var errorCode: Int?
-//
-//    var animationOnSpeed:  (value: Int?, minValue: Int?, maxValue: Int?)
-//    var animationOffSpeed: (value: Int?, minValue: Int?, maxValue: Int?)
-//    var animationStep:     (value: Int?, minValue: Int?, maxValue: Int?)
-//    var ledTimeout:        (value: Int?, minValue: Int?, maxValue: Int?)
-//    var ledBrightness:     (value: Int?, minValue: Int?, maxValue: Int?)
-//    var topSensorTriggerDistance: (value: Int?, minValue: Int?, maxValue: Int?)
-//    var botSensorTriggerDistance: (value: Int?, minValue: Int?, maxValue: Int?)
-//
-//    var primaryColor:       UIColor?
-//    var secondaryColor:     UIColor?
-//    var randomColor:        Bool?
-//    var animationMode:      PeripheralAnimations?
-//    var animationDirection: PeripheralAnimationDirections?
-//
-//    var ledState: Bool?
-//}
-
 protocol PeripheralDataElement {
     var code: UInt8  { get }
     var name: String { get }
@@ -108,12 +86,12 @@ enum PeripheralAnimations: UInt8, CaseIterable, PeripheralDataElement {
 
     var name: String {
         switch self {
-        case .tetris:               return "Tetris"
-        case .wave:                 return "Wave"
-        case .transfusion:          return "Transfusion"
-        case .rainbowTransfusion:   return "Rainbow transfusion"
-        case .rainbow:              return "Rainbow"
-        case .static:               return "Static"
+        case .tetris:               return "peripheral_animation_mode_tetris".localized
+        case .wave:                 return "peripheral_animation_mode_wave".localized
+        case .transfusion:          return "peripheral_animation_mode_transfusion".localized
+        case .rainbowTransfusion:   return "peripheral_animation_mode_rainbow_transfusion".localized
+        case .rainbow:              return "peripheral_animation_mode_rainbow".localized
+        case .static:               return "peripheral_animation_mode_static".localized
         }
     }
     var code: UInt8 {{ return self.rawValue }()}
@@ -128,12 +106,35 @@ enum PeripheralAnimationDirections: UInt8, CaseIterable, PeripheralDataElement {
     
     var name: String {
         switch self {
-        case .fromBottom: return "From bottom"
-        case .fromTop:    return "From top"
-        case .toCenter:   return "To center"
-        case .fromCenter: return "From center"
+        case .fromBottom: return "peripheral_animation_direction_from_bottom".localized
+        case .fromTop:    return "peripheral_animation_direction_from_top".localized
+        case .toCenter:   return "peripheral_animation_direction_to_center".localized
+        case .fromCenter: return "peripheral_animation_direction_from_center".localized
         }
     }
     
     var code: UInt8 {{ return self.rawValue }()}
+}
+
+enum PeripheralError: UInt8, CaseIterable, PeripheralDataElement {
+    
+    case error1 = 0x01
+    case error2 = 0x02
+    
+    var name: String {
+        switch self {
+        case .error1: return "Error 1"
+        case .error2: return "Error 2"
+        }
+    }
+    
+    var code: UInt8 {{ return self.rawValue }()}
+    
+    var description: String {
+        switch self {
+        case .error1: return "peripheral_error_code_1_description".localized
+        case .error2: return "peripheral_error_code_2_description".localized
+        }
+    }
+
 }

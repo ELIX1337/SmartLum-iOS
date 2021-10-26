@@ -27,14 +27,43 @@ struct PeripheralTableViewModel {
 }
 
 extension PeripheralTableViewModel {
-    static var errorSection: PeripheralSection {
-        get {
-            PeripheralSection.init(
-                headerText: "Error",
-                footerText: "Device error found",
-                rows: [.buttonCell(key: BasePeripheralData.errorKey, title: "Error")])
+    static func createNoticeSection(code: Int) -> PeripheralSection {
+        return PeripheralSection(
+            headerText: "peripheral_notice_section_header",
+            footerText: "peripheral_notice_section_footer",
+            rows: [.errorCell(
+                key: BasePeripheralData.errorKey,
+                code: code)])
+    }
+    
+    static func insertErrorCell(to section: inout PeripheralSection, errorCode: Int) {
+        if !section.rows.contains(.errorCell(key: BasePeripheralData.errorKey, code: errorCode)) {
+            section.rows.insert(.errorCell(key: BasePeripheralData.errorKey, code: errorCode), at: 0)
         }
     }
+    
+    static func insertErrorDetailCell(to section: inout PeripheralSection, errorCode: Int) {
+        if !section.rows.contains(.errorDetailCell(key: BasePeripheralData.errorDetailKey, code: errorCode)) {
+            section.rows.insert(.errorDetailCell(key: BasePeripheralData.errorDetailKey, code: errorCode), at: 0)
+        }
+    }
+    
+    static func createNoticeSection(withRows: [PeripheralCell]?) -> PeripheralSection {
+        return PeripheralSection(
+            headerText: "peripheral_notice_section_header".localized,
+            footerText: "peripheral_notice_section_footer".localized,
+            rows: withRows ?? [])
+    }
+    
+    static func createErrorDetailSection(code: Int) -> PeripheralSection {
+        return PeripheralSection(
+            headerText: "peripheral_notice_section_header",
+            footerText: "peripheral_notice_section_footer",
+            rows: [.errorDetailCell(
+                key: BasePeripheralData.errorDetailKey,
+                code: code)])
+    }
+    
 }
 
 struct HiddenIndexPath {
@@ -58,10 +87,12 @@ enum PeripheralCell: Equatable {
         
     case colorCell(key: String, title: String, initialValue : UIColor)
     case pickerCell(key: String, title: String, initialValue: String)
-    case sliderCell(key: String, title: String, initialValue: Float, minValue: Float, maxValue: Float)
+    case sliderCell(key: String, title: String, initialValue: Float, minValue: Float, maxValue: Float, leftIcon: UIImage?, rightIcon: UIImage?, showValue: Bool)
     case switchCell(key: String, title: String, initialValue: Bool)
     case stepperCell(key: String, title: String, initialValue: Double, minValue: Double, maxValue: Double)
     case buttonCell(key: String, title: String)
+    case errorCell(key:String, code: Int)
+    case errorDetailCell(key: String, code: Int)
     
     func updateCell(in tableView: UITableView, with tableViewModel: PeripheralTableViewModel) {
         if let indexPath = tableViewModel.getIndexPath(forRow: self) {
@@ -81,10 +112,12 @@ enum PeripheralCell: Equatable {
         switch self {
         case .colorCell(let key, _, _):         return key
         case .pickerCell(let key, _, _):        return key
-        case .sliderCell(let key, _, _, _, _):  return key
+        case .sliderCell(let key, _, _, _, _, _, _, _):  return key
         case .switchCell(let key, _, _):        return key
         case .stepperCell(let key, _, _, _, _): return key
         case .buttonCell(let key, _):           return key
+        case .errorCell(let key, _):            return key
+        case .errorDetailCell(let key, _):      return key
         }
     }
     
@@ -100,6 +133,8 @@ enum PeripheralCell: Equatable {
         case .sliderCell:  return SliderTableViewCell.reuseIdentifier
         case .stepperCell: return StepperTableViewCell.reuseIdentifier
         case .buttonCell:  return ButtonTableViewCell.reuseIdentifier
+        case .errorCell:   return ErrorTableViewCell.reuseIdentifier
+        case .errorDetailCell: return ErrorDetailTableViewCell.reuseIdentifier
         }
     }
     
@@ -111,6 +146,8 @@ enum PeripheralCell: Equatable {
         case .sliderCell:  return "SliderTableViewCell"
         case .stepperCell: return "StepperTableViewCell"
         case .buttonCell:  return "ButtonTableViewCell"
+        case .errorCell:   return "ErrorTableViewCell"
+        case .errorDetailCell: return "ErrorDetailTableViewCell"
         }
     }
     
@@ -122,17 +159,23 @@ enum PeripheralCell: Equatable {
         case .switchCell:  return SwitchTableViewCell.self
         case .stepperCell: return StepperTableViewCell.self
         case .buttonCell:  return ButtonTableViewCell.self
+        case .errorCell:   return ErrorTableViewCell.self
+        case .errorDetailCell: return ErrorDetailTableViewCell.self
         }
     }
     
     func configure(cell: BaseTableViewCell, with data: PeripheralData) {
         switch self {
-        case .sliderCell(key: let key, title: let title, initialValue: let initialValue, minValue: let minValue, maxValue: let maxValue):
+        case .sliderCell(key: let key, title: let title, initialValue: let initialValue, minValue: let minValue, maxValue: let maxValue, leftIcon: let leftIcon, rightIcon: let rightIcon, showValue: let showValue):
             if let cell = cell as? SliderTableViewCell {
                 cell.slider.minimumValue = minValue
                 cell.slider.maximumValue = maxValue
                 cell.slider.value        = Float(data.getValue(key: key) as? Int ?? Int(initialValue))
                 cell.titleLabel.text     = title
+                cell.valueLabel.isHidden = !showValue
+                cell.valueLabel.text     = String(describing: Int(cell.slider.value))
+                (leftIcon == nil) ? (cell.slider.minimumValueImage = nil) : (cell.slider.minimumValueImage = leftIcon)
+                (rightIcon == nil) ? (cell.slider.maximumValueImage = nil) : (cell.slider.maximumValueImage = rightIcon)
             }
         case .colorCell(key: let key, title: let title, initialValue: _):
             if let cell = cell as? ColorTableViewCell {
@@ -161,6 +204,17 @@ enum PeripheralCell: Equatable {
         case .buttonCell(key:_, title: let title):
             if let cell = cell as? ButtonTableViewCell {
                 cell.button.setTitle(title, for: .normal)
+            }
+        case .errorCell(key: _, code: _):
+            if let cell = cell as? ErrorTableViewCell {
+                cell.textLabel?.text = "peripheral_error_cell_title".localized
+                cell.detailTextLabel?.text = "peripheral_error_cell_code_prefix".localized
+            }
+        case .errorDetailCell(key: _, code: let code):
+            if let cell = cell as? ErrorDetailTableViewCell {
+                let error = PeripheralError.init(rawValue: UInt8(code))
+                cell.titleLabel.text = "peripheral_error_description_cell_title".localized + "\(code)"
+                cell.descriptionLabel.text = error?.description
             }
         }
     }

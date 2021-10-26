@@ -60,7 +60,6 @@ class PeripheralViewController: UIViewController {
         self.tableView.dataSource = self.viewModel
         self.tableView.delegate   = self.viewModel
         self.tableView.tableViewType = .ready
-        viewModel.tableView = self.tableView
         addTableViewConstraints(tableView: self.tableView)
     }
     
@@ -76,8 +75,8 @@ class PeripheralViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         if let _ = viewModel.peripheralSettingsTableViewModel {
-            let button: UIBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: .action, target: self, action: #selector(self.openPeripheralSettings))
-            self.navigationItem.rightBarButtonItem = button
+            let btn = UIBarButtonItem.init(image: UIImage.init(systemName: "gearshape"), style: .done, target: self, action: #selector(self.openPeripheralSettings))
+            self.navigationItem.rightBarButtonItem = btn
         }
     }
     
@@ -109,9 +108,24 @@ extension PeripheralViewController {
         self.alert?.dismiss(animated: true, completion: nil)
     }
     
-    public func showPeripheralErrorAlert() {
-        let alert = UIAlertController.init(title: "Error", message: "Error found", preferredStyle: .alert)
-        alert.addAction(.init(title: "Ok", style: .default, handler: { _ in alert.dismiss(animated: true, completion: nil) }))
+    public func showResetAlert() {
+        let alert = UIAlertController(
+            title: "peripheral_reset_alert_title".localized,
+            message: "peripheral_reset_alert_text".localized,
+            preferredStyle: .alert)
+        alert.addAction(.init(
+            title: "peripheral_reset_alert_confirm_button".localized,
+            style: .destructive,
+            handler: { _ in
+                self.viewModel.setFactorySettings()
+                self.navigationController?.popToRootViewController(animated: true)
+            }))
+        alert.addAction(.init(
+            title: "peripheral_reset_alert_cancel_button".localized,
+            style: .cancel,
+            handler: { _ in
+                alert.dismiss(animated: true, completion: nil)
+            }))
         self.present(alert, animated: true, completion: nil)
     }
 }
@@ -128,7 +142,6 @@ extension PeripheralViewController: PeripheralViewModelDelegate {
     
     func peripheralInitState(isInitialized: Bool) {
         print("is init \(isInitialized)")
-        //viewModel.dataModel.isInitialized = isInitialized
         viewModel.dataModel.setValue(key: BasePeripheralData.initStateKey, value: isInitialized)
         viewModel.isInitialized = isInitialized
         if (!isInitialized) {
@@ -158,7 +171,7 @@ extension PeripheralViewController: PeripheralViewModelDelegate {
     func peripheralDidDisconnect(reason: Error?) {
         self.dismiss(animated: true, completion: nil)
         self.navigationController?.popToRootViewController(animated: true)
-        print("Disconnect reason - \(reason?.localizedDescription)")
+        print("Disconnect reason - \(String(describing: reason?.localizedDescription))")
     }
     
     func peripheralIsReady() {
@@ -182,7 +195,6 @@ class PeripheralSetupViewController: PeripheralViewController {
         super.viewDidLoad()
         self.tableView.dataSource = viewModel
         self.tableView.tableViewType = .setup
-        viewModel.tableView = self.tableView
         addCancelButton()
         if (showConfirmButton) {
             addConfirmButton()
@@ -213,7 +225,7 @@ class PeripheralSetupViewController: PeripheralViewController {
     }
     
     private func addConfirmButton() {
-        confirmButton.setTitle("Confirm", for: UIControl.State.normal)
+        confirmButton.setTitle("button_confirm_peripheral_init".localized, for: UIControl.State.normal)
         confirmButton.addTarget(self, action: #selector(self.confirmAction), for: .touchUpInside)
         self.confirmButton.translatesAutoresizingMaskIntoConstraints = false
         self.confirmButton.layer.cornerRadius = 10.0
@@ -234,7 +246,7 @@ class PeripheralSetupViewController: PeripheralViewController {
     }
     
     private func addCancelButton() {
-        cancelButton.setTitle("Cancel", for: UIControl.State.normal)
+        cancelButton.setTitle("button_cancel_peripheral_init".localized, for: UIControl.State.normal)
         cancelButton.addTarget(self, action: #selector(self.cancelAction), for: .touchUpInside)
         self.cancelButton.translatesAutoresizingMaskIntoConstraints = false
         self.cancelButton.layer.cornerRadius = 10.0
@@ -262,12 +274,11 @@ class PeripheralSettingsViewController: PeripheralViewController {
         self.tableView.dataSource = viewModel
         self.tableView.delegate   = viewModel
         self.tableView.tableViewType = .settings
-        viewModel.tableView = self.tableView
         addTableViewConstraints(tableView: self.tableView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.title = "Device settings"
+        self.title = "peripheral_settings_window_title".localized
     }
     
     override func viewDidDisappear(_ animated: Bool) { }

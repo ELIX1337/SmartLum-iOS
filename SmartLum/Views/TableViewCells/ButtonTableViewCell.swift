@@ -15,18 +15,7 @@ class ButtonTableViewCell: UITableViewCell, BaseTableViewCell {
     
     @IBOutlet weak var button: UIButton!
     
-    func configure(title: String?, value: Any?) {
-        
-    }
-    
-    func defaultInit() {
-        
-    }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+    func configure(title: String?, value: Any?) { }
     
     @IBAction func onButtonClick(_ sender: UIButton) {
         self.returnValue?(true)

@@ -128,6 +128,8 @@ protocol PeripheralViewModelDelegate {
     
     public func disconnect() { basePeripheral.disconnect() }
     
+    public func setFactorySettings() { basePeripheral.setFactorySettings() }
+    
 }
 
 extension UITableView {
@@ -197,6 +199,9 @@ extension PeripheralViewModel: UITableViewDataSource {
 extension PeripheralViewModel: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? BaseTableViewCell {
+            cell.didSelect()
+        }
         tableView.deselectRow(at: indexPath, animated: true)
         self.selection(getTableViewModel(type: tableView.tableViewType).sections[indexPath.section].rows[indexPath.row])
     }
@@ -207,14 +212,13 @@ extension PeripheralViewModel: BasePeripheralDelegate {
     
     func peripheralError(code: Int) {
         dataModel.setValue(key: BasePeripheralData.errorKey, value: code)
-        if (peripheralReadyTableViewModel != nil) {
-            if (!peripheralReadyTableViewModel!.sections.contains(PeripheralTableViewModel.errorSection)) {
-                tableView.beginUpdates()
-                peripheralReadyTableViewModel!.sections.insert(PeripheralTableViewModel.errorSection, at: 0)
-                tableView.insertSections(IndexSet(integer: 0), with: .top)
-                tableView.endUpdates()
-            }
-        }
+        let noticeSection = PeripheralTableViewModel.createNoticeSection(withRows: [.errorCell(key: BasePeripheralData.errorKey, code: code)])
+        tableView.beginUpdates()
+        peripheralReadyTableViewModel?.sections.insert(noticeSection, at: 0)
+        tableView.insertSections(IndexSet(integer: 0), with: .top)
+        let detailNoticeSection = PeripheralTableViewModel.createNoticeSection(withRows: [.errorDetailCell(key: BasePeripheralData.errorDetailKey, code: code)])
+        peripheralSettingsTableViewModel?.sections.insert(detailNoticeSection, at: 0)
+        tableView.endUpdates()
     }
     
     func peripheralInitState(isInitialized: Bool) {
@@ -235,7 +239,7 @@ extension PeripheralViewModel: BasePeripheralDelegate {
     
     func peripheralFirmwareVersion(_ version: Int) {
         dataModel.setValue(key: BasePeripheralData.firmwareVersionKey, value: version)
-
+        
     }
     
     func peripheralOnDFUMode() {

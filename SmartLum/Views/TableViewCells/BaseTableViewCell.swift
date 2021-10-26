@@ -10,20 +10,12 @@ import UIKit
 protocol BaseTableViewCell: UITableViewCell {
     static var reuseIdentifier: String { get }
     func configure(title: String?, value: Any?)
-    func additionalData(closure: () -> Void)
-    func defaultInit()
     var returnValue: ((_ value: Any) -> Void)? { get set }
+    func didSelect()
 }
 
 extension BaseTableViewCell {
-    //var returnValue: ((_ value: Any) -> Void)? { get { returnValue } set { }}
-    func additionalData(closure: () -> Void) { }
+    func didSelect() { }
 }
 
-extension BaseTableViewCell where Self:SliderTableViewCell {
-    func setSliderRange(minValue: Float, maxValue: Float) {
-        self.slider.minimumValue = minValue
-        self.slider.maximumValue = maxValue
-    }
-}
 

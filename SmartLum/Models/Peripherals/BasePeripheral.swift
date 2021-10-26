@@ -60,7 +60,7 @@ class BasePeripheral: NSObject,
     init(_ peripheral: CBPeripheral,_ manager: CBCentralManager) {
         self.peripheral = peripheral
         self.centralManager = manager
-        self.name = peripheral.name ?? "Unknown Device".localized
+        self.name = peripheral.name ?? "peripheral_name_unknown".localized
         super.init()
         self.peripheral.delegate = self
     }
@@ -161,7 +161,7 @@ class BasePeripheral: NSObject,
         }
         if service.uuid == lastService {
             baseDelegate?.peripheralIsReady()
-            baseDelegate?.peripheralError(code: 5)
+            baseDelegate?.peripheralError(code: 1)
         }
     }
     
