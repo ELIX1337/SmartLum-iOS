@@ -115,10 +115,10 @@ extension UnsignedInteger {
         self.init(value)
     }
     
-    func toDoubleData() -> Data {
+    func toDoubleData(_ reversed: Bool) -> Data {
         var array = [UInt8](repeating: 0, count:2)
-        array[0] = UInt8(self >> 8)
-        array[1] = UInt8(self & 0xFF)
+        array[0] = reversed ? UInt8(self & 0xFF) : UInt8(self >> 8)
+        array[1] = reversed ? UInt8(self >> 8)   : UInt8(self & 0xFF) 
         return Data(array)
     }
     
