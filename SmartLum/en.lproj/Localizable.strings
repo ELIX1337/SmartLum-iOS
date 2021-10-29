@@ -53,7 +53,7 @@
     "peripheral_animation_step_cell_title" = "Step";
     "peripheral_led_state_cell_title" = "Enable LED";
     "peripheral_led_brightness_cell_title" = "";
-    "peripheral_led_timeout_cell_title" = "Timeout";
+    "peripheral_led_timeout_cell_title" = "Timeout (sec)";
     "peripheral_top_sensor_cell_title" = "Top sensor";
     "peripheral_bot_sensor_cell_title" = "Bot sensor";
     "peripheral_reset_to_factory_cell_title" = "Reset to factory";
