@@ -55,7 +55,7 @@
     "peripheral_animation_step_cell_title" = "Шаг";
     "peripheral_led_state_cell_title" = "Включить ленту";
     "peripheral_led_brightness_cell_title" = "";
-    "peripheral_led_timeout_cell_title" = "Таймаут";
+    "peripheral_led_timeout_cell_title" = "Таймаут (сек)";
     "peripheral_top_sensor_cell_title" = "Верхний датчик";
     "peripheral_bot_sensor_cell_title" = "Нижний датчик";
     "peripheral_reset_to_factory_cell_title" = "Сброс до заводских настроек";
