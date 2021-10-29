@@ -161,7 +161,6 @@ class BasePeripheral: NSObject,
         }
         if service.uuid == lastService {
             baseDelegate?.peripheralIsReady()
-            baseDelegate?.peripheralError(code: 1)
         }
     }
     
