@@ -109,29 +109,26 @@ class TorchereViewModel: PeripheralViewModel {
     }
     
     private func updateCellsFor(animation: PeripheralAnimations) {
-       // if let value = dataModel.getValue(key: FlClassicData.animationModeKey) as? PeripheralAnimations {
-           // if (value != animation) {
-                switch animation {
-                case .tetris:
-                    hideCell(rows: [animationStepCell], rowsSection: nil)
-                    break
-                case .wave:
-                    hideCell(rows: [randomColorCell], rowsSection: nil)
-                    break
-                case .transfusion:
-                    hideCell(rows: [animationStepCell, animationDirectionCell], rowsSection: nil)
-                    break
-                case .rainbowTransfusion:
-                    hideCell(rows: [animationStepCell, animationDirectionCell], rowsSection: [primaryColorCell])
-                    break
-                case .rainbow:
-                    hideCell(rows: [animationStepCell], rowsSection: [primaryColorCell])
-                    break
-                case .static:
-                    hideCell(rows: [animationStepCell, animationSpeedCell, animationDirectionCell, secondaryColorCell, randomColorCell], rowsSection: nil)
-                    break
-                //}
-            //}
+        switch animation {
+        case .tetris:
+            hideCell(rows: [animationStepCell], rowsSection: nil)
+            break
+        case .wave:
+            hideCell(rows: [randomColorCell], rowsSection: nil)
+            break
+        case .transfusion:
+            hideCell(rows: [animationStepCell, animationDirectionCell], rowsSection: nil)
+            break
+        case .rainbowTransfusion:
+            hideCell(rows: [animationStepCell, animationDirectionCell], rowsSection: [primaryColorCell])
+            break
+        case .rainbow:
+            hideCell(rows: [animationStepCell], rowsSection: [primaryColorCell])
+            break
+        case .static:
+            hideCell(rows: [animationStepCell, animationSpeedCell, animationDirectionCell, secondaryColorCell, randomColorCell], rowsSection: nil)
+            break
+            
         }
     }
     
