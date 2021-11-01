@@ -27,14 +27,6 @@ struct PeripheralTableViewModel {
 }
 
 extension PeripheralTableViewModel {
-    static func createNoticeSection(code: Int) -> PeripheralSection {
-        return PeripheralSection(
-            headerText: "peripheral_notice_section_header",
-            footerText: "peripheral_notice_section_footer",
-            rows: [.errorCell(
-                key: BasePeripheralData.errorKey,
-                code: code)])
-    }
     
     static func insertErrorCell(to section: inout PeripheralSection, errorCode: Int) {
         if !section.rows.contains(.errorCell(key: BasePeripheralData.errorKey, code: errorCode)) {

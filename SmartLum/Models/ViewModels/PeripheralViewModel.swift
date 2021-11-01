@@ -210,15 +210,43 @@ extension PeripheralViewModel: UITableViewDelegate {
 
 extension PeripheralViewModel: BasePeripheralDelegate {
     
+    func addErrorCell(_ tableView: UITableView?, _ model: inout PeripheralTableViewModel?, _ section: PeripheralSection) {
+        if (model != nil) {
+            if (!model!.sections.contains(section)) {
+                model?.sections.insert(section, at: 0)
+                if let tableView = tableView {
+                    tableView.insertSections(IndexSet(integer: 0), with: .top)
+                }
+            }
+        }
+    }
+    
+    func removeErrorCell(_ tableView: UITableView?,_ model: inout PeripheralTableViewModel?, _ section: PeripheralSection) {
+        if (model != nil) {
+            if (model!.sections.contains(section)) {
+                print("MODEL CONTAINS SECTION")
+                if let index = model?.sections.firstIndex(of: section) {
+                    print("GOT FIRST INDEX")
+                    model?.sections.remove(at: index)
+                    if let tableView = tableView {
+                        tableView.deleteSections(IndexSet(integer: 0), with: .top)
+                        print("DELETED SECTION")
+                    }
+                }
+            }
+        }
+    }
+    
     func peripheralError(code: Int) {
         dataModel.setValue(key: BasePeripheralData.errorKey, value: code)
         let noticeSection = PeripheralTableViewModel.createNoticeSection(withRows: [.errorCell(key: BasePeripheralData.errorKey, code: code)])
-        tableView.beginUpdates()
-        peripheralReadyTableViewModel?.sections.insert(noticeSection, at: 0)
-        tableView.insertSections(IndexSet(integer: 0), with: .top)
         let detailNoticeSection = PeripheralTableViewModel.createNoticeSection(withRows: [.errorDetailCell(key: BasePeripheralData.errorDetailKey, code: code)])
-        peripheralSettingsTableViewModel?.sections.insert(detailNoticeSection, at: 0)
-        tableView.endUpdates()
+        if (code != 0) {
+            tableView.beginUpdates()
+            addErrorCell(tableView, &peripheralReadyTableViewModel, noticeSection)
+            addErrorCell(nil, &peripheralSettingsTableViewModel, detailNoticeSection)
+            tableView.endUpdates()
+        }
     }
     
     func peripheralInitState(isInitialized: Bool) {
