@@ -86,7 +86,8 @@ class BasePeripheral: NSObject,
         case (.info,.initState):
             baseDelegate?.peripheralInitState(isInitialized: data.toBool())
             break
-        case (.info, .error):
+        case (.event, .error):
+            print("ERROR CODE - \(data.toInt())")
             baseDelegate?.peripheralError(code: data.toInt())
             break
         case (.info, .dfu):
