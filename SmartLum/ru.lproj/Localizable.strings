@@ -27,7 +27,7 @@
     // Sections
     "scanner_section_header" = "Найденные устройства";
     "peripheral_led_state_section_header" = "Управление подсветкой";
-    "peripheral_led_state_section_footer" = "";
+    "peripheral_led_state_section_footer" = "Применится после отключения от устройства";
     "peripheral_led_brightness_section_header" = "Яркость";
     "peripheral_led_brightness_section_footer" = "";
     "peripheral_additional_section_header" = "Дополнительно";

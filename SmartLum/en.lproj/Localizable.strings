@@ -26,7 +26,7 @@
     // Sections
     "scanner_section_header" = "Found devices";
     "peripheral_led_state_section_header" = "LED state";
-    "peripheral_led_state_section_footer" = "";
+    "peripheral_led_state_section_footer" = "Will be applied after disconnecting from the device";
     "peripheral_led_brightness_section_header" = "Brightness";
     "peripheral_led_brightness_section_footer" = "";
     "peripheral_additional_section_header" = "Additional";
