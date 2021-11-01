@@ -43,14 +43,14 @@ struct SlBaseData: PeripheralData {
     static let ledTimeout            = "LedTimeoutKey"
     static let animationSpeedKey     = "AnimationSpeedKey"
     
-    static let ledMinBrightness = 0
+    static let ledMinBrightness = 1
     static let ledMaxBrightness = 100
-    static let ledMinTimeout    = 0
-    static let ledMaxTimeout    = 10
-    static let sensorMinDistance = 1
+    static let ledMinTimeout    = 1
+    static let ledMaxTimeout    = 120
+    static let sensorMinDistance = 20
     static let sensorMaxDistance = 200
     static let animationMinSpeed = 1
-    static let animationMaxSpeed = 10
+    static let animationMaxSpeed = 100
 }
 
 struct FlClassicData: PeripheralData {
