@@ -14,9 +14,9 @@ class AdvertisedData: NSObject {
     let centralManager: CBCentralManager
     let peripheral: CBPeripheral
     let advertisingData: [String : Any]
-    public private(set) var advertisedName: String = "Unknown Device".localized
+    public private(set) var advertisedName: String = "peripheral_name_unknown".localized
     public private(set) var RSSI          : NSNumber
-    public var peripheralType : BasePeripheral.Type?
+    public var peripheralType : PeripheralProfile?
     
     init(withPeripheral peripheral: CBPeripheral,
          advertisementData advertisementDictionary: [String : Any],
@@ -29,6 +29,7 @@ class AdvertisedData: NSObject {
         super.init()
         self.advertisedName = getAdvertisedName(advertisementDictionary)
         self.peripheralType = getAdvertisedService(advertisementDictionary)
+        
     }
     
     private func getAdvertisedName(_ advertisementDictionary: [String : Any]) -> String {
@@ -36,16 +37,16 @@ class AdvertisedData: NSObject {
         if let name = advertisementDictionary[CBAdvertisementDataLocalNameKey] as? String {
             advertisedName = name
         } else {
-            advertisedName = "Unknown Device".localized
+            advertisedName = "peripheral_name_unknown".localized
         }
         return advertisedName
     }
     
-    private func getAdvertisedService(_ advertisementDictionary: [String : Any]) -> BasePeripheral.Type? {
+    private func getAdvertisedService(_ advertisementDictionary: [String : Any]) -> PeripheralProfile? {
         if let advUUID = advertisementDictionary[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID] {
             for uuid in advUUID {
-                if let service = UUIDs.advServices[uuid] {
-                    return service
+                if (UUIDs.advServices.keys.contains(uuid)) {
+                    return PeripheralProfile.getPeripheralType(uuid: uuid)
                 }
             }
         }

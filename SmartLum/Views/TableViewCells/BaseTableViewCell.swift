@@ -10,11 +10,12 @@ import UIKit
 protocol BaseTableViewCell: UITableViewCell {
     static var reuseIdentifier: String { get }
     func configure(title: String?, value: Any?)
-    func defaultInit()
     var returnValue: ((_ value: Any) -> Void)? { get set }
+    func didSelect()
 }
 
 extension BaseTableViewCell {
-    var returnValue: ((_ value: Any) -> Void)? { get { returnValue } set { }}
+    func didSelect() { }
 }
+
 

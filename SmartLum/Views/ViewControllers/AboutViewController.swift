@@ -23,10 +23,10 @@ class AboutViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .never
-        self.title = NSLocalizedString("About", comment: "")
-        btnTerms.setTitle(NSLocalizedString("Terms & Conditions", comment: ""), for: .normal)
-        btnThirdParty.setTitle(NSLocalizedString("Third Party", comment: ""), for: .normal)
-        btnPrivacy.setTitle(NSLocalizedString("Privacy", comment: ""), for: .normal)
+        self.title = "about_window_title".localized
+        btnTerms.setTitle("button_terms_and_conditions".localized, for: .normal)
+        btnThirdParty.setTitle("button_third_party".localized, for: .normal)
+        btnPrivacy.setTitle("button_privacy".localized, for: .normal)
         
         if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
            versionLabel.text = version
@@ -80,9 +80,9 @@ class AboutViewController: UIViewController {
         } else {
             vc = AcknowListViewController(fileNamed: "Pods-SmartLum-acknowledgements")
         }
-        vc.title = "Third party libraries".localized
-        vc.headerText = "Open source libraries".localized
-        vc.footerText = "2021 SmartLum"
+        vc.title = "third_party_libraries_window_title".localized
+        vc.headerText = "third_party_libraries_window_header".localized
+        vc.footerText = "2021 SmartLum ©"
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

@@ -9,6 +9,7 @@
 import UIKit
 
 class ColorTableViewCell: UITableViewCell, BaseTableViewCell {
+    var returnValue: ((Any) -> Void)?
 
     static let reuseIdentifier: String = "ColorCellID"
 

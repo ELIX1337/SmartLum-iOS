@@ -13,14 +13,17 @@ class SliderTableViewCell: UITableViewCell, BaseTableViewCell {
     static let reuseIdentifier: String = "SliderCellID"
     
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var valueLabel: UILabel!
     @IBOutlet weak var slider: UISlider!
     var returnValue: ((Any) -> Void)?
+    
+    override func awakeFromNib() {
+        valueLabel.text = String(describing: Int(slider.value))
+    }
     
     func configure(title: String?, value: Any?) {
         self.titleLabel.text = title?.localized
         self.slider.value = value as? Float ?? 0.0
-        self.slider.minimumValue = 0
-        self.slider.maximumValue = 30
         if let value = value as? Int {
             self.slider.setValue(Float(value), animated: true)
         }
@@ -30,6 +33,7 @@ class SliderTableViewCell: UITableViewCell, BaseTableViewCell {
     }
     
     @IBAction func onSliderValueChange(_ sender: UISlider) {
+        valueLabel.text = String(describing: Int(sender.value))
         self.returnValue?(sender.value)
     }
     

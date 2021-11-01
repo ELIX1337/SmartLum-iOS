@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -21,6 +21,14 @@
 		22EB5D4F25F23012003FC31D /* NetworkPermissionTrigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB5D4E25F23012003FC31D /* NetworkPermissionTrigger.swift */; };
 		22EB5D5425F23E79003FC31D /* TorcherePeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB5D5325F23E79003FC31D /* TorcherePeripheral.swift */; };
 		22EB5D8425FB5077003FC31D /* TablePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB5D8325FB5077003FC31D /* TablePickerViewController.swift */; };
+		2C25026F272690DC00671C26 /* ErrorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C25026D272690DC00671C26 /* ErrorTableViewCell.swift */; };
+		2C250270272690DC00671C26 /* ErrorTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C25026E272690DC00671C26 /* ErrorTableViewCell.xib */; };
+		2C41722C2718081F00F43EA2 /* DistanceSensorPeripheralProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C41722B2718081E00F43EA2 /* DistanceSensorPeripheralProtocol.swift */; };
+		2C41722E27180AF600F43EA2 /* SlBasePeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C41722D27180AF600F43EA2 /* SlBasePeripheral.swift */; };
+		2C4172302718100400F43EA2 /* SlBaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C41722F2718100400F43EA2 /* SlBaseViewModel.swift */; };
+		2C4172322718171F00F43EA2 /* LedPeripheralProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4172312718171F00F43EA2 /* LedPeripheralProtocol.swift */; };
+		2C4172342718218100F43EA2 /* SlBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4172332718218100F43EA2 /* SlBaseViewController.swift */; };
+		2C4172372718274200F43EA2 /* PeripheralProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4172362718274200F43EA2 /* PeripheralProfile.swift */; };
 		2C720282268F191F0079BEEA /* BasePeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F9D80266A088F00CCF8E2 /* BasePeripheral.swift */; };
 		2C720284268F1A190079BEEA /* UUIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C720283268F1A190079BEEA /* UUIDs.swift */; };
 		2C720287268F259A0079BEEA /* GenericRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C720286268F259A0079BEEA /* GenericRow.swift */; };
@@ -42,6 +50,11 @@
 		2C7202CB26A854220079BEEA /* TorchereViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7202CA26A854220079BEEA /* TorchereViewModel.swift */; };
 		2C7202CE26A985BC0079BEEA /* ColorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7202CC26A985BC0079BEEA /* ColorTableViewCell.swift */; };
 		2C7202CF26A985BC0079BEEA /* ColorTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C7202CD26A985BC0079BEEA /* ColorTableViewCell.xib */; };
+		2CAA8B192726EA9B00354FAB /* ErrorDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAA8B172726EA9B00354FAB /* ErrorDetailTableViewCell.swift */; };
+		2CAA8B1A2726EA9B00354FAB /* ErrorDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAA8B182726EA9B00354FAB /* ErrorDetailTableViewCell.xib */; };
+		2CBB5D6027227FB600F7946F /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBB5D5E27227FB600F7946F /* ButtonTableViewCell.swift */; };
+		2CBB5D6127227FB600F7946F /* ButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CBB5D5F27227FB600F7946F /* ButtonTableViewCell.xib */; };
+		2CD2C7C62719859C00B7E2E0 /* PeripheralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD2C7C52719859C00B7E2E0 /* PeripheralViewController.swift */; };
 		2CDE95CF268C70CE0025276A /* BluetoothEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95CE268C70CD0025276A /* BluetoothEndpoint.swift */; };
 		2CDE95D1268C71760025276A /* ColorPeripheralProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95D0268C71760025276A /* ColorPeripheralProtocol.swift */; };
 		2CDE95D3268C71D40025276A /* AnimationPeripheralProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE95D2268C71D40025276A /* AnimationPeripheralProtocol.swift */; };
@@ -54,7 +67,7 @@
 		30B664651FCD6E65003C8B55 /* SmartLumUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B664641FCD6E65003C8B55 /* SmartLumUITests.swift */; };
 		30B664801FCD9638003C8B55 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B6647F1FCD9638003C8B55 /* RootViewController.swift */; };
 		30B664831FCDA0EB003C8B55 /* ScannerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B664821FCDA0EB003C8B55 /* ScannerTableViewController.swift */; };
-		30B664851FCDA0FC003C8B55 /* PeripheralTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B664841FCDA0FC003C8B55 /* PeripheralTableViewCell.swift */; };
+		30B664851FCDA0FC003C8B55 /* ScannerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B664841FCDA0FC003C8B55 /* ScannerTableViewCell.swift */; };
 		52A637C0220DDECD00F5308D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52A637C2220DDECD00F5308D /* Localizable.strings */; };
 		52A637C5220DE11200F5308D /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A637C4220DE11200F5308D /* String+Localization.swift */; };
 		52FB0AF022131B7D00B1E575 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FB0AEF22131B7D00B1E575 /* Extensions.swift */; };
@@ -99,6 +112,14 @@
 		22EB5D4E25F23012003FC31D /* NetworkPermissionTrigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPermissionTrigger.swift; sourceTree = "<group>"; };
 		22EB5D5325F23E79003FC31D /* TorcherePeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorcherePeripheral.swift; sourceTree = "<group>"; };
 		22EB5D8325FB5077003FC31D /* TablePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TablePickerViewController.swift; sourceTree = "<group>"; };
+		2C25026D272690DC00671C26 /* ErrorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTableViewCell.swift; sourceTree = "<group>"; };
+		2C25026E272690DC00671C26 /* ErrorTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErrorTableViewCell.xib; sourceTree = "<group>"; };
+		2C41722B2718081E00F43EA2 /* DistanceSensorPeripheralProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceSensorPeripheralProtocol.swift; sourceTree = "<group>"; };
+		2C41722D27180AF600F43EA2 /* SlBasePeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlBasePeripheral.swift; sourceTree = "<group>"; };
+		2C41722F2718100400F43EA2 /* SlBaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlBaseViewModel.swift; sourceTree = "<group>"; };
+		2C4172312718171F00F43EA2 /* LedPeripheralProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LedPeripheralProtocol.swift; sourceTree = "<group>"; };
+		2C4172332718218100F43EA2 /* SlBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlBaseViewController.swift; sourceTree = "<group>"; };
+		2C4172362718274200F43EA2 /* PeripheralProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralProfile.swift; sourceTree = "<group>"; };
 		2C41FC2F265BC68000B81197 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2C720283268F1A190079BEEA /* UUIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDs.swift; sourceTree = "<group>"; };
 		2C720286268F259A0079BEEA /* GenericRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericRow.swift; sourceTree = "<group>"; };
@@ -121,6 +142,11 @@
 		2C7202CC26A985BC0079BEEA /* ColorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTableViewCell.swift; sourceTree = "<group>"; };
 		2C7202CD26A985BC0079BEEA /* ColorTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorTableViewCell.xib; sourceTree = "<group>"; };
 		2C9F9D80266A088F00CCF8E2 /* BasePeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePeripheral.swift; sourceTree = "<group>"; };
+		2CAA8B172726EA9B00354FAB /* ErrorDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDetailTableViewCell.swift; sourceTree = "<group>"; };
+		2CAA8B182726EA9B00354FAB /* ErrorDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErrorDetailTableViewCell.xib; sourceTree = "<group>"; };
+		2CBB5D5E27227FB600F7946F /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
+		2CBB5D5F27227FB600F7946F /* ButtonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ButtonTableViewCell.xib; sourceTree = "<group>"; };
+		2CD2C7C52719859C00B7E2E0 /* PeripheralViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralViewController.swift; sourceTree = "<group>"; };
 		2CDE95CE268C70CD0025276A /* BluetoothEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothEndpoint.swift; sourceTree = "<group>"; };
 		2CDE95D0268C71760025276A /* ColorPeripheralProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPeripheralProtocol.swift; sourceTree = "<group>"; };
 		2CDE95D2268C71D40025276A /* AnimationPeripheralProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationPeripheralProtocol.swift; sourceTree = "<group>"; };
@@ -139,7 +165,7 @@
 		30B664661FCD6E65003C8B55 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		30B6647F1FCD9638003C8B55 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		30B664821FCDA0EB003C8B55 /* ScannerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerTableViewController.swift; sourceTree = "<group>"; };
-		30B664841FCDA0FC003C8B55 /* PeripheralTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralTableViewCell.swift; sourceTree = "<group>"; };
+		30B664841FCDA0FC003C8B55 /* ScannerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerTableViewCell.swift; sourceTree = "<group>"; };
 		3CAE88F9324080774EBCCC02 /* Pods-SmartLum-SmartLumUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartLum-SmartLumUITests.release.xcconfig"; path = "Target Support Files/Pods-SmartLum-SmartLumUITests/Pods-SmartLum-SmartLumUITests.release.xcconfig"; sourceTree = "<group>"; };
 		4ECD7F437B0FE3E34C0C5BE1 /* Pods-SmartLum-SmartLumUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartLum-SmartLumUITests.debug.xcconfig"; path = "Target Support Files/Pods-SmartLum-SmartLumUITests/Pods-SmartLum-SmartLumUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		502F8065F13CED8A6A9CE27D /* Pods-SmartLum.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartLum.release.xcconfig"; path = "Target Support Files/Pods-SmartLum/Pods-SmartLum.release.xcconfig"; sourceTree = "<group>"; };
@@ -215,14 +241,6 @@
 			path = NetworkAPI;
 			sourceTree = "<group>";
 		};
-		22EB5D6825F9F812003FC31D /* TorchereViewController */ = {
-			isa = PBXGroup;
-			children = (
-				2C7202952695ADA10079BEEA /* TorchereViewController.swift */,
-			);
-			path = TorchereViewController;
-			sourceTree = "<group>";
-		};
 		2C720285268F1C860079BEEA /* Pickers */ = {
 			isa = PBXGroup;
 			children = (
@@ -239,7 +257,7 @@
 			children = (
 				2C720285268F1C860079BEEA /* Pickers */,
 				30B664811FCDA0DE003C8B55 /* ScannerViewController */,
-				22EB5D6825F9F812003FC31D /* TorchereViewController */,
+				2CD2C7C7271985BA00B7E2E0 /* Peripheral */,
 				30B6647F1FCD9638003C8B55 /* RootViewController.swift */,
 				2240D22B260CAF490037D304 /* AboutViewController.swift */,
 				2240D22C260CAF490037D304 /* AboutViewController.xib */,
@@ -261,8 +279,45 @@
 				2C7202C126A702370079BEEA /* SwitchTableViewCell.xib */,
 				2C7202CC26A985BC0079BEEA /* ColorTableViewCell.swift */,
 				2C7202CD26A985BC0079BEEA /* ColorTableViewCell.xib */,
+				2CBB5D5E27227FB600F7946F /* ButtonTableViewCell.swift */,
+				2CBB5D5F27227FB600F7946F /* ButtonTableViewCell.xib */,
+				2C25026D272690DC00671C26 /* ErrorTableViewCell.swift */,
+				2C25026E272690DC00671C26 /* ErrorTableViewCell.xib */,
+				2CAA8B172726EA9B00354FAB /* ErrorDetailTableViewCell.swift */,
+				2CAA8B182726EA9B00354FAB /* ErrorDetailTableViewCell.xib */,
 			);
 			path = TableViewCells;
+			sourceTree = "<group>";
+		};
+		2CA24A00272803AF0084F073 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				2C7202C826A84D120079BEEA /* PeripheralViewModel.swift */,
+				2C7202CA26A854220079BEEA /* TorchereViewModel.swift */,
+				2C41722F2718100400F43EA2 /* SlBaseViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		2CA24A02272806FC0084F073 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				2C720283268F1A190079BEEA /* UUIDs.swift */,
+				2CDE95D6268C77D30025276A /* AdvertisedData.swift */,
+				2C7202BA26A03CDE0079BEEA /* PeripheralData.swift */,
+				2C4172362718274200F43EA2 /* PeripheralProfile.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		2CD2C7C7271985BA00B7E2E0 /* Peripheral */ = {
+			isa = PBXGroup;
+			children = (
+				2CD2C7C52719859C00B7E2E0 /* PeripheralViewController.swift */,
+				2C4172332718218100F43EA2 /* SlBaseViewController.swift */,
+				2C7202952695ADA10079BEEA /* TorchereViewController.swift */,
+			);
+			path = Peripheral;
 			sourceTree = "<group>";
 		};
 		2CDE95D4268C722E0025276A /* Peripherals */ = {
@@ -271,6 +326,7 @@
 				2CDE95D5268C72780025276A /* Protocols */,
 				2C9F9D80266A088F00CCF8E2 /* BasePeripheral.swift */,
 				22EB5D5325F23E79003FC31D /* TorcherePeripheral.swift */,
+				2C41722D27180AF600F43EA2 /* SlBasePeripheral.swift */,
 			);
 			path = Peripherals;
 			sourceTree = "<group>";
@@ -280,6 +336,8 @@
 			children = (
 				2CDE95D0268C71760025276A /* ColorPeripheralProtocol.swift */,
 				2CDE95D2268C71D40025276A /* AnimationPeripheralProtocol.swift */,
+				2C41722B2718081E00F43EA2 /* DistanceSensorPeripheralProtocol.swift */,
+				2C4172312718171F00F43EA2 /* LedPeripheralProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -311,6 +369,7 @@
 			isa = PBXGroup;
 			children = (
 				22A46DCC25E7A857003F4200 /* Utils */,
+				2CA24A02272806FC0084F073 /* Data */,
 				30B664861FCDA2C5003C8B55 /* Models */,
 				30B664791FCD722A003C8B55 /* Views */,
 				30B664441FCD6E65003C8B55 /* AppDelegate.swift */,
@@ -357,7 +416,7 @@
 			isa = PBXGroup;
 			children = (
 				30B664821FCDA0EB003C8B55 /* ScannerTableViewController.swift */,
-				30B664841FCDA0FC003C8B55 /* PeripheralTableViewCell.swift */,
+				30B664841FCDA0FC003C8B55 /* ScannerTableViewCell.swift */,
 			);
 			path = ScannerViewController;
 			sourceTree = "<group>";
@@ -366,13 +425,9 @@
 			isa = PBXGroup;
 			children = (
 				2CDE95D4268C722E0025276A /* Peripherals */,
-				2C720283268F1A190079BEEA /* UUIDs.swift */,
-				2CDE95D6268C77D30025276A /* AdvertisedData.swift */,
+				2CA24A00272803AF0084F073 /* ViewModels */,
 				2CDE95CE268C70CD0025276A /* BluetoothEndpoint.swift */,
-				2C7202BA26A03CDE0079BEEA /* PeripheralData.swift */,
 				2C7202C626A848E20079BEEA /* PeripheralTableViewModel.swift */,
-				2C7202C826A84D120079BEEA /* PeripheralViewModel.swift */,
-				2C7202CA26A854220079BEEA /* TorchereViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -517,9 +572,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C250270272690DC00671C26 /* ErrorTableViewCell.xib in Resources */,
 				30B6644F1FCD6E65003C8B55 /* LaunchScreen.storyboard in Resources */,
 				2C7202CF26A985BC0079BEEA /* ColorTableViewCell.xib in Resources */,
 				52A637C0220DDECD00F5308D /* Localizable.strings in Resources */,
+				2CBB5D6127227FB600F7946F /* ButtonTableViewCell.xib in Resources */,
 				2C72029E269D5D1A0079BEEA /* PickerTableViewCell.xib in Resources */,
 				22A46D9625E1418E003F4200 /* FirmwareUpdateViewController.xib in Resources */,
 				30B6644C1FCD6E65003C8B55 /* Assets.xcassets in Resources */,
@@ -528,6 +585,7 @@
 				2C72029A269D5D010079BEEA /* SliderTableViewCell.xib in Resources */,
 				2240D20D260CAC520037D304 /* InfoPlist.strings in Resources */,
 				2240D22E260CAF490037D304 /* AboutViewController.xib in Resources */,
+				2CAA8B1A2726EA9B00354FAB /* ErrorDetailTableViewCell.xib in Resources */,
 				30B6644A1FCD6E65003C8B55 /* Main.storyboard in Resources */,
 				2C7202C326A702370079BEEA /* SwitchTableViewCell.xib in Resources */,
 			);
@@ -659,17 +717,20 @@
 			files = (
 				2CDE95D3268C71D40025276A /* AnimationPeripheralProtocol.swift in Sources */,
 				2C7202C226A702370079BEEA /* SwitchTableViewCell.swift in Sources */,
+				2C25026F272690DC00671C26 /* ErrorTableViewCell.swift in Sources */,
 				2240D233260CAFC50037D304 /* WebURLs.swift in Sources */,
 				22A46D9525E1418E003F4200 /* FirmwareUpdateViewController.swift in Sources */,
 				2C7202BB26A03CDF0079BEEA /* PeripheralData.swift in Sources */,
-				30B664851FCDA0FC003C8B55 /* PeripheralTableViewCell.swift in Sources */,
+				30B664851FCDA0FC003C8B55 /* ScannerTableViewCell.swift in Sources */,
 				30B664831FCDA0EB003C8B55 /* ScannerTableViewController.swift in Sources */,
 				22A46DE225E91104003F4200 /* FirmwareDownloader.swift in Sources */,
 				22EB5D5425F23E79003FC31D /* TorcherePeripheral.swift in Sources */,
+				2C4172322718171F00F43EA2 /* LedPeripheralProtocol.swift in Sources */,
 				2C7202A6269EE79C0079BEEA /* StepperTableViewCell.swift in Sources */,
 				2C7202CB26A854220079BEEA /* TorchereViewModel.swift in Sources */,
 				2CDE95D7268C77D30025276A /* AdvertisedData.swift in Sources */,
 				30B664801FCD9638003C8B55 /* RootViewController.swift in Sources */,
+				2CAA8B192726EA9B00354FAB /* ErrorDetailTableViewCell.swift in Sources */,
 				2C7202BF26A040E30079BEEA /* BaseTableViewCell.swift in Sources */,
 				2C7202C726A848E20079BEEA /* PeripheralTableViewModel.swift in Sources */,
 				2CDE95D1268C71760025276A /* ColorPeripheralProtocol.swift in Sources */,
@@ -679,20 +740,27 @@
 				2C720287268F259A0079BEEA /* GenericRow.swift in Sources */,
 				2C72028B269434180079BEEA /* WheelPickerViewController.swift in Sources */,
 				22A46DD225E7A931003F4200 /* DFUDocumentPicker.swift in Sources */,
+				2CBB5D6027227FB600F7946F /* ButtonTableViewCell.swift in Sources */,
 				22A46DD725E7A9EC003F4200 /* QuickError.swift in Sources */,
 				2C720299269D5D010079BEEA /* SliderTableViewCell.swift in Sources */,
+				2C4172372718274200F43EA2 /* PeripheralProfile.swift in Sources */,
 				30B664451FCD6E65003C8B55 /* AppDelegate.swift in Sources */,
 				2CDE95CF268C70CE0025276A /* BluetoothEndpoint.swift in Sources */,
 				2C72029D269D5D1A0079BEEA /* PickerTableViewCell.swift in Sources */,
 				2C7202CE26A985BC0079BEEA /* ColorTableViewCell.swift in Sources */,
 				22DCAD4025FF392300BB30D3 /* ColorPickerViewController.swift in Sources */,
+				2CD2C7C62719859C00B7E2E0 /* PeripheralViewController.swift in Sources */,
+				2C41722E27180AF600F43EA2 /* SlBasePeripheral.swift in Sources */,
 				2C720292269440260079BEEA /* PopupPickerViewController.swift in Sources */,
 				52A637C5220DE11200F5308D /* String+Localization.swift in Sources */,
 				2C7202C926A84D120079BEEA /* PeripheralViewModel.swift in Sources */,
 				2240D22D260CAF490037D304 /* AboutViewController.swift in Sources */,
 				22EB5D8425FB5077003FC31D /* TablePickerViewController.swift in Sources */,
+				2C4172302718100400F43EA2 /* SlBaseViewModel.swift in Sources */,
 				52FB0AF022131B7D00B1E575 /* Extensions.swift in Sources */,
 				2C7202962695ADA10079BEEA /* TorchereViewController.swift in Sources */,
+				2C4172342718218100F43EA2 /* SlBaseViewController.swift in Sources */,
+				2C41722C2718081F00F43EA2 /* DistanceSensorPeripheralProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

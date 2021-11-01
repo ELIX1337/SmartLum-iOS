@@ -5,40 +5,88 @@
   Created by Tim on 25/11/2020.
   Copyright © 2020 SmartLum. All rights reserved.
 */
-"ON" = "ON";
-"OFF" = "OFF";
-"Unknown Device" = "Unknown Device";
-"Terms & Conditions" = "Terms & Conditions";
-"Third Party" = "Third Party";
-"Privacy" = "Privacy";
-"About" = "About";
-"Nearby Devices" = "Nearby Devices";
-"Third party libraries" = "Third party libraries";
-"Open source libraries" = "Open source libraries";
-"Specify your strip type" = "Specify your strip type";
-"Set bottom sensor trigger distance" = "Set bottom sensor trigger distance";
-"Set top sensor trigger distance" = "Set top sensor trigger distance";
-"Distance" = "Distance";
 
-"Color" = "Color";
-"Primary" = "Primary";
-"Secondary" = "Secondary";
-"Random color" = "Random color";
+// Common
+    "button_terms_and_conditions" = "Terms & Conditions";
+    "button_third_party" = "Open source licenses";
+    "button_privacy" = "Privacy";
+    "button_confirm_peripheral_init" = "Confirm";
+    "button_cancel_peripheral_init" = "Cancel";
+    "about_window_title" = "About";
+    "third_party_libraries_window_title" = "Third party libraries";
+    "third_party_libraries_window_header" = "Open source libraries";
+    "peripheral_settings_window_title" = "Device settings";
+    "peripheral_reset_alert_title" = "Device reset";
+    "peripheral_reset_alert_text" = "This action will reset the device to factory settings";
+    "peripheral_reset_alert_cancel_button" = "Cancel";
+    "peripheral_reset_alert_confirm_button" = "Reset";
 
-"Animation" = "Animation";
-"Tetris" = "Tetris";
-"Wave" = "Wave";
-"Transfusion" = "Transfusion";
-"Rainbow transfusion" = "Rainbow transfusion";
-"Rainbow" = "Rainbow";
-"Static" = "Static";
+"peripheral_name_unknown" = "Unknown Device";
+// Peripheral tableView
+    // Sections
+    "scanner_section_header" = "Found devices";
+    "peripheral_led_state_section_header" = "LED state";
+    "peripheral_led_state_section_footer" = "Will be applied after disconnecting from the device";
+    "peripheral_led_brightness_section_header" = "Brightness";
+    "peripheral_led_brightness_section_footer" = "";
+    "peripheral_additional_section_header" = "Additional";
+    "peripheral_additional_section_footer" = "";
+    "peripheral_color_section_header"     = "LED color";
+    "peripheral_color_section_footer"     = "Choose and handle colors";
+    "peripheral_animation_section_header" = "Animation";
+    "peripheral_animation_section_footer" = "";
+    "peripheral_sensor_trigger_distance_section_header" = "Sensors";
+    "peripheral_sensor_trigger_distance_section_footer" = "Values in centimeters";
+    "peripheral_factory_settings_section_header" = "Factory settings";
+    "peripheral_factory_settings_section_footer" = "";
+    "peripheral_notice_section_header" = "Notice";
+    "peripheral_notice_section_footer" = "";
+    "peripheral_setup_trigger_distance_section_header" = "Set the sensors trigger distances";
+    "peripheral_setup_trigger_distance_section_footer" = "Values in centimeters";
+    // Cells
+    "peripheral_primary_color_cell_title" = "Primary";
+    "peripheral_secondary_color_cell_title" = "Secondary";
+    "peripheral_random_color_cell_title" = "Random color";
+    "periphetal_animation_mode_cell_title" = "Animation";
+    "peripheral_animation_speed_cell_title" = "Speed";
+    "peripheral_animation_direction_cell_title" = "Direction";
+    "peripheral_animation_step_cell_title" = "Step";
+    "peripheral_led_state_cell_title" = "Enable LED";
+    "peripheral_led_brightness_cell_title" = "";
+    "peripheral_led_timeout_cell_title" = "Timeout (sec)";
+    "peripheral_top_sensor_cell_title" = "Top sensor";
+    "peripheral_bot_sensor_cell_title" = "Bot sensor";
+    "peripheral_reset_to_factory_cell_title" = "Reset to factory";
+    "peripheral_error_cell_title" = "Error detected";
+    "peripheral_error_cell_code_prefix" = "Details";
+    "peripheral_error_description_cell_title" = "Error - Code ";
+    
+// Peripheral data
+    // Animation modes
+    "peripheral_animation_mode_tetris" = "Tetris";
+    "peripheral_animation_mode_wave" = "Wave";
+    "peripheral_animation_mode_transfusion" = "Transfusion";
+    "peripheral_animation_mode_rainbow_transfusion" = "Rainbow transfusion";
+    "peripheral_animation_mode_rainbow" = "Rainbow";
+    "peripheral_animation_mode_static" = "Static";
+    // Animation directions
+    "peripheral_animation_direction_from_bottom" = "From bottom";
+    "peripheral_animation_direction_from_top" = "From top";
+    "peripheral_animation_direction_to_center" = "To center";
+    "peripheral_animation_direction_from_center" = "From center";
+    // Errors
+    "peripheral_error_code_1_description" = "
+    Top sensor not found. Check the connection. Flashing LED on sensor means wiring problem.
+    You can find out more about solving the problem in the technical support service.
+    ";
+    "peripheral_error_code_2_description" = "
+    Bottom sensor not found. Check the connection. Flashing LED on sensor means wiring problem
+    You can find out more about solving the problem in the technical support service.
+    ";
 
-"Direction" = "Direction";
-"From bottom" = "From bottom";
-"From top" = "From top";
-"To center" = "To center";
-"From center" = "From center";
 
-"Speed" = "Speed";
-"Step" = "Step";
+
+
+
+
 

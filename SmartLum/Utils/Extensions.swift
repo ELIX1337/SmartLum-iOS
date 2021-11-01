@@ -9,6 +9,42 @@
 import UIKit
 import CoreBluetooth
 
+func bytes<U: FixedWidthInteger,V: FixedWidthInteger>(
+    of value    : U,
+    to type     : V.Type,
+    droppingZeros: Bool
+    ) -> [V]{
+
+    let sizeInput = MemoryLayout<U>.size
+    let sizeOutput = MemoryLayout<V>.size
+
+    precondition(sizeInput >= sizeOutput, "The input memory size should be greater than the output memory size")
+
+    var value = value
+    let a =  withUnsafePointer(to: &value, {
+        $0.withMemoryRebound(
+            to: V.self,
+            capacity: sizeInput,
+            {
+                Array(UnsafeBufferPointer(start: $0, count: sizeInput/sizeOutput))
+        })
+    })
+
+    let lastNonZeroIndex =
+        (droppingZeros ? a.lastIndex { $0 != 0 } : a.indices.last) ?? a.startIndex
+
+    return Array(a[...lastNonZeroIndex].reversed())
+}
+
+extension Data {
+    func toInt() -> Int {
+        let decimalValue = self.reduce(0) { v, byte in
+            return v << 8 | Int(byte)
+        }
+        return decimalValue
+    }
+}
+
 extension UIColor {
     
     func toData() -> Data {
@@ -65,6 +101,29 @@ extension Numeric {
     }
 }
 
+extension UnsignedInteger {
+    init(_ bytes: [UInt8]) {
+        precondition(bytes.count <= MemoryLayout<Self>.size)
+
+        var value: UInt64 = 0
+
+        for byte in bytes {
+            value <<= 8
+            value |= UInt64(byte)
+        }
+
+        self.init(value)
+    }
+    
+    func toDoubleData(_ reversed: Bool) -> Data {
+        var array = [UInt8](repeating: 0, count:2)
+        array[0] = reversed ? UInt8(self & 0xFF) : UInt8(self >> 8)
+        array[1] = reversed ? UInt8(self >> 8)   : UInt8(self & 0xFF) 
+        return Data(array)
+    }
+    
+}
+
 extension Bool {
     func toData() -> Data {
         var value = self ? Data([0x1]) : Data([0x0])
@@ -105,4 +164,16 @@ extension DataProtocol {
     func toCGFloat() -> CGFloat { value() }
     func toDouble() -> Double { value() }
     func toDecimal() -> Decimal { value() }
+}
+
+extension Array where Element: Hashable {
+    func difference(from other: [Element]) -> [Element] {
+        let thisSet = Set(self)
+        let otherSet = Set(other)
+        return Array(thisSet.symmetricDifference(otherSet))
+    }
+}
+
+extension UIImage {
+    static var largeScale: SymbolConfiguration { UIImage.SymbolConfiguration(pointSize: 20, weight: .bold, scale: .large) }
 }

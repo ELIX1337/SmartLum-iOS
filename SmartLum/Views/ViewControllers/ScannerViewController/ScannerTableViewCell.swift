@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PeripheralTableViewCell: UITableViewCell {
+class ScannerTableViewCell: UITableViewCell {
     
     //MARK: - Outlets and Actions
     
