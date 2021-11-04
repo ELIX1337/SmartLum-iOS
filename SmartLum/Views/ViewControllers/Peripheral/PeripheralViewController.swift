@@ -25,8 +25,8 @@ protocol PeripheralSetupViewControllerProtocol {
 func getPeripheralVC(peripheral: PeripheralProfile) -> PeripheralViewControllerProtocol {
     switch peripheral {
     case .FlClassic: return TorchereViewController()
-    case .FlMini: return TorchereViewController()
-    case .SlBase: return SlBaseViewController()
+    case .FlMini:    return TorchereViewController()
+    case .SlBase:    return SlBaseViewController()
     }
 }
 
@@ -40,8 +40,8 @@ func getPeripheralSetupVC(peripheral: BasePeripheral) -> PeripheralSetupViewCont
 func getPeripheralType(profile: PeripheralProfile, peripheral: CBPeripheral, manager: CBCentralManager) -> BasePeripheral {
     switch profile {
     case .FlClassic: return TorcherePeripheral.init(peripheral, manager)
-    case .FlMini: return TorcherePeripheral.init(peripheral, manager)
-    case .SlBase: return SlBasePeripheral.init(peripheral, manager)
+    case .FlMini:    return TorcherePeripheral.init(peripheral, manager)
+    case .SlBase:    return SlBasePeripheral.init(peripheral, manager)
     }
 }
 

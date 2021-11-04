@@ -19,7 +19,7 @@ class SlBasePeripheral: BasePeripheral, DistanceSensorPeripheralProtocol, LedPer
         super.init(peripheral, manager)
     }
     
-    override func readData(data: Data, from characteristic: BluetoothEndpoint.Characteristics, in service: BluetoothEndpoint.Services, error: Error?) {
+    override func readData(data: Data, from characteristic: BluetoothEndpoint.Characteristic, in service: BluetoothEndpoint.Service, error: Error?) {
         super.readData(data: data, from: characteristic, in: service, error: error)
         switch (service, characteristic) {
         case (.sensor,.topSensorTriggerDistance):

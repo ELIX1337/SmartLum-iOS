@@ -11,7 +11,7 @@ import UIKit
 
 protocol BasePeripheralProtocol {
     var peripheral: CBPeripheral { get set }
-    var endpoints: [[BluetoothEndpoint.Services:BluetoothEndpoint.Characteristics] : CBCharacteristic] { get set }
+    var endpoints: [[BluetoothEndpoint.Service:BluetoothEndpoint.Characteristic] : CBCharacteristic] { get set }
     func writeWithoutResponse(value: Data, to characteristic: CBCharacteristic)
     func setFactorySettings()
 }
@@ -50,9 +50,9 @@ class BasePeripheral: NSObject,
     
     let centralManager: CBCentralManager
     var peripheral: CBPeripheral
-    var type : PeripheralProfile?
+    var type: PeripheralProfile?
     var name: String
-    var endpoints: [[BluetoothEndpoint.Services : BluetoothEndpoint.Characteristics] : CBCharacteristic] = [:]
+    var endpoints: [[BluetoothEndpoint.Service : BluetoothEndpoint.Characteristic] : CBCharacteristic] = [:]
     public var isConnected: Bool { peripheral.state == .connected }
     var baseDelegate: BasePeripheralDelegate?
     var lastService: CBUUID?
@@ -81,7 +81,7 @@ class BasePeripheral: NSObject,
         print("Disconnecting from \(name)")
     }
     
-    internal func readData(data: Data, from characteristic: BluetoothEndpoint.Characteristics, in service:BluetoothEndpoint.Services, error: Error?) {
+    internal func readData(data: Data, from characteristic: BluetoothEndpoint.Characteristic, in service:BluetoothEndpoint.Service, error: Error?) {
         switch (service, characteristic) {
         case (.info,.initState):
             baseDelegate?.peripheralInitState(isInitialized: data.toBool())

@@ -16,8 +16,8 @@ protocol ColorPeripheralProtocol {
 }
 
 extension ColorPeripheralProtocol where Self:BasePeripheralProtocol {
-    var randomColorCharacteristic   : CBCharacteristic? { get { return self.endpoints[[.color:.randomColor]] } }
-    var primaryColorCharacteristic  : CBCharacteristic? { get { return self.endpoints[[.color:.primaryColor]] }  }
+    var randomColorCharacteristic:    CBCharacteristic? { get { return self.endpoints[[.color:.randomColor]] } }
+    var primaryColorCharacteristic:   CBCharacteristic? { get { return self.endpoints[[.color:.primaryColor]] }  }
     var secondaryColorCharacteristic: CBCharacteristic? { get { return self.endpoints[[.color:.secondaryColor]] } }
 
     func writePrimaryColor(_ color: UIColor) {
