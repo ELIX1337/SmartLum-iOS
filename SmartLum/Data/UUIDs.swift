@@ -60,8 +60,7 @@ public struct UUIDs: Error {
         public static let DEVICE_INFO_SERVICE_UUID = CBUUID(string: "BB93FFFF-3CE1-4720-A753-28C0159DC777")
         public static let ANIMATION_SERVICE_UUID   = CBUUID(string: "BB930A00-3CE1-4720-A753-28C0159DC777")
         public static let COLOR_SERVICE_UUID       = CBUUID(string: "BB930B00-3CE1-4720-A753-28C0159DC777")
-        //public static let LED_SERVICE_UUID         = CBUUID(string: "BB930C00-3CE1-4720-A753-28C0159DC777")
-        public static let LED_SERVICE_UUID         = CBUUID(string: "0C00")
+        public static let LED_SERVICE_UUID         = CBUUID(string: "BB930C00-3CE1-4720-A753-28C0159DC777")
         public static let SENSOR_SERVICE_UUID      = CBUUID(string: "BB930D00-3CE1-4720-A753-28C0159DC777")
         public static let EVENT_SERVICE_UUID       = CBUUID(string: "BB930E00-3CE1-4720-A753-28C0159DC777")
 
@@ -89,8 +88,7 @@ public struct UUIDs: Error {
         
         // LED service
         public static let LED_STATE_CHARACTERISTIC_UUID      = CBUUID(string: "BB930C01-3CE1-4720-A753-28C0159DC777")
-        public static let LED_BRIGHTNESS_CHARACTERISTIC_UUID = CBUUID(string: "0C02")
-        //public static let LED_BRIGHTNESS_CHARACTERISTIC_UUID = CBUUID(string: "BB930C02-3CE1-4720-A753-28C0159DC777")
+        public static let LED_BRIGHTNESS_CHARACTERISTIC_UUID = CBUUID(string: "BB930C02-3CE1-4720-A753-28C0159DC777")
         public static let LED_TIMEOUT_CHARACTERISTIC_UUID    = CBUUID(string: "BB930C03-3CE1-4720-A753-28C0159DC777")
 
         // Sensor service
