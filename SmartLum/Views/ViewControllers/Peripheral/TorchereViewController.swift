@@ -1,5 +1,5 @@
 //
-//  DeviceViewController.swift
+//  FlClassicViewController.swift
 //  SmartLum
 //
 //  Created by ELIX on 07.07.2021.
@@ -9,82 +9,35 @@
 import UIKit
 import CoreBluetooth
 
-class TorchereViewController: PeripheralViewController, PeripheralViewControllerProtocol {
-    
-    private var pickerDataSource: TablePickerViewDataSource<PeripheralDataElement>?
-    
+class FlClassicViewController: PeripheralViewController, PeripheralViewControllerProtocol {
+        
     func viewModelInit(peripheral: BasePeripheral) {
-        self.viewModel = TorchereViewModel(self.tableView,
-                                           peripheral,
-                                           self,
-                                           { self.onCellSelected($0) })
+        self.viewModel = FlClassicViewModel(tableView, peripheral, self, onCellSelected(cell:))
     }
     
-    func initPickerDataSource<T: PeripheralDataElement>(with elements: [T]) {
-        self.pickerDataSource = TablePickerViewDataSource<PeripheralDataElement>(withItems: elements, withSelection: PeripheralAnimations.rainbow, withRowTitle: { $0.name.localized })
-        {
-            if let viewModel = self.viewModel as? TorchereViewModel {
-                switch $0 {
-                case let selection as PeripheralAnimations:
-                    viewModel.writeAnimationMode(mode: selection)
-                    break
-                case let selection as PeripheralAnimationDirections:
-                    viewModel.writeAnimationDirection(direction: selection)
-                    break
-                default:
-                    print("Unknown selection - ", $0)
+    func onCellSelected(cell: PeripheralCell) {
+        if let mViewModel = viewModel as? FlClassicViewModel {
+            switch cell {
+            case mViewModel.primaryColorCell:
+                pushColorPicker(cell, initColor: mViewModel.primaryColor) { color, _ in
+                    mViewModel.writePrimaryColor(color: color)
                 }
+                return
+            case mViewModel.secondaryColorCell:
+                pushColorPicker(cell, initColor: mViewModel.secondaryColor) { color, _ in
+                    mViewModel.writeSecondaryColor(color: color)
+                }
+                break
+            case mViewModel.animationModeCell:
+                pushPicker(PeripheralAnimations.allCases)
+                break
+            case mViewModel.animationDirectionCell:
+                pushPicker(PeripheralAnimationDirections.allCases)
+                break
+            default:
+                return
             }
         }
     }
     
-    private func pushPicker<T: PeripheralDataElement>(_ dataArray: [T]) {
-        let vc = TablePickerViewController()
-        initPickerDataSource(with: dataArray)
-        vc.delegate = pickerDataSource
-        vc.dataSource = pickerDataSource
-        self.navigationController?.present(vc, animated: true, completion: nil)
-    }
-    
-    func onCellSelected(_ selection: PeripheralCell) {
-        if let viewModel = self.viewModel as? TorchereViewModel {
-        switch selection {
-        case viewModel.primaryColorCell,
-            viewModel.secondaryColorCell:
-            pushColorPicker(selection)
-            break
-        case viewModel.animationModeCell:
-            self.pushPicker(PeripheralAnimations.allCases)
-            break
-        case viewModel.animationDirectionCell:
-            self.pushPicker(PeripheralAnimationDirections.allCases)
-            break
-        case viewModel.animationStepCell:
-            tableView.reloadData()
-        default: print("default")
-        }
-        }
-    }
-    
-    private func pushColorPicker(_ sender: PeripheralCell) {
-        if let viewModel = self.viewModel as? TorchereViewModel {
-            let vc = ColorPickerViewController()
-            vc.configure(initColor: (viewModel.dataModel.getValue(key: sender.cellKey)) as? UIColor,
-                         colorIndicator: nil,
-                         sender: sender,
-                         onColorChange: { color, sender in
-                switch sender as? PeripheralCell {
-                case viewModel.primaryColorCell:
-                    viewModel.writePrimaryColor(color: color)
-                    break
-                case viewModel.secondaryColorCell:
-                    viewModel.writeSecondaryColor(color: color)
-                    break
-                default:
-                    print("Unknown sender")
-                }
-            })
-            self.navigationController?.present(vc, animated: true, completion: nil)
-        }
-    }
 }

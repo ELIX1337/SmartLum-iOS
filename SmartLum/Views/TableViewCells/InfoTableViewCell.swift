@@ -1,5 +1,5 @@
 //
-//  ErrorTableViewCell.swift
+//  InfoTableViewCell.swift
 //  SmartLum
 //
 //  Created by ELIX on 25.10.2021.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ErrorTableViewCell: UITableViewCell, BaseTableViewCell {
+class InfoTableViewCell: UITableViewCell, BaseTableViewCell {
     
     static var reuseIdentifier: String = "ErrorCellID"
     

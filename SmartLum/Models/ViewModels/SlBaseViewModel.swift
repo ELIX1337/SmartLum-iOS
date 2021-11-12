@@ -21,6 +21,8 @@ class SlBaseViewModel: PeripheralViewModel {
     var animationSpeedCell:     PeripheralCell!
     var resetToFactoryCell:     PeripheralCell!
     
+    var readyModel: PeripheralTableViewModel!
+    
     var slBasePeripheral: SlBasePeripheral! {
         get { return (super.basePeripheral as! SlBasePeripheral) }
     }
@@ -29,11 +31,10 @@ class SlBaseViewModel: PeripheralViewModel {
                   _ withPeripheral: BasePeripheral,
                   _ delegate: PeripheralViewModelDelegate,
                   _ selected: @escaping (PeripheralCell) -> Void) {
-        super.init(withTableView, withPeripheral as! SlBasePeripheral, delegate, selected)
-        self.slBasePeripheral.delegate = self
-        self.tableView = withTableView
-        self.selection = selected
-        self.dataModel = SlBaseData.init(values: [:])
+        super.init(withTableView, withPeripheral, delegate, selected)
+        slBasePeripheral.delegate = self
+        tableViewDataSourceAndDelegate = self
+        dataModel = SlBaseData.init(values: [:])
         self.topTriggerDistanceCell = .sliderCell(
             key: SlBaseData.topTriggerDistanceKey,
             title: "peripheral_top_sensor_cell_title".localized,
@@ -83,7 +84,11 @@ class SlBaseViewModel: PeripheralViewModel {
         self.resetToFactoryCell = .buttonCell(
             key: BasePeripheralData.factoryResetKey,
             title: "peripheral_reset_to_factory_cell_title".localized)
-        self.peripheralReadyTableViewModel = PeripheralTableViewModel(
+        initTableViewModel()
+    }
+    
+    func initTableViewModel() {
+        readyModel = PeripheralTableViewModel(
             sections: [
                 PeripheralSection(
                     headerText: "peripheral_led_state_section_header".localized,
@@ -98,89 +103,7 @@ class SlBaseViewModel: PeripheralViewModel {
                     footerText: "peripheral_additional_section_footer".localized,
                     rows: [animationSpeedCell,
                            ledTimeoutCell])
-            ])
-        self.peripheralSetupTableViewModel = PeripheralTableViewModel(
-            sections: [
-            PeripheralSection.init(
-                headerText: "peripheral_setup_trigger_distance_section_header".localized,
-                footerText: "peripheral_setup_trigger_distance_section_footer".localized,
-                rows: [topTriggerDistanceCell,
-                       botTriggerDistanceCell])
-        ])
-        self.peripheralSettingsTableViewModel = PeripheralTableViewModel(
-            sections: [
-            PeripheralSection.init(
-                headerText: "peripheral_sensor_trigger_distance_section_header".localized,
-                footerText: "peripheral_sensor_trigger_distance_section_footer".localized,
-                rows: [topTriggerDistanceCell,
-                       botTriggerDistanceCell]),
-            PeripheralSection.init(
-                headerText: "peripheral_factory_settings_section_header".localized,
-                footerText: "peripheral_factory_settings_section_footer".localized,
-                rows: [resetToFactoryCell])
-        ])
-    }
-    
-    override func cellDataCallback(fromRow: PeripheralCell, withValue: Any?) {
-        super.cellDataCallback(fromRow: fromRow, withValue: withValue)
-        switch fromRow {
-        case ledStateCell:
-            print("Led state - \(String(describing: withValue))")
-            if let value = withValue as? Bool {
-                slBasePeripheral.writeLedState(value)
-                dataModel.setValue(key: fromRow.cellKey, value: value)
-            }
-            break
-        case ledBrightnessCell:
-            print("Brightness - \(String(describing: withValue))")
-            if let value = withValue as? Float {
-                slBasePeripheral.writeLedBrightness(Int(value))
-                dataModel.setValue(key: fromRow.cellKey, value: value)
-            }
-            break
-        case ledTimeoutCell:
-            print("Led timeout - \(String(describing: withValue))")
-            if let value = withValue as? Int {
-                slBasePeripheral.writeLedTimeout(value)
-                dataModel.setValue(key: fromRow.cellKey, value: value)
-            }
-            break
-        case animationSpeedCell:
-            print("Animation speed - \(String(describing: withValue))")
-            if let value = withValue as? Float {
-                slBasePeripheral.writeAnimationOnSpeed(Int(value))
-                dataModel.setValue(key: fromRow.cellKey, value: value)
-            }
-            break
-        case topTriggerDistanceCell:
-            print("Top trigger - \(String(describing: withValue))")
-            if let value = withValue as? Float {
-                if (dataModel.getValue(key: BasePeripheralData.initStateKey) ?? false) as! Bool {
-                    slBasePeripheral.writeTopSensorTriggerDistance(Int(value))
-                    dataModel.setValue(key: SlBaseData.topTriggerDistanceKey, value: Int(value))
-                } else {
-                    initTopSensorTriggerDistance(distance: Int(value))
-                }
-            }
-            break
-        case botTriggerDistanceCell:
-            print("Bot trigger - \(String(describing: withValue))")
-            if let value = withValue as? Float {
-                if (dataModel.getValue(key: BasePeripheralData.initStateKey) ?? false) as! Bool {
-                    slBasePeripheral.writeBotSensorTriggerDistance(Int(value))
-                    dataModel.setValue(key: SlBaseData.botTriggerDistanceKey, value: Int(value))
-                } else {
-                    initBotSensorTriggerDistance(distance: Int(value))
-                }
-            }
-            break
-        case resetToFactoryCell:
-            selection(fromRow)
-            print("RESET CELL")
-            break
-        default:
-            print("Unkown cell - \(fromRow.cellKey)")
-        }
+            ], type: .ready)
     }
     
     public func writeInitDistance() -> Bool {
@@ -203,17 +126,17 @@ class SlBaseViewModel: PeripheralViewModel {
         readyToWriteInitData = dataModel.getValue(key: SlBaseData.topTriggerDistanceKey) as! Int != 0
     }
     
-    public func writeTopSensorTriggerDistance(distance: Int) {
-        slBasePeripheral.writeTopSensorTriggerDistance(distance)
-        dataModel.setValue(key: SlBaseData.topTriggerDistanceKey, value: distance)
-        reloadCell(for: topTriggerDistanceCell, with: .none)
-    }
-    
-    public func writeBotSensorTriggerDistance(distance: Int) {
-        slBasePeripheral.writeBotSensorTriggerDistance(distance)
-        dataModel.setValue(key: SlBaseData.botTriggerDistanceKey, value: distance)
-        reloadCell(for: botTriggerDistanceCell, with: .none)
-    }
+//    public func writeTopSensorTriggerDistance(distance: Int) {
+//        slBasePeripheral.writeTopSensorTriggerDistance(distance)
+//        dataModel.setValue(key: SlBaseData.topTriggerDistanceKey, value: distance)
+//        reloadCell(for: topTriggerDistanceCell, with: .none)
+//    }
+//    
+//    public func writeBotSensorTriggerDistance(distance: Int) {
+//        slBasePeripheral.writeBotSensorTriggerDistance(distance)
+//        dataModel.setValue(key: SlBaseData.botTriggerDistanceKey, value: distance)
+//        reloadCell(for: botTriggerDistanceCell, with: .none)
+//    }
     
 }
 
@@ -257,6 +180,99 @@ extension SlBaseViewModel: SlBasePeripheralDelegate {
     func getAnimationDirection(direction: PeripheralAnimationDirections) { }
     
     func getAnimationStep(step: Int) { }
+    
+}
+
+extension SlBaseViewModel: PeripheralTableViewModelDataSourceAndDelegate {
+    
+    func readyTableViewModel() -> PeripheralTableViewModel {
+        return readyModel
+    }
+    
+    func setupTableViewModel() -> PeripheralTableViewModel? {
+        PeripheralTableViewModel(
+            sections: [
+                PeripheralSection(
+                    headerText: "peripheral_setup_trigger_distance_section_header".localized,
+                    footerText: "peripheral_setup_trigger_distance_section_footer".localized,
+                    rows: [topTriggerDistanceCell, botTriggerDistanceCell])
+            ], type: .setup)
+    }
+    
+    func settingsTableViewModel() -> PeripheralTableViewModel? {
+        PeripheralTableViewModel(
+            sections: [
+                PeripheralSection(
+                    headerText: "peripheral_sensor_trigger_distance_section_header".localized,
+                    footerText: "peripheral_sensor_trigger_distance_section_footer".localized,
+                    rows: [topTriggerDistanceCell, botTriggerDistanceCell]),
+                PeripheralSection(
+                    headerText: "peripheral_factory_settings_section_header".localized,
+                    footerText: "peripheral_factory_settings_section_footer".localized,
+                    rows: [resetToFactoryCell])
+            ], type: .settings)
+    }
+    
+    func callback(from cell: PeripheralCell, with value: Any?, in tableView: UITableView) {
+        switch cell {
+        case ledStateCell:
+            print("Led state - \(String(describing: value))")
+            if let value = value as? Bool {
+                slBasePeripheral.writeLedState(value)
+                dataModel.setValue(key: cell.cellKey, value: value)
+            }
+            break
+        case ledBrightnessCell:
+            print("Brightness - \(String(describing: value))")
+            if let value = value as? Float {
+                slBasePeripheral.writeLedBrightness(Int(value))
+                dataModel.setValue(key: cell.cellKey, value: value)
+            }
+            break
+        case ledTimeoutCell:
+            print("Led timeout - \(String(describing: value))")
+            if let value = value as? Int {
+                slBasePeripheral.writeLedTimeout(value)
+                dataModel.setValue(key: cell.cellKey, value: value)
+            }
+            break
+        case animationSpeedCell:
+            print("Animation speed - \(String(describing: value))")
+            if let value = value as? Float {
+                slBasePeripheral.writeAnimationOnSpeed(Int(value))
+                dataModel.setValue(key: cell.cellKey, value: value)
+            }
+            break
+        case topTriggerDistanceCell:
+            print("Top trigger - \(String(describing: value))")
+            if let value = value as? Float {
+                if (dataModel.getValue(key: BasePeripheralData.initStateKey) ?? false) as! Bool {
+                    slBasePeripheral.writeTopSensorTriggerDistance(Int(value))
+                    dataModel.setValue(key: SlBaseData.topTriggerDistanceKey, value: Int(value))
+                } else {
+                    initTopSensorTriggerDistance(distance: Int(value))
+                }
+            }
+            break
+        case botTriggerDistanceCell:
+            print("Bot trigger - \(String(describing: value))")
+            if let value = value as? Float {
+                if (dataModel.getValue(key: BasePeripheralData.initStateKey) ?? false) as! Bool {
+                    slBasePeripheral.writeBotSensorTriggerDistance(Int(value))
+                    dataModel.setValue(key: SlBaseData.botTriggerDistanceKey, value: Int(value))
+                } else {
+                    initBotSensorTriggerDistance(distance: Int(value))
+                }
+            }
+            break
+        case resetToFactoryCell:
+            onCellSelected(cell)
+            print("RESET CELL")
+            break
+        default:
+            print("Unkown cell - \(cell.cellKey)")
+        }
+    }
     
 }
 

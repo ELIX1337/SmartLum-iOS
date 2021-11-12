@@ -15,7 +15,7 @@ class ColorPickerViewController: PopupPickerViewController {
     private var indicator: UIView?
     private var sender: Any?
     private var onColorChange: ((UIColor, Any?) -> Void)!
-    private var colorPickerView = ColorPicker.init()
+    private lazy var colorPickerView = ColorPicker.init()
     
     override func viewDidLayoutSubviews() {
         self.containerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5).isActive = true
@@ -27,16 +27,13 @@ class ColorPickerViewController: PopupPickerViewController {
         self.colorPickerView.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
         self.colorPickerView.addTarget(self, action: #selector(self.onColorChanged(picker:)), for: .valueChanged)
         self.colorPickerView.set(color: initColor ?? UIColor.white, colorSpace: .sRGB)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+        self.colorUI(colorPickerView.color)
     }
     
     public func configure(initColor: UIColor?,
                           colorIndicator: UIView?,
                           sender: Any,
-                          onColorChange: @escaping (UIColor, Any?) -> Void) {
+                          onColorChange: @escaping (_ color: UIColor, _ sender: Any?) -> Void) {
         self.initColor = initColor
         self.indicator = colorIndicator
         self.sender = sender
@@ -45,9 +42,13 @@ class ColorPickerViewController: PopupPickerViewController {
     
     @objc func onColorChanged(picker: ColorPicker) {
         self.onColorChange(picker.color, sender)
-        self.indicator?.backgroundColor = picker.color
-        containerView.backgroundColor = UIColor.dynamicColor(light: picker.color.withAlphaComponent(0.5),
-                                                             dark: picker.color.withAlphaComponent(0.15))
+        colorUI(picker.color)
+    }
+    
+    private func colorUI(_ color: UIColor) {
+        self.indicator?.backgroundColor = color
+        containerView.backgroundColor = UIColor.dynamicColor(light: color.withAlphaComponent(0.5),
+                                                             dark: color.withAlphaComponent(0.15))
     }
 }
 

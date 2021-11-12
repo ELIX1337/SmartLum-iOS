@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import iOSDFULibrary
 
 class RootViewController: UINavigationController {
     
@@ -16,25 +15,13 @@ class RootViewController: UINavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       // if #available(iOS 13.0, *) {
-            let navBarAppearance = UINavigationBarAppearance()
-            navBarAppearance.configureWithOpaqueBackground()
-            navBarAppearance.backgroundColor = UIColor.dynamicColor(light: smartlumColor ?? .SLWhite, dark: smartlumColor ?? .SLBlue)
-            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.dynamicColor(light: primaryTextColor ?? .SLDarkBlue, dark: primaryTextColor ?? .SLYellow)]
-            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.dynamicColor(light: primaryTextColor ?? .SLDarkBlue, dark: primaryTextColor ?? .SLYellow)]
-            navigationBar.standardAppearance = navBarAppearance
-            navigationBar.scrollEdgeAppearance = navBarAppearance
-        //} else {
-            // Fallback on earlier versions
-       // }
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithOpaqueBackground()
+        navBarAppearance.backgroundColor = UIColor.dynamicColor(light: smartlumColor ?? .SLWhite, dark: smartlumColor ?? .SLBlue)
+        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.dynamicColor(light: primaryTextColor ?? .SLDarkBlue, dark: primaryTextColor ?? .SLYellow)]
+        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.dynamicColor(light: primaryTextColor ?? .SLDarkBlue, dark: primaryTextColor ?? .SLYellow)]
+        navigationBar.standardAppearance = navBarAppearance
+        navigationBar.scrollEdgeAppearance = navBarAppearance
     }
-
-}
-
-func getPeripheralVC(peripheralType: PeripheralProfile) -> UIViewController {
-    switch peripheralType {
-    case .FlClassic: return TorchereViewController()
-    case .FlMini: return TorchereViewController()
-    case .SlBase: return SlBaseViewController()
-    }
+    
 }

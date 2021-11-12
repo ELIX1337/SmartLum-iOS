@@ -12,7 +12,7 @@ import CoreBluetooth
 class SlBaseViewController: PeripheralViewController, PeripheralViewControllerProtocol {
     
     func viewModelInit(peripheral: BasePeripheral) {
-        self.viewModel = SlBaseViewModel(self.tableView, peripheral, self, onCellSelected(cell:))
+        viewModel = SlBaseViewModel(tableView, peripheral, self, onCellSelected(cell:))
     }
     
     func onCellSelected(cell: PeripheralCell) {
