@@ -34,7 +34,7 @@
 		2C720287268F259A0079BEEA /* GenericRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C720286268F259A0079BEEA /* GenericRow.swift */; };
 		2C72028B269434180079BEEA /* WheelPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C72028A269434180079BEEA /* WheelPickerViewController.swift */; };
 		2C720292269440260079BEEA /* PopupPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C720290269440260079BEEA /* PopupPickerViewController.swift */; };
-		2C7202962695ADA10079BEEA /* TorchereViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7202952695ADA10079BEEA /* TorchereViewController.swift */; };
+		2C7202962695ADA10079BEEA /* FlClassicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7202952695ADA10079BEEA /* FlClassicViewController.swift */; };
 		2C720299269D5D010079BEEA /* SliderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C720297269D5D010079BEEA /* SliderTableViewCell.swift */; };
 		2C72029A269D5D010079BEEA /* SliderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C720298269D5D010079BEEA /* SliderTableViewCell.xib */; };
 		2C72029D269D5D1A0079BEEA /* PickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C72029B269D5D1A0079BEEA /* PickerTableViewCell.swift */; };
@@ -45,7 +45,7 @@
 		2C7202BF26A040E30079BEEA /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7202BE26A040E30079BEEA /* BaseTableViewCell.swift */; };
 		2C7202C226A702370079BEEA /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7202C026A702370079BEEA /* SwitchTableViewCell.swift */; };
 		2C7202C326A702370079BEEA /* SwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C7202C126A702370079BEEA /* SwitchTableViewCell.xib */; };
-		2C7202C726A848E20079BEEA /* PeripheralTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7202C626A848E20079BEEA /* PeripheralTableViewModel.swift */; };
+		2C7202C726A848E20079BEEA /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7202C626A848E20079BEEA /* TableViewModel.swift */; };
 		2C7202C926A84D120079BEEA /* PeripheralViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7202C826A84D120079BEEA /* PeripheralViewModel.swift */; };
 		2C7202CB26A854220079BEEA /* FlClassicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7202CA26A854220079BEEA /* FlClassicViewModel.swift */; };
 		2C7202CE26A985BC0079BEEA /* ColorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7202CC26A985BC0079BEEA /* ColorTableViewCell.swift */; };
@@ -74,7 +74,6 @@
 		30B664831FCDA0EB003C8B55 /* ScannerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B664821FCDA0EB003C8B55 /* ScannerTableViewController.swift */; };
 		30B664851FCDA0FC003C8B55 /* ScannerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B664841FCDA0FC003C8B55 /* ScannerTableViewCell.swift */; };
 		52A637C0220DDECD00F5308D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52A637C2220DDECD00F5308D /* Localizable.strings */; };
-		52A637C5220DE11200F5308D /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A637C4220DE11200F5308D /* String+Localization.swift */; };
 		52FB0AF022131B7D00B1E575 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FB0AEF22131B7D00B1E575 /* Extensions.swift */; };
 		9D248822D675F30B604D3075 /* Pods_SmartLumTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE54BBBC908EC0C8FACA680D /* Pods_SmartLumTests.framework */; };
 		D3313BDDB618A9B3B887A771 /* Pods_SmartLum.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A443132127CFF8E24499F6AA /* Pods_SmartLum.framework */; };
@@ -130,7 +129,7 @@
 		2C720286268F259A0079BEEA /* GenericRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericRow.swift; sourceTree = "<group>"; };
 		2C72028A269434180079BEEA /* WheelPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelPickerViewController.swift; sourceTree = "<group>"; };
 		2C720290269440260079BEEA /* PopupPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupPickerViewController.swift; sourceTree = "<group>"; };
-		2C7202952695ADA10079BEEA /* TorchereViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorchereViewController.swift; sourceTree = "<group>"; };
+		2C7202952695ADA10079BEEA /* FlClassicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlClassicViewController.swift; sourceTree = "<group>"; };
 		2C720297269D5D010079BEEA /* SliderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderTableViewCell.swift; sourceTree = "<group>"; };
 		2C720298269D5D010079BEEA /* SliderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SliderTableViewCell.xib; sourceTree = "<group>"; };
 		2C72029B269D5D1A0079BEEA /* PickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerTableViewCell.swift; sourceTree = "<group>"; };
@@ -141,7 +140,7 @@
 		2C7202BE26A040E30079BEEA /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		2C7202C026A702370079BEEA /* SwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchTableViewCell.swift; sourceTree = "<group>"; };
 		2C7202C126A702370079BEEA /* SwitchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SwitchTableViewCell.xib; sourceTree = "<group>"; };
-		2C7202C626A848E20079BEEA /* PeripheralTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralTableViewModel.swift; sourceTree = "<group>"; };
+		2C7202C626A848E20079BEEA /* TableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewModel.swift; sourceTree = "<group>"; };
 		2C7202C826A84D120079BEEA /* PeripheralViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralViewModel.swift; sourceTree = "<group>"; };
 		2C7202CA26A854220079BEEA /* FlClassicViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlClassicViewModel.swift; sourceTree = "<group>"; };
 		2C7202CC26A985BC0079BEEA /* ColorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTableViewCell.swift; sourceTree = "<group>"; };
@@ -181,7 +180,6 @@
 		502F8065F13CED8A6A9CE27D /* Pods-SmartLum.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartLum.release.xcconfig"; path = "Target Support Files/Pods-SmartLum/Pods-SmartLum.release.xcconfig"; sourceTree = "<group>"; };
 		52A637BD220DDD2600F5308D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		52A637C3220DDEDF00F5308D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		52A637C4220DE11200F5308D /* String+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localization.swift"; sourceTree = "<group>"; };
 		52FB0AEA2212D67100B1E575 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		52FB0AEF22131B7D00B1E575 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		9EB2910E6F0D4EE26C06DD48 /* Pods-SmartLumTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartLumTests.debug.xcconfig"; path = "Target Support Files/Pods-SmartLumTests/Pods-SmartLumTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -326,7 +324,7 @@
 			children = (
 				2CD2C7C52719859C00B7E2E0 /* PeripheralViewController.swift */,
 				2C4172332718218100F43EA2 /* SlBaseViewController.swift */,
-				2C7202952695ADA10079BEEA /* TorchereViewController.swift */,
+				2C7202952695ADA10079BEEA /* FlClassicViewController.swift */,
 				2CA36B48273A82D30067E414 /* SlStandartViewController.swift */,
 			);
 			path = Peripheral;
@@ -390,7 +388,6 @@
 				30B664441FCD6E65003C8B55 /* AppDelegate.swift */,
 				30B664481FCD6E65003C8B55 /* Main.storyboard */,
 				30B6644D1FCD6E65003C8B55 /* LaunchScreen.storyboard */,
-				52A637C4220DE11200F5308D /* String+Localization.swift */,
 				52A637C2220DDECD00F5308D /* Localizable.strings */,
 				30B664501FCD6E65003C8B55 /* Info.plist */,
 				2240D20F260CAC520037D304 /* InfoPlist.strings */,
@@ -442,7 +439,7 @@
 				2CDE95D4268C722E0025276A /* Peripherals */,
 				2CA24A00272803AF0084F073 /* ViewModels */,
 				2CDE95CE268C70CD0025276A /* BluetoothEndpoint.swift */,
-				2C7202C626A848E20079BEEA /* PeripheralTableViewModel.swift */,
+				2C7202C626A848E20079BEEA /* TableViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -748,7 +745,7 @@
 				30B664801FCD9638003C8B55 /* RootViewController.swift in Sources */,
 				2CAA8B192726EA9B00354FAB /* InfoDetailTableViewCell.swift in Sources */,
 				2C7202BF26A040E30079BEEA /* BaseTableViewCell.swift in Sources */,
-				2C7202C726A848E20079BEEA /* PeripheralTableViewModel.swift in Sources */,
+				2C7202C726A848E20079BEEA /* TableViewModel.swift in Sources */,
 				2CDE95D1268C71760025276A /* ColorPeripheralProtocol.swift in Sources */,
 				2C720284268F1A190079BEEA /* UUIDs.swift in Sources */,
 				22EB5D4F25F23012003FC31D /* NetworkPermissionTrigger.swift in Sources */,
@@ -772,13 +769,12 @@
 				2CD2C7C62719859C00B7E2E0 /* PeripheralViewController.swift in Sources */,
 				2C41722E27180AF600F43EA2 /* SlBasePeripheral.swift in Sources */,
 				2C720292269440260079BEEA /* PopupPickerViewController.swift in Sources */,
-				52A637C5220DE11200F5308D /* String+Localization.swift in Sources */,
 				2C7202C926A84D120079BEEA /* PeripheralViewModel.swift in Sources */,
 				2240D22D260CAF490037D304 /* AboutViewController.swift in Sources */,
 				22EB5D8425FB5077003FC31D /* TablePickerViewController.swift in Sources */,
 				2C4172302718100400F43EA2 /* SlBaseViewModel.swift in Sources */,
 				52FB0AF022131B7D00B1E575 /* Extensions.swift in Sources */,
-				2C7202962695ADA10079BEEA /* TorchereViewController.swift in Sources */,
+				2C7202962695ADA10079BEEA /* FlClassicViewController.swift in Sources */,
 				2C4172342718218100F43EA2 /* SlBaseViewController.swift in Sources */,
 				2C41722C2718081F00F43EA2 /* DistanceSensorPeripheralProtocol.swift in Sources */,
 			);

@@ -15,7 +15,7 @@ class SlBaseViewController: PeripheralViewController, PeripheralViewControllerPr
         viewModel = SlBaseViewModel(tableView, peripheral, self, onCellSelected(cell:))
     }
     
-    func onCellSelected(cell: PeripheralCell) {
+    func onCellSelected(cell: CellModel) {
         switch cell.cellKey {
         case BasePeripheralData.errorKey:
             openPeripheralSettings()

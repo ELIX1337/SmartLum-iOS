@@ -14,7 +14,7 @@ class SwitchTableViewCell: UITableViewCell, BaseTableViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var cellSwitch: UISwitch!
-    var returnValue: ((Any) -> Void)?
+    var callback: ((Any) -> Void)?
     
     func configure(title: String?, value: Any?) {
         self.selectionStyle = .none
@@ -31,6 +31,6 @@ class SwitchTableViewCell: UITableViewCell, BaseTableViewCell {
     }
     
     @IBAction func onSwitchValueChange(_ sender: UISwitch) {
-        self.returnValue?(sender.isOn)
+        self.callback?(sender.isOn)
     }
 }

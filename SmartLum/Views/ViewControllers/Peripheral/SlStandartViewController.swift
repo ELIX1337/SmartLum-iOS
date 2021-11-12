@@ -15,7 +15,7 @@ class SlStandartViewController: PeripheralViewController, PeripheralViewControll
         self.viewModel = SlStandartViewModel(self.tableView, peripheral, self, onCellSelected(cell:))
     }
     
-    func onCellSelected(cell: PeripheralCell) {
+    func onCellSelected(cell: CellModel) {
         if let mViewModel = self.viewModel as? SlStandartViewModel {
             switch cell {
             case mViewModel.primaryColorCell:

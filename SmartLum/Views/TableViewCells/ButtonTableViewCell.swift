@@ -11,14 +11,14 @@ import UIKit
 class ButtonTableViewCell: UITableViewCell, BaseTableViewCell {
     
     static let reuseIdentifier: String = "ButtonCellID"
-    var returnValue: ((Any) -> Void)?
+    var callback: ((Any) -> Void)?
     
     @IBOutlet weak var button: UIButton!
     
     func configure(title: String?, value: Any?) { }
     
     @IBAction func onButtonClick(_ sender: UIButton) {
-        self.returnValue?(true)
+        self.callback?(true)
     }
     
 }

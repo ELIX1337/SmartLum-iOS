@@ -14,13 +14,13 @@ class FlClassicViewModel: PeripheralViewModel {
         get { return (super.basePeripheral as! FlClassicPeripheral) }
     }
     
-    var primaryColorCell:       PeripheralCell!
-    var secondaryColorCell:     PeripheralCell!
-    var randomColorCell:        PeripheralCell!
-    var animationModeCell:      PeripheralCell!
-    var animationSpeedCell:     PeripheralCell!
-    var animationDirectionCell: PeripheralCell!
-    var animationStepCell:      PeripheralCell!
+    var primaryColorCell:       CellModel!
+    var secondaryColorCell:     CellModel!
+    var randomColorCell:        CellModel!
+    var animationModeCell:      CellModel!
+    var animationSpeedCell:     CellModel!
+    var animationDirectionCell: CellModel!
+    var animationStepCell:      CellModel!
     
     // Public variables for using in viewController
     var primaryColor: UIColor {
@@ -44,7 +44,7 @@ class FlClassicViewModel: PeripheralViewModel {
     override init(_ withTableView: UITableView,
                   _ withPeripheral: BasePeripheral,
                   _ delegate: PeripheralViewModelDelegate,
-                  _ selected: @escaping (PeripheralCell) -> Void) {
+                  _ selected: @escaping (CellModel) -> Void) {
         super.init(withTableView, withPeripheral, delegate, selected)
         peripheral.delegate = self
         tableViewDataSourceAndDelegate = self
@@ -57,15 +57,24 @@ class FlClassicViewModel: PeripheralViewModel {
         primaryColorCell = .colorCell(
             key: FlClassicData.primaryColorKey,
             title: "peripheral_primary_color_cell_title".localized,
-            initialValue: dataModel.getValue(key: FlClassicData.primaryColorKey) as? UIColor ?? UIColor.SLWhite)
+            initialValue: dataModel.getValue(key: FlClassicData.primaryColorKey) as? UIColor ?? UIColor.SLWhite,
+            callback: { color in
+                self.dataModel.setValue(key: FlClassicData.primaryColorKey, value: color)
+                self.writePrimaryColor(color: color)
+            })
         secondaryColorCell = .colorCell(
             key: FlClassicData.secondaryColorKey,
             title: "peripheral_secondary_color_cell_title".localized,
-            initialValue: dataModel.getValue(key: FlClassicData.secondaryColorKey) as? UIColor ?? UIColor.SLWhite)
+            initialValue: dataModel.getValue(key: FlClassicData.secondaryColorKey) as? UIColor ?? UIColor.SLWhite,
+            callback: { color in
+                self.dataModel.setValue(key: FlClassicData.secondaryColorKey, value: color)
+                self.writeSecondaryColor(color: color)
+            })
         randomColorCell = .switchCell(
             key: FlClassicData.randomColorKey,
             title: "peripheral_random_color_cell_title".localized,
-            initialValue: dataModel.getValue(key: FlClassicData.randomColorKey) as? Bool ?? false)
+            initialValue: dataModel.getValue(key: FlClassicData.randomColorKey) as? Bool ?? false,
+            callback: { self.writeRandomColor(state: $0) })
     }
     
     private func initAnimationSection() {
@@ -81,7 +90,11 @@ class FlClassicViewModel: PeripheralViewModel {
             maxValue: Float(FlClassicData.animationMaxSpeed),
             leftIcon: nil,
             rightIcon: nil,
-            showValue: false)
+            showValue: false,
+            callback: { speed in
+                self.writeAnimationOnSpeed(speed: Int(speed))
+                self.dataModel.setValue(key: FlClassicData.animationSpeedKey, value: Int(speed))
+            })
         animationDirectionCell = .pickerCell(
             key: FlClassicData.animationDirectionKey,
             title: "peripheral_animation_direction_cell_title".localized,
@@ -91,7 +104,8 @@ class FlClassicViewModel: PeripheralViewModel {
             title: "peripheral_animation_step_cell_title".localized,
             initialValue: Double(dataModel.getValue(key: FlClassicData.animationStepKey) as? Int ?? 0),
             minValue: Double(FlClassicData.animationMinStep),
-            maxValue: Double(FlClassicData.animationMaxStep))
+            maxValue: Double(FlClassicData.animationMaxStep),
+            callback: { self.writeAnimationStep(step: Int($0)) })
     }
     
     // Updating tableView depending selected animation
@@ -130,6 +144,11 @@ class FlClassicViewModel: PeripheralViewModel {
         peripheral.writeSecondaryColor(color)
         dataModel.setValue(key: FlClassicData.secondaryColorKey, value: color)
         reloadCell(for: secondaryColorCell, with: .none)
+    }
+    
+    public func writeRandomColor(state: Bool) {
+        peripheral.writeRandomColor(state)
+        dataModel.setValue(key: FlClassicData.randomColorKey, value: state)
     }
     
     public func writeAnimationMode(mode: PeripheralAnimations) {
@@ -204,53 +223,26 @@ extension FlClassicViewModel: FlClassicPeripheralDelegate {
 // PeripheraTableViewModel dataSource and delegate
 extension FlClassicViewModel: PeripheralTableViewModelDataSourceAndDelegate {
     
-    func readyTableViewModel() -> PeripheralTableViewModel {
-        return PeripheralTableViewModel(
+    func readyTableViewModel() -> TableViewModel {
+        return TableViewModel(
             sections: [
-                PeripheralSection(
+                SectionModel(
                     headerText: "peripheral_color_section_header".localized,
                     footerText: "peripheral_color_section_footer".localized,
                     rows: [primaryColorCell, secondaryColorCell, randomColorCell]),
-                PeripheralSection(
+                SectionModel(
                     headerText: "peripheral_animation_section_header".localized,
                     footerText: "peripheral_animation_section_footer".localized,
                     rows: [animationModeCell, animationSpeedCell, animationDirectionCell, animationStepCell])
             ], type: .ready)
     }
     
-    func setupTableViewModel() -> PeripheralTableViewModel? {
+    func setupTableViewModel() -> TableViewModel? {
         return nil
     }
     
-    func settingsTableViewModel() -> PeripheralTableViewModel? {
+    func settingsTableViewModel() -> TableViewModel? {
         return nil
     }
     
-    func callback(from cell: PeripheralCell, with value: Any?, in tableView: UITableView) {
-        switch cell {
-        case animationSpeedCell:
-            print("Speed - \(String(describing: value))")
-            if let value = value as? Float {
-                peripheral.writeAnimationOnSpeed(Int(value))
-                dataModel.setValue(key: FlClassicData.animationSpeedKey, value: Int(value))
-            }
-            break
-        case randomColorCell:
-            print("Random color - \(String(describing: value))")
-            if let value = value as? Bool {
-                peripheral.writeRandomColor(value)
-                dataModel.setValue(key: FlClassicData.randomColorKey, value: value)
-            }
-            break
-        case animationStepCell:
-            print("Animation step - \(String(describing: value))")
-            if let value = value as? Int {
-                peripheral.writeAnimationStep(value)
-                dataModel.setValue(key: FlClassicData.animationStepKey, value: value)
-            }
-            break
-        default:
-            print("Default")
-        }
-    }
 }

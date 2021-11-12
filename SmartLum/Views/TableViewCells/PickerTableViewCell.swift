@@ -10,7 +10,8 @@ import UIKit
 
 class PickerTableViewCell: UITableViewCell, BaseTableViewCell {
     
-    var returnValue: ((Any) -> Void)?
+    var callback: ((Any) -> Void)?
+    
     static let reuseIdentifier: String = "PickerCellID"
 
     @IBOutlet weak var valueLabel: UILabel!

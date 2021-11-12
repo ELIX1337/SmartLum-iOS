@@ -15,7 +15,7 @@ class StepperTableViewCell: UITableViewCell , BaseTableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var valueLabel: UILabel!
     @IBOutlet weak var stepper: UIStepper!
-    var returnValue: ((Any) -> Void)?
+    var callback: ((Any) -> Void)?
     
     func configure(title: String?, value: Any?) {
         self.selectionStyle = .none
@@ -33,7 +33,7 @@ class StepperTableViewCell: UITableViewCell , BaseTableViewCell {
     }
     
     @IBAction func onStepperValueChange(_ sender: UIStepper) {
-        returnValue?(Int(sender.value))
+        callback?(sender.value)
         valueLabel.text = String(Int(sender.value))
     }
     

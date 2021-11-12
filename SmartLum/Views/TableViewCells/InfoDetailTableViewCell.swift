@@ -16,7 +16,7 @@ class InfoDetailTableViewCell: UITableViewCell, BaseTableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
-    var returnValue: ((Any) -> Void)?
+    var callback: ((Any) -> Void)?
         
     func configure(title: String?, value: Any?) {
     }

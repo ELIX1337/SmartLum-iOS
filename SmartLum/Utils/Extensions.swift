@@ -36,6 +36,18 @@ func bytes<U: FixedWidthInteger,V: FixedWidthInteger>(
     return Array(a[...lastNonZeroIndex].reversed())
 }
 
+extension String {
+    
+    var localized: String {
+        return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
+    }
+    
+    func localized(withComment:String) -> String {
+        return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: withComment)
+    }
+    
+}
+
 extension Data {
     func toInt() -> Int {
         let decimalValue = self.reduce(0) { v, byte in
@@ -104,22 +116,13 @@ extension Numeric {
 extension UnsignedInteger {
     init(_ bytes: [UInt8]) {
         precondition(bytes.count <= MemoryLayout<Self>.size)
-
         var value: UInt64 = 0
 
         for byte in bytes {
             value <<= 8
             value |= UInt64(byte)
         }
-
         self.init(value)
-    }
-    
-    func toDoubleData(_ reversed: Bool) -> Data {
-        var array = [UInt8](repeating: 0, count:2)
-        array[0] = reversed ? UInt8(self & 0xFF) : UInt8(self >> 8)
-        array[1] = reversed ? UInt8(self >> 8)   : UInt8(self & 0xFF) 
-        return Data(array)
     }
     
 }

@@ -19,10 +19,9 @@ protocol PeripheralViewModelDelegate {
 
 // Protocol for sub-classes (specific peripheral viewModel) to build peripheral-specific tableView
 protocol PeripheralTableViewModelDataSourceAndDelegate {
-    func callback(from cell: PeripheralCell, with value: Any?, in tableView: UITableView)
-    func readyTableViewModel() -> PeripheralTableViewModel
-    func setupTableViewModel() -> PeripheralTableViewModel?
-    func settingsTableViewModel() -> PeripheralTableViewModel?
+    func readyTableViewModel() -> TableViewModel
+    func setupTableViewModel() -> TableViewModel?
+    func settingsTableViewModel() -> TableViewModel?
 }
 
 @objc class PeripheralViewModel: NSObject {
@@ -32,12 +31,12 @@ protocol PeripheralTableViewModelDataSourceAndDelegate {
     public var tableViewDataSourceAndDelegate: PeripheralTableViewModelDataSourceAndDelegate?
     public var dataModel: PeripheralData!
     public var tableView: UITableView
-    public var onCellSelected: (PeripheralCell) -> Void
+    public var onCellSelected: (CellModel) -> Void
     public lazy var hiddenIndexPath = HiddenIndexPath()
     
-    public lazy var readyTableViewModel:    PeripheralTableViewModel? = tableViewDataSourceAndDelegate?.readyTableViewModel()
-    public lazy var setupTableViewModel:    PeripheralTableViewModel? = tableViewDataSourceAndDelegate?.setupTableViewModel()
-    public lazy var settingsTableViewModel: PeripheralTableViewModel? = tableViewDataSourceAndDelegate?.settingsTableViewModel()
+    public lazy var readyTableViewModel:    TableViewModel? = tableViewDataSourceAndDelegate?.readyTableViewModel()
+    public lazy var setupTableViewModel:    TableViewModel? = tableViewDataSourceAndDelegate?.setupTableViewModel()
+    public lazy var settingsTableViewModel: TableViewModel? = tableViewDataSourceAndDelegate?.settingsTableViewModel()
     
     public var isConnected: Bool { basePeripheral.isConnected }
     public var peripheralSettingsAvailable: Bool { tableViewDataSourceAndDelegate?.settingsTableViewModel() != nil }
@@ -49,7 +48,7 @@ protocol PeripheralTableViewModelDataSourceAndDelegate {
     init(_ withTableView:  UITableView,
          _ withPeripheral: BasePeripheral,
          _ delegate:       PeripheralViewModelDelegate,
-         _ selected:       @escaping (PeripheralCell) -> Void) {
+         _ selected:       @escaping (CellModel) -> Void) {
         self.tableView = withTableView
         self.onCellSelected = selected
         self.delegate = delegate
@@ -59,17 +58,16 @@ protocol PeripheralTableViewModelDataSourceAndDelegate {
         self.basePeripheral.baseDelegate = self
     }
     
-    public func resetTableView(tableView: UITableView, delegate: PeripheralViewModelDelegate, tableViewType: PeripheralTableViewModel.TableViewType) {
+    public func resetTableView(tableView: UITableView, delegate: PeripheralViewModelDelegate, tableViewType: TableViewModel.TableViewType) {
         tableView.delegate = self
         tableView.dataSource = self
         self.tableView = tableView
         self.delegate = delegate
         self.tableView.tableViewType = tableViewType
         self.tableView.reloadData()
-
     }
         
-    internal func getTableViewModel(type: PeripheralTableViewModel.TableViewType) -> PeripheralTableViewModel? {
+    internal func getTableViewModel(type: TableViewModel.TableViewType) -> TableViewModel? {
         switch type {
         case .ready:    return readyTableViewModel
         case .settings: return settingsTableViewModel
@@ -77,7 +75,7 @@ protocol PeripheralTableViewModelDataSourceAndDelegate {
         }
     }
     
-    public func reloadCell(for row: PeripheralCell, with animation: UITableView.RowAnimation) {
+    public func reloadCell(for row: CellModel, with animation: UITableView.RowAnimation) {
         if let indexPath = getTableViewModel(type: tableView.tableViewType)?.getIndexPath(forRow: row) {
             tableView.reloadRows(at: [indexPath], with: animation)
         } else {
@@ -85,14 +83,14 @@ protocol PeripheralTableViewModelDataSourceAndDelegate {
         }
     }
     
-    public func hideCell(rows: [PeripheralCell], rowsSection: [PeripheralCell]?) {
+    public func hideCell(rows: [CellModel], rowsSection: [CellModel]?) {
         hideRows(rows: rows)
         if let section = rowsSection {
             hideSections(of: section)
         }
     }
     
-    private func hideRows(rows: [PeripheralCell]) {
+    private func hideRows(rows: [CellModel]) {
         let indexPaths = rows.map { getTableViewModel(type: tableView.tableViewType)?.getIndexPath(forRow: $0) }.compactMap { $0 }
         showRows(rows: nil)
         showSections(of: nil)
@@ -100,7 +98,7 @@ protocol PeripheralTableViewModelDataSourceAndDelegate {
         tableView.reloadRows(at: indexPaths, with: .top)
     }
     
-    private func showRows(rows: [PeripheralCell]?) {
+    private func showRows(rows: [CellModel]?) {
         guard let array = rows else {
             hiddenIndexPath.row.removeAll()
             tableView.reloadData()
@@ -114,13 +112,13 @@ protocol PeripheralTableViewModelDataSourceAndDelegate {
         }
     }
     
-    private func hideSections(of: [PeripheralCell]) {
+    private func hideSections(of: [CellModel]) {
         let indexPaths = of.map { getTableViewModel(type: tableView.tableViewType)?.getIndexPath(forRow: $0) }.compactMap { $0?.section }
         hiddenIndexPath.section = indexPaths
         hiddenIndexPath.section.forEach { tableView.reloadSections(IndexSet(integer: $0), with: .top) }
     }
     
-    private func showSections(of: [PeripheralCell]?) {
+    private func showSections(of: [CellModel]?) {
         guard let array = of else {
             hiddenIndexPath.section.removeAll()
             tableView.reloadData()
@@ -134,14 +132,14 @@ protocol PeripheralTableViewModelDataSourceAndDelegate {
         }
     }
     
-    func insertCell(_ model: inout PeripheralTableViewModel, _ at: IndexPath, _ cell: PeripheralCell) {
+    func insertCell(_ model: inout TableViewModel, _ at: IndexPath, _ cell: CellModel) {
         model.sections[at.section].rows.insert(cell, at: at.row)
         if model.type == tableView.tableViewType {
             tableView.insertRows(at: [at], with: .top)
         }
     }
     
-    func deleteCells(_ model: inout PeripheralTableViewModel, _ at: [IndexPath]) {
+    func deleteCells(_ model: inout TableViewModel, _ at: [IndexPath]) {
         at.forEach { indexPath in
             model.sections[indexPath.section].rows.remove(at: indexPath.row)
             if model.sections[indexPath.section].rows.isEmpty {
@@ -154,7 +152,7 @@ protocol PeripheralTableViewModelDataSourceAndDelegate {
         }
     }
     
-    func insertSection( _ model: inout PeripheralTableViewModel, _ at: IndexSet, _ section: PeripheralSection) {
+    func insertSection( _ model: inout TableViewModel, _ at: IndexSet, _ section: SectionModel) {
         if !model.sections.contains(section) {
             model.sections.insert(section, at: at.first!)
             if model.type == tableView.tableViewType {
@@ -163,43 +161,43 @@ protocol PeripheralTableViewModelDataSourceAndDelegate {
         }
     }
     
-    func deleteSection( _ model: inout PeripheralTableViewModel, _ at: IndexSet) {
+    func deleteSection( _ model: inout TableViewModel, _ at: IndexSet) {
         model.sections.remove(at: at.first!)
         if model.type == tableView.tableViewType {
             tableView.deleteSections(at, with: .top)
         }
     }
     
-    func insertErrorCell(_ model: inout PeripheralTableViewModel, code: Int) {
-        if let noticeSection = model.getSectionByKey(PeripheralTableViewModel.KEY_NOTICE_SECTION) {
+    func insertErrorCell(_ model: inout TableViewModel, code: Int) {
+        if let noticeSection = model.getSectionByKey(TableViewModel.KEY_NOTICE_SECTION) {
             if noticeSection.getCellByKey(BasePeripheralData.errorKey) == nil {
                 let sectionIndex = model.sections.firstIndex(of: noticeSection)!
-                let errorCell = PeripheralTableViewModel.createErrorCell()
+                let errorCell = TableViewModel.createErrorCell()
                 insertCell(&model, IndexPath(row: 0, section: sectionIndex), errorCell)
             }
         } else {
-            let noticeSection = PeripheralTableViewModel.createNoticeSection(withRows: [PeripheralTableViewModel.createErrorCell()])
+            let noticeSection = TableViewModel.createNoticeSection(withRows: [TableViewModel.createErrorCell()])
             insertSection(&model, IndexSet(integer: 0), noticeSection)
         }
     }
     
-    func insertErrorDetailCell(_ model: inout PeripheralTableViewModel, code: Int) {
-        if let noticeSection = model.getSectionByKey(PeripheralTableViewModel.KEY_NOTICE_DETAIL_SECTION) {
-            if (!noticeSection.rows.contains(PeripheralTableViewModel.createErrorDetailCell(code: code))) {
+    func insertErrorDetailCell(_ model: inout TableViewModel, code: Int) {
+        if let noticeSection = model.getSectionByKey(TableViewModel.KEY_NOTICE_DETAIL_SECTION) {
+            if (!noticeSection.rows.contains(TableViewModel.createErrorDetailCell(code: code))) {
                 let sectionIndex = model.sections.firstIndex(of: noticeSection)!
-                let errorDetailCell = PeripheralTableViewModel.createErrorDetailCell(code: code)
+                let errorDetailCell = TableViewModel.createErrorDetailCell(code: code)
                 insertCell(&model, IndexPath(row: 0, section: sectionIndex), errorDetailCell)
             }
         } else {
-            insertSection(&model, IndexSet(integer: 0), PeripheralTableViewModel.createNoticeDetailSection(withRows: [PeripheralTableViewModel.createErrorDetailCell(code: code)]))
+            insertSection(&model, IndexSet(integer: 0), TableViewModel.createNoticeDetailSection(withRows: [TableViewModel.createErrorDetailCell(code: code)]))
         }
     }
     
     // Removing error cell with specific errorCode
-    func removeErrorCell(_ model: inout PeripheralTableViewModel, code: Int) {
-        if let noticeSection = model.getSectionByKey(PeripheralTableViewModel.KEY_NOTICE_SECTION) {
+    func removeErrorCell(_ model: inout TableViewModel, code: Int) {
+        if let noticeSection = model.getSectionByKey(TableViewModel.KEY_NOTICE_SECTION) {
             if let sectionIndex = model.sections.firstIndex(of: noticeSection) {
-                if let errorCellIndex = noticeSection.rows.firstIndex(of: PeripheralTableViewModel.createErrorCell()) {
+                if let errorCellIndex = noticeSection.rows.firstIndex(of: TableViewModel.createErrorCell()) {
                     deleteCells(&model, [IndexPath(row: errorCellIndex, section: sectionIndex)])
                 }
             }
@@ -207,10 +205,10 @@ protocol PeripheralTableViewModelDataSourceAndDelegate {
     }
     
     // Removing error detail cell with specific errorCode
-    func removeErrorDetailCell(_ model: inout PeripheralTableViewModel, code: Int) {
-        if let noticeSection = model.getSectionByKey(PeripheralTableViewModel.KEY_NOTICE_DETAIL_SECTION) {
+    func removeErrorDetailCell(_ model: inout TableViewModel, code: Int) {
+        if let noticeSection = model.getSectionByKey(TableViewModel.KEY_NOTICE_DETAIL_SECTION) {
             if let sectionIndex = model.sections.firstIndex(of: noticeSection) {
-                if let errorDetailCellIndex = noticeSection.rows.firstIndex(of: PeripheralTableViewModel.createErrorCell()) {
+                if let errorDetailCellIndex = noticeSection.rows.firstIndex(of: TableViewModel.createErrorCell()) {
                     deleteCells(&model, [IndexPath(row: errorDetailCellIndex, section: sectionIndex)])
                 }
             }
@@ -218,9 +216,9 @@ protocol PeripheralTableViewModelDataSourceAndDelegate {
     }
     
     // Removing all error cells
-    func removeErrorCells(_ model: inout PeripheralTableViewModel) {
+    func removeErrorCells(_ model: inout TableViewModel) {
         // if model contains noticeSection
-        if let noticeSection = model.getSectionByKey(PeripheralTableViewModel.KEY_NOTICE_SECTION) {
+        if let noticeSection = model.getSectionByKey(TableViewModel.KEY_NOTICE_SECTION) {
             // if model contains errorCell
             let errorCells = noticeSection.rows.filter { $0.cellKey == BasePeripheralData.errorKey }
             let errorCellsIndexes = errorCells.map { $0.getIndexPath(fromModel: model) }
@@ -230,23 +228,14 @@ protocol PeripheralTableViewModelDataSourceAndDelegate {
     }
     
     // Removing all errorDetail cells
-    func removeErrorDetailCells(_ model: inout PeripheralTableViewModel) {
+    func removeErrorDetailCells(_ model: inout TableViewModel) {
         // if model contains noticeSection
-        if let noticeSection = model.getSectionByKey(PeripheralTableViewModel.KEY_NOTICE_DETAIL_SECTION) {
+        if let noticeSection = model.getSectionByKey(TableViewModel.KEY_NOTICE_DETAIL_SECTION) {
             // if model contains errorDetailCell
             let errorCells = noticeSection.rows.filter { $0.cellKey == BasePeripheralData.errorDetailKey }
             let errorCellsIndexes = errorCells.map { $0.getIndexPath(fromModel: model) }
             let noNil = errorCellsIndexes.compactMap { $0 }
             deleteCells(&model, noNil)
-        }
-    }
-    
-    private func defaultCellCallback(fromRow: PeripheralCell, withValue: Any?) {
-        switch fromRow.cellKey {
-        case BasePeripheralData.errorKey:
-            onCellSelected(fromRow)
-            break
-        default: break
         }
     }
     
@@ -260,9 +249,9 @@ protocol PeripheralTableViewModelDataSourceAndDelegate {
 }
 
 extension UITableView {
-    var tableViewType: PeripheralTableViewModel.TableViewType {
+    var tableViewType: TableViewModel.TableViewType {
         get {
-            return PeripheralTableViewModel.TableViewType.init(rawValue: self.tag) ?? .ready
+            return TableViewModel.TableViewType.init(rawValue: self.tag) ?? .ready
         }
         set {
             self.tag = newValue.rawValue
@@ -289,14 +278,10 @@ extension PeripheralViewModel: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let row = getTableViewModel(type: tableView.tableViewType)?.sections[indexPath.section].rows[indexPath.row] {
-            tableView.register(UINib.init(nibName: row.nibName, bundle: nil), forCellReuseIdentifier: row.cellReuseID)
-            let cell = tableView.dequeueReusableCell(withIdentifier: row.cellReuseID, for: indexPath) as! BaseTableViewCell
-            row.configure(cell: cell, with: dataModel)
-            cell.returnValue = { value in
-                self.defaultCellCallback(fromRow: row, withValue: value)
-                self.tableViewDataSourceAndDelegate?.callback(from: row, with: value, in: tableView)
-            }
+        if let cellModel = getTableViewModel(type: tableView.tableViewType)?.sections[indexPath.section].rows[indexPath.row] {
+            tableView.register(UINib(nibName: cellModel.nibName, bundle: nil), forCellReuseIdentifier: cellModel.cellReuseID)
+            let cell = tableView.dequeueReusableCell(withIdentifier: cellModel.cellReuseID, for: indexPath) as! BaseTableViewCell
+            cellModel.configure(cell: cell, with: dataModel)
             return cell
         } else {
             return UITableViewCell.init()
@@ -368,12 +353,15 @@ extension PeripheralViewModel: BasePeripheralDelegate {
         if !isInitialized {
             if setupTableViewModel != nil {
                 tableView.beginUpdates()
-                insertSection(&setupTableViewModel!, IndexSet(integer: 0), .init(key: "initKey", headerText: "", footerText: "", rows: [.infoCell(
-                    key: "init_info_cell",
-                    titleText: "Device requres setup",
-                    detailText: nil,
-                    image: .init(systemName: "info.circle.fill")?.withTintColor(.SLYellow, renderingMode: .alwaysOriginal),
-                    accessory: nil)]))
+                insertSection(&setupTableViewModel!, IndexSet(integer: 0), .init(
+                    headerText: "",
+                    footerText: "",
+                    rows: [.infoCell(
+                        key: "init_info_cell",
+                        titleText: "Device requres setup",
+                        detailText: nil,
+                        image: .init(systemName: "info.circle.fill")?.withTintColor(.SLYellow, renderingMode: .alwaysOriginal),
+                        accessory: nil)]))
                 tableView.endUpdates()
             }
         }

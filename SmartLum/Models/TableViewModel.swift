@@ -1,5 +1,5 @@
 //
-//  PeripheralTableViewModel.swift
+//  TableViewModel.swift
 //  SmartLum
 //
 //  Created by ELIX on 21.07.2021.
@@ -7,11 +7,11 @@
 //
 import UIKit
 
-struct PeripheralTableViewModel: Equatable {
-    var sections: [PeripheralSection]
-    var type: PeripheralTableViewModel.TableViewType
+struct TableViewModel: Equatable {
+    var sections: [SectionModel]
+    var type: TableViewModel.TableViewType
     
-    func getIndexPath(forRow: PeripheralCell) -> IndexPath? {
+    func getIndexPath(forRow: CellModel) -> IndexPath? {
         if let section = sections.filter({ $0.rows.contains(forRow)}).first,
            let sectionIndex = sections.firstIndex(of: section),
            let rowIndex = sections[sectionIndex].rows.firstIndex(of: forRow) {
@@ -20,7 +20,7 @@ struct PeripheralTableViewModel: Equatable {
         return nil
     }
     
-    func getSectionByKey(_ key: String) -> PeripheralSection? {
+    func getSectionByKey(_ key: String) -> SectionModel? {
         return sections.filter{ $0.key == key }.first
     }
     
@@ -31,29 +31,29 @@ struct PeripheralTableViewModel: Equatable {
     }
 }
 
-extension PeripheralTableViewModel {
+extension TableViewModel {
     
     static var KEY_NOTICE_SECTION: String { get { "peripheral_notice_section_key" } }
     static var KEY_NOTICE_DETAIL_SECTION: String { get { "peripheral_notice_detail_section_key" } }
     
-    static func createNoticeSection(withRows: [PeripheralCell]?) -> PeripheralSection {
-        return PeripheralSection(
+    static func createNoticeSection(withRows: [CellModel]?) -> SectionModel {
+        return SectionModel(
             key: KEY_NOTICE_SECTION,
             headerText: "peripheral_notice_section_header".localized,
             footerText: "peripheral_notice_section_footer".localized,
             rows: withRows ?? [])
     }
     
-    static func createNoticeDetailSection(withRows: [PeripheralCell]?) -> PeripheralSection {
-        return PeripheralSection(
+    static func createNoticeDetailSection(withRows: [CellModel]?) -> SectionModel {
+        return SectionModel(
             key: KEY_NOTICE_DETAIL_SECTION,
             headerText: "peripheral_notice_section_header".localized,
             footerText: "peripheral_notice_section_footer".localized,
             rows: withRows ?? [])
     }
     
-    static func createErrorCell() -> PeripheralCell {
-        return PeripheralCell.infoCell(
+    static func createErrorCell() -> CellModel {
+        return CellModel.infoCell(
             key: BasePeripheralData.errorKey,
             titleText: "peripheral_error_cell_title".localized,
             detailText: "peripheral_error_cell_code_prefix".localized,
@@ -61,12 +61,12 @@ extension PeripheralTableViewModel {
             accessory: .disclosureIndicator)
     }
     
-    static func createErrorDetailCell(code: Int) -> PeripheralCell {
-            return PeripheralCell.infoDetailCell(
+    static func createErrorDetailCell(code: Int) -> CellModel {
+            return CellModel.infoDetailCell(
                 key: BasePeripheralData.errorDetailKey,
                 titleText: "peripheral_error_description_cell_title".localized + "\(code)",
                 detailText: "peripheral_error_code_\(code)_description".localized,
-                image: .init(systemName: "exclamationmark.circle.fill")?.withTintColor(.systemRed, renderingMode: .alwaysOriginal),
+                image: .init(systemName: "exclamationmark.circle.fill", withConfiguration: UIImage.largeScale)?.withTintColor(.systemRed, renderingMode: .alwaysOriginal),
                 accessory: nil)
     }
         
@@ -82,30 +82,34 @@ struct HiddenIndexPath {
     }
 }
 
-struct PeripheralSection: Equatable {
+struct SectionModel: Equatable {
     var key: String?
     let headerText: String
     let footerText: String
-    var rows: [PeripheralCell]
+    var rows: [CellModel]
     
-    func getCellByKey(_ key: String) -> PeripheralCell? {
+    func getCellByKey(_ key: String) -> CellModel? {
         return rows.filter{ $0.cellKey == key }.first
     }
 
 }
 
-enum PeripheralCell: Equatable {
-        
-    case colorCell(key: String, title: String, initialValue : UIColor)
+enum CellModel: Equatable {
+    
+    static func == (lhs: CellModel, rhs: CellModel) -> Bool {
+        lhs.cellKey == rhs.cellKey
+    }
+
+    case colorCell(key: String, title: String, initialValue : UIColor, callback: (UIColor) -> Void)
     case pickerCell(key: String, title: String, initialValue: String)
-    case sliderCell(key: String, title: String, initialValue: Float, minValue: Float, maxValue: Float, leftIcon: UIImage?, rightIcon: UIImage?, showValue: Bool)
-    case switchCell(key: String, title: String, initialValue: Bool)
-    case stepperCell(key: String, title: String, initialValue: Double, minValue: Double, maxValue: Double)
-    case buttonCell(key: String, title: String)
+    case sliderCell(key: String, title: String, initialValue: Float, minValue: Float, maxValue: Float, leftIcon: UIImage?, rightIcon: UIImage?, showValue: Bool, callback: (Float) -> Void)
+    case switchCell(key: String, title: String, initialValue: Bool, callback: (Bool) -> Void)
+    case stepperCell(key: String, title: String, initialValue: Double, minValue: Double, maxValue: Double, callback: (Double) -> Void)
+    case buttonCell(key: String, title: String, callback: () -> Void)
     case infoCell(key: String, titleText: String, detailText: String?, image: UIImage?, accessory: UITableViewCell.AccessoryType?)
     case infoDetailCell(key: String, titleText: String, detailText: String?, image: UIImage?, accessory: UITableViewCell.AccessoryType?)
     
-    func updateCell(in tableView: UITableView, with tableViewModel: PeripheralTableViewModel) {
+    func updateCell(in tableView: UITableView, with tableViewModel: TableViewModel) {
         if let indexPath = tableViewModel.getIndexPath(forRow: self) {
             tableView.reloadRows(at: [indexPath], with: .middle)
             print("Reloading cell \(indexPath)")
@@ -115,20 +119,20 @@ enum PeripheralCell: Equatable {
         }
     }
     
-    func getIndexPath(fromModel: PeripheralTableViewModel) -> IndexPath? {
+    func getIndexPath(fromModel: TableViewModel) -> IndexPath? {
         return fromModel.getIndexPath(forRow: self)
     }
     
     var cellKey: String {
         switch self {
-        case .colorCell(let key, _, _):         return key
+        case .colorCell(let key, _, _, _):         return key
         case .pickerCell(let key, _, _):        return key
-        case .sliderCell(let key, _, _, _, _, _, _, _):  return key
-        case .switchCell(let key, _, _):        return key
-        case .stepperCell(let key, _, _, _, _): return key
-        case .buttonCell(let key, _):           return key
-        case .infoCell(let key, _, _, _, _):          return key
-        case .infoDetailCell(let key, _, _, _, _):    return key
+        case .sliderCell(let key, _, _, _, _, _, _, _, _):  return key
+        case .switchCell(let key, _, _, _):        return key
+        case .stepperCell(let key, _, _, _, _, _): return key
+        case .buttonCell(let key, _, _):           return key
+        case .infoCell(let key, _, _, _, _):       return key
+        case .infoDetailCell(let key, _, _, _, _): return key
         }
     }
     
@@ -177,7 +181,7 @@ enum PeripheralCell: Equatable {
     
     func configure(cell: BaseTableViewCell, with data: PeripheralData) {
         switch self {
-        case .sliderCell(key: let key, title: let title, initialValue: let initialValue, minValue: let minValue, maxValue: let maxValue, leftIcon: let leftIcon, rightIcon: let rightIcon, showValue: let showValue):
+        case .sliderCell(key: let key, title: let title, initialValue: let initialValue, minValue: let minValue, maxValue: let maxValue, leftIcon: let leftIcon, rightIcon: let rightIcon, showValue: let showValue, callback: let callback):
             if let cell = cell as? SliderTableViewCell {
                 cell.slider.minimumValue = minValue
                 cell.slider.maximumValue = maxValue
@@ -187,10 +191,14 @@ enum PeripheralCell: Equatable {
                 cell.valueLabel.text     = String(describing: Int(cell.slider.value))
                 (leftIcon == nil) ? (cell.slider.minimumValueImage = nil) : (cell.slider.minimumValueImage = leftIcon)
                 (rightIcon == nil) ? (cell.slider.maximumValueImage = nil) : (cell.slider.maximumValueImage = rightIcon)
+                cell.callback = {
+                    callback($0 as! Float)
+                }
             }
-        case .colorCell(key: let key, title: let title, initialValue: _):
+        case .colorCell(key: let key, title: let title, initialValue: _, callback: let callback):
             if let cell = cell as? ColorTableViewCell {
                 cell.configure(title: title, value: data.getValue(key: key))
+                cell.callback = { callback($0 as! UIColor) }
             }
         case .pickerCell(key: let key, title: let title, initialValue: let initialValue):
             if let cell = cell as? PickerTableViewCell {
@@ -198,12 +206,13 @@ enum PeripheralCell: Equatable {
                 cell.titleLabel.text = title
                 cell.valueLabel.text = dataValue?.name ?? initialValue
             }
-        case .switchCell(key: let key, title: let title, initialValue: let initialValue):
+        case .switchCell(key: let key, title: let title, initialValue: let initialValue, callback: let callback):
             if let cell = cell as? SwitchTableViewCell {
                 cell.titleLabel.text = title
                 cell.cellSwitch.isOn = data.getValue(key: key) as? Bool ?? initialValue
+                cell.callback = { callback($0 as! Bool) }
             }
-        case .stepperCell(key: let key, title: let title, initialValue: let initialValue, minValue: let minValue, maxValue: let maxValue):
+        case .stepperCell(key: let key, title: let title, initialValue: let initialValue, minValue: let minValue, maxValue: let maxValue, callback: let callback):
             if let cell = cell as? StepperTableViewCell {
                 let dataValue = data.getValue(key: key) as? Int ?? Int(initialValue)
                 cell.titleLabel.text = title
@@ -211,10 +220,12 @@ enum PeripheralCell: Equatable {
                 cell.stepper.value = Double(dataValue)
                 cell.stepper.minimumValue = minValue
                 cell.stepper.maximumValue = maxValue
+                cell.callback = { callback($0 as! Double) }
             }
-        case .buttonCell(key:_, title: let title):
+        case .buttonCell(key:_, title: let title, callback: let callback):
             if let cell = cell as? ButtonTableViewCell {
                 cell.button.setTitle(title, for: .normal)
+                cell.callback = { _ in callback() }
             }
         case .infoCell(key: _, titleText: let titleText, detailText: let detailText, image: let image, accessory: let accessory):
             if let cell = cell as? InfoTableViewCell {

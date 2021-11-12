@@ -16,6 +16,6 @@ class InfoTableViewCell: UITableViewCell, BaseTableViewCell {
     
     func defaultInit() { }
     
-    var returnValue: ((Any) -> Void)?
+    var callback: ((Any) -> Void)?
     
 }

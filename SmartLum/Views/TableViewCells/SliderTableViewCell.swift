@@ -15,7 +15,7 @@ class SliderTableViewCell: UITableViewCell, BaseTableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var valueLabel: UILabel!
     @IBOutlet weak var slider: UISlider!
-    var returnValue: ((Any) -> Void)?
+    var callback: ((Any) -> Void)?
     
     override func awakeFromNib() {
         valueLabel.text = String(describing: Int(slider.value))
@@ -34,7 +34,7 @@ class SliderTableViewCell: UITableViewCell, BaseTableViewCell {
     
     @IBAction func onSliderValueChange(_ sender: UISlider) {
         valueLabel.text = String(describing: Int(sender.value))
-        self.returnValue?(sender.value)
+        self.callback?(sender.value)
     }
     
 }

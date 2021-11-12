@@ -11,11 +11,11 @@ import CoreBluetooth
 
 protocol PeripheralViewControllerProtocol {
     func viewModelInit(peripheral: BasePeripheral)
-    func onCellSelected(cell: PeripheralCell)
+    func onCellSelected(cell: CellModel)
 }
 
 extension PeripheralViewControllerProtocol {
-    func onCellSelected(cell: PeripheralCell) { }
+    func onCellSelected(cell: CellModel) { }
 }
 
 protocol PeripheralSetupViewControllerProtocol {
@@ -122,7 +122,7 @@ class PeripheralViewController: UIViewController {
         self.navigationController?.present(vc, animated: true, completion: nil)
     }
     
-    func pushColorPicker(_ sender: PeripheralCell, initColor: UIColor, onColorChange: @escaping (_ color: UIColor, _ sender: Any) -> Void) {
+    func pushColorPicker(_ sender: CellModel, initColor: UIColor, onColorChange: @escaping (_ color: UIColor, _ sender: Any) -> Void) {
         let vc = ColorPickerViewController()
         vc.configure(initColor: initColor, colorIndicator: nil, sender: sender, onColorChange: onColorChange)
         self.navigationController?.present(vc, animated: true, completion: nil)

@@ -15,7 +15,7 @@ class FlClassicViewController: PeripheralViewController, PeripheralViewControlle
         self.viewModel = FlClassicViewModel(tableView, peripheral, self, onCellSelected(cell:))
     }
     
-    func onCellSelected(cell: PeripheralCell) {
+    func onCellSelected(cell: CellModel) {
         if let mViewModel = viewModel as? FlClassicViewModel {
             switch cell {
             case mViewModel.primaryColorCell:
