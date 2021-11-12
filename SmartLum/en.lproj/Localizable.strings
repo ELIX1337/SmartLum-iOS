@@ -47,7 +47,7 @@
     "peripheral_primary_color_cell_title" = "Primary";
     "peripheral_secondary_color_cell_title" = "Secondary";
     "peripheral_random_color_cell_title" = "Random color";
-    "periphetal_animation_mode_cell_title" = "Animation";
+    "peripheral_animation_mode_cell_title" = "Animation";
     "peripheral_animation_speed_cell_title" = "Speed";
     "peripheral_animation_direction_cell_title" = "Direction";
     "peripheral_animation_step_cell_title" = "Step";
@@ -75,14 +75,8 @@
     "peripheral_animation_direction_to_center" = "To center";
     "peripheral_animation_direction_from_center" = "From center";
     // Errors
-    "peripheral_error_code_1_description" = "
-    Top sensor not found. Check the connection. Flashing LED on sensor means wiring problem.
-    You can find out more about solving the problem in the technical support service.
-    ";
-    "peripheral_error_code_2_description" = "
-    Bottom sensor not found. Check the connection. Flashing LED on sensor means wiring problem
-    You can find out more about solving the problem in the technical support service.
-    ";
+    "peripheral_error_code_1_description" = "\tTop sensor not found. Check the connection. Flashing LED on sensor means wiring problem.\n\tYou can find out more about solving the problem in the technical support service.";
+    "peripheral_error_code_2_description" = "\tBottom sensor not found. Check the connection. Flashing LED on sensor means wiring problem.\n\tYou can find out more about solving the problem in the technical support service.";
 
 
 
