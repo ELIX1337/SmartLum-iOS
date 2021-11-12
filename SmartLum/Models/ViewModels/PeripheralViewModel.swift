@@ -68,7 +68,7 @@ protocol PeripheralTableViewModelDataSourceAndDelegate {
         self.tableView.reloadData()
 
     }
-    
+        
     internal func getTableViewModel(type: PeripheralTableViewModel.TableViewType) -> PeripheralTableViewModel? {
         switch type {
         case .ready:    return readyTableViewModel
