@@ -9,10 +9,10 @@
 import CoreBluetooth
 
 protocol AnimationPeripheralProtocol {
-    func writeAnimationMode(_ animation: PeripheralAnimations)
+    func writeAnimationMode(_ animation: PeripheralDataElement)
     func writeAnimationOnSpeed(_ speed: Int)
     func writeAnimationOffSpeed(_ speed: Int)
-    func writeAnimationDirection(_ direction: PeripheralAnimationDirections)
+    func writeAnimationDirection(_ direction: PeripheralDataElement)
     func writeAnimationStep(_ step: Int)
 }
 
@@ -23,35 +23,24 @@ extension AnimationPeripheralProtocol where Self:BasePeripheralProtocol {
     var animationDirectionCharacteristic: CBCharacteristic? { get { self.endpoints[[.animation:.animationDirection]] } }
     var animationStepCharacteristic:      CBCharacteristic? { get { self.endpoints[[.animation:.animationStep]]}}
     
-    func writeAnimationMode(_ animation: PeripheralAnimations) {
-        if let characteristic = animationModeCharacteristic {
-            peripheral.writeValue(UInt8(animation.code).toData(), for: characteristic, type: .withoutResponse)
-        }
+    func writeAnimationMode(_ animation: PeripheralDataElement) {
+        writeWithoutResponse(value: animation.code.toDynamicSizeData(), to: animationModeCharacteristic)
     }
+    
     func writeAnimationOnSpeed(_ speed: Int) {
-        if let characteristic = animationOnSpeedCharacteristic {
-            if characteristic.properties.contains(.writeWithoutResponse) {
-                peripheral.writeValue(UInt8(speed).toData(), for: characteristic, type: .withoutResponse)
-            } else {
-                peripheral.writeValue(UInt8(speed).toData(), for: characteristic, type: .withResponse)
-            }
-            print("Writing speed - \(speed) - \(characteristic.uuid.uuidString)")
-        }
+        writeWithoutResponse(value: speed.toDynamicSizeData(), to: animationOnSpeedCharacteristic)
     }
+    
     func writeAnimationOffSpeed(_ speed: Int) {
-        if let characteristic = animationOffSpeedCharacteristic {
-            peripheral.writeValue(UInt8(speed).toData(), for: characteristic, type: .withoutResponse)
-        }
+        writeWithoutResponse(value: speed.toDynamicSizeData(), to: animationOffSpeedCharacteristic)
     }
-    func writeAnimationDirection(_ direction: PeripheralAnimationDirections) {
-        if let characteristic = animationDirectionCharacteristic {
-            peripheral.writeValue(direction.code.toData(), for: characteristic, type: .withoutResponse)
-        }
+    
+    func writeAnimationDirection(_ direction: PeripheralDataElement) {
+        writeWithoutResponse(value: direction.code.toDynamicSizeData(), to: animationDirectionCharacteristic)
     }
+    
     func writeAnimationStep(_ step: Int) {
-        if let characteristic = animationStepCharacteristic {
-            peripheral.writeValue(UInt8(step).toData(), for: characteristic, type: .withoutResponse)
-        }
+        writeWithoutResponse(value: step.toDynamicSizeData(), to: animationStepCharacteristic)
     }
 
 }

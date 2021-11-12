@@ -12,23 +12,39 @@ import UIKit
 protocol BasePeripheralProtocol {
     var peripheral: CBPeripheral { get set }
     var endpoints: [[BluetoothEndpoint.Service:BluetoothEndpoint.Characteristic] : CBCharacteristic] { get set }
-    func writeWithoutResponse(value: Data, to characteristic: CBCharacteristic)
+    func writeWithoutResponse(value: Data, to characteristic: CBCharacteristic?)
+    func writeWithResponse(value: Data, to characteristic: CBCharacteristic?)
     func setFactorySettings()
 }
 
 extension BasePeripheralProtocol {
     var factorySettingsCharacteristic: CBCharacteristic? { get { self.endpoints[[.info:.factorySettings]] } }
+    var demoModeCharacteristic:        CBCharacteristic? { get { self.endpoints[[.info:.demoMode]] } }
 
-    func writeWithoutResponse(value: Data, to characteristic: CBCharacteristic) {
-        if peripheral.canSendWriteWithoutResponse {
-            self.peripheral.writeValue(value, for: characteristic, type: .withoutResponse)
+    func writeWithResponse(value: Data, to characteristic: CBCharacteristic?) {
+        if let char = characteristic {
+            self.peripheral.writeValue(value, for: char, type: .withResponse)
+        }
+    }
+    
+    func writeWithoutResponse(value: Data, to characteristic: CBCharacteristic?) {
+        if let char = characteristic {
+            if char.properties.contains(.writeWithoutResponse) {
+                self.peripheral.writeValue(value, for: char, type: .withoutResponse)
+                print("Writing (no response) to \(char.uuid.uuidString) - \(value)")
+            } else {
+                writeWithResponse(value: value, to: characteristic)
+                print("Writing (response) to \(char.uuid.uuidString) - \(value)")
+            }
         }
     }
     
     func setFactorySettings() {
-        if let characteristic = factorySettingsCharacteristic {
-            writeWithoutResponse(value: true.toData(), to: characteristic)
-        }
+        writeWithoutResponse(value: true.toData(), to: factorySettingsCharacteristic)
+    }
+    
+    func enableDemoMode() {
+        writeWithoutResponse(value: true.toData(), to: demoModeCharacteristic)
     }
     
 }
@@ -41,6 +57,11 @@ protocol BasePeripheralDelegate {
     func peripheralError(code: Int)
     func peripheralFirmwareVersion(_ version: Int)
     func peripheralOnDFUMode()
+    func peripheralDemoMode(state: Bool)
+}
+
+extension BasePeripheralDelegate {
+    func peripheralDemoMode(state: Bool) { }
 }
 
 class BasePeripheral: NSObject,
@@ -87,7 +108,7 @@ class BasePeripheral: NSObject,
             baseDelegate?.peripheralInitState(isInitialized: data.toBool())
             break
         case (.event, .error):
-            print("ERROR CODE - \(data.toInt())")
+            print("GOT ERROR - \(data.toInt())")
             baseDelegate?.peripheralError(code: data.toInt())
             break
         case (.info, .dfu):
@@ -97,6 +118,9 @@ class BasePeripheral: NSObject,
             break
         case (.info, .firmwareVersion):
             baseDelegate?.peripheralFirmwareVersion(data.toInt())
+            break
+        case (.info, .demoMode):
+            baseDelegate?.peripheralDemoMode(state: data.toBool())
             break
         default:
             break
@@ -174,6 +198,12 @@ class BasePeripheral: NSObject,
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor descriptor: CBDescriptor, error: Error?) { }
+    
+    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
+        if let error = error {
+            print("Write error to \(characteristic.uuid) - \(error.localizedDescription)")
+        }
+    }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if let value = characteristic.value,

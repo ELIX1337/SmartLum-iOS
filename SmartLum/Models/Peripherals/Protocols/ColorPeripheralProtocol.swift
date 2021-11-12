@@ -16,26 +16,20 @@ protocol ColorPeripheralProtocol {
 }
 
 extension ColorPeripheralProtocol where Self:BasePeripheralProtocol {
-    var randomColorCharacteristic:    CBCharacteristic? { get { return self.endpoints[[.color:.randomColor]] } }
     var primaryColorCharacteristic:   CBCharacteristic? { get { return self.endpoints[[.color:.primaryColor]] }  }
     var secondaryColorCharacteristic: CBCharacteristic? { get { return self.endpoints[[.color:.secondaryColor]] } }
+    var randomColorCharacteristic:    CBCharacteristic? { get { return self.endpoints[[.color:.randomColor]] } }
 
     func writePrimaryColor(_ color: UIColor) {
-        if let characteristic = primaryColorCharacteristic {
-            peripheral.writeValue(color.toData(), for: characteristic, type: .withoutResponse)
-        }
+        writeWithoutResponse(value: color.toData(), to: primaryColorCharacteristic)
     }
     
     func writeSecondaryColor(_ color: UIColor) {
-        if let characteristic = secondaryColorCharacteristic {
-            peripheral.writeValue(color.toData(), for: characteristic, type: .withoutResponse)
-        }
+        writeWithoutResponse(value: color.toData(), to: secondaryColorCharacteristic)
     }
     
     func writeRandomColor(_ state: Bool) {
-        if let characteristic = randomColorCharacteristic {
-            peripheral.writeValue(state.toData(), for: characteristic, type: .withoutResponse)
-        }
+        writeWithoutResponse(value: state.toData(), to: randomColorCharacteristic)
     }
 
 }
