@@ -24,9 +24,10 @@ protocol PeripheralSetupViewControllerProtocol {
 
 func getPeripheralVC(peripheral: PeripheralProfile) -> PeripheralViewControllerProtocol {
     switch peripheral {
-    case .FlClassic: return TorchereViewController()
-    case .FlMini:    return TorchereViewController()
-    case .SlBase:    return SlBaseViewController()
+    case .FlClassic:  return FlClassicViewController()
+    case .FlMini:     return FlClassicViewController()
+    case .SlBase:     return SlBaseViewController()
+    case .SlStandart: return SlStandartViewController()
     }
 }
 
@@ -39,9 +40,10 @@ func getPeripheralSetupVC(peripheral: BasePeripheral) -> PeripheralSetupViewCont
 
 func getPeripheralType(profile: PeripheralProfile, peripheral: CBPeripheral, manager: CBCentralManager) -> BasePeripheral {
     switch profile {
-    case .FlClassic: return TorcherePeripheral.init(peripheral, manager)
-    case .FlMini:    return TorcherePeripheral.init(peripheral, manager)
-    case .SlBase:    return SlBasePeripheral.init(peripheral, manager)
+    case .FlClassic:  return FlClassicPeripheral.init(peripheral, manager)
+    case .FlMini:     return FlClassicPeripheral.init(peripheral, manager)
+    case .SlBase:     return SlBasePeripheral.init(peripheral, manager)
+    case .SlStandart: return SlStandartPeripheral.init(peripheral, manager)
     }
 }
 
@@ -50,6 +52,7 @@ class PeripheralViewController: UIViewController {
     @objc var viewModel: PeripheralViewModel!
     var tableView: UITableView = UITableView.init(frame: .zero, style: .grouped)
     var alert: UIAlertController?
+    var pickerDataSource: TablePickerViewDataSource<PeripheralDataElement>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,9 +60,6 @@ class PeripheralViewController: UIViewController {
         if (!viewModel.isConnected) {
             self.showConnectionAlert()
         }
-        self.tableView.dataSource = self.viewModel
-        self.tableView.delegate   = self.viewModel
-        self.tableView.tableViewType = .ready
         addTableViewConstraints(tableView: self.tableView)
     }
     
@@ -74,7 +74,8 @@ class PeripheralViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if let _ = viewModel.peripheralSettingsTableViewModel {
+        viewModel.resetTableView(tableView: tableView, delegate: self, tableViewType: .ready)
+        if viewModel.peripheralSettingsAvailable {
             let btn = UIBarButtonItem.init(image: UIImage.init(systemName: "gearshape"), style: .done, target: self, action: #selector(self.openPeripheralSettings))
             self.navigationItem.rightBarButtonItem = btn
         }
@@ -93,6 +94,38 @@ class PeripheralViewController: UIViewController {
         if (self.isMovingFromParent) {
             viewModel?.disconnect()
         }
+    }
+    
+    func initPickerDataSource<T: PeripheralDataElement>(with elements: [T]) {
+        self.pickerDataSource = TablePickerViewDataSource<PeripheralDataElement>(withItems: elements, withSelection: PeripheralAnimations.rainbow, withRowTitle: { $0.name.localized })
+        {
+            if let viewModel = self.viewModel as? FlClassicViewModel {
+                switch $0 {
+                case let selection as PeripheralAnimations:
+                    viewModel.writeAnimationMode(mode: selection)
+                    break
+                case let selection as PeripheralAnimationDirections:
+                    viewModel.writeAnimationDirection(direction: selection)
+                    break
+                default:
+                    print("Unknown selection - ", $0)
+                }
+            }
+        }
+    }
+    
+    func pushPicker<T: PeripheralDataElement>(_ dataArray: [T]) {
+        let vc = TablePickerViewController()
+        initPickerDataSource(with: dataArray)
+        vc.delegate = pickerDataSource
+        vc.dataSource = pickerDataSource
+        self.navigationController?.present(vc, animated: true, completion: nil)
+    }
+    
+    func pushColorPicker(_ sender: PeripheralCell, initColor: UIColor, onColorChange: @escaping (_ color: UIColor, _ sender: Any) -> Void) {
+        let vc = ColorPickerViewController()
+        vc.configure(initColor: initColor, colorIndicator: nil, sender: sender, onColorChange: onColorChange)
+        self.navigationController?.present(vc, animated: true, completion: nil)
     }
 
 }
@@ -153,9 +186,7 @@ extension PeripheralViewController: PeripheralViewModelDelegate {
                         self.navigationController?.popToRootViewController(animated: true)
                         self.navigationController?.visibleViewController?.showErrorAlert(title: "Disconnected", message: "Device setup failed")
                     } else {
-                        self.tableView.dataSource = self.viewModel
-                        self.tableView.delegate   = self.viewModel
-                        self.tableView.reloadData()
+                        self.viewModel.resetTableView(tableView: self.tableView, delegate: self, tableViewType: .ready)
                     }
                 }
                 navigationController?.present(setupViewController, animated: true, completion: nil)
@@ -192,9 +223,9 @@ class PeripheralSetupViewController: PeripheralViewController {
     var initObserve: NSKeyValueObservation?
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        self.tableView.dataSource = viewModel
-        self.tableView.tableViewType = .setup
+        tableView = UITableView.init(frame: .zero, style: .insetGrouped)
+        tableView.tableViewType = .setup
+        addTableViewConstraints(tableView: tableView)
         addCancelButton()
         if (showConfirmButton) {
             addConfirmButton()
@@ -209,10 +240,8 @@ class PeripheralSetupViewController: PeripheralViewController {
         }
     }
     
-    @objc func confirmAction(_ sender:UIButton!) { }
-    
-    @objc func cancelAction(_ sender:UIButton!) {
-        self.dismiss(animated: true, completion: nil)
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.resetTableView(tableView: tableView, delegate: self, tableViewType: .setup)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -224,63 +253,65 @@ class PeripheralSetupViewController: PeripheralViewController {
         super.viewDidDisappear(animated)
     }
     
+    override func addTableViewConstraints(tableView: UITableView) {
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.cellLayoutMarginsFollowReadableWidth = false
+        view.addSubview(tableView)
+        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 120, right: 0)
+    }
+    
     private func addConfirmButton() {
         confirmButton.setTitle("button_confirm_peripheral_init".localized, for: UIControl.State.normal)
         confirmButton.addTarget(self, action: #selector(self.confirmAction), for: .touchUpInside)
-        self.confirmButton.translatesAutoresizingMaskIntoConstraints = false
-        self.confirmButton.layer.cornerRadius = 10.0
-        self.confirmButton.backgroundColor = UIColor.SLWhite
-        self.confirmButton.tintColor = UIColor.SLDarkBlue
-        self.confirmButton.isEnabled = false
-        self.view.addSubview(confirmButton)
+        confirmButton.translatesAutoresizingMaskIntoConstraints = false
+        confirmButton.layer.cornerRadius = 10.0
+        confirmButton.backgroundColor = UIColor.SLWhite
+        confirmButton.tintColor = UIColor.SLDarkBlue
+        confirmButton.isEnabled = false
+        view.addSubview(confirmButton)
         confirmButton.heightAnchor.constraint(equalToConstant: CGFloat(44)).isActive = true
-        let bot = confirmButton.bottomAnchor.constraint(equalTo: cancelButton.topAnchor)
-        let left = confirmButton.leftAnchor.constraint(equalTo: view.leftAnchor)
-        let right = confirmButton.rightAnchor.constraint(equalTo: view.rightAnchor)
-        bot.constant = -5
-        bot.isActive = true
-        left.constant = 10
-        left.isActive = true
-        right.constant = -10
-        right.isActive = true
+        confirmButton.bottomAnchor.constraint(equalTo: cancelButton.topAnchor, constant: -5).isActive = true
+        confirmButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
+        confirmButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
     }
     
     private func addCancelButton() {
         cancelButton.setTitle("button_cancel_peripheral_init".localized, for: UIControl.State.normal)
         cancelButton.addTarget(self, action: #selector(self.cancelAction), for: .touchUpInside)
-        self.cancelButton.translatesAutoresizingMaskIntoConstraints = false
-        self.cancelButton.layer.cornerRadius = 10.0
-        self.cancelButton.backgroundColor = UIColor.SLWhite
-        self.cancelButton.tintColor = UIColor.SLDarkBlue
-        self.view.addSubview(cancelButton)
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        cancelButton.layer.cornerRadius = 10.0
+        cancelButton.backgroundColor = UIColor.SLWhite
+        cancelButton.tintColor = UIColor.SLDarkBlue
+        view.addSubview(cancelButton)
         cancelButton.heightAnchor.constraint(equalToConstant: CGFloat(44)).isActive = true
-        let bot = cancelButton.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        let left = cancelButton.leftAnchor.constraint(equalTo: view.leftAnchor)
-        let right = cancelButton.rightAnchor.constraint(equalTo: view.rightAnchor)
-        bot.constant = -15
-        bot.isActive = true
-        left.constant = 10
-        left.isActive = true
-        right.constant = -10
-        right.isActive = true
+        cancelButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -15).isActive = true
+        cancelButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
+        cancelButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
+    }
+    
+    @objc func confirmAction(_ sender:UIButton!) { }
+    
+    @objc func cancelAction(_ sender:UIButton!) {
+        self.dismiss(animated: true, completion: nil)
     }
     
 }
 
 class PeripheralSettingsViewController: PeripheralViewController {
-        
-    override func viewDidLoad() {
+            
+    override func viewWillAppear(_ animated: Bool) {
+        self.title = "peripheral_settings_window_title".localized
         self.tableView = UITableView.init(frame: .zero, style: .insetGrouped)
-        self.tableView.dataSource = viewModel
-        self.tableView.delegate   = viewModel
-        self.tableView.tableViewType = .settings
+        viewModel.resetTableView(tableView: tableView, delegate: self, tableViewType: .settings)
         addTableViewConstraints(tableView: self.tableView)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.title = "peripheral_settings_window_title".localized
+    override func viewDidDisappear(_ animated: Bool) {
+        // Do not remove!
     }
-    
-    override func viewDidDisappear(_ animated: Bool) { }
     
 }

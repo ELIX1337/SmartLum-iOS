@@ -23,12 +23,14 @@ struct BluetoothEndpoint {
         case flClassic
         case flMini
         case slBase
+        case slStandart
         
         var uuidString: String {
             switch self {
-            case .flClassic: return UUIDs.TORCHERE_ADVERTISING_UUID.uuidString
-            case .flMini:    return UUIDs.FL_MINI_ADVERTISING_UUID.uuidString
-            case .slBase:    return UUIDs.SL_BASE_ADVERTISING_UUID.uuidString
+            case .flClassic:  return UUIDs.FL_CLASSIC_ADVERTISING_UUID.uuidString
+            case .flMini:     return UUIDs.FL_MINI_ADVERTISING_UUID.uuidString
+            case .slBase:     return UUIDs.SL_BASE_ADVERTISING_UUID.uuidString
+            case .slStandart: return UUIDs.SL_STANDART_ADVERTISING_UUID.uuidString
             }
         }
     }
@@ -40,6 +42,7 @@ struct BluetoothEndpoint {
         case led
         case sensor
         case event
+        case stairs
         
         var uuidString: String {
             switch self {
@@ -49,6 +52,7 @@ struct BluetoothEndpoint {
             case .led:       return UUIDs.LED_SERVICE_UUID.uuidString
             case .sensor:    return UUIDs.SENSOR_SERVICE_UUID.uuidString
             case .event:     return UUIDs.EVENT_SERVICE_UUID.uuidString
+            case .stairs:    return UUIDs.STAIRS_SERVICE_UUID.uuidString
             }
         }
         
@@ -72,6 +76,9 @@ struct BluetoothEndpoint {
             case .event:
                 return legacy ? UUIDs.Legacy.EVENT_SERVICE_UUID.uuidString :
                                 UUIDs.EVENT_SERVICE_UUID.uuidString
+            case .stairs:
+                return legacy ? UUIDs.Legacy.STAIRS_SERVICE_UUID.uuidString :
+                                UUIDs.STAIRS_SERVICE_UUID.uuidString
             }
         }
     }
@@ -81,6 +88,7 @@ struct BluetoothEndpoint {
         case factorySettings
         case initState
         case dfu
+        case demoMode
         case error
         case primaryColor
         case secondaryColor
@@ -92,30 +100,53 @@ struct BluetoothEndpoint {
         case animationStep
         case topSensorTriggerDistance
         case botSensorTriggerDistance
+        case topSensorCurrentDistance
+        case botSensorCurrentDistance
+        case topSensorTriggerLightness
+        case botSensorTriggerLightness
+        case topSensorCurrentLightness
+        case botSensorCurrentLightness
         case ledState
         case ledBrightness
         case ledTimeout
+        case stepsCount
+        case standbyState
+        case standbyTopCount
+        case standbyBotCount
+        case standbyBrightness
         
         var uuidString: String {
             switch self {
-            case .firmwareVersion:          return UUIDs.DEVICE_FIRMWARE_VERSION_CHARACTERISTIC_UUID.uuidString
-            case .factorySettings:          return UUIDs.FACTORY_SETTINGS_CHARACTERISTIC_UUID.uuidString
-            case .initState:                return UUIDs.DEVICE_INIT_STATE_CHARACTERISTIC_UUID.uuidString
-            case .dfu:                      return UUIDs.DEVICE_DFU_CHARACTERISTIC_UUID.uuidString
-            case .error:                    return UUIDs.EVENT_ERROR_CHARACTERISTIC_UUID.uuidString
-            case .primaryColor:             return UUIDs.COLOR_PRIMARY_CHARACTERISTIC_UUID.uuidString
-            case .secondaryColor:           return UUIDs.COLOR_SECONDARY_CHARACTERISTIC_UUID.uuidString
-            case .randomColor:              return UUIDs.COLOR_RANDOM_CHARACTERISTIC_UUID.uuidString
-            case .animationMode:            return UUIDs.ANIMATION_MODE_CHARACTERISTIC_UUID.uuidString
-            case .animationOnSpeed:         return UUIDs.ANIMATION_ON_SPEED_CHARACTERISTIC_UUID.uuidString
-            case .animationOffSpeed:        return UUIDs.ANIMATION_OFF_SPEED_CHARACTERISTIC_UUID.uuidString
-            case .animationDirection:       return UUIDs.ANIMATION_DIRECTION_CHARACTERISTIC_UUID.uuidString
-            case .animationStep:            return UUIDs.ANIMATION_STEP_CHARACTERISTIC_UUID.uuidString
-            case .topSensorTriggerDistance: return UUIDs.TOP_SENSOR_TRIGGER_DISTANCE_CHARACTERISTIC_UUID.uuidString
-            case .botSensorTriggerDistance: return UUIDs.BOT_SENSOR_TRIGGER_DISTANCE_CHARACTERISTIC_UUID.uuidString
-            case .ledState:                 return UUIDs.LED_STATE_CHARACTERISTIC_UUID.uuidString
-            case .ledBrightness:            return UUIDs.LED_BRIGHTNESS_CHARACTERISTIC_UUID.uuidString
-            case .ledTimeout:               return UUIDs.LED_TIMEOUT_CHARACTERISTIC_UUID.uuidString
+            case .firmwareVersion:           return UUIDs.DEVICE_FIRMWARE_VERSION_CHARACTERISTIC_UUID.uuidString
+            case .factorySettings:           return UUIDs.FACTORY_SETTINGS_CHARACTERISTIC_UUID.uuidString
+            case .initState:                 return UUIDs.DEVICE_INIT_STATE_CHARACTERISTIC_UUID.uuidString
+            case .dfu:                       return UUIDs.DEVICE_DFU_CHARACTERISTIC_UUID.uuidString
+            case .demoMode:                  return UUIDs.DEVICE_DEMO_MODE_STATE_CHARACTERISTIC_UUID.uuidString
+            case .error:                     return UUIDs.EVENT_ERROR_CHARACTERISTIC_UUID.uuidString
+            case .primaryColor:              return UUIDs.COLOR_PRIMARY_CHARACTERISTIC_UUID.uuidString
+            case .secondaryColor:            return UUIDs.COLOR_SECONDARY_CHARACTERISTIC_UUID.uuidString
+            case .randomColor:               return UUIDs.COLOR_RANDOM_CHARACTERISTIC_UUID.uuidString
+            case .animationMode:             return UUIDs.ANIMATION_MODE_CHARACTERISTIC_UUID.uuidString
+            case .animationOnSpeed:          return UUIDs.ANIMATION_ON_SPEED_CHARACTERISTIC_UUID.uuidString
+            case .animationOffSpeed:         return UUIDs.ANIMATION_OFF_SPEED_CHARACTERISTIC_UUID.uuidString
+            case .animationDirection:        return UUIDs.ANIMATION_DIRECTION_CHARACTERISTIC_UUID.uuidString
+            case .animationStep:             return UUIDs.ANIMATION_STEP_CHARACTERISTIC_UUID.uuidString
+            case .topSensorTriggerDistance:  return UUIDs.TOP_SENSOR_TRIGGER_DISTANCE_CHARACTERISTIC_UUID.uuidString
+            case .botSensorTriggerDistance:  return UUIDs.BOT_SENSOR_TRIGGER_DISTANCE_CHARACTERISTIC_UUID.uuidString
+            case .topSensorCurrentDistance:  return UUIDs.TOP_SENSOR_CURRENT_DISTANCE_CHARACTERISTIC_UUID.uuidString
+            case .botSensorCurrentDistance:  return UUIDs.BOT_SENSOR_CURRENT_DISTANCE_CHARACTERISTIC_UUID.uuidString
+            case .topSensorTriggerLightness: return UUIDs.TOP_SENSOR_TRIGGER_LIGHTNESS_CHARACTERISTIC_UUID.uuidString
+            case .botSensorTriggerLightness: return UUIDs.BOT_SENSOR_TRIGGER_LIGHTNESS_CHARACTERISTIC_UUID.uuidString
+            case .topSensorCurrentLightness: return UUIDs.TOP_SENSOR_CURRENT_LIGHTNESS_CHARACTERISTIC_UUID.uuidString
+            case .botSensorCurrentLightness: return UUIDs.BOT_SENSOR_CURRENT_LIGHTNESS_CHARACTERISTIC_UUID.uuidString
+            case .ledState:                  return UUIDs.LED_STATE_CHARACTERISTIC_UUID.uuidString
+            case .ledBrightness:             return UUIDs.LED_BRIGHTNESS_CHARACTERISTIC_UUID.uuidString
+            case .ledTimeout:                return UUIDs.LED_TIMEOUT_CHARACTERISTIC_UUID.uuidString
+            case .stepsCount:                return UUIDs.STEPS_COUNT_CHARACTERISTIC_UUID.uuidString
+            case .standbyState:              return UUIDs.STANDBY_LIGHTING_STATE_CHARACTERISTIC_UUID.uuidString
+            case .standbyTopCount:           return UUIDs.STANDBY_LIGHTING_TOP_COUNT_CHARACTERISTIC_UUID.uuidString
+            case .standbyBotCount:           return UUIDs.STANDBY_LIGHTING_BOT_COUNT_CHARACTERISTIC_UUID.uuidString
+            case .standbyBrightness:         return UUIDs.STANDBY_LIGHTING_BRIGHTNESS_CHARACTERISTIC_UUID.uuidString
             }
         }
         
@@ -133,6 +164,9 @@ struct BluetoothEndpoint {
             case .dfu:
                 return legacy ? UUIDs.Legacy.DEVICE_DFU_CHARACTERISTIC_UUID.uuidString :
                                 UUIDs.DEVICE_DFU_CHARACTERISTIC_UUID.uuidString
+            case .demoMode:
+                return legacy ? UUIDs.Legacy.DEVICE_DEMO_MODE_STATE_CHARACTERISTIC_UUID.uuidString:
+                                UUIDs.DEVICE_DEMO_MODE_STATE_CHARACTERISTIC_UUID.uuidString
             case .error:
                 return legacy ? UUIDs.Legacy.EVENT_ERROR_CHARACTERISTIC_UUID.uuidString :
                                 UUIDs.EVENT_ERROR_CHARACTERISTIC_UUID.uuidString
@@ -175,6 +209,39 @@ struct BluetoothEndpoint {
             case .ledTimeout:
                 return legacy ? UUIDs.Legacy.LED_TIMEOUT_CHARACTERISTIC_UUID.uuidString :
                                 UUIDs.LED_TIMEOUT_CHARACTERISTIC_UUID.uuidString
+            case .stepsCount:
+                return legacy ? UUIDs.Legacy.STEPS_COUNT_CHARACTERISTIC_UUID.uuidString :
+                                UUIDs.STEPS_COUNT_CHARACTERISTIC_UUID.uuidString
+            case .standbyState:
+                return legacy ? UUIDs.Legacy.STANDBY_LIGHTING_STATE_CHARACTERISTIC_UUID.uuidString :
+                                UUIDs.STANDBY_LIGHTING_STATE_CHARACTERISTIC_UUID.uuidString
+            case .standbyTopCount:
+                return legacy ? UUIDs.Legacy.STANDBY_LIGHTING_TOP_COUNT.uuidString :
+                                UUIDs.STANDBY_LIGHTING_TOP_COUNT_CHARACTERISTIC_UUID.uuidString
+            case .standbyBotCount:
+                return legacy ? UUIDs.Legacy.STANDBY_LIGHTING_BOT_COUNT.uuidString :
+                                UUIDs.STANDBY_LIGHTING_BOT_COUNT_CHARACTERISTIC_UUID.uuidString
+            case .standbyBrightness:
+                return legacy ? UUIDs.Legacy.STANDBY_LIGHTING_BRIGHTNESS.uuidString :
+                                UUIDs.STANDBY_LIGHTING_BRIGHTNESS_CHARACTERISTIC_UUID.uuidString
+            case .topSensorCurrentDistance:
+                return legacy ? UUIDs.Legacy.TOP_SENSOR_CURRENT_DISTANCE_CHARACTERISTIC_UUID.uuidString :
+                                UUIDs.TOP_SENSOR_CURRENT_DISTANCE_CHARACTERISTIC_UUID.uuidString
+            case .botSensorCurrentDistance:
+                return legacy ? UUIDs.Legacy.BOT_SENSOR_CURRENT_DISTANCE_CHARACTERISTIC_UUID.uuidString :
+                                UUIDs.BOT_SENSOR_CURRENT_DISTANCE_CHARACTERISTIC_UUID.uuidString
+            case .topSensorTriggerLightness:
+                return legacy ? UUIDs.Legacy.TOP_SENSOR_TRIGGER_LIGHTNESS_CHARACTERISTIC_UUID.uuidString :
+                                UUIDs.TOP_SENSOR_TRIGGER_LIGHTNESS_CHARACTERISTIC_UUID.uuidString
+            case .botSensorTriggerLightness:
+                return legacy ? UUIDs.Legacy.BOT_SENSOR_TRIGGER_LIGHTNESS_CHARACTERISTIC_UUID.uuidString :
+                                UUIDs.BOT_SENSOR_TRIGGER_LIGHTNESS_CHARACTERISTIC_UUID.uuidString
+            case .topSensorCurrentLightness:
+                return legacy ? UUIDs.Legacy.TOP_SENSOR_CURRENT_LIGHTNESS_CHARACTERISTIC_UUID.uuidString :
+                                UUIDs.TOP_SENSOR_CURRENT_LIGHTNESS_CHARACTERISTIC_UUID.uuidString
+            case .botSensorCurrentLightness:
+                return legacy ? UUIDs.Legacy.BOT_SENSOR_CURRENT_LIGHTNESS_CHARACTERISTIC_UUID.uuidString :
+                                UUIDs.BOT_SENSOR_CURRENT_LIGHTNESS_CHARACTERISTIC_UUID.uuidString
             }
         }
     }

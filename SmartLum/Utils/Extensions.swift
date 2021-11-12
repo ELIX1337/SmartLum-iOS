@@ -124,6 +124,19 @@ extension UnsignedInteger {
     
 }
 
+extension Int {
+    func toDynamicSizeData() -> Data {
+        if (0...255).contains(self) {
+            var source = UInt8(self)
+            return .init(bytes: &source, count: MemoryLayout<UInt8>.size)
+        }
+        var array = [UInt8](repeating: 0, count:2)
+        array[0] = UInt8(self >> 8)
+        array[1] = UInt8(self & 0xFF)
+        return Data(array)
+    }
+}
+
 extension Bool {
     func toData() -> Data {
         var value = self ? Data([0x1]) : Data([0x0])

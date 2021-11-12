@@ -11,9 +11,10 @@ import CoreBluetooth
 public struct UUIDs: Error {
             
     // MARK: - Advertising UUIDs
-    public static let TORCHERE_ADVERTISING_UUID = CBUUID(string: "BB930001-3CE1-4720-A753-28C0159DC777")
-    public static let FL_MINI_ADVERTISING_UUID  = CBUUID(string: "BB930002-3CE1-4720-A753-28C0159DC777")
-    public static let SL_BASE_ADVERTISING_UUID  = CBUUID(string: "BB930003-3CE1-4720-A753-28C0159DC777")
+    public static let FL_CLASSIC_ADVERTISING_UUID     = CBUUID(string: "BB930001-3CE1-4720-A753-28C0159DC777")
+    public static let FL_MINI_ADVERTISING_UUID      = CBUUID(string: "BB930002-3CE1-4720-A753-28C0159DC777")
+    public static let SL_BASE_ADVERTISING_UUID      = CBUUID(string: "BB930003-3CE1-4720-A753-28C0159DC777")
+    public static let SL_STANDART_ADVERTISING_UUID  = CBUUID(string: "BB930004-3CE1-4720-A753-28C0159DC777")
 
     // MARK: - Services UUIDs
     public static let DEVICE_INFO_SERVICE_UUID = CBUUID(string: "FFFF")
@@ -22,6 +23,7 @@ public struct UUIDs: Error {
     public static let LED_SERVICE_UUID         = CBUUID(string: "0C00")
     public static let SENSOR_SERVICE_UUID      = CBUUID(string: "0D00")
     public static let EVENT_SERVICE_UUID       = CBUUID(string: "0E00")
+    public static let STAIRS_SERVICE_UUID      = CBUUID(string: "0F00")
 
     // MARK: - Characteristics UUIDs
     // Device info service
@@ -29,6 +31,7 @@ public struct UUIDs: Error {
     public static let DEVICE_DFU_CHARACTERISTIC_UUID              = CBUUID(string: "FFFD")
     public static let FACTORY_SETTINGS_CHARACTERISTIC_UUID        = CBUUID(string: "FFFC")
     public static let DEVICE_INIT_STATE_CHARACTERISTIC_UUID       = CBUUID(string: "FFFB")
+    public static let DEVICE_DEMO_MODE_STATE_CHARACTERISTIC_UUID  = CBUUID(string: "FFFF")
     
     // Event service
     public static let EVENT_ERROR_CHARACTERISTIC_UUID = CBUUID.init(string: "0E01")
@@ -51,9 +54,22 @@ public struct UUIDs: Error {
     public static let LED_TIMEOUT_CHARACTERISTIC_UUID    = CBUUID(string: "0C03")
 
     // Sensor service
-    public static let TOP_SENSOR_TRIGGER_DISTANCE_CHARACTERISTIC_UUID = CBUUID(string: "0D01")
-    public static let BOT_SENSOR_TRIGGER_DISTANCE_CHARACTERISTIC_UUID = CBUUID(string: "0D02")
+    public static let TOP_SENSOR_TRIGGER_DISTANCE_CHARACTERISTIC_UUID  = CBUUID(string: "0D01")
+    public static let BOT_SENSOR_TRIGGER_DISTANCE_CHARACTERISTIC_UUID  = CBUUID(string: "0D02")
+    public static let TOP_SENSOR_CURRENT_DISTANCE_CHARACTERISTIC_UUID  = CBUUID(string: "0D03")
+    public static let BOT_SENSOR_CURRENT_DISTANCE_CHARACTERISTIC_UUID  = CBUUID(string: "0D04")
+    public static let TOP_SENSOR_TRIGGER_LIGHTNESS_CHARACTERISTIC_UUID = CBUUID(string: "0D05")
+    public static let BOT_SENSOR_TRIGGER_LIGHTNESS_CHARACTERISTIC_UUID = CBUUID(string: "0D06")
+    public static let TOP_SENSOR_CURRENT_LIGHTNESS_CHARACTERISTIC_UUID = CBUUID(string: "0D07")
+    public static let BOT_SENSOR_CURRENT_LIGHTNESS_CHARACTERISTIC_UUID = CBUUID(string: "0D08")
     
+    // Stairs service
+    public static let STEPS_COUNT_CHARACTERISTIC_UUID                 = CBUUID(string: "0F01")
+    public static let STANDBY_LIGHTING_STATE_CHARACTERISTIC_UUID      = CBUUID(string: "0F02")
+    public static let STANDBY_LIGHTING_TOP_COUNT_CHARACTERISTIC_UUID  = CBUUID(string: "0F03")
+    public static let STANDBY_LIGHTING_BOT_COUNT_CHARACTERISTIC_UUID  = CBUUID(string: "0F04")
+    public static let STANDBY_LIGHTING_BRIGHTNESS_CHARACTERISTIC_UUID = CBUUID(string: "0F05")
+
     struct Legacy {
 
         // MARK: - Services UUIDs
@@ -63,6 +79,7 @@ public struct UUIDs: Error {
         public static let LED_SERVICE_UUID         = CBUUID(string: "BB930C00-3CE1-4720-A753-28C0159DC777")
         public static let SENSOR_SERVICE_UUID      = CBUUID(string: "BB930D00-3CE1-4720-A753-28C0159DC777")
         public static let EVENT_SERVICE_UUID       = CBUUID(string: "BB930E00-3CE1-4720-A753-28C0159DC777")
+        public static let STAIRS_SERVICE_UUID      = CBUUID(string: "BB930F00-3CE1-4720-A753-28C0159DC777")
 
         // MARK: - Characteristics UUIDs
         // Device info service
@@ -70,6 +87,7 @@ public struct UUIDs: Error {
         public static let DEVICE_DFU_CHARACTERISTIC_UUID              = CBUUID(string: "BB93FFFD-3CE1-4720-A753-28C0159DC777")
         public static let FACTORY_SETTINGS_CHARACTERISTIC_UUID        = CBUUID(string: "BB93FFFC-3CE1-4720-A753-28C0159DC777")
         public static let DEVICE_INIT_STATE_CHARACTERISTIC_UUID       = CBUUID(string: "BB93FFFB-3CE1-4720-A753-28C0159DC777")
+        public static let DEVICE_DEMO_MODE_STATE_CHARACTERISTIC_UUID  = CBUUID(string: "BB93FFFA-3CE1-4720-A753-28C0159DC777")
         
         // Event service
         public static let EVENT_ERROR_CHARACTERISTIC_UUID = CBUUID(string: "BB930E01-3CE1-4720-A753-28C0159DC777")
@@ -92,14 +110,28 @@ public struct UUIDs: Error {
         public static let LED_TIMEOUT_CHARACTERISTIC_UUID    = CBUUID(string: "BB930C03-3CE1-4720-A753-28C0159DC777")
 
         // Sensor service
-        public static let TOP_SENSOR_TRIGGER_DISTANCE_CHARACTERISTIC_UUID = CBUUID(string: "BB930D01-3CE1-4720-A753-28C0159DC777")
-        public static let BOT_SENSOR_TRIGGER_DISTANCE_CHARACTERISTIC_UUID = CBUUID(string: "BB930D02-3CE1-4720-A753-28C0159DC777")
+        public static let TOP_SENSOR_TRIGGER_DISTANCE_CHARACTERISTIC_UUID  = CBUUID(string: "BB930D01-3CE1-4720-A753-28C0159DC777")
+        public static let BOT_SENSOR_TRIGGER_DISTANCE_CHARACTERISTIC_UUID  = CBUUID(string: "BB930D02-3CE1-4720-A753-28C0159DC777")
+        public static let TOP_SENSOR_CURRENT_DISTANCE_CHARACTERISTIC_UUID  = CBUUID(string: "BB930D03-3CE1-4720-A753-28C0159DC777")
+        public static let BOT_SENSOR_CURRENT_DISTANCE_CHARACTERISTIC_UUID  = CBUUID(string: "BB930D04-3CE1-4720-A753-28C0159DC777")
+        public static let TOP_SENSOR_TRIGGER_LIGHTNESS_CHARACTERISTIC_UUID = CBUUID(string: "BB930D05-3CE1-4720-A753-28C0159DC777")
+        public static let BOT_SENSOR_TRIGGER_LIGHTNESS_CHARACTERISTIC_UUID = CBUUID(string: "BB930D06-3CE1-4720-A753-28C0159DC777")
+        public static let TOP_SENSOR_CURRENT_LIGHTNESS_CHARACTERISTIC_UUID = CBUUID(string: "BB930D07-3CE1-4720-A753-28C0159DC777")
+        public static let BOT_SENSOR_CURRENT_LIGHTNESS_CHARACTERISTIC_UUID = CBUUID(string: "BB930D08-3CE1-4720-A753-28C0159DC777")
+        
+        // Stairs service
+        public static let STEPS_COUNT_CHARACTERISTIC_UUID            = CBUUID(string: "BB930F01-3CE1-4720-A753-28C0159DC777")
+        public static let STANDBY_LIGHTING_STATE_CHARACTERISTIC_UUID = CBUUID(string: "BB930F02-3CE1-4720-A753-28C0159DC777")
+        public static let STANDBY_LIGHTING_TOP_COUNT                 = CBUUID(string: "BB930F03-3CE1-4720-A753-28C0159DC777")
+        public static let STANDBY_LIGHTING_BOT_COUNT                 = CBUUID(string: "BB930F04-3CE1-4720-A753-28C0159DC777")
+        public static let STANDBY_LIGHTING_BRIGHTNESS                = CBUUID(string: "BB930F05-3CE1-4720-A753-28C0159DC777")
     }
 
 }
 
 extension UUIDs {
-    static let advServices:[CBUUID:BasePeripheral.Type] = [BluetoothEndpoint.AdvertisingServices.flClassic.uuid : TorcherePeripheral.self,
-                                                           BluetoothEndpoint.AdvertisingServices.flMini.uuid : TorcherePeripheral.self,
-                                                           BluetoothEndpoint.AdvertisingServices.slBase.uuid : SlBasePeripheral.self]
+    static let advServices:[CBUUID:BasePeripheral.Type] = [BluetoothEndpoint.AdvertisingServices.flClassic.uuid : FlClassicPeripheral.self,
+                                                           BluetoothEndpoint.AdvertisingServices.flMini.uuid : FlClassicPeripheral.self,
+                                                           BluetoothEndpoint.AdvertisingServices.slBase.uuid : SlBasePeripheral.self,
+                                                           BluetoothEndpoint.AdvertisingServices.slStandart.uuid : SlStandartPeripheral.self]
 }
