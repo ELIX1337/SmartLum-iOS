@@ -44,6 +44,16 @@
     "peripheral_notice_section_footer" = "";
     "peripheral_setup_trigger_distance_section_header" = "Установите дистанции срабатывания датчиков";
     "peripheral_setup_trigger_distance_section_footer" = "Значения в сантиметрах";
+    "peripheral_sl_standart_led_section_header" = "Настройки ленты";
+    "peripheral_sl_standart_led_section_footer" = "";
+    "peripheral_sl_standart_sensor_trigger_distance_section_header" = "Дистанция срабатывания датчиков";
+    "peripheral_sl_standart_sensor_trigger_distance_section_footer" = "Значения в сантиметрах";
+    "peripheral_sl_standart_sensor_trigger_lightness_section_header" = "Пороговое значение освещенности";
+    "peripheral_sl_standart_sensor_trigger_lightness_section_footer" = "Значение при котором устройство перейдет в ночной режим работы";
+    "peripheral_sl_standart_steps_settings_section_header" = "Настройки лестницы";
+    "peripheral_sl_standart_steps_settings_section_footer" = "";
+    "peripheral_sl_standart_standby_section_header" = "Дежурное освещение";
+    "peripheral_sl_standart_standby_section_footer" = "";
 
     // Cells
     "peripheral_primary_color_cell_title" = "Основной";
@@ -54,7 +64,7 @@
     "peripheral_animation_direction_cell_title" = "Направление";
     "peripheral_animation_step_cell_title" = "Шаг";
     "peripheral_led_state_cell_title" = "Включить ленту";
-    "peripheral_led_brightness_cell_title" = "";
+    "peripheral_led_brightness_cell_title" = "Яркость";
     "peripheral_led_timeout_cell_title" = "Таймаут (сек)";
     "peripheral_top_sensor_cell_title" = "Верхний датчик";
     "peripheral_bot_sensor_cell_title" = "Нижний датчик";
@@ -62,6 +72,18 @@
     "peripheral_error_cell_title" = "Обнаружена ошибка";
     "peripheral_error_cell_code_prefix" = "Подробнее";
     "peripheral_error_description_cell_title" = "Ошибка - Код ";
+
+    "peripheral_sl_standart_top_sensor_trigger_distance_cell_title" = "Верхний датчик";
+    "peripheral_sl_standart_bot_sensor_trigger_distance_cell_title" = "Нижний датчик";
+    "peripheral_sl_standart_top_sensor_trigger_lightness_cell_title" = "Верхний датчик";
+    "peripheral_sl_standart_bot_sensor_trigger_lightness_cell_title" = "Нижний датчик";
+    "peripheral_sl_standart_steps_count_cell" = "Количество ступеней";
+    "peripheral_sl_standart_standby_state" = "Вкл/Выкл";
+    "peripheral_sl_standart_standby_brightness" = "Яркость";
+    "peripheral_sl_standart_standby_top_count" = "Число верхних ступеней";
+    "peripheral_sl_standart_standby_bot_count" = "Число нижних ступеней";
+
+    "peripheral_setup_requires_cell_text" = "Устройство необходимо настроить";
     
 // Peripheral data
     // Animation modes

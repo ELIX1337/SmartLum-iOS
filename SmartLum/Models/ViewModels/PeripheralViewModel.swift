@@ -25,7 +25,7 @@ protocol PeripheralTableViewModelDataSourceAndDelegate {
 }
 
 @objc class PeripheralViewModel: NSObject {
-    
+    private var heightAtIndexPath = Dictionary<IndexPath, CGFloat>()
     public var basePeripheral: BasePeripheral!
     public var delegate: PeripheralViewModelDelegate
     public var tableViewDataSourceAndDelegate: PeripheralTableViewModelDataSourceAndDelegate?
@@ -75,14 +75,24 @@ protocol PeripheralTableViewModelDataSourceAndDelegate {
         }
     }
     
-    public func reloadCell(for row: CellModel, with animation: UITableView.RowAnimation) {
-        if let indexPath = getTableViewModel(type: tableView.tableViewType)?.getIndexPath(forRow: row) {
-            tableView.reloadRows(at: [indexPath], with: animation)
-        } else {
-            tableView.reloadData()
-        }
+    internal func checkInitWrite() {
+        readyToWriteInitData = requiresInit()
     }
     
+    internal func requiresInit() -> Bool {
+        return false
+    }
+    
+    public func updateCell(for row: CellModel, with: UITableView.RowAnimation) {
+        guard let indexPath = self.getTableViewModel(type: self.tableView.tableViewType)?.getIndexPath(forRow: row) else { return }
+        guard let cell = tableView.cellForRow(at: indexPath) as? BaseTableViewCell else { return }
+        guard with != .none else {
+            row.configure(cell: cell, with: dataModel)
+            return
+        }
+        tableView.reloadRows(at: [indexPath], with: with)
+    }
+
     public func hideCell(rows: [CellModel], rowsSection: [CellModel]?) {
         hideRows(rows: rows)
         if let section = rowsSection {
@@ -270,11 +280,11 @@ extension PeripheralViewModel: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        getTableViewModel(type: tableView.tableViewType)?.sections[section].headerText.localized ?? ""
+        getTableViewModel(type: tableView.tableViewType)?.sections[section].headerText.localized
     }
     
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        getTableViewModel(type: tableView.tableViewType)?.sections[section].footerText.localized ?? ""
+        getTableViewModel(type: tableView.tableViewType)?.sections[section].footerText.localized
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -284,8 +294,16 @@ extension PeripheralViewModel: UITableViewDataSource {
             cellModel.configure(cell: cell, with: dataModel)
             return cell
         } else {
-            return UITableViewCell.init()
+            return UITableViewCell()
         }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        heightAtIndexPath[indexPath] = cell.frame.size.height
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return heightAtIndexPath[indexPath] ?? UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -332,21 +350,21 @@ extension PeripheralViewModel: UITableViewDelegate {
 extension PeripheralViewModel: BasePeripheralDelegate {
 
     func peripheralError(code: Int) {
-        dataModel.setValue(key: BasePeripheralData.errorKey, value: code)
-        tableView.beginUpdates()
-                if readyTableViewModel != nil {
-                    code != 0 ? insertErrorCell(&readyTableViewModel!, code: code) :
-                    removeErrorCells(&readyTableViewModel!)
-                }
-                if settingsTableViewModel != nil {
-                    code != 0 ? insertErrorDetailCell(&settingsTableViewModel!, code: code) :
-                    removeErrorDetailCells(&settingsTableViewModel!)
-                }
-                if setupTableViewModel != nil {
-                    code != 0 ? insertErrorDetailCell(&setupTableViewModel!, code: code) :
-                    removeErrorDetailCells(&setupTableViewModel!)
-                }
-        tableView.endUpdates()
+//        dataModel.setValue(key: BasePeripheralData.errorKey, value: code)
+//        tableView.beginUpdates()
+//                if readyTableViewModel != nil {
+//                    code != 0 ? insertErrorCell(&readyTableViewModel!, code: code) :
+//                    removeErrorCells(&readyTableViewModel!)
+//                }
+//                if settingsTableViewModel != nil {
+//                    code != 0 ? insertErrorDetailCell(&settingsTableViewModel!, code: code) :
+//                    removeErrorDetailCells(&settingsTableViewModel!)
+//                }
+//                if setupTableViewModel != nil {
+//                    code != 0 ? insertErrorDetailCell(&setupTableViewModel!, code: code) :
+//                    removeErrorDetailCells(&setupTableViewModel!)
+//                }
+//        tableView.endUpdates()
     }
     
     func peripheralInitState(isInitialized: Bool) {
@@ -358,7 +376,7 @@ extension PeripheralViewModel: BasePeripheralDelegate {
                     footerText: "",
                     rows: [.infoCell(
                         key: "init_info_cell",
-                        titleText: "Device requres setup",
+                        titleText: "peripheral_setup_requires_cell_text".localized,
                         detailText: nil,
                         image: .init(systemName: "info.circle.fill")?.withTintColor(.SLYellow, renderingMode: .alwaysOriginal),
                         accessory: nil)]))

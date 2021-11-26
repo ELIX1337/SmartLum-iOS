@@ -68,7 +68,7 @@ class SlBaseViewModel: PeripheralViewModel {
         self.ledTimeoutCell = .stepperCell(
             key: SlBaseData.ledTimeout,
             title: "peripheral_led_timeout_cell_title".localized,
-            initialValue: 0,
+            initialValue: 1,
             minValue: Double(SlBaseData.ledMinTimeout),
             maxValue: Double(SlBaseData.ledMaxTimeout),
             callback: { self.writeLedTimeout(timeout: Int($0)) })
@@ -91,21 +91,25 @@ class SlBaseViewModel: PeripheralViewModel {
     public func writeLedState(state: Bool) {
         dataModel.setValue(key: SlBaseData.ledStateKey, value: state)
         slBasePeripheral.writeLedState(state)
+        updateCell(for: ledStateCell, with: .none)
     }
     
     public func writeLedBrightness(value: Int) {
         dataModel.setValue(key: SlBaseData.ledBrightnessKey, value: value)
         slBasePeripheral.writeLedBrightness(value)
+        updateCell(for: ledBrightnessCell, with: .none)
     }
     
     public func writeLedTimeout(timeout: Int) {
         dataModel.setValue(key: SlBaseData.ledTimeout, value: timeout)
         slBasePeripheral.writeLedTimeout(timeout)
+        updateCell(for: ledTimeoutCell, with: .none)
     }
     
     public func writeAnimationSpeed(speed: Int) {
         dataModel.setValue(key: SlBaseData.animationSpeedKey, value: speed)
         slBasePeripheral.writeAnimationOnSpeed(speed)
+        updateCell(for: animationSpeedCell, with: .none)
     }
     
     public func writeInitDistance() -> Bool {
@@ -119,31 +123,35 @@ class SlBaseViewModel: PeripheralViewModel {
     }
     
     public func writeTopSensorTriggerDistance(distance: Int) {
+        dataModel.setValue(key: SlBaseData.topTriggerDistanceKey, value: distance)
         if isInitialized {
             slBasePeripheral.writeTopSensorTriggerDistance(distance)
-            dataModel.setValue(key: SlBaseData.topTriggerDistanceKey, value: distance)
         } else {
-            initTopSensorTriggerDistance(distance: distance)
+            checkInitWrite()
         }
     }
     
     public func writeBotSensorTriggerDistance(distance: Int) {
+        dataModel.setValue(key: SlBaseData.botTriggerDistanceKey, value: distance)
         if isInitialized {
             slBasePeripheral.writeBotSensorTriggerDistance(distance)
-            dataModel.setValue(key: SlBaseData.botTriggerDistanceKey, value: distance)
         } else {
-            initBotSensorTriggerDistance(distance: distance)
+            checkInitWrite()
         }
     }
     
-    public func initTopSensorTriggerDistance(distance: Int) {
-        dataModel.setValue(key: SlBaseData.topTriggerDistanceKey, value: distance)
+    private func initTopSensorTriggerDistance(distance: Int) {
         readyToWriteInitData = dataModel.getValue(key: SlBaseData.botTriggerDistanceKey) as! Int != 0
     }
     
-    public func initBotSensorTriggerDistance(distance: Int) {
-        dataModel.setValue(key: SlBaseData.botTriggerDistanceKey, value: distance)
+    private func initBotSensorTriggerDistance(distance: Int) {
         readyToWriteInitData = dataModel.getValue(key: SlBaseData.topTriggerDistanceKey) as! Int != 0
+    }
+    
+    override func requiresInit() -> Bool {
+        let first  = dataModel.getValue(key: SlBaseData.botTriggerDistanceKey) as? Int != 0
+        let second = dataModel.getValue(key: SlBaseData.topTriggerDistanceKey) as? Int != 0
+        return first && second
     }
     
 }
@@ -152,32 +160,32 @@ extension SlBaseViewModel: SlBasePeripheralDelegate {
     
     func getAnimationOnSpeed(speed: Int) {
         dataModel.setValue(key: SlBaseData.animationSpeedKey, value: speed)
-        reloadCell(for: animationSpeedCell, with: .middle)
+        updateCell(for: animationSpeedCell, with: .middle)
     }
     
     func getLedBrightness(brightness: Int) {
         dataModel.setValue(key: SlBaseData.ledBrightnessKey, value: brightness)
-        reloadCell(for: ledBrightnessCell, with: .middle)
+        updateCell(for: ledBrightnessCell, with: .middle)
     }
     
     func getLedTimeout(timeout: Int) {
         dataModel.setValue(key: SlBaseData.ledTimeout, value: timeout)
-        reloadCell(for: ledTimeoutCell, with: .middle)
+        updateCell(for: ledTimeoutCell, with: .middle)
     }
     
     func getLedState(state: Bool) {
         dataModel.setValue(key: SlBaseData.ledStateKey, value: state)
-        reloadCell(for: ledStateCell, with: .middle)
+        updateCell(for: ledStateCell, with: .middle)
     }
     
     func getTopSensorTriggerDistance(distance: Int) {
         dataModel.setValue(key: SlBaseData.topTriggerDistanceKey, value: distance)
-        reloadCell(for: topTriggerDistanceCell, with: .middle)
+        updateCell(for: topTriggerDistanceCell, with: .middle)
     }
     
     func getBotSensorTriggerDistance(distance: Int) {
         dataModel.setValue(key: SlBaseData.botTriggerDistanceKey, value: distance)
-        reloadCell(for: botTriggerDistanceCell, with: .middle)
+        updateCell(for: botTriggerDistanceCell, with: .middle)
     }
     
     // Unused

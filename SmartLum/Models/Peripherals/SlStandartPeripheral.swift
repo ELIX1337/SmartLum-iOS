@@ -12,7 +12,7 @@ protocol SlStandartPeripheralDelegate: StairsPeripheralDelegate, DistanceSensorP
 
 class SlStandartPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSensorPeripheralProtocol, LightnessSensorPeripheralProtocol, LedPeripheralProtocol, AnimationPeripheralProtocol, ColorPeripheralProtocol {
     
-    var delegate: SlBasePeripheralDelegate?
+    var delegate: SlStandartPeripheralDelegate?
     
     override init(_ peripheral: CBPeripheral, _ manager: CBCentralManager) {
         super.init(peripheral, manager)
@@ -24,10 +24,15 @@ class SlStandartPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSe
     override func readData(data: Data, from characteristic: BluetoothEndpoint.Characteristic, in service: BluetoothEndpoint.Service, error: Error?) {
         super.readData(data: data, from: characteristic, in: service, error: error)
         switch (service, characteristic) {
-        case (.led, .ledBrightness):
+        case (.led, .ledBrightness),
+            (.led, .ledState),
+            (.led, .ledTimeout),
+            (.led, .ledType),
+            (.led, .ledAdaptiveBrightness):
             handleLedSettings(characteristic, data)
             break
-        case (.stairs, .stepsCount):
+        case (.stairs, .stepsCount),
+            (.stairs, .workMode):
             break
         case (.stairs, .standbyState),
             (.stairs, .standbyBrightness),
@@ -64,10 +69,35 @@ class SlStandartPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSe
         }
     }
     
+    func handleStairsSettings(_ setting: BluetoothEndpoint.Characteristic, _ value: Data) {
+        switch setting {
+        case .stepsCount:
+            delegate?.getStepsCount(count: value.toInt())
+            break
+        case .workMode:
+            delegate?.getWorkMode(mode: value.toInt())
+            break
+        default:
+            break
+        }
+    }
+    
     func handleLedSettings(_ setting: BluetoothEndpoint.Characteristic, _ value: Data) {
         switch setting {
+        case .ledState:
+            delegate?.getLedState(state: value.toBool())
+            break
         case .ledBrightness:
             delegate?.getLedBrightness(brightness: value.toInt())
+            break
+        case .ledTimeout:
+            delegate?.getLedTimeout(timeout: value.toInt())
+            break
+        case .ledType:
+            delegate?.getLedType(type: PeripheralLedType(rawValue: value.toInt()) ?? .default)
+            break
+        case .ledAdaptiveBrightness:
+            delegate?.getLedType(type: PeripheralLedAdaptiveMode(rawValue: value.toInt()) ?? .off)
             break
         default:
             break
@@ -75,23 +105,76 @@ class SlStandartPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSe
     }
     
     func handleStandbyModeSettings(_ setting: BluetoothEndpoint.Characteristic, _ value: Data) {
-
+        switch setting {
+        case .standbyState:
+            delegate?.getStandbyState(state: value.toInt() != 0) // TODO: - toBool()
+            break
+        case .standbyBrightness:
+            delegate?.getStandbyBrightness(brightness: value.toInt())
+            break
+        case .standbyTopCount:
+            delegate?.getStandbyTopCount(count: value.toInt())
+            break
+        case .standbyBotCount:
+            delegate?.getStandbyBotCount(count: value.toInt())
+            break
+        default:
+            break
+        }
     }
     
     func handleDistanceSettings(_ settings: BluetoothEndpoint.Characteristic, _ value: Data) {
-        
+        switch settings {
+        case .topSensorTriggerDistance:
+            delegate?.getTopSensorTriggerDistance(distance: value.toInt())
+            break
+        case .botSensorTriggerDistance:
+            delegate?.getBotSensorTriggerDistance(distance: value.toInt())
+            break
+        default:
+            break
+        // TODO: - Current
+        }
     }
     
     func handleLightnessSettings(_ setting: BluetoothEndpoint.Characteristic, _ value: Data) {
-        
+        switch setting {
+        case .topSensorTriggerLightness:
+            delegate?.getTopSensorTriggerLightness(lightness: value.toInt())
+            break
+        case .botSensorTriggerLightness:
+            delegate?.getBotSensorTriggerLightness(lightness: value.toInt())
+            break
+        case .topSensorCurrentLightness:
+            delegate?.getTopSensorCurrentLightness(lightness: value.toInt())
+            break
+        case .botSensorCurrentLightness:
+            delegate?.getBotSensorCurrentLightness(lightness: value.toInt())
+            break
+        default:
+            break
+        // TODO: - Current
+        }
     }
     
     func handleColorSettings(_ setting: BluetoothEndpoint.Characteristic, _ value: Data) {
-        
+        switch setting {
+        case .primaryColor:
+            delegate?.getPrimaryColor(value.toUIColor())
+            break
+        default:
+            break
+        }
     }
     
     func handleAnimationSettings(_ setting: BluetoothEndpoint.Characteristic, _ value: Data) {
-        
+        switch setting {
+        case .animationMode:
+            delegate?.getAnimationMode(mode: PeripheralAnimations(rawValue: value.toInt()) ?? .static)
+            break
+        default:
+            break
+        }
     }
     
 }

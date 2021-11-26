@@ -57,16 +57,29 @@ struct SlStandartData: PeripheralData {
     var values: [String : Any]
     
     static let primaryColorKey         = "PrimaryColorKey"
+    static let randomColorKey          = "RandomColorKey"
     static let ledStateKey             = "LedStateKey"
     static let ledBrightnessKey        = "LedBrightnessKey"
     static let ledTimeoutKey           = "LedTimeoutKey"
+    static let ledTypeKey              = "LedTimeoutKey"
+    static let ledAdaptiveModeKey      = "LedTimeoutKey"
     static let topTriggerDistanceKey   = "TopTriggerDistanceKey"
     static let botTriggerDistanceKey   = "BotTriggerDistanceKey"
-    static let topLightnessDistanceKey = "TopTriggerDistanceKey"
-    static let botLightnessDistanceKey = "BotTriggerDistanceKey"
+    static let topTriggerLightnessKey  = "TopTriggerDistanceKey"
+    static let botTriggerLightnessKey  = "BotTriggerDistanceKey"
+    static let topCurrentDistanceKey   = "TopCurrentDistanceKey"
+    static let botCurrentDistanceKey   = "BotCurrentDistanceKey"
+    static let topCurrentLightnessKey  = "TopCurrentLightnessKey"
+    static let botCurrentLightnessKey  = "BotCurrentLightnessKey"
     static let animationModeKey        = "AnimationModeKey"
     static let animationSpeedKey       = "AnimationSpeedKey"
     static let animationDirectionKey   = "AnimationDirectionKey"
+    static let stepsCountKey           = "StepsCountKey"
+    static let standbyStateKey         = "StandbyStateKey"
+    static let standbyBrightnessKey    = "StandbyBrightnessKey"
+    static let standbyTopCountKey      = "StandbyTopCountKey"
+    static let standbyBotCountKey      = "StandbyBotCountKey"
+    static let stairsWorkMode          = "StairsWorkMode"
 
     static let ledMinBrightness = 1
     static let ledMaxBrightness = 255
@@ -76,6 +89,10 @@ struct SlStandartData: PeripheralData {
     static let sensorMaxDistance = 200
     static let animationMinSpeed = 1
     static let animationMaxSpeed = 100
+    static let stepsMinCount = 2
+    static let stepsMaxCount = 26
+    static let standbyMinCount = 1
+    static let standbyMaxCount = stepsMaxCount / 2
 
 }
 
@@ -101,6 +118,43 @@ protocol PeripheralDataElement {
     var name: String { get }
 }
 
+extension PeripheralDataElement where Self.RawValue == Int, Self: RawRepresentable {
+    var code: Int { return self.rawValue }
+}
+
+enum PeripheralLedType: Int, CaseIterable, PeripheralDataElement {
+       
+    case `default` = 0
+    case rgb = 1
+    
+    var name: String {
+        switch self {
+        case .`default`: return "peripheral_led_type_default".localized
+        case .rgb:       return "peripheral_led_type_rgb".localized
+        }
+    }
+    
+}
+
+enum PeripheralLedAdaptiveMode: Int, CaseIterable, PeripheralDataElement {
+    
+    case off = 0
+    case top = 1
+    case bot = 2
+    case average = 3
+    
+    //var code: Int { return self.rawValue }
+    
+    var name: String {
+        switch self {
+        case .off: return "peripheral_adaptime_mode_off".localized
+        case .top: return "peripheral_adaptime_mode_top".localized
+        case .bot: return "peripheral_adaptime_mode_bot".localized
+        case .average: return "peripheral_adaptime_mode_average".localized
+        }
+    }
+}
+
 enum PeripheralAnimations: Int, CaseIterable, PeripheralDataElement {
     
     case tetris             = 1
@@ -120,7 +174,7 @@ enum PeripheralAnimations: Int, CaseIterable, PeripheralDataElement {
         case .static:             return "peripheral_animation_mode_static".localized
         }
     }
-    var code: Int {{ return self.rawValue }()}
+    //var code: Int { return self.rawValue }
 }
 
 enum PeripheralAnimationDirections: Int, CaseIterable, PeripheralDataElement {
@@ -139,7 +193,7 @@ enum PeripheralAnimationDirections: Int, CaseIterable, PeripheralDataElement {
         }
     }
     
-    var code: Int {{ return self.rawValue }()}
+    //var code: Int { return self.rawValue }
 }
 
 enum PeripheralError: Int, CaseIterable, PeripheralDataElement {
@@ -154,7 +208,7 @@ enum PeripheralError: Int, CaseIterable, PeripheralDataElement {
         }
     }
     
-    var code: Int {{ return self.rawValue }()}
+    //var code: Int { return self.rawValue }
     
     var description: String {
         switch self {

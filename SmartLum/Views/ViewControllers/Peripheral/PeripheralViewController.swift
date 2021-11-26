@@ -11,11 +11,11 @@ import CoreBluetooth
 
 protocol PeripheralViewControllerProtocol {
     func viewModelInit(peripheral: BasePeripheral)
-    func onCellSelected(cell: CellModel)
+    func onCellSelected(model: CellModel)
 }
 
 extension PeripheralViewControllerProtocol {
-    func onCellSelected(cell: CellModel) { }
+    func onCellSelected(model: CellModel) { }
 }
 
 protocol PeripheralSetupViewControllerProtocol {
@@ -96,27 +96,16 @@ class PeripheralViewController: UIViewController {
         }
     }
     
-    func initPickerDataSource<T: PeripheralDataElement>(with elements: [T]) {
+    func initPickerDataSource<T: PeripheralDataElement>(with elements: [T], callback: @escaping (T) -> Void) {
         self.pickerDataSource = TablePickerViewDataSource<PeripheralDataElement>(withItems: elements, withSelection: PeripheralAnimations.rainbow, withRowTitle: { $0.name.localized })
         {
-            if let viewModel = self.viewModel as? FlClassicViewModel {
-                switch $0 {
-                case let selection as PeripheralAnimations:
-                    viewModel.writeAnimationMode(mode: selection)
-                    break
-                case let selection as PeripheralAnimationDirections:
-                    viewModel.writeAnimationDirection(direction: selection)
-                    break
-                default:
-                    print("Unknown selection - ", $0)
-                }
-            }
+            callback($0 as! T)
         }
     }
     
-    func pushPicker<T: PeripheralDataElement>(_ dataArray: [T]) {
+    func pushPicker<T: PeripheralDataElement>(_ dataArray: [T], _ callback: @escaping (T) -> Void) {
         let vc = TablePickerViewController()
-        initPickerDataSource(with: dataArray)
+        initPickerDataSource(with: dataArray, callback: callback)
         vc.delegate = pickerDataSource
         vc.dataSource = pickerDataSource
         self.navigationController?.present(vc, animated: true, completion: nil)

@@ -418,8 +418,8 @@
 		30B664791FCD722A003C8B55 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2C7202942695888B0079BEEA /* ViewControllers */,
 				2C72029F269D5D240079BEEA /* TableViewCells */,
+				2C7202942695888B0079BEEA /* ViewControllers */,
 			);
 			path = Views;
 			sourceTree = "<group>";

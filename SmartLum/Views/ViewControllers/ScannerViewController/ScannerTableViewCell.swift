@@ -35,8 +35,6 @@ class ScannerTableViewCell: UITableViewCell {
         } else {
             peripheralRSSIIcon.image = #imageLiteral(resourceName: "rssi_1")
         }
-        
-        print("Found a \(aPeripheral.advertisedName)")
     }
     
     public func peripheralUpdatedAdvertisementData(_ aPeripheral: AdvertisedData) {

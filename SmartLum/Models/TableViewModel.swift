@@ -101,23 +101,13 @@ enum CellModel: Equatable {
     }
 
     case colorCell(key: String, title: String, initialValue : UIColor, callback: (UIColor) -> Void)
-    case pickerCell(key: String, title: String, initialValue: String)
+    case pickerCell(key: String, title: String, initialValue: Any)
     case sliderCell(key: String, title: String, initialValue: Float, minValue: Float, maxValue: Float, leftIcon: UIImage?, rightIcon: UIImage?, showValue: Bool, callback: (Float) -> Void)
     case switchCell(key: String, title: String, initialValue: Bool, callback: (Bool) -> Void)
     case stepperCell(key: String, title: String, initialValue: Double, minValue: Double, maxValue: Double, callback: (Double) -> Void)
     case buttonCell(key: String, title: String, callback: () -> Void)
     case infoCell(key: String, titleText: String, detailText: String?, image: UIImage?, accessory: UITableViewCell.AccessoryType?)
     case infoDetailCell(key: String, titleText: String, detailText: String?, image: UIImage?, accessory: UITableViewCell.AccessoryType?)
-    
-    func updateCell(in tableView: UITableView, with tableViewModel: TableViewModel) {
-        if let indexPath = tableViewModel.getIndexPath(forRow: self) {
-            tableView.reloadRows(at: [indexPath], with: .middle)
-            print("Reloading cell \(indexPath)")
-        } else {
-            tableView.reloadData()
-            print("Reloading tableView")
-        }
-    }
     
     func getIndexPath(fromModel: TableViewModel) -> IndexPath? {
         return fromModel.getIndexPath(forRow: self)
@@ -148,7 +138,7 @@ enum CellModel: Equatable {
         case .sliderCell:  return SliderTableViewCell.reuseIdentifier
         case .stepperCell: return StepperTableViewCell.reuseIdentifier
         case .buttonCell:  return ButtonTableViewCell.reuseIdentifier
-        case .infoCell:   return InfoTableViewCell.reuseIdentifier
+        case .infoCell:    return InfoTableViewCell.reuseIdentifier
         case .infoDetailCell: return InfoDetailTableViewCell.reuseIdentifier
         }
     }
@@ -202,9 +192,12 @@ enum CellModel: Equatable {
             }
         case .pickerCell(key: let key, title: let title, initialValue: let initialValue):
             if let cell = cell as? PickerTableViewCell {
-                let dataValue = data.getValue(key: key) as? PeripheralDataElement
                 cell.titleLabel.text = title
-                cell.valueLabel.text = dataValue?.name ?? initialValue
+                if let dataValue = data.getValue(key: key) {
+                    cell.valueLabel.text = String(describing: dataValue)
+                } else {
+                    cell.valueLabel.text = String(describing: initialValue)
+                }
             }
         case .switchCell(key: let key, title: let title, initialValue: let initialValue, callback: let callback):
             if let cell = cell as? SwitchTableViewCell {
@@ -216,8 +209,8 @@ enum CellModel: Equatable {
             if let cell = cell as? StepperTableViewCell {
                 let dataValue = data.getValue(key: key) as? Int ?? Int(initialValue)
                 cell.titleLabel.text = title
-                cell.valueLabel.text = String(describing: dataValue)
                 cell.stepper.value = Double(dataValue)
+                cell.valueLabel.text = String(describing: Int(cell.stepper.value))
                 cell.stepper.minimumValue = minValue
                 cell.stepper.maximumValue = maxValue
                 cell.callback = { callback($0 as! Double) }
@@ -227,17 +220,18 @@ enum CellModel: Equatable {
                 cell.button.setTitle(title, for: .normal)
                 cell.callback = { _ in callback() }
             }
-        case .infoCell(key: _, titleText: let titleText, detailText: let detailText, image: let image, accessory: let accessory):
+        case .infoCell(key: let key, titleText: let titleText, detailText: let detailText, image: let image, accessory: let accessory):
             if let cell = cell as? InfoTableViewCell {
+                let value = data.getValue(key: key)
                 if #available(iOS 14.0, *) {
                     var content = cell.defaultContentConfiguration()
                     content.image = image
                     content.text = titleText
-                    content.secondaryText = detailText
+                    content.secondaryText = String(describing: value ?? detailText ?? "")
                     cell.contentConfiguration = content
                 } else {
                     cell.textLabel?.text =  titleText
-                    cell.detailTextLabel?.text =  detailText
+                    cell.detailTextLabel?.text = String(describing: value ?? detailText ?? "")
                     cell.imageView?.image = image
                 }
                 cell.accessoryType = accessory ?? .none

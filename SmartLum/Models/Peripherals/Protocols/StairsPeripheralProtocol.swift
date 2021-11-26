@@ -50,4 +50,5 @@ protocol StairsPeripheralDelegate {
     func getStandbyBrightness(brightness: Int)
     func getStandbyTopCount(count: Int)
     func getStandbyBotCount(count: Int)
+    func getWorkMode(mode: Int)
 }

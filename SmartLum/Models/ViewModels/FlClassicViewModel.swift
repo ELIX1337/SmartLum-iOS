@@ -21,7 +21,7 @@ class FlClassicViewModel: PeripheralViewModel {
     var animationSpeedCell:     CellModel!
     var animationDirectionCell: CellModel!
     var animationStepCell:      CellModel!
-    
+        
     // Public variables for using in viewController
     var primaryColor: UIColor {
         get {
@@ -57,19 +57,13 @@ class FlClassicViewModel: PeripheralViewModel {
         primaryColorCell = .colorCell(
             key: FlClassicData.primaryColorKey,
             title: "peripheral_primary_color_cell_title".localized,
-            initialValue: dataModel.getValue(key: FlClassicData.primaryColorKey) as? UIColor ?? UIColor.SLWhite,
-            callback: { color in
-                self.dataModel.setValue(key: FlClassicData.primaryColorKey, value: color)
-                self.writePrimaryColor(color: color)
-            })
+            initialValue: primaryColor,
+            callback: { _ in })
         secondaryColorCell = .colorCell(
             key: FlClassicData.secondaryColorKey,
             title: "peripheral_secondary_color_cell_title".localized,
             initialValue: dataModel.getValue(key: FlClassicData.secondaryColorKey) as? UIColor ?? UIColor.SLWhite,
-            callback: { color in
-                self.dataModel.setValue(key: FlClassicData.secondaryColorKey, value: color)
-                self.writeSecondaryColor(color: color)
-            })
+            callback: { _ in })
         randomColorCell = .switchCell(
             key: FlClassicData.randomColorKey,
             title: "peripheral_random_color_cell_title".localized,
@@ -81,7 +75,7 @@ class FlClassicViewModel: PeripheralViewModel {
         animationModeCell = .pickerCell(
             key: FlClassicData.animationModeKey,
             title: "peripheral_animation_mode_cell_title".localized,
-            initialValue: dataModel.getValue(key: FlClassicData.animationModeKey) as? String ?? "")
+            initialValue: "")
         animationSpeedCell = .sliderCell(
             key: FlClassicData.animationSpeedKey,
             title: "peripheral_animation_speed_cell_title".localized,
@@ -137,41 +131,43 @@ class FlClassicViewModel: PeripheralViewModel {
     public func writePrimaryColor(color: UIColor) {
         peripheral.writePrimaryColor(color)
         dataModel.setValue(key: FlClassicData.primaryColorKey, value: color)
-        reloadCell(for: primaryColorCell, with: .none)
+        updateCell(for: primaryColorCell, with: .none)
     }
     
     public func writeSecondaryColor(color: UIColor) {
         peripheral.writeSecondaryColor(color)
         dataModel.setValue(key: FlClassicData.secondaryColorKey, value: color)
-        reloadCell(for: secondaryColorCell, with: .none)
+        updateCell(for: secondaryColorCell, with: .none)
     }
     
     public func writeRandomColor(state: Bool) {
         peripheral.writeRandomColor(state)
         dataModel.setValue(key: FlClassicData.randomColorKey, value: state)
+        updateCell(for: randomColorCell, with: .none)
     }
     
     public func writeAnimationMode(mode: PeripheralAnimations) {
         peripheral.writeAnimationMode(mode)
-        updateCellsFor(animation: mode)
-        dataModel.setValue(key: FlClassicData.animationModeKey, value: mode)
-        reloadCell(for: animationModeCell, with: .none)
+        dataModel.setValue(key: FlClassicData.animationModeKey, value: mode.name)
+        updateCell(for: animationModeCell, with: .none)
     }
     
     public func writeAnimationDirection(direction: PeripheralAnimationDirections) {
         peripheral.writeAnimationDirection(direction)
         dataModel.setValue(key: FlClassicData.animationDirectionKey, value: direction)
-        reloadCell(for: animationDirectionCell, with: .none)
+        updateCell(for: animationDirectionCell, with: .none)
     }
     
     public func writeAnimationOnSpeed(speed: Int) {
         peripheral.writeAnimationOnSpeed(speed)
         dataModel.setValue(key: FlClassicData.animationSpeedKey, value: speed)
+        updateCell(for: animationSpeedCell, with: .none)
     }
     
     public func writeAnimationStep(step: Int) {
         peripheral.writeAnimationStep(step)
         dataModel.setValue(key: FlClassicData.animationStepKey, value: step)
+        updateCell(for: animationStepCell, with: .none)
     }
     
 }
@@ -181,38 +177,37 @@ extension FlClassicViewModel: FlClassicPeripheralDelegate {
     
     func getPrimaryColor(_ color: UIColor) {
         dataModel.setValue(key: FlClassicData.primaryColorKey, value: color)
-        reloadCell(for: primaryColorCell, with: .middle)
+        updateCell(for: primaryColorCell, with: .middle)
     }
     
     func getSecondaryColor(_ color: UIColor) {
         dataModel.setValue(key: FlClassicData.secondaryColorKey, value: color)
-        reloadCell(for: secondaryColorCell, with: .middle)
+        updateCell(for: secondaryColorCell, with: .middle)
     }
     
     func getRandomColor(_ state: Bool) {
         dataModel.setValue(key: FlClassicData.randomColorKey, value: state)
-        reloadCell(for: randomColorCell, with: .middle)
+        updateCell(for: randomColorCell, with: .middle)
     }
     
     func getAnimationMode(mode: PeripheralAnimations) {
-        updateCellsFor(animation: mode)
-        dataModel.setValue(key: FlClassicData.animationModeKey, value: mode)
-        reloadCell(for: animationModeCell, with: .middle)
+        dataModel.setValue(key: FlClassicData.animationModeKey, value: mode.name)
+        updateCell(for: animationModeCell, with: .middle)
     }
     
     func getAnimationOnSpeed(speed: Int) {
         dataModel.setValue(key: FlClassicData.animationSpeedKey, value: speed)
-        reloadCell(for: animationSpeedCell, with: .middle)
+        updateCell(for: animationSpeedCell, with: .middle)
     }
         
     func getAnimationDirection(direction: PeripheralAnimationDirections) {
-        dataModel.setValue(key: FlClassicData.animationDirectionKey, value: direction)
-        reloadCell(for: animationDirectionCell, with: .middle)
+        dataModel.setValue(key: FlClassicData.animationDirectionKey, value: direction.name)
+        updateCell(for: animationDirectionCell, with: .middle)
     }
     
     func getAnimationStep(step: Int) {
         dataModel.setValue(key: FlClassicData.animationStepKey, value: step)
-        reloadCell(for: animationStepCell, with: .middle)
+        updateCell(for: animationStepCell, with: .middle)
     }
     
     // Unused

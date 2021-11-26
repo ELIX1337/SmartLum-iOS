@@ -37,12 +37,26 @@
     "peripheral_animation_section_footer" = "";
     "peripheral_sensor_trigger_distance_section_header" = "Sensors";
     "peripheral_sensor_trigger_distance_section_footer" = "Values in centimeters";
+    "peripheral_sensor_trigger_lightness_section_header" = "Sensors";
+    "peripheral_sensor_trigger_lightness_section_footer" = "";
     "peripheral_factory_settings_section_header" = "Factory settings";
     "peripheral_factory_settings_section_footer" = "";
     "peripheral_notice_section_header" = "Notice";
     "peripheral_notice_section_footer" = "";
     "peripheral_setup_trigger_distance_section_header" = "Set the sensors trigger distances";
     "peripheral_setup_trigger_distance_section_footer" = "Values in centimeters";
+
+    "peripheral_sl_standart_led_section_header" = "LED settings";
+    "peripheral_sl_standart_led_section_footer" = "";
+    "peripheral_sl_standart_sensor_trigger_distance_section_header" = "Sensors trigger distance";
+    "peripheral_sl_standart_sensor_trigger_distance_section_footer" = "Values in centimeters";
+    "peripheral_sl_standart_sensor_trigger_lightness_section_header" = "Sensors trigger lightness";
+    "peripheral_sl_standart_sensor_trigger_lightness_section_footer" = "The value at which the device switches to night mode";
+    "peripheral_sl_standart_steps_settings_section_header" = "Steps settings";
+    "peripheral_sl_standart_steps_settings_section_footer" = "";
+    "peripheral_sl_standart_standby_section_header" = "Standby lighting";
+    "peripheral_sl_standart_standby_section_footer" = "";
+
     // Cells
     "peripheral_primary_color_cell_title" = "Primary";
     "peripheral_secondary_color_cell_title" = "Secondary";
@@ -52,7 +66,7 @@
     "peripheral_animation_direction_cell_title" = "Direction";
     "peripheral_animation_step_cell_title" = "Step";
     "peripheral_led_state_cell_title" = "Enable LED";
-    "peripheral_led_brightness_cell_title" = "";
+    "peripheral_led_brightness_cell_title" = "Brightness";
     "peripheral_led_timeout_cell_title" = "Timeout (sec)";
     "peripheral_top_sensor_cell_title" = "Top sensor";
     "peripheral_bot_sensor_cell_title" = "Bot sensor";
@@ -60,7 +74,19 @@
     "peripheral_error_cell_title" = "Error detected";
     "peripheral_error_cell_code_prefix" = "Details";
     "peripheral_error_description_cell_title" = "Error - Code ";
-    
+
+    "peripheral_sl_standart_top_sensor_trigger_distance_cell_title" = "Top sensor";
+    "peripheral_sl_standart_bot_sensor_trigger_distance_cell_title" = "Bottom sensor";
+    "peripheral_sl_standart_top_sensor_trigger_lightness_cell_title" = "Top sensor";
+    "peripheral_sl_standart_bot_sensor_trigger_lightness_cell_title" = "Bottom sensor";
+    "peripheral_sl_standart_steps_count_cell" = "Steps count";
+    "peripheral_sl_standart_standby_state" = "On/Off";
+    "peripheral_sl_standart_standby_brightness" = "Brightness";
+    "peripheral_sl_standart_standby_top_count" = "Top steps count";
+    "peripheral_sl_standart_standby_bot_count" = "Bottom steps count";
+
+    "peripheral_setup_requires_cell_text" = "Device requires setup";
+
 // Peripheral data
     // Animation modes
     "peripheral_animation_mode_tetris" = "Tetris";

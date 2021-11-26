@@ -52,6 +52,8 @@ public struct UUIDs: Error {
     public static let LED_STATE_CHARACTERISTIC_UUID      = CBUUID(string: "0C01")
     public static let LED_BRIGHTNESS_CHARACTERISTIC_UUID = CBUUID(string: "0C02")
     public static let LED_TIMEOUT_CHARACTERISTIC_UUID    = CBUUID(string: "0C03")
+    public static let LED_TYPE_UUID                      = CBUUID(string: "0C04")
+    public static let LED_ADAPTIVE_MODE_UUID             = CBUUID(string: "0C05")
 
     // Sensor service
     public static let TOP_SENSOR_TRIGGER_DISTANCE_CHARACTERISTIC_UUID  = CBUUID(string: "0D01")
@@ -69,6 +71,7 @@ public struct UUIDs: Error {
     public static let STANDBY_LIGHTING_TOP_COUNT_CHARACTERISTIC_UUID  = CBUUID(string: "0F03")
     public static let STANDBY_LIGHTING_BOT_COUNT_CHARACTERISTIC_UUID  = CBUUID(string: "0F04")
     public static let STANDBY_LIGHTING_BRIGHTNESS_CHARACTERISTIC_UUID = CBUUID(string: "0F05")
+    public static let WORK_MODE_CHARACTERISTIC_UUID                   = CBUUID(string: "0F06")
 
     struct Legacy {
 
@@ -108,6 +111,8 @@ public struct UUIDs: Error {
         public static let LED_STATE_CHARACTERISTIC_UUID      = CBUUID(string: "BB930C01-3CE1-4720-A753-28C0159DC777")
         public static let LED_BRIGHTNESS_CHARACTERISTIC_UUID = CBUUID(string: "BB930C02-3CE1-4720-A753-28C0159DC777")
         public static let LED_TIMEOUT_CHARACTERISTIC_UUID    = CBUUID(string: "BB930C03-3CE1-4720-A753-28C0159DC777")
+        public static let LED_TYPE_UUID                      = CBUUID(string: "BB930C04-3CE1-4720-A753-28C0159DC777")
+        public static let LED_ADAPTIVE_MODE_UUID             = CBUUID(string: "BB930C05-3CE1-4720-A753-28C0159DC777")
 
         // Sensor service
         public static let TOP_SENSOR_TRIGGER_DISTANCE_CHARACTERISTIC_UUID  = CBUUID(string: "BB930D01-3CE1-4720-A753-28C0159DC777")
@@ -125,6 +130,8 @@ public struct UUIDs: Error {
         public static let STANDBY_LIGHTING_TOP_COUNT                 = CBUUID(string: "BB930F03-3CE1-4720-A753-28C0159DC777")
         public static let STANDBY_LIGHTING_BOT_COUNT                 = CBUUID(string: "BB930F04-3CE1-4720-A753-28C0159DC777")
         public static let STANDBY_LIGHTING_BRIGHTNESS                = CBUUID(string: "BB930F05-3CE1-4720-A753-28C0159DC777")
+        public static let WORK_MODE                                  = CBUUID(string: "BB930F06-3CE1-4720-A753-28C0159DC777")
+
     }
 
 }

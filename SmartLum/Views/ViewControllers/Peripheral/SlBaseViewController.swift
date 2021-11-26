@@ -12,11 +12,11 @@ import CoreBluetooth
 class SlBaseViewController: PeripheralViewController, PeripheralViewControllerProtocol {
     
     func viewModelInit(peripheral: BasePeripheral) {
-        viewModel = SlBaseViewModel(tableView, peripheral, self, onCellSelected(cell:))
+        viewModel = SlBaseViewModel(tableView, peripheral, self, onCellSelected(model:))
     }
     
-    func onCellSelected(cell: CellModel) {
-        switch cell.cellKey {
+    func onCellSelected(model: CellModel) {
+        switch model.cellKey {
         case BasePeripheralData.errorKey:
             openPeripheralSettings()
             break

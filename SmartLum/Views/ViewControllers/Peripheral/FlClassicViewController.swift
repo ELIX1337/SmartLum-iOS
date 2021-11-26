@@ -12,7 +12,9 @@ import CoreBluetooth
 class FlClassicViewController: PeripheralViewController, PeripheralViewControllerProtocol {
         
     func viewModelInit(peripheral: BasePeripheral) {
-        self.viewModel = FlClassicViewModel(tableView, peripheral, self, onCellSelected(cell:))
+        self.viewModel = FlClassicViewModel(tableView, peripheral, self) {
+            self.onCellSelected(cell: $0)
+        }
     }
     
     func onCellSelected(cell: CellModel) {
@@ -29,10 +31,14 @@ class FlClassicViewController: PeripheralViewController, PeripheralViewControlle
                 }
                 break
             case mViewModel.animationModeCell:
-                pushPicker(PeripheralAnimations.allCases)
+                pushPicker(PeripheralAnimations.allCases) {
+                    mViewModel.writeAnimationMode(mode: $0)
+                }
                 break
             case mViewModel.animationDirectionCell:
-                pushPicker(PeripheralAnimationDirections.allCases)
+                pushPicker(PeripheralAnimationDirections.allCases) {
+                    mViewModel.writeAnimationDirection(direction: $0)
+                }
                 break
             default:
                 return

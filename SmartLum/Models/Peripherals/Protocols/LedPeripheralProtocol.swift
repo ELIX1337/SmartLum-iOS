@@ -16,7 +16,8 @@ extension LedPeripheralProtocol where Self:BasePeripheralProtocol {
     var ledStateCharacteristic: CBCharacteristic? { get { self.endpoints[[.led:.ledState]] } }
     var ledBrightnessCharacteristic: CBCharacteristic? { get { self.endpoints[[.led:.ledBrightness]] } }
     var ledTimeoutCharacteristic: CBCharacteristic? { get { self.endpoints[[.led:.ledTimeout]] } }
-
+    var ledTypeCharateristic: CBCharacteristic? { get { self.endpoints[[.led:.ledType]] } }
+    var ledAdaptiveBrightnessCharateristic: CBCharacteristic? { get { self.endpoints[[.led:.ledAdaptiveBrightness]] } }
     
     func writeLedState(_ state: Bool) {
         writeWithoutResponse(value: state.toData(), to: ledStateCharacteristic)
@@ -29,6 +30,14 @@ extension LedPeripheralProtocol where Self:BasePeripheralProtocol {
     func writeLedTimeout(_ timeout: Int) {
         writeWithoutResponse(value: timeout.toDynamicSizeData(), to: ledTimeoutCharacteristic)
     }
+    
+    func writeLedType(_ type: PeripheralDataElement) {
+        writeWithoutResponse(value: type.code.toDynamicSizeData(), to: ledTypeCharateristic)
+    }
+    
+    func writeLedAdaptiveBrightnessState(_ mode: PeripheralDataElement) {
+        writeWithoutResponse(value: mode.code.toDynamicSizeData(), to: ledAdaptiveBrightnessCharateristic)
+    }
 
 }
 
@@ -36,5 +45,12 @@ protocol LedPeripheralDelegate {
     func getLedState(state: Bool)
     func getLedBrightness(brightness: Int)
     func getLedTimeout(timeout: Int)
+    func getLedType(type: PeripheralDataElement)
+    func getLedAdaptiveBrightnessState(mode: PeripheralDataElement)
+}
+
+extension LedPeripheralDelegate {
+    func getLedType(type: PeripheralDataElement) { }
+    func getLedAdaptiveBrightnessState(mode: PeripheralDataElement) { }
 }
 

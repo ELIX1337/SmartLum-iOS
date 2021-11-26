@@ -109,11 +109,14 @@ struct BluetoothEndpoint {
         case ledState
         case ledBrightness
         case ledTimeout
+        case ledType
+        case ledAdaptiveBrightness
         case stepsCount
         case standbyState
         case standbyTopCount
         case standbyBotCount
         case standbyBrightness
+        case workMode
         
         var uuidString: String {
             switch self {
@@ -142,11 +145,14 @@ struct BluetoothEndpoint {
             case .ledState:                  return UUIDs.LED_STATE_CHARACTERISTIC_UUID.uuidString
             case .ledBrightness:             return UUIDs.LED_BRIGHTNESS_CHARACTERISTIC_UUID.uuidString
             case .ledTimeout:                return UUIDs.LED_TIMEOUT_CHARACTERISTIC_UUID.uuidString
+            case .ledType:                   return UUIDs.LED_TYPE_UUID.uuidString
+            case .ledAdaptiveBrightness:     return UUIDs.LED_ADAPTIVE_MODE_UUID.uuidString
             case .stepsCount:                return UUIDs.STEPS_COUNT_CHARACTERISTIC_UUID.uuidString
             case .standbyState:              return UUIDs.STANDBY_LIGHTING_STATE_CHARACTERISTIC_UUID.uuidString
             case .standbyTopCount:           return UUIDs.STANDBY_LIGHTING_TOP_COUNT_CHARACTERISTIC_UUID.uuidString
             case .standbyBotCount:           return UUIDs.STANDBY_LIGHTING_BOT_COUNT_CHARACTERISTIC_UUID.uuidString
             case .standbyBrightness:         return UUIDs.STANDBY_LIGHTING_BRIGHTNESS_CHARACTERISTIC_UUID.uuidString
+            case .workMode:                  return UUIDs.WORK_MODE_CHARACTERISTIC_UUID.uuidString
             }
         }
         
@@ -209,6 +215,12 @@ struct BluetoothEndpoint {
             case .ledTimeout:
                 return legacy ? UUIDs.Legacy.LED_TIMEOUT_CHARACTERISTIC_UUID.uuidString :
                                 UUIDs.LED_TIMEOUT_CHARACTERISTIC_UUID.uuidString
+            case .ledType:
+                return legacy ? UUIDs.Legacy.LED_TYPE_UUID.uuidString :
+                                UUIDs.LED_TYPE_UUID.uuidString
+            case .ledAdaptiveBrightness:
+                return legacy ? UUIDs.Legacy.LED_ADAPTIVE_MODE_UUID.uuidString :
+                                UUIDs.LED_ADAPTIVE_MODE_UUID.uuidString
             case .stepsCount:
                 return legacy ? UUIDs.Legacy.STEPS_COUNT_CHARACTERISTIC_UUID.uuidString :
                                 UUIDs.STEPS_COUNT_CHARACTERISTIC_UUID.uuidString
@@ -242,6 +254,9 @@ struct BluetoothEndpoint {
             case .botSensorCurrentLightness:
                 return legacy ? UUIDs.Legacy.BOT_SENSOR_CURRENT_LIGHTNESS_CHARACTERISTIC_UUID.uuidString :
                                 UUIDs.BOT_SENSOR_CURRENT_LIGHTNESS_CHARACTERISTIC_UUID.uuidString
+            case .workMode:
+                return legacy ? UUIDs.Legacy.WORK_MODE.uuidString :
+                                UUIDs.WORK_MODE_CHARACTERISTIC_UUID.uuidString
             }
         }
     }

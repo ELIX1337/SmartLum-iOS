@@ -20,7 +20,7 @@ protocol BasePeripheralProtocol {
 extension BasePeripheralProtocol {
     var factorySettingsCharacteristic: CBCharacteristic? { get { self.endpoints[[.info:.factorySettings]] } }
     var demoModeCharacteristic:        CBCharacteristic? { get { self.endpoints[[.info:.demoMode]] } }
-
+    
     func writeWithResponse(value: Data, to characteristic: CBCharacteristic?) {
         if let char = characteristic {
             self.peripheral.writeValue(value, for: char, type: .withResponse)
@@ -28,6 +28,7 @@ extension BasePeripheralProtocol {
     }
     
     func writeWithoutResponse(value: Data, to characteristic: CBCharacteristic?) {
+        print("write \(value) - \(String(describing: characteristic?.uuid))")
         if let char = characteristic {
             if char.properties.contains(.writeWithoutResponse) {
                 self.peripheral.writeValue(value, for: char, type: .withoutResponse)
@@ -129,10 +130,10 @@ class BasePeripheral: NSObject,
     
     private func enableNotifications(for characteristic: CBCharacteristic) {
         if characteristic.properties.contains(.notify) {
-            print("Enabling notifications for \(characteristic.uuid) characteristic...")
+            print("Enabling notifications for \(characteristic.uuid)")
             peripheral.setNotifyValue(true, for: characteristic)
         } else {
-            print("Can't enable notifications for characterestic \(characteristic.uuid), characteristic doesn't contain NOTIFY property")
+            print("No NOTIFY property in \(characteristic.uuid)")
         }
     }
     
@@ -162,31 +163,39 @@ class BasePeripheral: NSObject,
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        if let services = peripheral.services {
-            for service in services {
-                peripheral.discoverCharacteristics(nil, for: service)
-                print("Service found - \(service.uuid)")
-                lastService = services.last?.uuid
-            }
-        }
-    }
-            
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        if let characteristics = service.characteristics {
-            for characteristic in characteristics {
-                enableNotifications(for: characteristic)
-                peripheral.readValue(for: characteristic)
-                //peripheral.discoverDescriptors(for: characteristic)
-                if let cases = BluetoothEndpoint.getCases(service, characteristic) {
-                    self.endpoints[cases] = characteristic
-                } else {
-                    print("Unknown characteristic- \(characteristic.uuid) : \(service.uuid.uuidString)")
+        guard let error = error else {
+            if let services = peripheral.services {
+                for service in services {
+                    peripheral.discoverCharacteristics(nil, for: service)
+                    print("Service found - \(service.uuid)")
+                    lastService = services.last?.uuid
                 }
             }
+            return
         }
-        if service.uuid == lastService {
-            baseDelegate?.peripheralIsReady()
+        print("Error while discovering \(name) services \(error.localizedDescription)")
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+        guard let error = error else {
+            if let characteristics = service.characteristics {
+                for characteristic in characteristics {
+                    enableNotifications(for: characteristic)
+                    peripheral.readValue(for: characteristic)
+                    //peripheral.discoverDescriptors(for: characteristic)
+                    if let cases = BluetoothEndpoint.getCases(service, characteristic) {
+                        self.endpoints[cases] = characteristic
+                    } else {
+                        print("Unknown characteristic- \(characteristic.uuid) : \(service.uuid.uuidString)")
+                    }
+                }
+            }
+            if service.uuid == lastService {
+                baseDelegate?.peripheralIsReady()
+            }
+            return
         }
+        print("Error while discovering characteristics in \(service.uuid) - \(error.localizedDescription)")
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverDescriptorsFor characteristic: CBCharacteristic, error: Error?) {
@@ -200,21 +209,30 @@ class BasePeripheral: NSObject,
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor descriptor: CBDescriptor, error: Error?) { }
     
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
-        if let error = error {
-            print("Write error to \(characteristic.uuid) - \(error.localizedDescription)")
+        guard let error = error else {
+            return
         }
+        print("Error while writing \(characteristic.uuid) - \(error.localizedDescription)")
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        if let value = characteristic.value,
-           let char = BluetoothEndpoint.getCharacteristic(characteristic: characteristic),
-           let service = characteristic.service,
-           let serv = BluetoothEndpoint.getService(service) {
-            readData(data: value, from: char, in: serv, error: error)
+        guard let error = error else {
+            if let value = characteristic.value,
+               let char = BluetoothEndpoint.getCharacteristic(characteristic: characteristic),
+               let service = characteristic.service,
+               let serv = BluetoothEndpoint.getService(service) {
+                readData(data: value, from: char, in: serv, error: error)
+            }
+            return
         }
+        print("Error reading \(characteristic.uuid) - \(error.localizedDescription)")
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
+        guard let error = error else {
+            return
+        }
+        print("Error updating notification state for \(characteristic.uuid) - \(error.localizedDescription)")
     }
     
     // MARK: - NSObject

@@ -12,22 +12,35 @@ import CoreBluetooth
 class SlStandartViewController: PeripheralViewController, PeripheralViewControllerProtocol {
     
     func viewModelInit(peripheral: BasePeripheral) {
-        self.viewModel = SlStandartViewModel(self.tableView, peripheral, self, onCellSelected(cell:))
+        self.viewModel = SlStandartViewModel(self.tableView, peripheral, self, onCellSelected(model:))
     }
     
-    func onCellSelected(cell: CellModel) {
+    func onCellSelected(model: CellModel) {
         if let mViewModel = self.viewModel as? SlStandartViewModel {
-            switch cell {
+            switch model {
             case mViewModel.primaryColorCell:
-                pushColorPicker(cell, initColor: mViewModel.primaryColor) { color, _ in
+                pushColorPicker(model, initColor: mViewModel.primaryColor) { color, _ in
                     mViewModel.writePrimaryColor(color)
                 }
                 break
             case mViewModel.animationModeCell:
-                pushPicker(PeripheralAnimations.allCases)
+                pushPicker(PeripheralAnimations.allCases) { selection in
+                    print("SELECTED - \(selection.name)")
+                }
                 break
-            case mViewModel.animationDirectionCell:
-                pushPicker(PeripheralAnimationDirections.allCases)
+            default:
+                return
+            }
+            switch model.cellKey {
+            case SlStandartData.ledTypeKey:
+                pushPicker(PeripheralLedType.allCases) { type in
+                    print("CELL TYPE - \(type.name)")
+                }
+                break
+            case SlStandartData.ledAdaptiveModeKey:
+                pushPicker(PeripheralLedAdaptiveMode.allCases) { mode in
+                    print("ADAPTIVE MODE - \(mode.name)")
+                }
                 break
             default:
                 return
