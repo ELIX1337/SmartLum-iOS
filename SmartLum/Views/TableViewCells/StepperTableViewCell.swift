@@ -10,6 +10,7 @@ import UIKit
 
 class StepperTableViewCell: UITableViewCell , BaseTableViewCell {
     
+    static var nibName: String = "StepperTableViewCell"
     static let reuseIdentifier: String = "StepperCellID"
     
     @IBOutlet weak var titleLabel: UILabel!

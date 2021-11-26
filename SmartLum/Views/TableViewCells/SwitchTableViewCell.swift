@@ -10,6 +10,7 @@ import UIKit
 
 class SwitchTableViewCell: UITableViewCell, BaseTableViewCell {
     
+    static var nibName: String = "SwitchTableViewCell"
     static let reuseIdentifier: String = "SwitchCellID"
     
     @IBOutlet weak var titleLabel: UILabel!

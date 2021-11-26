@@ -10,6 +10,7 @@ import UIKit
 
 class ButtonTableViewCell: UITableViewCell, BaseTableViewCell {
     
+    static var nibName: String = "ButtonTableViewCell"
     static let reuseIdentifier: String = "ButtonCellID"
     var callback: ((Any) -> Void)?
     

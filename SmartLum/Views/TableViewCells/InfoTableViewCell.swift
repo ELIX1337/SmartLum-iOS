@@ -10,6 +10,7 @@ import UIKit
 
 class InfoTableViewCell: UITableViewCell, BaseTableViewCell {
     
+    static var nibName: String = "InfoTableViewCell"
     static var reuseIdentifier: String = "ErrorCellID"
     
     func configure(title: String?, value: Any?) { }

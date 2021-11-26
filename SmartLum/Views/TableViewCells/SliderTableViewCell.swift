@@ -10,6 +10,7 @@ import UIKit
 
 class SliderTableViewCell: UITableViewCell, BaseTableViewCell {
     
+    static var nibName: String = "SliderTableViewCell"
     static let reuseIdentifier: String = "SliderCellID"
     
     @IBOutlet weak var titleLabel: UILabel!

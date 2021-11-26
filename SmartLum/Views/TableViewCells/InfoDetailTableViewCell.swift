@@ -10,6 +10,7 @@ import UIKit
 
 class InfoDetailTableViewCell: UITableViewCell, BaseTableViewCell {
     
+    static var nibName: String = "InfoDetailTableViewCell"
     static var reuseIdentifier: String = "ErrorDetailCellID"
     
     @IBOutlet weak var titleImage: UIImageView!

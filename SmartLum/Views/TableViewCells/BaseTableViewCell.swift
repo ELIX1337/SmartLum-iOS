@@ -8,6 +8,7 @@
 import UIKit
 
 protocol BaseTableViewCell: UITableViewCell {
+    static var nibName: String { get }
     static var reuseIdentifier: String { get }
     func configure(title: String?, value: Any?)
     var callback: ((_ value: Any) -> Void)? { get set }

@@ -350,21 +350,21 @@ extension PeripheralViewModel: UITableViewDelegate {
 extension PeripheralViewModel: BasePeripheralDelegate {
 
     func peripheralError(code: Int) {
-//        dataModel.setValue(key: BasePeripheralData.errorKey, value: code)
-//        tableView.beginUpdates()
-//                if readyTableViewModel != nil {
-//                    code != 0 ? insertErrorCell(&readyTableViewModel!, code: code) :
-//                    removeErrorCells(&readyTableViewModel!)
-//                }
-//                if settingsTableViewModel != nil {
-//                    code != 0 ? insertErrorDetailCell(&settingsTableViewModel!, code: code) :
-//                    removeErrorDetailCells(&settingsTableViewModel!)
-//                }
-//                if setupTableViewModel != nil {
-//                    code != 0 ? insertErrorDetailCell(&setupTableViewModel!, code: code) :
-//                    removeErrorDetailCells(&setupTableViewModel!)
-//                }
-//        tableView.endUpdates()
+        dataModel.setValue(key: BasePeripheralData.errorKey, value: code)
+        tableView.beginUpdates()
+                if readyTableViewModel != nil {
+                    code != 0 ? insertErrorCell(&readyTableViewModel!, code: code) :
+                    removeErrorCells(&readyTableViewModel!)
+                }
+                if settingsTableViewModel != nil {
+                    code != 0 ? insertErrorDetailCell(&settingsTableViewModel!, code: code) :
+                    removeErrorDetailCells(&settingsTableViewModel!)
+                }
+                if setupTableViewModel != nil {
+                    code != 0 ? insertErrorDetailCell(&setupTableViewModel!, code: code) :
+                    removeErrorDetailCells(&setupTableViewModel!)
+                }
+        tableView.endUpdates()
     }
     
     func peripheralInitState(isInitialized: Bool) {

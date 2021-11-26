@@ -12,6 +12,7 @@ class ColorTableViewCell: UITableViewCell, BaseTableViewCell {
     
     var callback: ((Any) -> Void)?
     
+    static let nibName: String = "ColorTableViewCell"
     static let reuseIdentifier: String = "ColorCellID"
     
     func configure(title: String?, value: Any?) {
