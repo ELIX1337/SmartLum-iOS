@@ -31,7 +31,13 @@ class SlStandartViewModel: PeripheralViewModel {
     var botCurrentLightnessCell: CellModel!
 
     // Stairs section
+    var stairsWorkModeCell: CellModel!
+    var controllerTypeCell: CellModel!
+    var ledAdaptiveCell: CellModel!
     var stepsCountCell: CellModel!
+    var topSensorCountCell: CellModel!
+    var botSensorCountCell: CellModel!
+    // Standby Lightness section
     var standbyStateCell: CellModel!
     var standbyBrightnessCell: CellModel!
     var standbyTopCountCell: CellModel!
@@ -58,7 +64,6 @@ class SlStandartViewModel: PeripheralViewModel {
                   _ selected: @escaping (CellModel) -> Void) {
         super.init(withTableView, withPeripheral as! SlStandartPeripheral, delegate, selected)
         slStandartPeripheral.delegate = self
-        self.tableViewDataSourceAndDelegate = self
         self.tableView = withTableView
         self.onCellSelected = selected
         self.dataModel = SlStandartData(values: [:])
@@ -66,13 +71,84 @@ class SlStandartViewModel: PeripheralViewModel {
         initLedSection()
         initAnimationSection()
         initSettingsSection()
+        initReadyTableViewModel()
+        initSettingsTableViewModel()
+        initSetupTableViewModel()
+    }
+    
+    private func initReadyTableViewModel() {
+        readyTableViewModel = TableViewModel(
+            sections: [
+                SectionModel(
+                    headerText: "peripheral_color_section_header".localized,
+                    footerText: "peripheral_color_section_footer".localized,
+                    rows: [primaryColorCell, randomColorCell]),
+                SectionModel(
+                    headerText: "peripheral_sl_standart_led_section_header".localized,
+                    footerText: "peripheral_sl_standart_led_section_footer".localized,
+                    rows: [ledStateCell, ledBrightnessCell, ledTimeoutCell]),
+                SectionModel(
+                    headerText: "peripheral_animation_section_header".localized,
+                    footerText: "peripheral_animation_section_footer".localized,
+                    rows: [animationModeCell, animationSpeedCell])
+            ], type: .ready)
+    }
+    
+    private func initSettingsTableViewModel() {
+        settingsTableViewModel = TableViewModel(
+            sections: [
+                SectionModel(
+                    headerText: "peripheral_sl_standart_steps_settings_section_header".localized,
+                    footerText: "peripheral_sl_standart_steps_settings_section_footer".localized,
+                    rows: [controllerTypeCell, ledAdaptiveCell, stairsWorkModeCell, stepsCountCell, topSensorCountCell, botSensorCountCell]),
+                SectionModel(
+                    key: "StandbySection",
+                    headerText: "peripheral_sl_standart_standby_section_header".localized,
+                    footerText: "peripheral_sl_standart_standby_section_footer".localized,
+                    rows: [standbyStateCell, standbyBrightnessCell, standbyTopCountCell, standbyBotCountCell]),
+                SectionModel(
+                    headerText: "peripheral_sl_standart_sensor_trigger_distance_section_header".localized,
+                    footerText: "peripheral_sl_standart_sensor_trigger_distance_section_footer".localized,
+                    rows: [topTriggerDistanceCell, botTriggerDistanceCell]),
+                SectionModel(
+                    headerText: "peripheral_sl_standart_sensor_trigger_lightness_section_header".localized,
+                    footerText: "peripheral_sl_standart_sensor_trigger_lightness_section_footer".localized,
+                    rows: [topTriggerLightnessCell, botTriggerLightnessCell]),
+                SectionModel(
+                    headerText: "peripheral_sl_standart_sensor_current_lightness_section_header".localized,
+                    footerText: "peripheral_sl_standart_sensor_current_lightness_section_footer".localized,
+                    rows: [topCurrentLightnessCell, botCurrentLightnessCell]),
+                SectionModel(
+                    headerText: "peripheral_factory_settings_section_header".localized,
+                    footerText: "peripheral_factory_settings_section_footer".localized,
+                    rows: [resetToFactoryCell]),
+            ], type: .settings)
+    }
+    
+    private func initSetupTableViewModel() {
+        setupTableViewModel = TableViewModel(
+            sections: [
+                SectionModel(
+                    headerText: "peripheral_color_section_header".localized,
+                    footerText: "peripheral_color_section_footer".localized,
+                    rows: [topTriggerDistanceCell, botTriggerLightnessCell]),
+                SectionModel(
+                    headerText: "peripheral_animation_section_header".localized,
+                    footerText: "peripheral_animation_section_footer".localized,
+                    rows: [topTriggerLightnessCell, botTriggerLightnessCell])
+            ], type: .setup)
     }
     
     private func initColorSection() {
         primaryColorCell = .colorCell(
             key: SlStandartData.primaryColorKey,
-            title: "peripheral_primary_color_cell_title".localized,
+            title: "peripheral_sl_standart_color_cell_title".localized,
             initialValue: UIColor.white, callback: { _ in })
+        randomColorCell = .switchCell(
+            key: SlStandartData.randomColorKey,
+            title: "peripheral_sl_standart_random_color_cell_title".localized,
+            initialValue: false,
+            callback: { self.writeRandomColor(state: $0) })
     }
     
     private func initLedSection() {
@@ -160,23 +236,51 @@ class SlStandartViewModel: PeripheralViewModel {
             callback: { self.writeBotTriggerLightness(value: Int($0)) })
         topCurrentDistanceCell = .infoCell(
             key: SlStandartData.topCurrentDistanceKey,
-            titleText: "Top current distance",
+            titleText: "peripheral_sl_standart_top_current_distance_cell_title".localized,
             detailText: "",
             image: nil,
             accessory: nil)
         botCurrentDistanceCell = .infoCell(
             key: SlStandartData.topCurrentDistanceKey,
-            titleText: "Bot current distance",
+            titleText: "peripheral_sl_standart_top_current_distance_cell_title".localized,
             detailText: "",
             image: nil,
             accessory: nil)
+        stairsWorkModeCell = .pickerCell(
+            key: SlStandartData.stairsWorkModeKey,
+            title: "peripheral_sl_standart_stairs_work_mode_cell_title".localized,
+            initialValue: PeripheralStairsWorkMode.bySensors.name)
+        controllerTypeCell = .infoCell(
+            key: SlStandartData.controllerTypeKey,
+            titleText: "peripheral_sl_standart_controller_type_cell_title".localized,
+            detailText: "",
+            image: nil,
+            accessory: UITableViewCell.AccessoryType.none)
+        ledAdaptiveCell = .pickerCell(
+            key: SlStandartData.ledAdaptiveModeKey,
+            title: "peripheral_sl_standart_adaptive_brightness_cell_title".localized,
+            initialValue: PeripheralLedAdaptiveMode.off.name)
         stepsCountCell = .stepperCell(
             key: SlStandartData.stepsCountKey,
             title: "peripheral_sl_standart_steps_count_cell".localized,
-            initialValue: 0,
+            initialValue: Double(SlStandartData.sensorMinCount),
             minValue: Double(SlStandartData.stepsMinCount),
             maxValue: Double(SlStandartData.stepsMaxCount),
             callback: { self.writeStepsCount(count: Int($0)) })
+        topSensorCountCell = .stepperCell(
+            key: SlStandartData.topSensorCountKey,
+            title: "peripheral_sl_standart_top_sensor_count_cell_title".localized,
+            initialValue: Double(SlStandartData.sensorMinCount),
+            minValue: Double(SlStandartData.sensorMinCount),
+            maxValue: Double(SlStandartData.sensorMaxCount),
+            callback: { self.writeTopSensorCount(count: Int($0)) })
+        botSensorCountCell = .stepperCell(
+            key: SlStandartData.topSensorCountKey,
+            title: "peripheral_sl_standart_bot_sensor_count_cell_title".localized,
+            initialValue: 0,
+            minValue: Double(SlStandartData.sensorMinCount),
+            maxValue: Double(SlStandartData.sensorMaxCount),
+            callback: { self.writeBotSensorCount(count: Int($0)) })
         standbyStateCell = .switchCell(
             key: SlStandartData.standbyStateKey,
             title: "peripheral_sl_standart_standby_state".localized,
@@ -212,16 +316,40 @@ class SlStandartViewModel: PeripheralViewModel {
             callback: { self.onCellSelected(self.resetToFactoryCell) })
         topCurrentLightnessCell = .infoCell(
             key: SlStandartData.topCurrentLightnessKey,
-            titleText: "Top lightness",
+            titleText: "peripheral_sl_standart_top_current_lightness_cell_title".localized,
             detailText: nil,
             image: nil,
             accessory: nil)
         botCurrentLightnessCell = .infoCell(
             key: SlStandartData.botCurrentLightnessKey,
-            titleText: "Bot lightness",
+            titleText: "peripheral_sl_standart_bot_current_lightness_cell_title".localized,
             detailText: nil,
             image: nil,
             accessory: nil)
+    }
+    
+    private func handleAdaptiveMode(mode: PeripheralLedAdaptiveMode) {
+        switch mode {
+        case .off:
+            showCells(cells: [ledBrightnessCell], inModel: readyTableViewModel!)
+            showCells(cells: [standbyBrightnessCell], inModel: settingsTableViewModel!)
+            break
+        default:
+            hideCells(cells: [ledBrightnessCell], inModel: readyTableViewModel!)
+            hideCells(cells: [standbyBrightnessCell], inModel: settingsTableViewModel!)
+            break
+        }
+    }
+    
+    private func handleLedType(type: SlStandartControllerType) {
+        switch type {
+        case .`default`:
+            hideCells(cells: [primaryColorCell, randomColorCell], inModel: readyTableViewModel!)
+            break
+        case .rgb:
+            showCells(cells: [primaryColorCell, randomColorCell], inModel: readyTableViewModel!)
+            break
+        }
     }
     
     func writePrimaryColor(_ color: UIColor) {
@@ -230,6 +358,25 @@ class SlStandartViewModel: PeripheralViewModel {
             dataModel.setValue(key: SlStandartData.primaryColorKey, value: color)
             updateCell(for: primaryColorCell, with: .none)
         }
+    }
+    
+    func writeRandomColor(state: Bool) {
+        dataModel.setValue(key: SlStandartData.randomColorKey, value: state)
+        slStandartPeripheral.writeRandomColor(state)
+    }
+    
+    func writeAnimationMode(mode: SlStandartAnimations) {
+        guard mode.name != dataModel.getValue(key: SlStandartData.animationModeKey) as! String else { return }
+        dataModel.setValue(key: SlStandartData.animationModeKey, value: mode.name)
+        slStandartPeripheral.writeAnimationMode(mode)
+        updateCell(for: animationModeCell, with: .none)
+    }
+    
+    func writeLedType(type: SlStandartControllerType) {
+        dataModel.setValue(key: SlStandartData.controllerTypeKey, value: type)
+        slStandartPeripheral.writeLedType(type)
+        updateCell(for: controllerTypeCell, with: .none)
+        handleLedType(type: type)
     }
     
     func writeLedState(state: Bool) {
@@ -247,6 +394,13 @@ class SlStandartViewModel: PeripheralViewModel {
     func writeLedTimeout(timeout: Int) {
         dataModel.setValue(key: SlStandartData.ledTimeoutKey, value: timeout)
         slStandartPeripheral.writeLedTimeout(Int(timeout))
+    }
+    
+    func writeLedAdaptiveBrightnessMode(mode: PeripheralLedAdaptiveMode) {
+        dataModel.setValue(key: SlStandartData.ledAdaptiveModeKey, value: mode.name)
+        slStandartPeripheral.writeLedAdaptiveBrightnessState(mode)
+        updateCell(for: ledAdaptiveCell, with: .none)
+        handleAdaptiveMode(mode: mode)
     }
     
     func writeAnimationSpeed(speed: Int) {
@@ -280,9 +434,25 @@ class SlStandartViewModel: PeripheralViewModel {
         slStandartPeripheral.writeBotSensorLightness(value)
     }
     
+    func writeStairsWorkMode(mode: PeripheralStairsWorkMode) {
+        dataModel.setValue(key: SlStandartData.stairsWorkModeKey, value: mode.name)
+        slStandartPeripheral.writeStairsWorkMode(mode)
+        updateCell(for: stairsWorkModeCell, with: .none)
+    }
+    
     func writeStepsCount(count: Int) {
         dataModel.setValue(key: SlStandartData.stepsCountKey, value: count)
         slStandartPeripheral.writeStepsCount(count)
+    }
+    
+    func writeTopSensorCount(count: Int) {
+        dataModel.setValue(key: SlStandartData.topSensorCountKey, value: count)
+        slStandartPeripheral.writeTopSensorCount(count)
+    }
+    
+    func writeBotSensorCount(count: Int) {
+        dataModel.setValue(key: SlStandartData.botSensorCountKey, value: count)
+        slStandartPeripheral.writeBotSensorCount(count)
     }
     
     func writeStandbyState(state: Bool) {
@@ -321,27 +491,46 @@ class SlStandartViewModel: PeripheralViewModel {
         dataModel.setValue(key: SlStandartData.stepsCountKey, value: count)
     }
     
+    private func initTopSensorCount(count: Int) {
+        dataModel.setValue(key: SlStandartData.topSensorCountKey, value: count)
+    }
+    
+    private func initBotSensorCount(count: Int) {
+        dataModel.setValue(key: SlStandartData.botSensorCountKey, value: count)
+    }
+    
 }
 
 extension SlStandartViewModel: SlStandartPeripheralDelegate {
     
+    func getWorkMode(mode: PeripheralDataElement) {
+        dataModel.setValue(key: SlStandartData.stairsWorkModeKey, value: mode.name)
+        updateCell(for: stairsWorkModeCell, with: .middle)
+    }
+    
+    func getTopSensorCount(count: Int) {
+        dataModel.setValue(key: SlStandartData.topSensorCountKey, value: count)
+        updateCell(for: topSensorCountCell, with: .middle)
+    }
+    
+    func getBotSensorCount(count: Int) {
+        dataModel.setValue(key: SlStandartData.botSensorCountKey, value: count)
+        updateCell(for: botSensorCountCell, with: .middle)
+    }
+    
     func getLedType(type: PeripheralDataElement) {
-        print("LED TYPE - \(type.name)")
-        dataModel.setValue(key: SlStandartData.ledTypeKey, value: type)
+        dataModel.setValue(key: SlStandartData.controllerTypeKey, value: type.name)
+        updateCell(for: controllerTypeCell, with: .middle)
+        handleLedType(type: type as! SlStandartControllerType)
     }
     
     func getLedAdaptiveBrightnessState(mode: PeripheralDataElement) {
-        print("LED adaptive mode - \(mode.name)")
-        dataModel.setValue(key: SlStandartData.ledAdaptiveModeKey, value: mode)
-    }
-    
-    func getWorkMode(mode: Int) {
-        print("GOT WORK MODE - \(mode)")
-        dataModel.setValue(key: SlStandartData.stairsWorkMode, value: mode)
+        dataModel.setValue(key: SlStandartData.ledAdaptiveModeKey, value: mode.name)
+        updateCell(for: ledAdaptiveCell, with: .middle)
+        handleAdaptiveMode(mode: mode as! PeripheralLedAdaptiveMode)
     }
     
     func getStepsCount(count: Int) {
-        print("GET STEPS COUNT - \(count)")
         dataModel.setValue(key: SlStandartData.stepsCountKey, value: count)
         updateCell(for: stepsCountCell, with: .middle)
     }
@@ -367,14 +556,11 @@ extension SlStandartViewModel: SlStandartPeripheralDelegate {
     }
     
     func getTopSensorTriggerLightness(lightness: Int) {
-        print("TOP TRIGGER LIGHTNESS \(lightness)")
         dataModel.setValue(key: SlStandartData.topTriggerLightnessKey, value: lightness)
-        
         updateCell(for: topTriggerLightnessCell, with: .middle)
     }
     
     func getBotSensorTriggerLightness(lightness: Int) {
-        print("BOT TRIGGER LIGHTNESS \(lightness)")
         dataModel.setValue(key: SlStandartData.botTriggerLightnessKey, value: lightness)
         updateCell(for: botTriggerLightnessCell, with: .middle)
     }
@@ -414,23 +600,20 @@ extension SlStandartViewModel: SlStandartPeripheralDelegate {
     func getLedState(state: Bool) {
         dataModel.setValue(key: SlStandartData.ledStateKey, value: state)
         updateCell(for: ledStateCell, with: .middle)
-        print("LED STATE - \(state)")
     }
     
     func getLedBrightness(brightness: Int) {
         dataModel.setValue(key: SlStandartData.ledBrightnessKey, value: brightness)
         updateCell(for: ledBrightnessCell, with: .middle)
-        print("LED BRIGHNTESS - \(brightness)")
     }
     
     func getLedTimeout(timeout: Int) {
         dataModel.setValue(key: SlStandartData.ledTimeoutKey, value: timeout)
         updateCell(for: ledTimeoutCell, with: .middle)
-        print("LED TIMEOUT - \(timeout)")
     }
     
-    func getAnimationMode(mode: PeripheralAnimations) {
-        dataModel.setValue(key: SlStandartData.animationModeKey, value: mode)
+    func getAnimationMode(mode: PeripheralDataElement) {
+        dataModel.setValue(key: SlStandartData.animationModeKey, value: mode.name)
         updateCell(for: animationModeCell, with: .middle)
     }
     
@@ -443,72 +626,6 @@ extension SlStandartViewModel: SlStandartPeripheralDelegate {
     func getSecondaryColor(_ color: UIColor) { }
     func getAnimationOffSpeed(speed: Int) { }
     func getAnimationStep(step: Int) { }
-    func getAnimationDirection(direction: PeripheralAnimationDirections) { }
-    
-}
-
-extension SlStandartViewModel: PeripheralTableViewModelDataSourceAndDelegate {
-    
-    func readyTableViewModel() -> TableViewModel {
-        return TableViewModel(
-            sections: [
-                SectionModel(
-                    headerText: "peripheral_color_section_header".localized,
-                    footerText: "peripheral_color_section_footer".localized,
-                    rows: [primaryColorCell]),
-                SectionModel(
-                    headerText: "peripheral_sl_standart_led_section_header".localized,
-                    footerText: "peripheral_sl_standart_led_section_footer".localized,
-                    rows: [ledStateCell, ledBrightnessCell, ledTimeoutCell]),
-                SectionModel(
-                    headerText: "peripheral_animation_section_header".localized,
-                    footerText: "peripheral_animation_section_footer".localized,
-                    rows: [animationModeCell, animationSpeedCell])
-            ], type: .ready)
-    }
-    
-    func setupTableViewModel() -> TableViewModel? {
-        return TableViewModel(
-            sections: [
-                SectionModel(
-                    headerText: "peripheral_color_section_header".localized,
-                    footerText: "peripheral_color_section_footer".localized,
-                    rows: [topTriggerDistanceCell, botTriggerLightnessCell]),
-                SectionModel(
-                    headerText: "peripheral_animation_section_header".localized,
-                    footerText: "peripheral_animation_section_footer".localized,
-                    rows: [topTriggerLightnessCell, botTriggerLightnessCell])
-            ], type: .setup)
-    }
-    
-    func settingsTableViewModel() -> TableViewModel? {
-        return TableViewModel(
-            sections: [
-                SectionModel(
-                    headerText: "peripheral_sl_standart_steps_settings_section_header".localized,
-                    footerText: "peripheral_sl_standart_steps_settings_section_footer".localized,
-                    rows: [stepsCountCell]),
-                SectionModel(
-                    headerText: "peripheral_sl_standart_standby_section_header".localized,
-                    footerText: "peripheral_sl_standart_standby_section_footer".localized,
-                    rows: [standbyStateCell, standbyBrightnessCell, standbyTopCountCell, standbyBotCountCell]),
-                SectionModel(
-                    headerText: "peripheral_sl_standart_sensor_trigger_distance_section_header".localized,
-                    footerText: "peripheral_sl_standart_sensor_trigger_distance_section_footer".localized,
-                    rows: [topTriggerDistanceCell, botTriggerDistanceCell]),
-                SectionModel(
-                    headerText: "peripheral_sl_standart_sensor_trigger_lightness_section_header".localized,
-                    footerText: "peripheral_sl_standart_sensor_trigger_lightness_section_footer".localized,
-                    rows: [topTriggerLightnessCell, botTriggerLightnessCell]),
-                SectionModel(
-                    headerText: "peripheral_factory_settings_section_header".localized,
-                    footerText: "peripheral_factory_settings_section_footer".localized,
-                    rows: [resetToFactoryCell]),
-                SectionModel(
-                    headerText: "ХУЕТА",
-                    footerText: "СУЕТА",
-                    rows: [topCurrentLightnessCell, botCurrentLightnessCell])
-            ], type: .settings)
-    }
+    func getAnimationDirection(direction: PeripheralDataElement) { }
     
 }

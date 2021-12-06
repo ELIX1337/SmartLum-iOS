@@ -117,6 +117,8 @@ struct BluetoothEndpoint {
         case standbyBotCount
         case standbyBrightness
         case workMode
+        case topSensorCount
+        case botSensorCount
         
         var uuidString: String {
             switch self {
@@ -153,6 +155,8 @@ struct BluetoothEndpoint {
             case .standbyBotCount:           return UUIDs.STANDBY_LIGHTING_BOT_COUNT_CHARACTERISTIC_UUID.uuidString
             case .standbyBrightness:         return UUIDs.STANDBY_LIGHTING_BRIGHTNESS_CHARACTERISTIC_UUID.uuidString
             case .workMode:                  return UUIDs.WORK_MODE_CHARACTERISTIC_UUID.uuidString
+            case .topSensorCount:            return UUIDs.TOP_SENSOR_COUNT.uuidString
+            case .botSensorCount:            return UUIDs.BOT_SENSOR_COUNT.uuidString
             }
         }
         
@@ -257,6 +261,12 @@ struct BluetoothEndpoint {
             case .workMode:
                 return legacy ? UUIDs.Legacy.WORK_MODE.uuidString :
                                 UUIDs.WORK_MODE_CHARACTERISTIC_UUID.uuidString
+            case .topSensorCount:
+                return legacy ? UUIDs.Legacy.TOP_SENSOR_COUNT.uuidString :
+                                UUIDs.TOP_SENSOR_COUNT.uuidString
+            case .botSensorCount:
+                return legacy ? UUIDs.Legacy.BOT_SENSOR_COUNT.uuidString :
+                                UUIDs.BOT_SENSOR_COUNT.uuidString
             }
         }
     }

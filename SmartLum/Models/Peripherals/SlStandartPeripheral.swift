@@ -32,7 +32,10 @@ class SlStandartPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSe
             handleLedSettings(characteristic, data)
             break
         case (.stairs, .stepsCount),
-            (.stairs, .workMode):
+            (.stairs, .workMode),
+            (.stairs, .topSensorCount),
+            (.stairs, .botSensorCount):
+            handleStairsSettings(characteristic, data)
             break
         case (.stairs, .standbyState),
             (.stairs, .standbyBrightness),
@@ -75,8 +78,13 @@ class SlStandartPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSe
             delegate?.getStepsCount(count: value.toInt())
             break
         case .workMode:
-            delegate?.getWorkMode(mode: value.toInt())
+            delegate?.getWorkMode(mode: PeripheralStairsWorkMode(rawValue: value.toInt()) ?? .bySensors)
             break
+        case .topSensorCount:
+            delegate?.getTopSensorCount(count: value.toInt())
+            break
+        case .botSensorCount:
+            delegate?.getBotSensorCount(count: value.toInt())
         default:
             break
         }
@@ -92,12 +100,13 @@ class SlStandartPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSe
             break
         case .ledTimeout:
             delegate?.getLedTimeout(timeout: value.toInt())
+            delegate?.getLedType(type: SlStandartControllerType.default)
             break
         case .ledType:
-            delegate?.getLedType(type: PeripheralLedType(rawValue: value.toInt()) ?? .default)
+            delegate?.getLedType(type: SlStandartControllerType(rawValue: value.toInt()) ?? .default)
             break
         case .ledAdaptiveBrightness:
-            delegate?.getLedType(type: PeripheralLedAdaptiveMode(rawValue: value.toInt()) ?? .off)
+            delegate?.getLedAdaptiveBrightnessState(mode: PeripheralLedAdaptiveMode(rawValue: value.toInt()) ?? .off)
             break
         default:
             break
@@ -107,7 +116,7 @@ class SlStandartPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSe
     func handleStandbyModeSettings(_ setting: BluetoothEndpoint.Characteristic, _ value: Data) {
         switch setting {
         case .standbyState:
-            delegate?.getStandbyState(state: value.toInt() != 0) // TODO: - toBool()
+            delegate?.getStandbyState(state: value.toBool())
             break
         case .standbyBrightness:
             delegate?.getStandbyBrightness(brightness: value.toInt())
@@ -170,7 +179,7 @@ class SlStandartPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSe
     func handleAnimationSettings(_ setting: BluetoothEndpoint.Characteristic, _ value: Data) {
         switch setting {
         case .animationMode:
-            delegate?.getAnimationMode(mode: PeripheralAnimations(rawValue: value.toInt()) ?? .static)
+            delegate?.getAnimationMode(mode: SlStandartAnimations(rawValue: value.toInt()) ?? .off)
             break
         default:
             break

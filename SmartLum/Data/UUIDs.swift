@@ -11,7 +11,7 @@ import CoreBluetooth
 public struct UUIDs: Error {
             
     // MARK: - Advertising UUIDs
-    public static let FL_CLASSIC_ADVERTISING_UUID     = CBUUID(string: "BB930001-3CE1-4720-A753-28C0159DC777")
+    public static let FL_CLASSIC_ADVERTISING_UUID   = CBUUID(string: "BB930001-3CE1-4720-A753-28C0159DC777")
     public static let FL_MINI_ADVERTISING_UUID      = CBUUID(string: "BB930002-3CE1-4720-A753-28C0159DC777")
     public static let SL_BASE_ADVERTISING_UUID      = CBUUID(string: "BB930003-3CE1-4720-A753-28C0159DC777")
     public static let SL_STANDART_ADVERTISING_UUID  = CBUUID(string: "BB930004-3CE1-4720-A753-28C0159DC777")
@@ -72,6 +72,8 @@ public struct UUIDs: Error {
     public static let STANDBY_LIGHTING_BOT_COUNT_CHARACTERISTIC_UUID  = CBUUID(string: "0F04")
     public static let STANDBY_LIGHTING_BRIGHTNESS_CHARACTERISTIC_UUID = CBUUID(string: "0F05")
     public static let WORK_MODE_CHARACTERISTIC_UUID                   = CBUUID(string: "0F06")
+    public static let TOP_SENSOR_COUNT                                = CBUUID(string: "0F07")
+    public static let BOT_SENSOR_COUNT                                = CBUUID(string: "0F08")
 
     struct Legacy {
 
@@ -131,6 +133,8 @@ public struct UUIDs: Error {
         public static let STANDBY_LIGHTING_BOT_COUNT                 = CBUUID(string: "BB930F04-3CE1-4720-A753-28C0159DC777")
         public static let STANDBY_LIGHTING_BRIGHTNESS                = CBUUID(string: "BB930F05-3CE1-4720-A753-28C0159DC777")
         public static let WORK_MODE                                  = CBUUID(string: "BB930F06-3CE1-4720-A753-28C0159DC777")
+        public static let TOP_SENSOR_COUNT                           = CBUUID(string: "BB930F07-3CE1-4720-A753-28C0159DC777")
+        public static let BOT_SENSOR_COUNT                           = CBUUID(string: "BB930F08-3CE1-4720-A753-28C0159DC777")
 
     }
 

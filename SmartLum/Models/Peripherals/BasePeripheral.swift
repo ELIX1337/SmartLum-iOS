@@ -191,7 +191,7 @@ class BasePeripheral: NSObject,
                 }
             }
             if service.uuid == lastService {
-                baseDelegate?.peripheralIsReady()
+                //baseDelegate?.peripheralIsReady()
             }
             return
         }
@@ -221,7 +221,15 @@ class BasePeripheral: NSObject,
                let char = BluetoothEndpoint.getCharacteristic(characteristic: characteristic),
                let service = characteristic.service,
                let serv = BluetoothEndpoint.getService(service) {
-                readData(data: value, from: char, in: serv, error: error)
+                if !value.isEmpty {
+                    readData(data: value, from: char, in: serv, error: error)
+                }
+            }
+            if (lastService == characteristic.service?.uuid) {
+                if (characteristic.service?.characteristics?.last == characteristic) {
+                    baseDelegate?.peripheralIsReady()
+                    print("LAST")
+                }
             }
             return
         }

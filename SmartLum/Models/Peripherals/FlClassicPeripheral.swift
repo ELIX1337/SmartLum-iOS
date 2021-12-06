@@ -32,7 +32,7 @@ class FlClassicPeripheral: BasePeripheral, ColorPeripheralProtocol, AnimationPer
             delegate?.getRandomColor(data.toBool())
             break
         case (.animation,.animationMode):
-            delegate?.getAnimationMode(mode: PeripheralAnimations(rawValue: data.toInt()) ?? .static)
+            delegate?.getAnimationMode(mode: FlClassicAnimations(rawValue: data.toInt()) ?? .static)
             break
         case (.animation,.animationOnSpeed):
             delegate?.getAnimationOnSpeed(speed: data.toInt())

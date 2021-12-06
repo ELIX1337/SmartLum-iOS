@@ -57,6 +57,7 @@ class PeripheralViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = viewModel?.peripheralName
+        self.navigationItem.largeTitleDisplayMode = .always
         if (!viewModel.isConnected) {
             self.showConnectionAlert()
         }
@@ -82,7 +83,6 @@ class PeripheralViewController: UIViewController {
     }
     
     @objc func openPeripheralSettings() {
-        print("Settings")
         let vc = PeripheralSettingsViewController()
         vc.viewModel = self.viewModel
         navigationController?.pushViewController(vc, animated: true)
@@ -97,7 +97,7 @@ class PeripheralViewController: UIViewController {
     }
     
     func initPickerDataSource<T: PeripheralDataElement>(with elements: [T], callback: @escaping (T) -> Void) {
-        self.pickerDataSource = TablePickerViewDataSource<PeripheralDataElement>(withItems: elements, withSelection: PeripheralAnimations.rainbow, withRowTitle: { $0.name.localized })
+        self.pickerDataSource = TablePickerViewDataSource<PeripheralDataElement>(withItems: elements, withSelection: FlClassicAnimations.rainbow, withRowTitle: { $0.name.localized })
         {
             callback($0 as! T)
         }
@@ -122,7 +122,8 @@ class PeripheralViewController: UIViewController {
 extension PeripheralViewController {
     
     public func showConnectionAlert() {
-        self.alert = UIAlertController(title: "Connecting to \(self.viewModel.peripheralName)", message: "", preferredStyle: .actionSheet)
+        let text = "peripheral_connecting_alert_text".localized
+        self.alert = UIAlertController(title: "\(text)\(viewModel.peripheralName)", message: "", preferredStyle: .actionSheet)
         self.present(alert!, animated: false, completion: nil)
     }
     
@@ -166,8 +167,22 @@ extension PeripheralViewController: PeripheralViewModelDelegate {
         print("is init \(isInitialized)")
         viewModel.dataModel.setValue(key: BasePeripheralData.initStateKey, value: isInitialized)
         viewModel.isInitialized = isInitialized
-        if (!isInitialized) {
-            hideConnectionAlert()
+    }
+    
+    func peripheralDidConnect() {
+        //hideConnectionAlert()
+    }
+    
+    func peripheralDidDisconnect(reason: Error?) {
+        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popToRootViewController(animated: true)
+        print("Disconnect reason - \(String(describing: reason?.localizedDescription))")
+    }
+    
+    func peripheralIsReady() {
+        hideConnectionAlert()
+        if !viewModel.isInitialized {
+            //hideConnectionAlert()
             if let setupViewController = getPeripheralSetupVC(peripheral: viewModel.basePeripheral) {
                 setupViewController.viewModel = viewModel
                 setupViewController.dismiss = { gotInit in
@@ -182,19 +197,6 @@ extension PeripheralViewController: PeripheralViewModelDelegate {
                 tableView.reloadData()
             }
         }
-    }
-    
-    func peripheralDidConnect() {
-        hideConnectionAlert()
-    }
-    
-    func peripheralDidDisconnect(reason: Error?) {
-        self.dismiss(animated: true, completion: nil)
-        self.navigationController?.popToRootViewController(animated: true)
-        print("Disconnect reason - \(String(describing: reason?.localizedDescription))")
-    }
-    
-    func peripheralIsReady() {
     }
     
     func peripheralOnDFUMode() {
@@ -294,9 +296,14 @@ class PeripheralSettingsViewController: PeripheralViewController {
             
     override func viewWillAppear(_ animated: Bool) {
         self.title = "peripheral_settings_window_title".localized
-        self.tableView = UITableView.init(frame: .zero, style: .insetGrouped)
         viewModel.resetTableView(tableView: tableView, delegate: self, tableViewType: .settings)
         addTableViewConstraints(tableView: self.tableView)
+    }
+    
+    override func loadView() {
+        super.loadView()
+        self.navigationItem.largeTitleDisplayMode = .always
+        self.tableView = UITableView.init(frame: .zero, style: .insetGrouped)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

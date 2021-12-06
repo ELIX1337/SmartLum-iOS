@@ -12,9 +12,30 @@ import CoreBluetooth
 class SlStandartViewController: PeripheralViewController, PeripheralViewControllerProtocol {
     
     func viewModelInit(peripheral: BasePeripheral) {
-        self.viewModel = SlStandartViewModel(self.tableView, peripheral, self, onCellSelected(model:))
+        self.viewModel = SlStandartViewModel(self.tableView, peripheral, self) {
+            self.onCellSelected(model:$0)
+            guard let vm = self.viewModel as? SlStandartViewModel else { return }
+            switch $0.cellKey {
+            case SlStandartData.stairsWorkModeKey:
+                self.pushPicker(PeripheralStairsWorkMode.allCases) { mode in
+                    vm.writeStairsWorkMode(mode: mode)
+                }
+                break
+            case SlStandartData.ledAdaptiveModeKey:
+                self.pushPicker(PeripheralLedAdaptiveMode.allCases) { mode in
+                    vm.writeLedAdaptiveBrightnessMode(mode: mode)
+                }
+                break
+            case BasePeripheralData.factoryResetKey:
+                self.showResetAlert()
+                break
+            default:
+                break
+            }
+            
+        }
     }
-    
+        
     func onCellSelected(model: CellModel) {
         if let mViewModel = self.viewModel as? SlStandartViewModel {
             switch model {
@@ -24,22 +45,8 @@ class SlStandartViewController: PeripheralViewController, PeripheralViewControll
                 }
                 break
             case mViewModel.animationModeCell:
-                pushPicker(PeripheralAnimations.allCases) { selection in
-                    print("SELECTED - \(selection.name)")
-                }
-                break
-            default:
-                return
-            }
-            switch model.cellKey {
-            case SlStandartData.ledTypeKey:
-                pushPicker(PeripheralLedType.allCases) { type in
-                    print("CELL TYPE - \(type.name)")
-                }
-                break
-            case SlStandartData.ledAdaptiveModeKey:
-                pushPicker(PeripheralLedAdaptiveMode.allCases) { mode in
-                    print("ADAPTIVE MODE - \(mode.name)")
+                pushPicker(SlStandartAnimations.allCases) { selection in
+                    mViewModel.writeAnimationMode(mode: selection)
                 }
                 break
             default:
@@ -56,3 +63,4 @@ class SlStandartSetupViewController: PeripheralSetupViewController {
         confirmButton.isEnabled = !(viewModel as! SlBaseViewModel).writeInitDistance()
     }
 }
+

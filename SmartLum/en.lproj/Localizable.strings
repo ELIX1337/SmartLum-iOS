@@ -20,6 +20,7 @@
     "peripheral_reset_alert_text" = "This action will reset the device to factory settings";
     "peripheral_reset_alert_cancel_button" = "Cancel";
     "peripheral_reset_alert_confirm_button" = "Reset";
+    "peripheral_connecting_alert_text" = "Connecting to ";
 
 "peripheral_name_unknown" = "Unknown Device";
 // Peripheral tableView
@@ -52,10 +53,21 @@
     "peripheral_sl_standart_sensor_trigger_distance_section_footer" = "Values in centimeters";
     "peripheral_sl_standart_sensor_trigger_lightness_section_header" = "Sensors trigger lightness";
     "peripheral_sl_standart_sensor_trigger_lightness_section_footer" = "The value at which the device switches to night mode";
+    "peripheral_sl_standart_sensor_current_lightness_section_header" = "Current lightness";
+    "peripheral_sl_standart_sensor_current_lightness_section_footer" = "";
     "peripheral_sl_standart_steps_settings_section_header" = "Steps settings";
     "peripheral_sl_standart_steps_settings_section_footer" = "";
     "peripheral_sl_standart_standby_section_header" = "Standby lighting";
     "peripheral_sl_standart_standby_section_footer" = "";
+    "peripheral_sl_standart_random_color_cell_title" = "Random color";
+    "peripheral_sl_standart_adaptive_brightness_cell_title" = "Adaptive brightness";
+    "peripheral_sl_standart_stairs_work_mode_cell_title" = "Work mode";
+    "peripheral_sl_standart_top_sensor_count_cell_title" = "Top sensors count";
+    "peripheral_sl_standart_bot_sensor_count_cell_title" = "Bottom sensors count";
+    "peripheral_sl_standart_top_current_lightness_cell_title" = "Top";
+    "peripheral_sl_standart_bot_current_lightness_cell_title" = "Bottom";
+    "peripheral_sl_standart_controller_type_default" = "Default";
+    "peripheral_sl_standart_controller_type_rgb" = "RGB";
 
     // Cells
     "peripheral_primary_color_cell_title" = "Primary";
@@ -75,6 +87,8 @@
     "peripheral_error_cell_code_prefix" = "Details";
     "peripheral_error_description_cell_title" = "Error - Code ";
 
+    "peripheral_sl_standart_color_cell_title" = "";
+    "peripheral_sl_standart_controller_type_cell_title" = "Controller type";
     "peripheral_sl_standart_top_sensor_trigger_distance_cell_title" = "Top sensor";
     "peripheral_sl_standart_bot_sensor_trigger_distance_cell_title" = "Bottom sensor";
     "peripheral_sl_standart_top_sensor_trigger_lightness_cell_title" = "Top sensor";
@@ -88,7 +102,7 @@
     "peripheral_setup_requires_cell_text" = "Device requires setup";
 
 // Peripheral data
-    // Animation modes
+    // FL-Classic animation modes
     "peripheral_animation_mode_tetris" = "Tetris";
     "peripheral_animation_mode_wave" = "Wave";
     "peripheral_animation_mode_transfusion" = "Transfusion";
@@ -100,6 +114,22 @@
     "peripheral_animation_direction_from_top" = "From top";
     "peripheral_animation_direction_to_center" = "To center";
     "peripheral_animation_direction_from_center" = "From center";
+
+    // SL-Standart animation modes
+    "sl_standart_animations_off" = "Off";
+    "sl_standart_animations_stepByStep" = "Step by step";
+    "sl_standart_animations_sharp" = "Sharp";
+
+    // Peripheral stairs work modes
+    "peripheral_stairs_work_mode_by_sensor" = "By sensors";
+    "peripheral_stairs_work_mode_by_timer" = "By timer";
+
+    // Peripheral led adaptive modes
+    "peripheral_adaptime_mode_off" = "Off";
+    "peripheral_adaptime_mode_top" = "By top sensors";
+    "peripheral_adaptime_mode_bot" = "By bottom sensors";
+    "peripheral_adaptime_mode_average" = "Average value";
+
     // Errors
     "peripheral_error_code_1_description" = "\tTop sensor not found. Check the connection. Flashing LED on sensor means wiring problem.\n\tYou can find out more about solving the problem in the technical support service.";
     "peripheral_error_code_2_description" = "\tBottom sensor not found. Check the connection. Flashing LED on sensor means wiring problem.\n\tYou can find out more about solving the problem in the technical support service.";

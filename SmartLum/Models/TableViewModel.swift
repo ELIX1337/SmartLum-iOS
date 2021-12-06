@@ -24,6 +24,15 @@ struct TableViewModel: Equatable {
         return sections.filter{ $0.key == key }.first
     }
     
+    mutating func deleteCell(indexPath: IndexPath) {
+        sections[indexPath.section].rows.remove(at: indexPath.row)
+    }
+    
+    mutating func insertCell(cell: CellModel, inSectionByKey: String, at: Int) {
+        guard let sectionKey = (sections.firstIndex { $0.key == inSectionByKey }) else { fatalError("Cannot find section with key \(inSectionByKey)") }
+        sections[sectionKey].rows.insert(cell, at: at)
+    }
+    
     enum TableViewType: Int {
         case ready    = 1
         case setup    = 2
@@ -80,6 +89,11 @@ struct HiddenIndexPath {
         section.removeAll()
         row.removeAll()
     }
+}
+
+struct HiddenCells {
+    var section = [SectionModel]()
+    var cell = [CellModel]()
 }
 
 struct SectionModel: Equatable {

@@ -46,9 +46,9 @@ extension AnimationPeripheralProtocol where Self:BasePeripheralProtocol {
 }
 
 protocol AnimationPeripheralDelegate {
-    func getAnimationMode(mode: PeripheralAnimations)
+    func getAnimationMode(mode: PeripheralDataElement)
     func getAnimationOnSpeed(speed: Int)
     func getAnimationOffSpeed(speed: Int)
-    func getAnimationDirection(direction: PeripheralAnimationDirections)
+    func getAnimationDirection(direction: PeripheralDataElement)
     func getAnimationStep(step: Int)
 }

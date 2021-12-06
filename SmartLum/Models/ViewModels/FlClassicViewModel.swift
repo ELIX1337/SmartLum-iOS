@@ -47,10 +47,20 @@ class FlClassicViewModel: PeripheralViewModel {
                   _ selected: @escaping (CellModel) -> Void) {
         super.init(withTableView, withPeripheral, delegate, selected)
         peripheral.delegate = self
-        tableViewDataSourceAndDelegate = self
         dataModel = FlClassicData.init(values: [:])
         initColorSection()
         initAnimationSection()
+        readyTableViewModel = TableViewModel(
+            sections: [
+                SectionModel(
+                    headerText: "peripheral_color_section_header".localized,
+                    footerText: "peripheral_color_section_footer".localized,
+                    rows: [primaryColorCell, secondaryColorCell, randomColorCell]),
+                SectionModel(
+                    headerText: "peripheral_animation_section_header".localized,
+                    footerText: "peripheral_animation_section_footer".localized,
+                    rows: [animationModeCell, animationSpeedCell, animationDirectionCell, animationStepCell])
+            ], type: .ready)
     }
     
     private func initColorSection() {
@@ -92,39 +102,48 @@ class FlClassicViewModel: PeripheralViewModel {
         animationDirectionCell = .pickerCell(
             key: FlClassicData.animationDirectionKey,
             title: "peripheral_animation_direction_cell_title".localized,
-            initialValue: dataModel.getValue(key: FlClassicData.animationDirectionKey) as? String ?? "")
+            initialValue: "")
         animationStepCell = .stepperCell(
             key: FlClassicData.animationStepKey,
             title: "peripheral_animation_step_cell_title".localized,
-            initialValue: Double(dataModel.getValue(key: FlClassicData.animationStepKey) as? Int ?? 0),
+            initialValue: Double(FlClassicData.animationMinStep),
             minValue: Double(FlClassicData.animationMinStep),
             maxValue: Double(FlClassicData.animationMaxStep),
             callback: { self.writeAnimationStep(step: Int($0)) })
     }
     
     // Updating tableView depending selected animation
-    private func updateCellsFor(animation: PeripheralAnimations) {
-        switch animation {
-        case .tetris:
-            hideCell(rows: [animationStepCell], rowsSection: nil)
-            break
-        case .wave:
-            hideCell(rows: [randomColorCell], rowsSection: nil)
-            break
-        case .transfusion:
-            hideCell(rows: [animationStepCell, animationDirectionCell], rowsSection: nil)
-            break
-        case .rainbowTransfusion:
-            hideCell(rows: [animationStepCell, animationDirectionCell], rowsSection: [primaryColorCell])
-            break
-        case .rainbow:
-            hideCell(rows: [animationStepCell], rowsSection: [primaryColorCell])
-            break
-        case .static:
-            hideCell(rows: [animationStepCell, animationSpeedCell, animationDirectionCell, secondaryColorCell, randomColorCell], rowsSection: nil)
-            break
-            
-        }
+    private func handleAnimation(animation: FlClassicAnimations) {
+        tableView.performBatchUpdates( {
+            showAllCells(inModel: readyTableViewModel!)
+            switch animation {
+            case .tetris:
+                hideCells(cells: [animationStepCell], inModel: readyTableViewModel!)
+                break
+            case .wave:
+                hideCells(cells: [randomColorCell], inModel: readyTableViewModel!)
+                break
+            case .transfusion:
+                hideCells(cells: [animationStepCell, animationDirectionCell], inModel: readyTableViewModel!)
+                break
+            case .rainbowTransfusion:
+                hideCells(cells: [animationStepCell, animationDirectionCell], inModel: readyTableViewModel!)
+                break
+            case .rainbow:
+                hideCells(cells: [animationStepCell], inModel: readyTableViewModel!)
+                break
+            case .static:
+                hideCells(cells: [animationStepCell, animationSpeedCell, animationDirectionCell, secondaryColorCell, randomColorCell], inModel: readyTableViewModel!)
+                break
+            }
+            let randonColorState = dataModel.getValue(key: FlClassicData.randomColorKey) as! Bool
+            handleRandomColor(state: randonColorState)
+        }, completion: nil)
+    }
+    
+    private func handleRandomColor(state: Bool) {
+        state ? hideCells(cells: [primaryColorCell, secondaryColorCell], inModel: readyTableViewModel!) :
+         showCells(cells: [primaryColorCell, secondaryColorCell], inModel: readyTableViewModel!)
     }
     
     // Public API
@@ -144,12 +163,17 @@ class FlClassicViewModel: PeripheralViewModel {
         peripheral.writeRandomColor(state)
         dataModel.setValue(key: FlClassicData.randomColorKey, value: state)
         updateCell(for: randomColorCell, with: .none)
+        handleRandomColor(state: state)
     }
     
-    public func writeAnimationMode(mode: PeripheralAnimations) {
+    public func writeAnimationMode(mode: FlClassicAnimations) {
+        guard mode.name != dataModel.getValue(key: FlClassicData.animationModeKey) as! String else {
+            return
+        }
         peripheral.writeAnimationMode(mode)
         dataModel.setValue(key: FlClassicData.animationModeKey, value: mode.name)
         updateCell(for: animationModeCell, with: .none)
+        handleAnimation(animation: mode)
     }
     
     public func writeAnimationDirection(direction: PeripheralAnimationDirections) {
@@ -188,11 +212,13 @@ extension FlClassicViewModel: FlClassicPeripheralDelegate {
     func getRandomColor(_ state: Bool) {
         dataModel.setValue(key: FlClassicData.randomColorKey, value: state)
         updateCell(for: randomColorCell, with: .middle)
+        handleRandomColor(state: state)
     }
     
-    func getAnimationMode(mode: PeripheralAnimations) {
+    func getAnimationMode(mode: PeripheralDataElement) {
         dataModel.setValue(key: FlClassicData.animationModeKey, value: mode.name)
         updateCell(for: animationModeCell, with: .middle)
+        handleAnimation(animation: mode as! FlClassicAnimations)
     }
     
     func getAnimationOnSpeed(speed: Int) {
@@ -200,7 +226,7 @@ extension FlClassicViewModel: FlClassicPeripheralDelegate {
         updateCell(for: animationSpeedCell, with: .middle)
     }
         
-    func getAnimationDirection(direction: PeripheralAnimationDirections) {
+    func getAnimationDirection(direction: PeripheralDataElement) {
         dataModel.setValue(key: FlClassicData.animationDirectionKey, value: direction.name)
         updateCell(for: animationDirectionCell, with: .middle)
     }
@@ -213,31 +239,4 @@ extension FlClassicViewModel: FlClassicPeripheralDelegate {
     // Unused
     func getAnimationOffSpeed(speed: Int) { }
 
-}
-
-// PeripheraTableViewModel dataSource and delegate
-extension FlClassicViewModel: PeripheralTableViewModelDataSourceAndDelegate {
-    
-    func readyTableViewModel() -> TableViewModel {
-        return TableViewModel(
-            sections: [
-                SectionModel(
-                    headerText: "peripheral_color_section_header".localized,
-                    footerText: "peripheral_color_section_footer".localized,
-                    rows: [primaryColorCell, secondaryColorCell, randomColorCell]),
-                SectionModel(
-                    headerText: "peripheral_animation_section_header".localized,
-                    footerText: "peripheral_animation_section_footer".localized,
-                    rows: [animationModeCell, animationSpeedCell, animationDirectionCell, animationStepCell])
-            ], type: .ready)
-    }
-    
-    func setupTableViewModel() -> TableViewModel? {
-        return nil
-    }
-    
-    func settingsTableViewModel() -> TableViewModel? {
-        return nil
-    }
-    
 }

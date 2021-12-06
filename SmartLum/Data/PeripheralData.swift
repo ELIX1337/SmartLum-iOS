@@ -61,8 +61,8 @@ struct SlStandartData: PeripheralData {
     static let ledStateKey             = "LedStateKey"
     static let ledBrightnessKey        = "LedBrightnessKey"
     static let ledTimeoutKey           = "LedTimeoutKey"
-    static let ledTypeKey              = "LedTimeoutKey"
-    static let ledAdaptiveModeKey      = "LedTimeoutKey"
+    static let controllerTypeKey       = "ControllerTypeKey"
+    static let ledAdaptiveModeKey      = "LedAdaptiveModeKey"
     static let topTriggerDistanceKey   = "TopTriggerDistanceKey"
     static let botTriggerDistanceKey   = "BotTriggerDistanceKey"
     static let topTriggerLightnessKey  = "TopTriggerDistanceKey"
@@ -79,7 +79,9 @@ struct SlStandartData: PeripheralData {
     static let standbyBrightnessKey    = "StandbyBrightnessKey"
     static let standbyTopCountKey      = "StandbyTopCountKey"
     static let standbyBotCountKey      = "StandbyBotCountKey"
-    static let stairsWorkMode          = "StairsWorkMode"
+    static let stairsWorkModeKey       = "StairsWorkMode"
+    static let topSensorCountKey       = "TopSensorCountKey"
+    static let botSensorCountKey       = "BotSensorCountKey"
 
     static let ledMinBrightness = 1
     static let ledMaxBrightness = 255
@@ -91,6 +93,8 @@ struct SlStandartData: PeripheralData {
     static let animationMaxSpeed = 100
     static let stepsMinCount = 2
     static let stepsMaxCount = 26
+    static let sensorMinCount = 1
+    static let sensorMaxCount = 2
     static let standbyMinCount = 1
     static let standbyMaxCount = stepsMaxCount / 2
 
@@ -122,15 +126,15 @@ extension PeripheralDataElement where Self.RawValue == Int, Self: RawRepresentab
     var code: Int { return self.rawValue }
 }
 
-enum PeripheralLedType: Int, CaseIterable, PeripheralDataElement {
+enum SlStandartControllerType: Int, CaseIterable, PeripheralDataElement {
        
     case `default` = 0
     case rgb = 1
     
     var name: String {
         switch self {
-        case .`default`: return "peripheral_led_type_default".localized
-        case .rgb:       return "peripheral_led_type_rgb".localized
+        case .`default`: return "peripheral_sl_standart_controller_type_default".localized
+        case .rgb:       return "peripheral_sl_standart_controller_type_rgb".localized
         }
     }
     
@@ -142,9 +146,7 @@ enum PeripheralLedAdaptiveMode: Int, CaseIterable, PeripheralDataElement {
     case top = 1
     case bot = 2
     case average = 3
-    
-    //var code: Int { return self.rawValue }
-    
+        
     var name: String {
         switch self {
         case .off: return "peripheral_adaptime_mode_off".localized
@@ -155,7 +157,36 @@ enum PeripheralLedAdaptiveMode: Int, CaseIterable, PeripheralDataElement {
     }
 }
 
-enum PeripheralAnimations: Int, CaseIterable, PeripheralDataElement {
+enum PeripheralStairsWorkMode: Int, CaseIterable, PeripheralDataElement {
+    
+    case bySensors = 0
+    case byTimer = 1
+    
+    var name: String {
+        switch self {
+        case .bySensors: return "peripheral_stairs_work_mode_by_sensor".localized
+        case .byTimer: return "peripheral_stairs_work_mode_by_timer".localized
+        }
+    }
+}
+
+enum SlStandartAnimations: Int, CaseIterable, PeripheralDataElement {
+    
+    //case tetris
+    case off        = 0
+    case stepByStep = 1
+    case sharp      = 2
+    
+    var name: String {
+        switch self {
+        case .off:          return "sl_standart_animations_off".localized
+        case .stepByStep:   return "sl_standart_animations_stepByStep".localized
+        case .sharp:        return "sl_standart_animations_sharp".localized
+        }
+    }
+}
+
+enum FlClassicAnimations: Int, CaseIterable, PeripheralDataElement {
     
     case tetris             = 1
     case wave               = 2
@@ -174,7 +205,7 @@ enum PeripheralAnimations: Int, CaseIterable, PeripheralDataElement {
         case .static:             return "peripheral_animation_mode_static".localized
         }
     }
-    //var code: Int { return self.rawValue }
+    
 }
 
 enum PeripheralAnimationDirections: Int, CaseIterable, PeripheralDataElement {
@@ -193,7 +224,6 @@ enum PeripheralAnimationDirections: Int, CaseIterable, PeripheralDataElement {
         }
     }
     
-    //var code: Int { return self.rawValue }
 }
 
 enum PeripheralError: Int, CaseIterable, PeripheralDataElement {
@@ -207,9 +237,7 @@ enum PeripheralError: Int, CaseIterable, PeripheralDataElement {
         case .error2: return "Error 2"
         }
     }
-    
-    //var code: Int { return self.rawValue }
-    
+        
     var description: String {
         switch self {
         case .error1: return "peripheral_error_code_1_description".localized

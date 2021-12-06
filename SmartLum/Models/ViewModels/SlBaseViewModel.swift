@@ -28,7 +28,6 @@ class SlBaseViewModel: PeripheralViewModel {
                   _ selected: @escaping (CellModel) -> Void) {
         super.init(withTableView, withPeripheral, delegate, selected)
         slBasePeripheral.delegate = self
-        tableViewDataSourceAndDelegate = self
         dataModel = SlBaseData.init(values: [:])
         self.topTriggerDistanceCell = .sliderCell(
             key: SlBaseData.topTriggerDistanceKey,
@@ -86,6 +85,52 @@ class SlBaseViewModel: PeripheralViewModel {
             key: BasePeripheralData.factoryResetKey,
             title: "peripheral_reset_to_factory_cell_title".localized,
             callback: { self.onCellSelected(self.resetToFactoryCell) })
+        initReadyTableViewModel()
+        initSetupTableViewModel()
+        initSettingsTableViewModel()
+    }
+    
+    private func initReadyTableViewModel() {
+        readyTableViewModel = TableViewModel(
+            sections: [
+                SectionModel(
+                    headerText: "peripheral_led_state_section_header".localized,
+                    footerText: "peripheral_led_state_section_footer".localized,
+                    rows: [ledStateCell]),
+                SectionModel(
+                    headerText: "peripheral_led_brightness_section_header".localized,
+                    footerText: "peripheral_led_brightness_section_footer".localized,
+                    rows: [ledBrightnessCell]),
+                SectionModel(
+                    headerText: "peripheral_additional_section_header".localized,
+                    footerText: "peripheral_additional_section_footer".localized,
+                    rows: [animationSpeedCell,
+                           ledTimeoutCell])
+            ], type: .ready)
+    }
+    
+    private func initSetupTableViewModel() {
+        setupTableViewModel = TableViewModel(
+            sections: [
+                SectionModel(
+                    headerText: "peripheral_setup_trigger_distance_section_header".localized,
+                    footerText: "peripheral_setup_trigger_distance_section_footer".localized,
+                    rows: [topTriggerDistanceCell, botTriggerDistanceCell])
+            ], type: .setup)
+    }
+    
+    private func initSettingsTableViewModel() {
+        settingsTableViewModel = TableViewModel(
+            sections: [
+                SectionModel(
+                    headerText: "peripheral_sensor_trigger_distance_section_header".localized,
+                    footerText: "peripheral_sensor_trigger_distance_section_footer".localized,
+                    rows: [topTriggerDistanceCell, botTriggerDistanceCell]),
+                SectionModel(
+                    headerText: "peripheral_factory_settings_section_header".localized,
+                    footerText: "peripheral_factory_settings_section_footer".localized,
+                    rows: [resetToFactoryCell])
+            ], type: .settings)
     }
     
     public func writeLedState(state: Bool) {
@@ -189,60 +234,14 @@ extension SlBaseViewModel: SlBasePeripheralDelegate {
     }
     
     // Unused
-    func getAnimationMode(mode: PeripheralAnimations) { }
+    func getAnimationMode(mode: PeripheralDataElement) { }
     
     func getAnimationOffSpeed(speed: Int) { }
     
-    func getAnimationDirection(direction: PeripheralAnimationDirections) { }
+    func getAnimationDirection(direction: PeripheralDataElement) { }
     
     func getAnimationStep(step: Int) { }
     
 }
 
-extension SlBaseViewModel: PeripheralTableViewModelDataSourceAndDelegate {
-    
-    func readyTableViewModel() -> TableViewModel {
-        TableViewModel(
-            sections: [
-                SectionModel(
-                    headerText: "peripheral_led_state_section_header".localized,
-                    footerText: "peripheral_led_state_section_footer".localized,
-                    rows: [ledStateCell]),
-                SectionModel(
-                    headerText: "peripheral_led_brightness_section_header".localized,
-                    footerText: "peripheral_led_brightness_section_footer".localized,
-                    rows: [ledBrightnessCell]),
-                SectionModel(
-                    headerText: "peripheral_additional_section_header".localized,
-                    footerText: "peripheral_additional_section_footer".localized,
-                    rows: [animationSpeedCell,
-                           ledTimeoutCell])
-            ], type: .ready)
-    }
-    
-    func setupTableViewModel() -> TableViewModel? {
-        TableViewModel(
-            sections: [
-                SectionModel(
-                    headerText: "peripheral_setup_trigger_distance_section_header".localized,
-                    footerText: "peripheral_setup_trigger_distance_section_footer".localized,
-                    rows: [topTriggerDistanceCell, botTriggerDistanceCell])
-            ], type: .setup)
-    }
-    
-    func settingsTableViewModel() -> TableViewModel? {
-        TableViewModel(
-            sections: [
-                SectionModel(
-                    headerText: "peripheral_sensor_trigger_distance_section_header".localized,
-                    footerText: "peripheral_sensor_trigger_distance_section_footer".localized,
-                    rows: [topTriggerDistanceCell, botTriggerDistanceCell]),
-                SectionModel(
-                    headerText: "peripheral_factory_settings_section_header".localized,
-                    footerText: "peripheral_factory_settings_section_footer".localized,
-                    rows: [resetToFactoryCell])
-            ], type: .settings)
-    }
-        
-}
 

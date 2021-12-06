@@ -384,7 +384,7 @@
 				22A46DCC25E7A857003F4200 /* Utils */,
 				2CA24A02272806FC0084F073 /* Data */,
 				30B664861FCDA2C5003C8B55 /* Models */,
-				30B664791FCD722A003C8B55 /* Views */,
+				30B664791FCD722A003C8B55 /* UI */,
 				30B664441FCD6E65003C8B55 /* AppDelegate.swift */,
 				30B664481FCD6E65003C8B55 /* Main.storyboard */,
 				30B6644D1FCD6E65003C8B55 /* LaunchScreen.storyboard */,
@@ -415,13 +415,13 @@
 			path = SmartLumUITests;
 			sourceTree = "<group>";
 		};
-		30B664791FCD722A003C8B55 /* Views */ = {
+		30B664791FCD722A003C8B55 /* UI */ = {
 			isa = PBXGroup;
 			children = (
 				2C72029F269D5D240079BEEA /* TableViewCells */,
 				2C7202942695888B0079BEEA /* ViewControllers */,
 			);
-			path = Views;
+			path = UI;
 			sourceTree = "<group>";
 		};
 		30B664811FCDA0DE003C8B55 /* ScannerViewController */ = {

@@ -32,14 +32,17 @@ protocol PeripheralTableViewModelDataSourceAndDelegate {
     public var dataModel: PeripheralData!
     public var tableView: UITableView
     public var onCellSelected: (CellModel) -> Void
-    public lazy var hiddenIndexPath = HiddenIndexPath()
+    public var hiddenIndexPath = HiddenIndexPath()
+   // public var hiddenCells = HiddenCells()
     
-    public lazy var readyTableViewModel:    TableViewModel? = tableViewDataSourceAndDelegate?.readyTableViewModel()
-    public lazy var setupTableViewModel:    TableViewModel? = tableViewDataSourceAndDelegate?.setupTableViewModel()
-    public lazy var settingsTableViewModel: TableViewModel? = tableViewDataSourceAndDelegate?.settingsTableViewModel()
+    public var readyTableViewModel:    TableViewModel? //= tableViewDataSourceAndDelegate?.readyTableViewModel()
+    public var setupTableViewModel:    TableViewModel? //= tableViewDataSourceAndDelegate?.setupTableViewModel()
+    public var settingsTableViewModel: TableViewModel? //= tableViewDataSourceAndDelegate?.settingsTableViewModel()
+    
+    private var hiddenCells: [CellModel] = []
     
     public var isConnected: Bool { basePeripheral.isConnected }
-    public var peripheralSettingsAvailable: Bool { tableViewDataSourceAndDelegate?.settingsTableViewModel() != nil }
+    public var peripheralSettingsAvailable: Bool { settingsTableViewModel != nil }
     public var peripheralName: String { basePeripheral.name }
     
     @objc dynamic public var readyToWriteInitData: Bool = false
@@ -92,53 +95,50 @@ protocol PeripheralTableViewModelDataSourceAndDelegate {
         }
         tableView.reloadRows(at: [indexPath], with: with)
     }
-
-    public func hideCell(rows: [CellModel], rowsSection: [CellModel]?) {
-        hideRows(rows: rows)
-        if let section = rowsSection {
-            hideSections(of: section)
-        }
-    }
     
-    private func hideRows(rows: [CellModel]) {
-        let indexPaths = rows.map { getTableViewModel(type: tableView.tableViewType)?.getIndexPath(forRow: $0) }.compactMap { $0 }
-        showRows(rows: nil)
-        showSections(of: nil)
-        hiddenIndexPath.row = indexPaths
-        tableView.reloadRows(at: indexPaths, with: .top)
-    }
-    
-    private func showRows(rows: [CellModel]?) {
-        guard let array = rows else {
-            hiddenIndexPath.row.removeAll()
-            tableView.reloadData()
-            return
-        }
-        for row in array {
-            if let rowIndex = getTableViewModel(type: tableView.tableViewType)?.getIndexPath(forRow: row) {
-                hiddenIndexPath.row = hiddenIndexPath.row.filter { $0 != rowIndex }
-                tableView.reloadRows(at: [rowIndex], with: .top)
+    public func hideCells(cells: [CellModel], inModel: TableViewModel) {
+        let currentModel = getTableViewModel(type: tableView.tableViewType) == inModel
+        var indexes = [IndexPath]()
+        cells.forEach { cell in
+            if let index = inModel.getIndexPath(forRow: cell) {
+                indexes.append(index)
+                hiddenCells.append(cell)
+            } else {
+                fatalError("Cannot find cell \(cell.cellKey) in model")
             }
         }
-    }
-    
-    private func hideSections(of: [CellModel]) {
-        let indexPaths = of.map { getTableViewModel(type: tableView.tableViewType)?.getIndexPath(forRow: $0) }.compactMap { $0?.section }
-        hiddenIndexPath.section = indexPaths
-        hiddenIndexPath.section.forEach { tableView.reloadSections(IndexSet(integer: $0), with: .top) }
-    }
-    
-    private func showSections(of: [CellModel]?) {
-        guard let array = of else {
-            hiddenIndexPath.section.removeAll()
-            tableView.reloadData()
-            return
+        if currentModel {
+            tableView.reloadRows(at: indexes, with: .middle)
         }
-        for section in array {
-            if let sectionIndex = getTableViewModel(type: tableView.tableViewType)?.getIndexPath(forRow: section)?.section {
-                hiddenIndexPath.section = hiddenIndexPath.section.filter { $0 != sectionIndex }
-                tableView.reloadSections(IndexSet(integer: sectionIndex), with: .none)
+    }
+    
+    public func showCells(cells: [CellModel], inModel: TableViewModel) {
+        let currentModel = getTableViewModel(type: tableView.tableViewType) == inModel
+        var indexes = [IndexPath]()
+        cells.forEach { cell in
+            if let index = inModel.getIndexPath(forRow: cell) {
+                indexes.append(index)
+                hiddenCells.removeAll { $0.cellKey == cell.cellKey }
+            } else {
+                fatalError("Cannot find cell \(cell.cellKey) in model")
             }
+        }
+        if currentModel {
+            tableView.reloadRows(at: indexes, with: .middle)
+        }
+    }
+    
+    public func showAllCells(inModel: TableViewModel) {
+        let currentModel = getTableViewModel(type: tableView.tableViewType) == inModel
+        var indexes = [IndexPath]()
+        inModel.sections.forEach { section in
+            section.rows.forEach { cell in
+                indexes.append(inModel.getIndexPath(forRow: cell)!)
+                hiddenCells.removeAll { $0.cellKey == cell.cellKey }
+            }
+        }
+        if currentModel {
+            tableView.reloadRows(at: indexes, with: .middle)
         }
     }
     
@@ -307,27 +307,29 @@ extension PeripheralViewModel: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if (hiddenIndexPath.section.contains(indexPath.section)) {
-            return 0
+        guard let cell = getTableViewModel(type: tableView.tableViewType)?.sections[indexPath.section].rows[indexPath.row] else {
+            return UITableView.automaticDimension
         }
-        if (hiddenIndexPath.row.contains(indexPath)) {
+        if hiddenCells.contains(cell) {
             return 0
         }
         return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if hiddenIndexPath.section.contains(section){
-            return 0
+        guard let subArray = getTableViewModel(type: tableView.tableViewType)?.sections[section].rows else {
+            return UITableView.automaticDimension
         }
-        return UITableView.automaticDimension
+        let sectionIsEmpty = subArray.allSatisfy(hiddenCells.contains)
+        return sectionIsEmpty ? 0 : UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if hiddenIndexPath.section.contains(section){
-            return 0
+        guard let subArray = getTableViewModel(type: tableView.tableViewType)?.sections[section].rows else {
+            return UITableView.automaticDimension
         }
-        return UITableView.automaticDimension
+        let sectionIsEmpty = subArray.allSatisfy(hiddenCells.contains)
+        return sectionIsEmpty ? 0 : UITableView.automaticDimension
     }
     
 }
@@ -350,6 +352,7 @@ extension PeripheralViewModel: UITableViewDelegate {
 extension PeripheralViewModel: BasePeripheralDelegate {
 
     func peripheralError(code: Int) {
+        print("ERROR - \(code)")
         dataModel.setValue(key: BasePeripheralData.errorKey, value: code)
         tableView.beginUpdates()
                 if readyTableViewModel != nil {
