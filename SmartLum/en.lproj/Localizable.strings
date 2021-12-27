@@ -36,7 +36,7 @@
     "peripheral_color_section_footer"     = "Choose and handle colors";
     "peripheral_animation_section_header" = "Animation";
     "peripheral_animation_section_footer" = "";
-    "peripheral_sensor_trigger_distance_section_header" = "Sensors";
+    "peripheral_sensor_trigger_distance_section_header" = "Sensors trigger distance";
     "peripheral_sensor_trigger_distance_section_footer" = "Values in centimeters";
     "peripheral_sensor_trigger_lightness_section_header" = "Sensors";
     "peripheral_sensor_trigger_lightness_section_footer" = "";
@@ -81,7 +81,7 @@
     "peripheral_led_brightness_cell_title" = "Brightness";
     "peripheral_led_timeout_cell_title" = "Timeout (sec)";
     "peripheral_top_sensor_cell_title" = "Top sensor";
-    "peripheral_bot_sensor_cell_title" = "Bot sensor";
+    "peripheral_bot_sensor_cell_title" = "Bottom sensor";
     "peripheral_reset_to_factory_cell_title" = "Reset to factory";
     "peripheral_error_cell_title" = "Error detected";
     "peripheral_error_cell_code_prefix" = "Details";
