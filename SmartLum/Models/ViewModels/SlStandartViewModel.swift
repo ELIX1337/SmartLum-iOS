@@ -1,5 +1,5 @@
 //
-//  SlProViewModel.swift
+//  SlStandartViewModel.swift
 //  SmartLum
 //
 //  Created by ELIX on 09.11.2021.
@@ -8,11 +8,8 @@
 
 import UIKit
 
-class SlProViewModel: PeripheralViewModel {
+class SlStandartViewModel: PeripheralViewModel {
     
-    // Color section
-    var primaryColorCell: CellModel!
-    var randomColorCell: CellModel!
     // LED section
     var ledStateCell: CellModel!
     var ledBrightnessCell: CellModel!
@@ -54,20 +51,19 @@ class SlProViewModel: PeripheralViewModel {
         }
     }
     
-    var slProPeripheral: SlProPeripheral! {
-        get { return (super.basePeripheral as! SlProPeripheral) }
+    var slStandartPeripheral: SlStandartPeripheral! {
+        get { return (super.basePeripheral as! SlStandartPeripheral) }
     }
     
     override init(_ withTableView: UITableView,
                   _ withPeripheral: BasePeripheral,
                   _ delegate: PeripheralViewModelDelegate,
                   _ selected: @escaping (CellModel) -> Void) {
-        super.init(withTableView, withPeripheral as! SlProPeripheral, delegate, selected)
-        slProPeripheral.delegate = self
+        super.init(withTableView, withPeripheral as! SlStandartPeripheral, delegate, selected)
+        slStandartPeripheral.delegate = self
         self.tableView = withTableView
         self.onCellSelected = selected
         self.dataModel = StairsControllerData(values: [:])
-        initColorSection()
         initLedSection()
         initAnimationSection()
         initSettingsSection()
@@ -79,10 +75,6 @@ class SlProViewModel: PeripheralViewModel {
     private func initReadyTableViewModel() {
         readyTableViewModel = TableViewModel(
             sections: [
-                SectionModel(
-                    headerText: "peripheral_color_section_header".localized,
-                    footerText: "peripheral_color_section_footer".localized,
-                    rows: [primaryColorCell, randomColorCell]),
                 SectionModel(
                     headerText: "peripheral_sl_pro_led_section_header".localized,
                     footerText: "peripheral_sl_pro_led_section_footer".localized,
@@ -137,18 +129,6 @@ class SlProViewModel: PeripheralViewModel {
                     footerText: "peripheral_animation_section_footer".localized,
                     rows: [topTriggerLightnessCell, botTriggerLightnessCell])
             ], type: .setup)
-    }
-    
-    private func initColorSection() {
-        primaryColorCell = .colorCell(
-            key: StairsControllerData.primaryColorKey,
-            title: "peripheral_sl_pro_color_cell_title".localized,
-            initialValue: UIColor.white, callback: { _ in })
-        randomColorCell = .switchCell(
-            key: StairsControllerData.randomColorKey,
-            title: "peripheral_sl_pro_random_color_cell_title".localized,
-            initialValue: false,
-            callback: { self.writeRandomColor(state: $0) })
     }
     
     private func initLedSection() {
@@ -341,64 +321,33 @@ class SlProViewModel: PeripheralViewModel {
         }
     }
     
-    private func handleLedType(type: SlProControllerType) {
-        switch type {
-        case .`default`:
-            hideCells(cells: [primaryColorCell, randomColorCell], inModel: readyTableViewModel!)
-            break
-        case .rgb:
-            showCells(cells: [primaryColorCell, randomColorCell], inModel: readyTableViewModel!)
-            break
-        }
-    }
-    
-    func writePrimaryColor(_ color: UIColor) {
-        if (dataModel.getValue(key: StairsControllerData.primaryColorKey) as? UIColor != color) {
-            slProPeripheral.writePrimaryColor(color)
-            dataModel.setValue(key: StairsControllerData.primaryColorKey, value: color)
-            updateCell(for: primaryColorCell, with: .none)
-        }
-    }
-    
-    func writeRandomColor(state: Bool) {
-        dataModel.setValue(key: StairsControllerData.randomColorKey, value: state)
-        slProPeripheral.writeRandomColor(state)
-    }
-    
     func writeAnimationMode(mode: SlProAnimations) {
         guard mode.name != dataModel.getValue(key: StairsControllerData.animationModeKey) as! String else { return }
         dataModel.setValue(key: StairsControllerData.animationModeKey, value: mode.name)
-        slProPeripheral.writeAnimationMode(mode)
+        slStandartPeripheral.writeAnimationMode(mode)
         updateCell(for: animationModeCell, with: .none)
-    }
-    
-    func writeLedType(type: SlProControllerType) {
-        dataModel.setValue(key: StairsControllerData.controllerTypeKey, value: type)
-        slProPeripheral.writeLedType(type)
-        updateCell(for: controllerTypeCell, with: .none)
-        handleLedType(type: type)
     }
     
     func writeLedState(state: Bool) {
         dataModel.setValue(key: StairsControllerData.ledStateKey, value: state)
-        slProPeripheral.writeLedState(state)
+        slStandartPeripheral.writeLedState(state)
     }
     
     func writeLedBrightness(value: Int) {
         if (dataModel.getValue(key: StairsControllerData.ledBrightnessKey) as? Int != value) {
             dataModel.setValue(key: StairsControllerData.ledBrightnessKey, value: value)
-            slProPeripheral.writeLedBrightness(value)
+            slStandartPeripheral.writeLedBrightness(value)
         }
     }
     
     func writeLedTimeout(timeout: Int) {
         dataModel.setValue(key: StairsControllerData.ledTimeoutKey, value: timeout)
-        slProPeripheral.writeLedTimeout(Int(timeout))
+        slStandartPeripheral.writeLedTimeout(Int(timeout))
     }
     
     func writeLedAdaptiveBrightnessMode(mode: PeripheralLedAdaptiveMode) {
         dataModel.setValue(key: StairsControllerData.ledAdaptiveModeKey, value: mode.name)
-        slProPeripheral.writeLedAdaptiveBrightnessState(mode)
+        slStandartPeripheral.writeLedAdaptiveBrightnessState(mode)
         updateCell(for: ledAdaptiveCell, with: .none)
         handleAdaptiveMode(mode: mode)
     }
@@ -406,75 +355,75 @@ class SlProViewModel: PeripheralViewModel {
     func writeAnimationSpeed(speed: Int) {
         if (dataModel.getValue(key: StairsControllerData.animationSpeedKey) as? Int != speed) {
             dataModel.setValue(key: StairsControllerData.animationSpeedKey, value: speed)
-            slProPeripheral.writeAnimationOnSpeed(speed)
+            slStandartPeripheral.writeAnimationOnSpeed(speed)
         }
     }
     
     func writeTopTriggerDistance(value: Int) {
         if (dataModel.getValue(key: StairsControllerData.topTriggerDistanceKey) as? Int != value) {
             dataModel.setValue(key: StairsControllerData.topTriggerDistanceKey, value: value)
-            slProPeripheral.writeTopSensorTriggerDistance(value)
+            slStandartPeripheral.writeTopSensorTriggerDistance(value)
         }
     }
     
     func writeBotTriggerDistance(value: Int) {
         if (dataModel.getValue(key: StairsControllerData.botTriggerDistanceKey) as? Int != value) {
             dataModel.setValue(key: StairsControllerData.botTriggerDistanceKey, value: value)
-            slProPeripheral.writeBotSensorTriggerDistance(value)
+            slStandartPeripheral.writeBotSensorTriggerDistance(value)
         }
     }
     
     func writeTopTriggerLightness(value: Int) {
         dataModel.setValue(key: StairsControllerData.topTriggerLightnessKey, value: value)
-        slProPeripheral.writeTopSensorLightness(value)
+        slStandartPeripheral.writeTopSensorLightness(value)
     }
     
     func writeBotTriggerLightness(value: Int) {
         dataModel.setValue(key: StairsControllerData.botTriggerLightnessKey, value: value)
-        slProPeripheral.writeBotSensorLightness(value)
+        slStandartPeripheral.writeBotSensorLightness(value)
     }
     
     func writeStairsWorkMode(mode: PeripheralStairsWorkMode) {
         dataModel.setValue(key: StairsControllerData.stairsWorkModeKey, value: mode.name)
-        slProPeripheral.writeStairsWorkMode(mode)
+        slStandartPeripheral.writeStairsWorkMode(mode)
         updateCell(for: stairsWorkModeCell, with: .none)
     }
     
     func writeStepsCount(count: Int) {
         dataModel.setValue(key: StairsControllerData.stepsCountKey, value: count)
-        slProPeripheral.writeStepsCount(count)
+        slStandartPeripheral.writeStepsCount(count)
     }
     
     func writeTopSensorCount(count: Int) {
         dataModel.setValue(key: StairsControllerData.topSensorCountKey, value: count)
-        slProPeripheral.writeTopSensorCount(count)
+        slStandartPeripheral.writeTopSensorCount(count)
     }
     
     func writeBotSensorCount(count: Int) {
         dataModel.setValue(key: StairsControllerData.botSensorCountKey, value: count)
-        slProPeripheral.writeBotSensorCount(count)
+        slStandartPeripheral.writeBotSensorCount(count)
     }
     
     func writeStandbyState(state: Bool) {
         dataModel.setValue(key: StairsControllerData.standbyStateKey, value: state)
-        slProPeripheral.writeStandbyState(state)
+        slStandartPeripheral.writeStandbyState(state)
     }
     
     func writeStandbyBrightness(value: Int) {
         if (dataModel.getValue(key: StairsControllerData.standbyBrightnessKey) as? Int != value) {
             dataModel.setValue(key: StairsControllerData.standbyBrightnessKey, value: value)
-            slProPeripheral.writeStandbyBrightness(value)
+            slStandartPeripheral.writeStandbyBrightness(value)
         }
     }
     
     func writeStandbyTopCount(count: Int) {
         dataModel.setValue(key: StairsControllerData.standbyTopCountKey, value: count)
-        slProPeripheral.writeStandbyTopCount(count)
+        slStandartPeripheral.writeStandbyTopCount(count)
     }
     
     func writeStandbyBotCount(count: Int) {
         dataModel.setValue(key: StairsControllerData.standbyBotCountKey, value: count)
-        slProPeripheral.writeStandbyBotCount(count)
+        slStandartPeripheral.writeStandbyBotCount(count)
     }
     
     private func initTopSensorTriggerDistance(distance: Int) {
@@ -501,7 +450,7 @@ class SlProViewModel: PeripheralViewModel {
     
 }
 
-extension SlProViewModel: SlProPeripheralDelegate {
+extension SlStandartViewModel: SlStandartPeripheralDelegate {
     
     func getWorkMode(mode: PeripheralDataElement) {
         dataModel.setValue(key: StairsControllerData.stairsWorkModeKey, value: mode.name)
@@ -516,12 +465,6 @@ extension SlProViewModel: SlProPeripheralDelegate {
     func getBotSensorCount(count: Int) {
         dataModel.setValue(key: StairsControllerData.botSensorCountKey, value: count)
         updateCell(for: botSensorCountCell, with: .middle)
-    }
-    
-    func getLedType(type: PeripheralDataElement) {
-        dataModel.setValue(key: StairsControllerData.controllerTypeKey, value: type.name)
-        updateCell(for: controllerTypeCell, with: .middle)
-        handleLedType(type: type as! SlProControllerType)
     }
     
     func getLedAdaptiveBrightnessState(mode: PeripheralDataElement) {
@@ -575,16 +518,6 @@ extension SlProViewModel: SlProPeripheralDelegate {
         print("BOT CURRENT LIGHTNESS - \(lightness)")
         dataModel.setValue(key: StairsControllerData.botCurrentLightnessKey, value: lightness)
         updateCell(for: botCurrentLightnessCell, with: .none)
-    }
-    
-    func getPrimaryColor(_ color: UIColor) {
-        dataModel.setValue(key: StairsControllerData.primaryColorKey, value: color)
-        updateCell(for: primaryColorCell, with: .middle)
-    }
-    
-    func getRandomColor(_ state: Bool) {
-        dataModel.setValue(key: StairsControllerData.randomColorKey, value: state)
-        updateCell(for: randomColorCell, with: .middle)
     }
     
     func getTopSensorTriggerDistance(distance: Int) {

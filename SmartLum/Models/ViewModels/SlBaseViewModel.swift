@@ -28,55 +28,55 @@ class SlBaseViewModel: PeripheralViewModel {
                   _ selected: @escaping (CellModel) -> Void) {
         super.init(withTableView, withPeripheral, delegate, selected)
         slBasePeripheral.delegate = self
-        dataModel = SlBaseData.init(values: [:])
+        dataModel = StairsControllerData.init(values: [:])
         self.topTriggerDistanceCell = .sliderCell(
-            key: SlBaseData.topTriggerDistanceKey,
+            key: StairsControllerData.topTriggerDistanceKey,
             title: "peripheral_top_sensor_cell_title".localized,
             initialValue: 1,
-            minValue: Float(SlBaseData.sensorMinDistance),
-            maxValue: Float(SlBaseData.sensorMaxDistance),
+            minValue: Float(StairsControllerData.slBaseSensorMinDistance),
+            maxValue: Float(StairsControllerData.slBaseSensorMaxDistance),
             leftIcon: nil,
             rightIcon: nil,
             showValue: true,
             callback: { self.writeTopSensorTriggerDistance(distance: Int($0)) })
         self.botTriggerDistanceCell = .sliderCell(
-            key: SlBaseData.botTriggerDistanceKey,
+            key: StairsControllerData.botTriggerDistanceKey,
             title: "peripheral_bot_sensor_cell_title".localized,
             initialValue: 1,
-            minValue: Float(SlBaseData.sensorMinDistance),
-            maxValue: Float(SlBaseData.sensorMaxDistance),
+            minValue: Float(StairsControllerData.slBaseSensorMinDistance),
+            maxValue: Float(StairsControllerData.slBaseSensorMaxDistance),
             leftIcon: nil,
             rightIcon: nil,
             showValue: true,
             callback: { self.writeBotSensorTriggerDistance(distance: Int($0)) })
         self.ledStateCell = .switchCell(
-            key: SlBaseData.ledStateKey,
+            key: StairsControllerData.ledStateKey,
             title: "peripheral_led_state_cell_title".localized,
-            initialValue: dataModel.getValue(key: SlBaseData.ledStateKey) as? Bool ?? false,
+            initialValue: dataModel.getValue(key: StairsControllerData.ledStateKey) as? Bool ?? false,
             callback: { self.writeLedState(state: $0) })
         self.ledBrightnessCell = .sliderCell(
-            key: SlBaseData.ledBrightnessKey,
+            key: StairsControllerData.ledBrightnessKey,
             title: "peripheral_led_brightness_cell_title".localized,
-            initialValue: Float(dataModel.getValue(key: SlBaseData.ledBrightnessKey) as? Float ?? 0),
-            minValue: Float(SlBaseData.ledMinBrightness),
-            maxValue: Float(SlBaseData.ledMaxBrightness),
+            initialValue: Float(dataModel.getValue(key: StairsControllerData.ledBrightnessKey) as? Float ?? 0),
+            minValue: Float(StairsControllerData.slBaseLedMinBrightness),
+            maxValue: Float(StairsControllerData.slBaseLedMaxBrightness),
             leftIcon: UIImage(systemName: "sun.min.fill", withConfiguration: UIImage.largeScale),
             rightIcon: UIImage(systemName: "sun.max.fill", withConfiguration: UIImage.largeScale),
             showValue: false,
             callback: { self.writeLedBrightness(value: Int($0)) })
         self.ledTimeoutCell = .stepperCell(
-            key: SlBaseData.ledTimeout,
+            key: StairsControllerData.ledTimeoutKey,
             title: "peripheral_led_timeout_cell_title".localized,
             initialValue: 1,
-            minValue: Double(SlBaseData.ledMinTimeout),
-            maxValue: Double(SlBaseData.ledMaxTimeout),
+            minValue: Double(StairsControllerData.slBaseLedMinTimeout),
+            maxValue: Double(StairsControllerData.slBaseLedMaxTimeout),
             callback: { self.writeLedTimeout(timeout: Int($0)) })
         self.animationSpeedCell = .sliderCell(
-            key: SlBaseData.animationSpeedKey,
+            key: StairsControllerData.animationSpeedKey,
             title: "peripheral_animation_speed_cell_title".localized,
             initialValue: 1,
-            minValue: Float(SlBaseData.animationMinSpeed),
-            maxValue: Float(SlBaseData.animationMaxSpeed),
+            minValue: Float(StairsControllerData.slBaseAnimationMinSpeed),
+            maxValue: Float(StairsControllerData.slBaseAnimationMaxSpeed),
             leftIcon: nil,
             rightIcon: nil,
             showValue: false,
@@ -134,32 +134,32 @@ class SlBaseViewModel: PeripheralViewModel {
     }
     
     public func writeLedState(state: Bool) {
-        dataModel.setValue(key: SlBaseData.ledStateKey, value: state)
+        dataModel.setValue(key: StairsControllerData.ledStateKey, value: state)
         slBasePeripheral.writeLedState(state)
         updateCell(for: ledStateCell, with: .none)
     }
     
     public func writeLedBrightness(value: Int) {
-        dataModel.setValue(key: SlBaseData.ledBrightnessKey, value: value)
+        dataModel.setValue(key: StairsControllerData.ledBrightnessKey, value: value)
         slBasePeripheral.writeLedBrightness(value)
         updateCell(for: ledBrightnessCell, with: .none)
     }
     
     public func writeLedTimeout(timeout: Int) {
-        dataModel.setValue(key: SlBaseData.ledTimeout, value: timeout)
+        dataModel.setValue(key: StairsControllerData.ledTimeoutKey, value: timeout)
         slBasePeripheral.writeLedTimeout(timeout)
         updateCell(for: ledTimeoutCell, with: .none)
     }
     
     public func writeAnimationSpeed(speed: Int) {
-        dataModel.setValue(key: SlBaseData.animationSpeedKey, value: speed)
+        dataModel.setValue(key: StairsControllerData.animationSpeedKey, value: speed)
         slBasePeripheral.writeAnimationOnSpeed(speed)
         updateCell(for: animationSpeedCell, with: .none)
     }
     
     public func writeInitDistance() -> Bool {
-        if let top = dataModel.getValue(key: SlBaseData.topTriggerDistanceKey),
-           let bot = dataModel.getValue(key: SlBaseData.botTriggerDistanceKey) {
+        if let top = dataModel.getValue(key: StairsControllerData.topTriggerDistanceKey),
+           let bot = dataModel.getValue(key: StairsControllerData.botTriggerDistanceKey) {
             slBasePeripheral.writeTopSensorTriggerDistance(top as! Int)
             slBasePeripheral.writeBotSensorTriggerDistance(bot as! Int)
             return true
@@ -168,7 +168,7 @@ class SlBaseViewModel: PeripheralViewModel {
     }
     
     public func writeTopSensorTriggerDistance(distance: Int) {
-        dataModel.setValue(key: SlBaseData.topTriggerDistanceKey, value: distance)
+        dataModel.setValue(key: StairsControllerData.topTriggerDistanceKey, value: distance)
         if isInitialized {
             slBasePeripheral.writeTopSensorTriggerDistance(distance)
         } else {
@@ -177,7 +177,7 @@ class SlBaseViewModel: PeripheralViewModel {
     }
     
     public func writeBotSensorTriggerDistance(distance: Int) {
-        dataModel.setValue(key: SlBaseData.botTriggerDistanceKey, value: distance)
+        dataModel.setValue(key: StairsControllerData.botTriggerDistanceKey, value: distance)
         if isInitialized {
             slBasePeripheral.writeBotSensorTriggerDistance(distance)
         } else {
@@ -186,16 +186,16 @@ class SlBaseViewModel: PeripheralViewModel {
     }
     
     private func initTopSensorTriggerDistance(distance: Int) {
-        readyToWriteInitData = dataModel.getValue(key: SlBaseData.botTriggerDistanceKey) as! Int != 0
+        readyToWriteInitData = dataModel.getValue(key: StairsControllerData.botTriggerDistanceKey) as! Int != 0
     }
     
     private func initBotSensorTriggerDistance(distance: Int) {
-        readyToWriteInitData = dataModel.getValue(key: SlBaseData.topTriggerDistanceKey) as! Int != 0
+        readyToWriteInitData = dataModel.getValue(key: StairsControllerData.topTriggerDistanceKey) as! Int != 0
     }
     
     override func requiresInit() -> Bool {
-        let first  = dataModel.getValue(key: SlBaseData.botTriggerDistanceKey) as? Int != 0
-        let second = dataModel.getValue(key: SlBaseData.topTriggerDistanceKey) as? Int != 0
+        let first  = dataModel.getValue(key: StairsControllerData.botTriggerDistanceKey) as? Int != 0
+        let second = dataModel.getValue(key: StairsControllerData.topTriggerDistanceKey) as? Int != 0
         return first && second
     }
     
@@ -204,32 +204,32 @@ class SlBaseViewModel: PeripheralViewModel {
 extension SlBaseViewModel: SlBasePeripheralDelegate {
     
     func getAnimationOnSpeed(speed: Int) {
-        dataModel.setValue(key: SlBaseData.animationSpeedKey, value: speed)
+        dataModel.setValue(key: StairsControllerData.animationSpeedKey, value: speed)
         updateCell(for: animationSpeedCell, with: .middle)
     }
     
     func getLedBrightness(brightness: Int) {
-        dataModel.setValue(key: SlBaseData.ledBrightnessKey, value: brightness)
+        dataModel.setValue(key: StairsControllerData.ledBrightnessKey, value: brightness)
         updateCell(for: ledBrightnessCell, with: .middle)
     }
     
     func getLedTimeout(timeout: Int) {
-        dataModel.setValue(key: SlBaseData.ledTimeout, value: timeout)
+        dataModel.setValue(key: StairsControllerData.ledTimeoutKey, value: timeout)
         updateCell(for: ledTimeoutCell, with: .middle)
     }
     
     func getLedState(state: Bool) {
-        dataModel.setValue(key: SlBaseData.ledStateKey, value: state)
+        dataModel.setValue(key: StairsControllerData.ledStateKey, value: state)
         updateCell(for: ledStateCell, with: .middle)
     }
     
     func getTopSensorTriggerDistance(distance: Int) {
-        dataModel.setValue(key: SlBaseData.topTriggerDistanceKey, value: distance)
+        dataModel.setValue(key: StairsControllerData.topTriggerDistanceKey, value: distance)
         updateCell(for: topTriggerDistanceCell, with: .middle)
     }
     
     func getBotSensorTriggerDistance(distance: Int) {
-        dataModel.setValue(key: SlBaseData.botTriggerDistanceKey, value: distance)
+        dataModel.setValue(key: StairsControllerData.botTriggerDistanceKey, value: distance)
         updateCell(for: botTriggerDistanceCell, with: .middle)
     }
     

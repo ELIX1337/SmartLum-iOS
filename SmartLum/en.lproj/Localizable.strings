@@ -21,8 +21,8 @@
     "peripheral_reset_alert_cancel_button" = "Cancel";
     "peripheral_reset_alert_confirm_button" = "Reset";
     "peripheral_connecting_alert_text" = "Connecting to ";
+    "peripheral_name_unknown" = "Unknown Device";
 
-"peripheral_name_unknown" = "Unknown Device";
 // Peripheral tableView
     // Sections
     "scanner_section_header" = "Found devices";

@@ -1,18 +1,18 @@
 //
-//  SlProPeripheral.swift
+//  SlStandartPeripheral.swift
 //  SmartLum
 //
-//  Created by ELIX on 09.11.2021.
-//  Copyright © 2021 SmartLum. All rights reserved.
+//  Created by ELIX on 10.01.2022.
+//  Copyright © 2022 SmartLum. All rights reserved.
 //
 
 import CoreBluetooth
 
-protocol SlProPeripheralDelegate: StairsPeripheralDelegate, DistanceSensorPeripheralDelegate, LightnessSensorPeripheralDelegate, LedPeripheralDelegate, AnimationPeripheralDelegate, ColorPeripheralDelegate { }
+protocol SlStandartPeripheralDelegate: StairsPeripheralDelegate, DistanceSensorPeripheralDelegate, LightnessSensorPeripheralDelegate, LedPeripheralDelegate, AnimationPeripheralDelegate { }
 
-class SlProPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSensorPeripheralProtocol, LightnessSensorPeripheralProtocol, LedPeripheralProtocol, AnimationPeripheralProtocol, ColorPeripheralProtocol {
+class SlStandartPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSensorPeripheralProtocol, LightnessSensorPeripheralProtocol, LedPeripheralProtocol, AnimationPeripheralProtocol {
     
-    var delegate: SlProPeripheralDelegate?
+    var delegate: SlStandartPeripheralDelegate?
     
     override init(_ peripheral: CBPeripheral, _ manager: CBCentralManager) {
         super.init(peripheral, manager)
@@ -51,11 +51,6 @@ class SlProPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSensorP
             (.sensor, .topSensorCurrentLightness),
             (.sensor, .botSensorCurrentLightness):
             handleLightnessSettings(characteristic, data)
-            break
-        case (.color, .primaryColor),
-            (.color, .secondaryColor),
-            (.color, .randomColor):
-            handleColorSettings(characteristic, data)
             break
         case (.animation, .animationMode),
             (.animation, .animationDirection),
@@ -160,16 +155,6 @@ class SlProPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSensorP
         default:
             break
         // TODO: - Current
-        }
-    }
-    
-    func handleColorSettings(_ setting: BluetoothEndpoint.Characteristic, _ value: Data) {
-        switch setting {
-        case .primaryColor:
-            delegate?.getPrimaryColor(value.toUIColor())
-            break
-        default:
-            break
         }
     }
     
