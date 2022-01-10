@@ -1,5 +1,5 @@
 //
-//  SlStandartViewController.swift
+//  SlProViewController.swift
 //  SmartLum
 //
 //  Created by ELIX on 09.11.2021.
@@ -9,19 +9,19 @@
 import UIKit
 import CoreBluetooth
 
-class SlStandartViewController: PeripheralViewController, PeripheralViewControllerProtocol {
+class SlProViewController: PeripheralViewController, PeripheralViewControllerProtocol {
     
     func viewModelInit(peripheral: BasePeripheral) {
-        self.viewModel = SlStandartViewModel(self.tableView, peripheral, self) {
+        self.viewModel = SlProViewModel(self.tableView, peripheral, self) {
             self.onCellSelected(model:$0)
-            guard let vm = self.viewModel as? SlStandartViewModel else { return }
+            guard let vm = self.viewModel as? SlProViewModel else { return }
             switch $0.cellKey {
-            case SlStandartData.stairsWorkModeKey:
+            case SlProData.stairsWorkModeKey:
                 self.pushPicker(PeripheralStairsWorkMode.allCases) { mode in
                     vm.writeStairsWorkMode(mode: mode)
                 }
                 break
-            case SlStandartData.ledAdaptiveModeKey:
+            case SlProData.ledAdaptiveModeKey:
                 self.pushPicker(PeripheralLedAdaptiveMode.allCases) { mode in
                     vm.writeLedAdaptiveBrightnessMode(mode: mode)
                 }
@@ -37,7 +37,7 @@ class SlStandartViewController: PeripheralViewController, PeripheralViewControll
     }
         
     func onCellSelected(model: CellModel) {
-        if let mViewModel = self.viewModel as? SlStandartViewModel {
+        if let mViewModel = self.viewModel as? SlProViewModel {
             switch model {
             case mViewModel.primaryColorCell:
                 pushColorPicker(model, initColor: mViewModel.primaryColor) { color, _ in
@@ -45,7 +45,7 @@ class SlStandartViewController: PeripheralViewController, PeripheralViewControll
                 }
                 break
             case mViewModel.animationModeCell:
-                pushPicker(SlStandartAnimations.allCases) { selection in
+                pushPicker(SlProAnimations.allCases) { selection in
                     mViewModel.writeAnimationMode(mode: selection)
                 }
                 break
@@ -57,7 +57,7 @@ class SlStandartViewController: PeripheralViewController, PeripheralViewControll
     
 }
 
-class SlStandartSetupViewController: PeripheralSetupViewController {
+class SlProSetupViewController: PeripheralSetupViewController {
     
     override func confirmAction(_ sender: UIButton!) {
         confirmButton.isEnabled = !(viewModel as! SlBaseViewModel).writeInitDistance()

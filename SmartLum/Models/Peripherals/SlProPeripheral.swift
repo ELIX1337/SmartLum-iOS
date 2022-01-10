@@ -1,5 +1,5 @@
 //
-//  SlStandartPeripheral.swift
+//  SlProPeripheral.swift
 //  SmartLum
 //
 //  Created by ELIX on 09.11.2021.
@@ -8,11 +8,11 @@
 
 import CoreBluetooth
 
-protocol SlStandartPeripheralDelegate: StairsPeripheralDelegate, DistanceSensorPeripheralDelegate, LightnessSensorPeripheralDelegate, LedPeripheralDelegate, AnimationPeripheralDelegate, ColorPeripheralDelegate { }
+protocol SlProPeripheralDelegate: StairsPeripheralDelegate, DistanceSensorPeripheralDelegate, LightnessSensorPeripheralDelegate, LedPeripheralDelegate, AnimationPeripheralDelegate, ColorPeripheralDelegate { }
 
-class SlStandartPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSensorPeripheralProtocol, LightnessSensorPeripheralProtocol, LedPeripheralProtocol, AnimationPeripheralProtocol, ColorPeripheralProtocol {
+class SlProPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSensorPeripheralProtocol, LightnessSensorPeripheralProtocol, LedPeripheralProtocol, AnimationPeripheralProtocol, ColorPeripheralProtocol {
     
-    var delegate: SlStandartPeripheralDelegate?
+    var delegate: SlProPeripheralDelegate?
     
     override init(_ peripheral: CBPeripheral, _ manager: CBCentralManager) {
         super.init(peripheral, manager)
@@ -100,10 +100,10 @@ class SlStandartPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSe
             break
         case .ledTimeout:
             delegate?.getLedTimeout(timeout: value.toInt())
-            delegate?.getLedType(type: SlStandartControllerType.default)
+            delegate?.getLedType(type: SlProControllerType.default)
             break
         case .ledType:
-            delegate?.getLedType(type: SlStandartControllerType(rawValue: value.toInt()) ?? .default)
+            delegate?.getLedType(type: SlProControllerType(rawValue: value.toInt()) ?? .default)
             break
         case .ledAdaptiveBrightness:
             delegate?.getLedAdaptiveBrightnessState(mode: PeripheralLedAdaptiveMode(rawValue: value.toInt()) ?? .off)
@@ -179,7 +179,7 @@ class SlStandartPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSe
     func handleAnimationSettings(_ setting: BluetoothEndpoint.Characteristic, _ value: Data) {
         switch setting {
         case .animationMode:
-            delegate?.getAnimationMode(mode: SlStandartAnimations(rawValue: value.toInt()) ?? .off)
+            delegate?.getAnimationMode(mode: SlProAnimations(rawValue: value.toInt()) ?? .off)
             break
         default:
             break

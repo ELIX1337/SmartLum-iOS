@@ -27,7 +27,7 @@ func getPeripheralVC(peripheral: PeripheralProfile) -> PeripheralViewControllerP
     case .FlClassic:  return FlClassicViewController()
     case .FlMini:     return FlClassicViewController()
     case .SlBase:     return SlBaseViewController()
-    case .SlStandart: return SlStandartViewController()
+    case .SlPro: return SlProViewController()
     }
 }
 
@@ -43,7 +43,7 @@ func getPeripheralType(profile: PeripheralProfile, peripheral: CBPeripheral, man
     case .FlClassic:  return FlClassicPeripheral.init(peripheral, manager)
     case .FlMini:     return FlClassicPeripheral.init(peripheral, manager)
     case .SlBase:     return SlBasePeripheral.init(peripheral, manager)
-    case .SlStandart: return SlStandartPeripheral.init(peripheral, manager)
+    case .SlPro: return SlProPeripheral.init(peripheral, manager)
     }
 }
 

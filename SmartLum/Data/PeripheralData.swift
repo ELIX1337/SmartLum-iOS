@@ -53,7 +53,7 @@ struct SlBaseData: PeripheralData {
     static let animationMaxSpeed = 100
 }
 
-struct SlStandartData: PeripheralData {
+struct SlProData: PeripheralData {
     var values: [String : Any]
     
     static let primaryColorKey         = "PrimaryColorKey"
@@ -126,15 +126,15 @@ extension PeripheralDataElement where Self.RawValue == Int, Self: RawRepresentab
     var code: Int { return self.rawValue }
 }
 
-enum SlStandartControllerType: Int, CaseIterable, PeripheralDataElement {
+enum SlProControllerType: Int, CaseIterable, PeripheralDataElement {
        
     case `default` = 0
     case rgb = 1
     
     var name: String {
         switch self {
-        case .`default`: return "peripheral_sl_standart_controller_type_default".localized
-        case .rgb:       return "peripheral_sl_standart_controller_type_rgb".localized
+        case .`default`: return "peripheral_sl_pro_controller_type_default".localized
+        case .rgb:       return "peripheral_sl_pro_controller_type_rgb".localized
         }
     }
     
@@ -170,7 +170,7 @@ enum PeripheralStairsWorkMode: Int, CaseIterable, PeripheralDataElement {
     }
 }
 
-enum SlStandartAnimations: Int, CaseIterable, PeripheralDataElement {
+enum SlProAnimations: Int, CaseIterable, PeripheralDataElement {
     
     //case tetris
     case off        = 0
@@ -179,9 +179,9 @@ enum SlStandartAnimations: Int, CaseIterable, PeripheralDataElement {
     
     var name: String {
         switch self {
-        case .off:          return "sl_standart_animations_off".localized
-        case .stepByStep:   return "sl_standart_animations_stepByStep".localized
-        case .sharp:        return "sl_standart_animations_sharp".localized
+        case .off:          return "sl_pro_animations_off".localized
+        case .stepByStep:   return "sl_pro_animations_stepByStep".localized
+        case .sharp:        return "sl_pro_animations_sharp".localized
         }
     }
 }

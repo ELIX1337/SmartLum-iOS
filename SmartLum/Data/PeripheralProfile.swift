@@ -14,14 +14,14 @@ enum PeripheralProfile {
     case FlClassic
     case FlMini
     case SlBase
-    case SlStandart
+    case SlPro
     
     var uuid: CBUUID {
         switch self {
         case .FlClassic:  return UUIDs.FL_CLASSIC_ADVERTISING_UUID
         case .FlMini:     return UUIDs.FL_MINI_ADVERTISING_UUID
         case .SlBase:     return UUIDs.SL_BASE_ADVERTISING_UUID
-        case .SlStandart: return UUIDs.SL_STANDART_ADVERTISING_UUID
+        case .SlPro:      return UUIDs.SL_PRO_ADVERTISING_UUID
         }
     }
     
@@ -30,7 +30,7 @@ enum PeripheralProfile {
         case UUIDs.FL_CLASSIC_ADVERTISING_UUID: return Self.FlClassic
         case UUIDs.FL_MINI_ADVERTISING_UUID: return Self.FlMini
         case UUIDs.SL_BASE_ADVERTISING_UUID: return Self.SlBase
-        case UUIDs.SL_STANDART_ADVERTISING_UUID: return Self.SlStandart
+        case UUIDs.SL_PRO_ADVERTISING_UUID: return Self.SlPro
         default: return nil
         }
     }

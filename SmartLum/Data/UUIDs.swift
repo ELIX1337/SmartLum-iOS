@@ -14,7 +14,7 @@ public struct UUIDs: Error {
     public static let FL_CLASSIC_ADVERTISING_UUID   = CBUUID(string: "BB930001-3CE1-4720-A753-28C0159DC777")
     public static let FL_MINI_ADVERTISING_UUID      = CBUUID(string: "BB930002-3CE1-4720-A753-28C0159DC777")
     public static let SL_BASE_ADVERTISING_UUID      = CBUUID(string: "BB930003-3CE1-4720-A753-28C0159DC777")
-    public static let SL_STANDART_ADVERTISING_UUID  = CBUUID(string: "BB930004-3CE1-4720-A753-28C0159DC777")
+    public static let SL_PRO_ADVERTISING_UUID  = CBUUID(string: "BB930004-3CE1-4720-A753-28C0159DC777")
 
     // MARK: - Services UUIDs
     public static let DEVICE_INFO_SERVICE_UUID = CBUUID(string: "FFFF")
@@ -144,5 +144,5 @@ extension UUIDs {
     static let advServices:[CBUUID:BasePeripheral.Type] = [BluetoothEndpoint.AdvertisingServices.flClassic.uuid : FlClassicPeripheral.self,
                                                            BluetoothEndpoint.AdvertisingServices.flMini.uuid : FlClassicPeripheral.self,
                                                            BluetoothEndpoint.AdvertisingServices.slBase.uuid : SlBasePeripheral.self,
-                                                           BluetoothEndpoint.AdvertisingServices.slStandart.uuid : SlStandartPeripheral.self]
+                                                           BluetoothEndpoint.AdvertisingServices.slPro.uuid : SlProPeripheral.self]
 }

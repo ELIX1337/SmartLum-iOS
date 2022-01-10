@@ -46,27 +46,27 @@
     "peripheral_notice_section_footer" = "";
     "peripheral_setup_trigger_distance_section_header" = "Установите дистанции срабатывания датчиков";
     "peripheral_setup_trigger_distance_section_footer" = "Значения в сантиметрах";
-    "peripheral_sl_standart_led_section_header" = "Настройки ленты";
-    "peripheral_sl_standart_led_section_footer" = "";
-    "peripheral_sl_standart_sensor_trigger_distance_section_header" = "Дистанция срабатывания датчиков";
-    "peripheral_sl_standart_sensor_trigger_distance_section_footer" = "Значения в сантиметрах";
-    "peripheral_sl_standart_sensor_trigger_lightness_section_header" = "Пороговое значение освещенности";
-    "peripheral_sl_standart_sensor_trigger_lightness_section_footer" = "Значение при котором устройство перейдет в ночной режим работы";
-    "peripheral_sl_standart_sensor_current_lightness_section_header" = "Текущая освещенность";
-    "peripheral_sl_standart_sensor_current_lightness_section_footer" = "";
-    "peripheral_sl_standart_steps_settings_section_header" = "Настройки лестницы";
-    "peripheral_sl_standart_steps_settings_section_footer" = "";
-    "peripheral_sl_standart_standby_section_header" = "Дежурное освещение";
-    "peripheral_sl_standart_standby_section_footer" = "";
-    "peripheral_sl_standart_random_color_cell_title" = "Случайный цвет";
-    "peripheral_sl_standart_adaptive_brightness_cell_title" = "Адаптивная яркость";
-    "peripheral_sl_standart_stairs_work_mode_cell_title" = "Режим работы";
-    "peripheral_sl_standart_top_sensor_count_cell_title" = "Количество верхних датиков";
-    "peripheral_sl_standart_bot_sensor_count_cell_title" = "Количество нижних датчиков";
-    "peripheral_sl_standart_top_current_lightness_cell_title" = "Сверху";
-    "peripheral_sl_standart_bot_current_lightness_cell_title" = "Снизу";
-    "peripheral_sl_standart_controller_type_default" = "Стандартный";
-    "peripheral_sl_standart_controller_type_rgb" = "Многоцветный";
+    "peripheral_sl_pro_led_section_header" = "Настройки ленты";
+    "peripheral_sl_pro_led_section_footer" = "";
+    "peripheral_sl_pro_sensor_trigger_distance_section_header" = "Дистанция срабатывания датчиков";
+    "peripheral_sl_pro_sensor_trigger_distance_section_footer" = "Значения в сантиметрах";
+    "peripheral_sl_pro_sensor_trigger_lightness_section_header" = "Пороговое значение освещенности";
+    "peripheral_sl_pro_sensor_trigger_lightness_section_footer" = "Значение при котором устройство перейдет в ночной режим работы";
+    "peripheral_sl_pro_sensor_current_lightness_section_header" = "Текущая освещенность";
+    "peripheral_sl_pro_sensor_current_lightness_section_footer" = "";
+    "peripheral_sl_pro_steps_settings_section_header" = "Настройки лестницы";
+    "peripheral_sl_pro_steps_settings_section_footer" = "";
+    "peripheral_sl_pro_standby_section_header" = "Дежурное освещение";
+    "peripheral_sl_pro_standby_section_footer" = "";
+    "peripheral_sl_pro_random_color_cell_title" = "Случайный цвет";
+    "peripheral_sl_pro_adaptive_brightness_cell_title" = "Адаптивная яркость";
+    "peripheral_sl_pro_stairs_work_mode_cell_title" = "Режим работы";
+    "peripheral_sl_pro_top_sensor_count_cell_title" = "Количество верхних датиков";
+    "peripheral_sl_pro_bot_sensor_count_cell_title" = "Количество нижних датчиков";
+    "peripheral_sl_pro_top_current_lightness_cell_title" = "Сверху";
+    "peripheral_sl_pro_bot_current_lightness_cell_title" = "Снизу";
+    "peripheral_sl_pro_controller_type_default" = "Стандартный";
+    "peripheral_sl_pro_controller_type_rgb" = "Многоцветный";
 
     // Cells
     "peripheral_primary_color_cell_title" = "Основной";
@@ -86,17 +86,17 @@
     "peripheral_error_cell_code_prefix" = "Подробнее";
     "peripheral_error_description_cell_title" = "Ошибка - Код ";
 
-    "peripheral_sl_standart_color_cell_title" = "";
-    "peripheral_sl_standart_controller_type_cell_title" = "Тип контроллера";
-    "peripheral_sl_standart_top_sensor_trigger_distance_cell_title" = "Верхний датчик";
-    "peripheral_sl_standart_bot_sensor_trigger_distance_cell_title" = "Нижний датчик";
-    "peripheral_sl_standart_top_sensor_trigger_lightness_cell_title" = "Верхний датчик";
-    "peripheral_sl_standart_bot_sensor_trigger_lightness_cell_title" = "Нижний датчик";
-    "peripheral_sl_standart_steps_count_cell" = "Количество ступеней";
-    "peripheral_sl_standart_standby_state" = "Вкл/Выкл";
-    "peripheral_sl_standart_standby_brightness" = "Яркость";
-    "peripheral_sl_standart_standby_top_count" = "Число верхних ступеней";
-    "peripheral_sl_standart_standby_bot_count" = "Число нижних ступеней";
+    "peripheral_sl_pro_color_cell_title" = "";
+    "peripheral_sl_pro_controller_type_cell_title" = "Тип контроллера";
+    "peripheral_sl_pro_top_sensor_trigger_distance_cell_title" = "Верхний датчик";
+    "peripheral_sl_pro_bot_sensor_trigger_distance_cell_title" = "Нижний датчик";
+    "peripheral_sl_pro_top_sensor_trigger_lightness_cell_title" = "Верхний датчик";
+    "peripheral_sl_pro_bot_sensor_trigger_lightness_cell_title" = "Нижний датчик";
+    "peripheral_sl_pro_steps_count_cell" = "Количество ступеней";
+    "peripheral_sl_pro_standby_state" = "Вкл/Выкл";
+    "peripheral_sl_pro_standby_brightness" = "Яркость";
+    "peripheral_sl_pro_standby_top_count" = "Число верхних ступеней";
+    "peripheral_sl_pro_standby_bot_count" = "Число нижних ступеней";
     "peripheral_setup_requires_cell_text" = "Устройство необходимо настроить";
     
 // Peripheral data
@@ -113,10 +113,10 @@
     "peripheral_animation_direction_to_center" = "К центру";
     "peripheral_animation_direction_from_center" = "Из центра";
 
-    // SL-Standart animation modes
-    "sl_standart_animations_off" = "Выкл.";
-    "sl_standart_animations_stepByStep" = "Плавно";
-    "sl_standart_animations_sharp" = "Резко";
+    // SL-Pro animation modes
+    "sl_pro_animations_off" = "Выкл.";
+    "sl_pro_animations_stepByStep" = "Плавно";
+    "sl_pro_animations_sharp" = "Резко";
 
     // Peripheral stairs work modes
     "peripheral_stairs_work_mode_by_sensor" = "По датчикам";
