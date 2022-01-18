@@ -1,119 +1,22 @@
 //
-//  TableViewModel.swift
+//  CellModel.swift
 //  SmartLum
 //
-//  Created by ELIX on 21.07.2021.
-//  Copyright © 2021 SmartLum. All rights reserved.
+//  Created by ELIX on 14.01.2022.
+//  Copyright © 2022 SmartLum. All rights reserved.
 //
+
 import UIKit
-
-struct TableViewModel: Equatable {
-    var sections: [SectionModel]
-    var type: TableViewModel.TableViewType
-    
-    func getIndexPath(forRow: CellModel) -> IndexPath? {
-        if let section = sections.filter({ $0.rows.contains(forRow)}).first,
-           let sectionIndex = sections.firstIndex(of: section),
-           let rowIndex = sections[sectionIndex].rows.firstIndex(of: forRow) {
-            return IndexPath.init(row: rowIndex, section: sectionIndex)
-        }
-        return nil
-    }
-    
-    func getSectionByKey(_ key: String) -> SectionModel? {
-        return sections.filter{ $0.key == key }.first
-    }
-    
-    mutating func deleteCell(indexPath: IndexPath) {
-        sections[indexPath.section].rows.remove(at: indexPath.row)
-    }
-    
-    mutating func insertCell(cell: CellModel, inSectionByKey: String, at: Int) {
-        guard let sectionKey = (sections.firstIndex { $0.key == inSectionByKey }) else { fatalError("Cannot find section with key \(inSectionByKey)") }
-        sections[sectionKey].rows.insert(cell, at: at)
-    }
-    
-    enum TableViewType: Int {
-        case ready    = 1
-        case setup    = 2
-        case settings = 3
-    }
-}
-
-extension TableViewModel {
-    
-    static var KEY_NOTICE_SECTION: String { get { "peripheral_notice_section_key" } }
-    static var KEY_NOTICE_DETAIL_SECTION: String { get { "peripheral_notice_detail_section_key" } }
-    
-    static func createNoticeSection(withRows: [CellModel]?) -> SectionModel {
-        return SectionModel(
-            key: KEY_NOTICE_SECTION,
-            headerText: "peripheral_notice_section_header".localized,
-            footerText: "peripheral_notice_section_footer".localized,
-            rows: withRows ?? [])
-    }
-    
-    static func createNoticeDetailSection(withRows: [CellModel]?) -> SectionModel {
-        return SectionModel(
-            key: KEY_NOTICE_DETAIL_SECTION,
-            headerText: "peripheral_notice_section_header".localized,
-            footerText: "peripheral_notice_section_footer".localized,
-            rows: withRows ?? [])
-    }
-    
-    static func createErrorCell() -> CellModel {
-        return CellModel.infoCell(
-            key: BasePeripheralData.errorKey,
-            titleText: "peripheral_error_cell_title".localized,
-            detailText: "peripheral_error_cell_code_prefix".localized,
-            image: .init(systemName: "exclamationmark.circle.fill")?.withTintColor(.systemRed, renderingMode: .alwaysOriginal),
-            accessory: .disclosureIndicator)
-    }
-    
-    static func createErrorDetailCell(code: Int) -> CellModel {
-            return CellModel.infoDetailCell(
-                key: BasePeripheralData.errorDetailKey,
-                titleText: "peripheral_error_description_cell_title".localized + "\(code)",
-                detailText: "peripheral_error_code_\(code)_description".localized,
-                image: .init(systemName: "exclamationmark.circle.fill", withConfiguration: UIImage.largeScale)?.withTintColor(.systemRed, renderingMode: .alwaysOriginal),
-                accessory: nil)
-    }
-        
-}
-
-struct HiddenIndexPath {
-    var section = [Int]()
-    var row = [IndexPath]()
-    
-    mutating func clear() {
-        section.removeAll()
-        row.removeAll()
-    }
-}
-
-struct HiddenCells {
-    var section = [SectionModel]()
-    var cell = [CellModel]()
-}
-
-struct SectionModel: Equatable {
-    var key: String?
-    let headerText: String
-    let footerText: String
-    var rows: [CellModel]
-    
-    func getCellByKey(_ key: String) -> CellModel? {
-        return rows.filter{ $0.cellKey == key }.first
-    }
-
-}
 
 enum CellModel: Equatable {
     
+    // Приводим в соответсвие протоколу Equatable
     static func == (lhs: CellModel, rhs: CellModel) -> Bool {
         lhs.cellKey == rhs.cellKey
     }
 
+    // Типы ячеек
+    // Callback - это данные возвращаемые с ячейки, например изменение значения слайдера идет в Callback, который обрабатывается во ViewModel
     case colorCell(key: String, title: String, initialValue : UIColor, callback: (UIColor) -> Void)
     case pickerCell(key: String, title: String, initialValue: Any)
     case sliderCell(key: String, title: String, initialValue: Float, minValue: Float, maxValue: Float, leftIcon: UIImage?, rightIcon: UIImage?, showValue: Bool, callback: (Float) -> Void)
@@ -123,14 +26,16 @@ enum CellModel: Equatable {
     case infoCell(key: String, titleText: String, detailText: String?, image: UIImage?, accessory: UITableViewCell.AccessoryType?)
     case infoDetailCell(key: String, titleText: String, detailText: String?, image: UIImage?, accessory: UITableViewCell.AccessoryType?)
     
+    // Возвращает IndexPath ячейки из модели таблицы (вроде бы нигде не используется, но добавил как возможность)
     func getIndexPath(fromModel: TableViewModel) -> IndexPath? {
         return fromModel.getIndexPath(forRow: self)
     }
     
+    // Ключ ячейки. Каждая ячейка имеет свой ключ (id) по которому она идентифицируется
     var cellKey: String {
         switch self {
         case .colorCell(let key, _, _, _):         return key
-        case .pickerCell(let key, _, _):        return key
+        case .pickerCell(let key, _, _):           return key
         case .sliderCell(let key, _, _, _, _, _, _, _, _):  return key
         case .switchCell(let key, _, _, _):        return key
         case .stepperCell(let key, _, _, _, _, _): return key
@@ -140,6 +45,7 @@ enum CellModel: Equatable {
         }
     }
     
+    // Значение в ячейке (вроде нигде не используется, но по хорошему и не должно)
     func cellValue(from model: PeripheralData) -> Any? {
         return model.getValue(key: cellKey)
     }
@@ -170,6 +76,7 @@ enum CellModel: Equatable {
         }
     }
     
+    // Класс ячейки. Нигде пока не пригодилось
     var cellClass: BaseTableViewCell.Type {
         switch self {
         case .colorCell:   return ColorTableViewCell.self
@@ -183,6 +90,9 @@ enum CellModel: Equatable {
         }
     }
     
+    // Функция, которая получает ячейку и конфигурирует ее в соответсвии с типой этой ячейки
+    // data - это ключ-значение массив со всеми данными, ячейка получает необходимое ей значение по ее ключу,
+    // т.е. ключ ячейки (key) соответствует определенному ключу в этом массиве
     func configure(cell: BaseTableViewCell, with data: PeripheralData) {
         switch self {
         case .sliderCell(key: let key, title: let title, initialValue: let initialValue, minValue: let minValue, maxValue: let maxValue, leftIcon: let leftIcon, rightIcon: let rightIcon, showValue: let showValue, callback: let callback):

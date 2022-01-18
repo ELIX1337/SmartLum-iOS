@@ -8,8 +8,15 @@
 
 import UIKit
 
+// ViewModel устройства SL-Base
 class SlBaseViewModel: PeripheralViewModel {
     
+    // Делаем downcast BasePeripheral в SlBasePeripheral
+    var slBasePeripheral: SlBasePeripheral! {
+        get { return (super.basePeripheral as! SlBasePeripheral) }
+    }
+    
+    // Заранее декларируем ячейки для нашей tableView
     var topTriggerDistanceCell: CellModel!
     var botTriggerDistanceCell: CellModel!
     var ledStateCell:           CellModel!
@@ -17,10 +24,6 @@ class SlBaseViewModel: PeripheralViewModel {
     var ledTimeoutCell:         CellModel!
     var animationSpeedCell:     CellModel!
     var resetToFactoryCell:     CellModel!
-        
-    var slBasePeripheral: SlBasePeripheral! {
-        get { return (super.basePeripheral as! SlBasePeripheral) }
-    }
     
     override init(_ withTableView: UITableView,
                   _ withPeripheral: BasePeripheral,
@@ -29,6 +32,14 @@ class SlBaseViewModel: PeripheralViewModel {
         super.init(withTableView, withPeripheral, delegate, selected)
         slBasePeripheral.delegate = self
         dataModel = StairsControllerData.init(values: [:])
+        initCells()
+        initReadyTableViewModel()
+        initSetupTableViewModel()
+        initSettingsTableViewModel()
+    }
+    
+    /// Иницализируем все ячейки
+    private func initCells() {
         self.topTriggerDistanceCell = .sliderCell(
             key: StairsControllerData.topTriggerDistanceKey,
             title: "peripheral_top_sensor_cell_title".localized,
@@ -85,11 +96,9 @@ class SlBaseViewModel: PeripheralViewModel {
             key: BasePeripheralData.factoryResetKey,
             title: "peripheral_reset_to_factory_cell_title".localized,
             callback: { self.onCellSelected(self.resetToFactoryCell) })
-        initReadyTableViewModel()
-        initSetupTableViewModel()
-        initSettingsTableViewModel()
     }
     
+    /// Инициализируем tableViewModel для  главного экрана
     private func initReadyTableViewModel() {
         readyTableViewModel = TableViewModel(
             sections: [
@@ -109,6 +118,7 @@ class SlBaseViewModel: PeripheralViewModel {
             ], type: .ready)
     }
     
+    /// Инициализируем tableViewModel для экрана настройки устройства (инициализации)
     private func initSetupTableViewModel() {
         setupTableViewModel = TableViewModel(
             sections: [
@@ -119,6 +129,7 @@ class SlBaseViewModel: PeripheralViewModel {
             ], type: .setup)
     }
     
+    /// Инициализируем tableViewModel для экрана расширенных настроек
     private func initSettingsTableViewModel() {
         settingsTableViewModel = TableViewModel(
             sections: [
@@ -133,30 +144,37 @@ class SlBaseViewModel: PeripheralViewModel {
             ], type: .settings)
     }
     
+    /// Публичный метод для включения/выключения ленты
     public func writeLedState(state: Bool) {
         dataModel.setValue(key: StairsControllerData.ledStateKey, value: state)
         slBasePeripheral.writeLedState(state)
         updateCell(for: ledStateCell, with: .none)
     }
     
+    /// Публичный метод для управления яркостью ленты
     public func writeLedBrightness(value: Int) {
         dataModel.setValue(key: StairsControllerData.ledBrightnessKey, value: value)
         slBasePeripheral.writeLedBrightness(value)
         updateCell(for: ledBrightnessCell, with: .none)
     }
     
+    /// Публичный метод для задания таймаута ленты
     public func writeLedTimeout(timeout: Int) {
         dataModel.setValue(key: StairsControllerData.ledTimeoutKey, value: timeout)
         slBasePeripheral.writeLedTimeout(timeout)
         updateCell(for: ledTimeoutCell, with: .none)
     }
     
+    /// Публичный метод для управления скоростью включения ленты
     public func writeAnimationSpeed(speed: Int) {
         dataModel.setValue(key: StairsControllerData.animationSpeedKey, value: speed)
         slBasePeripheral.writeAnimationOnSpeed(speed)
         updateCell(for: animationSpeedCell, with: .none)
     }
     
+    /// Этот метод используется при первичной настройке (инициализации) устройства.
+    /// Запись данных произойдет только в том случае, когда в dataModel будут лежать необходимые данные.
+    /// Для этого пользователь должен "подвигать" оба слайдера.
     public func writeInitDistance() -> Bool {
         if let top = dataModel.getValue(key: StairsControllerData.topTriggerDistanceKey),
            let bot = dataModel.getValue(key: StairsControllerData.botTriggerDistanceKey) {
@@ -167,15 +185,23 @@ class SlBaseViewModel: PeripheralViewModel {
         return false
     }
     
+    /// Этот метод для записи дистанции срабатывания используется из 2 мест.
+    /// 1. При первичной настройке устройства (инициализации).
+    /// 2. Из экрана расширенных настроек.
     public func writeTopSensorTriggerDistance(distance: Int) {
+        // Кидаем данные в dataModel
         dataModel.setValue(key: StairsControllerData.topTriggerDistanceKey, value: distance)
+        // Проверяем, инициализировано ли устройство
         if isInitialized {
+            // Инициализировано, отправляем данные на устройство (экран расширенных настроек)
             slBasePeripheral.writeTopSensorTriggerDistance(distance)
         } else {
+            // Не инициализировано - не пишем, отправка данных произойдет по кнопке "подтвердить", так что сидим и ждем
             checkInitWrite()
         }
     }
     
+    /// Так же логика, что и у предыдущего метода
     public func writeBotSensorTriggerDistance(distance: Int) {
         dataModel.setValue(key: StairsControllerData.botTriggerDistanceKey, value: distance)
         if isInitialized {
@@ -185,14 +211,9 @@ class SlBaseViewModel: PeripheralViewModel {
         }
     }
     
-    private func initTopSensorTriggerDistance(distance: Int) {
-        readyToWriteInitData = dataModel.getValue(key: StairsControllerData.botTriggerDistanceKey) as! Int != 0
-    }
-    
-    private func initBotSensorTriggerDistance(distance: Int) {
-        readyToWriteInitData = dataModel.getValue(key: StairsControllerData.topTriggerDistanceKey) as! Int != 0
-    }
-    
+    /// Переопределяем функцию.
+    /// В теле указываем условие, при котором становится возможным запись данных при инициализации.
+    /// В данном случае запись возможна, когда пользователь указал дистанции для верхнего и нижнего датчиков.
     override func requiresInit() -> Bool {
         let first  = dataModel.getValue(key: StairsControllerData.botTriggerDistanceKey) as? Int != 0
         let second = dataModel.getValue(key: StairsControllerData.topTriggerDistanceKey) as? Int != 0
@@ -201,6 +222,7 @@ class SlBaseViewModel: PeripheralViewModel {
     
 }
 
+/// Методы делегата устройства SL-Base (прием данных).
 extension SlBaseViewModel: SlBasePeripheralDelegate {
     
     func getAnimationOnSpeed(speed: Int) {
@@ -233,7 +255,7 @@ extension SlBaseViewModel: SlBasePeripheralDelegate {
         updateCell(for: botTriggerDistanceCell, with: .middle)
     }
     
-    // Unused
+    // Не используется
     func getAnimationMode(mode: PeripheralDataElement) { }
     
     func getAnimationOffSpeed(speed: Int) { }

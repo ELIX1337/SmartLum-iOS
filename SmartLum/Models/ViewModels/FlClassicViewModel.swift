@@ -8,12 +8,15 @@
 
 import UIKit
 
+// ViewModel устройства FL-Classic
 class FlClassicViewModel: PeripheralViewModel {
-        
+     
+    // Делаем downcast BasePeripheral в FlClassicPeripheral
     var peripheral: FlClassicPeripheral! {
         get { return (super.basePeripheral as! FlClassicPeripheral) }
     }
     
+    // Заранее декларируем ячейки для нашей tableView
     var primaryColorCell:       CellModel!
     var secondaryColorCell:     CellModel!
     var randomColorCell:        CellModel!
@@ -22,12 +25,14 @@ class FlClassicViewModel: PeripheralViewModel {
     var animationDirectionCell: CellModel!
     var animationStepCell:      CellModel!
         
-    // Public variables for using in viewController
+    // Публичные переменные для использования во ViewController'е
+    // Используются чтобы инициализировать ColorPicker
     var primaryColor: UIColor {
         get {
             if let color = dataModel.getValue(key: FlClassicData.primaryColorKey) as? UIColor {
                 return color
             }
+            // Дефолтное значение
             return UIColor.white
         }
     }
@@ -37,6 +42,7 @@ class FlClassicViewModel: PeripheralViewModel {
             if let color = dataModel.getValue(key: FlClassicData.secondaryColorKey) as? UIColor {
                 return color
             }
+            // Дефолтное значение
             return UIColor.white
         }
     }
@@ -47,9 +53,11 @@ class FlClassicViewModel: PeripheralViewModel {
                   _ selected: @escaping (CellModel) -> Void) {
         super.init(withTableView, withPeripheral, delegate, selected)
         peripheral.delegate = self
+        // dataModel - хранит значения полученные с устройства в формате ключ-значение
         dataModel = FlClassicData.init(values: [:])
         initColorSection()
         initAnimationSection()
+        // Инициализируем нашу TableView в родительском классе
         readyTableViewModel = TableViewModel(
             sections: [
                 SectionModel(
@@ -63,16 +71,19 @@ class FlClassicViewModel: PeripheralViewModel {
             ], type: .ready)
     }
     
+    // Функция инициализации секции с цветами
     private func initColorSection() {
         primaryColorCell = .colorCell(
             key: FlClassicData.primaryColorKey,
             title: "peripheral_primary_color_cell_title".localized,
             initialValue: primaryColor,
+            // callBack пустой, так как он обрабатывается во ViewController'e
             callback: { _ in })
         secondaryColorCell = .colorCell(
             key: FlClassicData.secondaryColorKey,
             title: "peripheral_secondary_color_cell_title".localized,
             initialValue: dataModel.getValue(key: FlClassicData.secondaryColorKey) as? UIColor ?? UIColor.SLWhite,
+            // callBack пустой, так как он обрабатывается во ViewController'e
             callback: { _ in })
         randomColorCell = .switchCell(
             key: FlClassicData.randomColorKey,
@@ -81,6 +92,7 @@ class FlClassicViewModel: PeripheralViewModel {
             callback: { self.writeRandomColor(state: $0) })
     }
     
+    // Функция инициализации секции с анимациями
     private func initAnimationSection() {
         animationModeCell = .pickerCell(
             key: FlClassicData.animationModeKey,
@@ -112,10 +124,15 @@ class FlClassicViewModel: PeripheralViewModel {
             callback: { self.writeAnimationStep(step: Int($0)) })
     }
     
-    // Updating tableView depending selected animation
+    /// Тупорылая и прямолинейная функция, которая скрывает/показывает ячейки в зависимости от выбранного режима анимации.
+    /// Быстро, дешево.
+    /// Очевидно, что это нужно делать поумнее.
+    /// Например, в Android каждая анимация описана как тип данных (enum) и имеет поле supportingSettings от которого мы и узнаем, какие настройки нужно выводить на экран
     private func handleAnimation(animation: FlClassicAnimations) {
         tableView.performBatchUpdates( {
+            // Обнуляем скрытые ячейки
             showAllCells(inModel: readyTableViewModel!)
+            // Перебираем
             switch animation {
             case .tetris:
                 hideCells(cells: [animationStepCell], inModel: readyTableViewModel!)
@@ -141,31 +158,42 @@ class FlClassicViewModel: PeripheralViewModel {
         }, completion: nil)
     }
     
+    /// Если включен RandomColor, то скрываем ячейки PrimaryColor и SecondaryColor
     private func handleRandomColor(state: Bool) {
         state ? hideCells(cells: [primaryColorCell, secondaryColorCell], inModel: readyTableViewModel!) :
          showCells(cells: [primaryColorCell, secondaryColorCell], inModel: readyTableViewModel!)
     }
     
-    // Public API
+    /// Публичный метод для записи primaryColor
     public func writePrimaryColor(color: UIColor) {
         peripheral.writePrimaryColor(color)
+        // Обновляем данные в dataModel
         dataModel.setValue(key: FlClassicData.primaryColorKey, value: color)
+        // Перезагружаем соответствующую ячейку
         updateCell(for: primaryColorCell, with: .none)
     }
     
+    /// Публичный метод для записи secondaryColor
     public func writeSecondaryColor(color: UIColor) {
         peripheral.writeSecondaryColor(color)
+        // Обновляем данные в dataModel
         dataModel.setValue(key: FlClassicData.secondaryColorKey, value: color)
+        // Перезагружаем соответствующую ячейку
         updateCell(for: secondaryColorCell, with: .none)
     }
     
+    /// Публичный метод для записи randomColor
     public func writeRandomColor(state: Bool) {
         peripheral.writeRandomColor(state)
+        // Обновляем данные в dataModel
         dataModel.setValue(key: FlClassicData.randomColorKey, value: state)
+        // Перезагружаем соответствующую ячейку
         updateCell(for: randomColorCell, with: .none)
+        // Скрываем или показываем primaryColor и secondaryColor
         handleRandomColor(state: state)
     }
     
+    /// Публичный метод для записи режима анимации
     public func writeAnimationMode(mode: FlClassicAnimations) {
         guard mode.name != dataModel.getValue(key: FlClassicData.animationModeKey) as! String else {
             return
@@ -176,18 +204,21 @@ class FlClassicViewModel: PeripheralViewModel {
         handleAnimation(animation: mode)
     }
     
+    /// Публичный метод для направления анимации
     public func writeAnimationDirection(direction: PeripheralAnimationDirections) {
         peripheral.writeAnimationDirection(direction)
         dataModel.setValue(key: FlClassicData.animationDirectionKey, value: direction)
         updateCell(for: animationDirectionCell, with: .none)
     }
     
+    /// Публичный метод для записи скорости анимации
     public func writeAnimationOnSpeed(speed: Int) {
         peripheral.writeAnimationOnSpeed(speed)
         dataModel.setValue(key: FlClassicData.animationSpeedKey, value: speed)
         updateCell(for: animationSpeedCell, with: .none)
     }
     
+    /// Публичный метод для записи шага анимации
     public func writeAnimationStep(step: Int) {
         peripheral.writeAnimationStep(step)
         dataModel.setValue(key: FlClassicData.animationStepKey, value: step)
@@ -196,7 +227,7 @@ class FlClassicViewModel: PeripheralViewModel {
     
 }
 
-// Data from peripheral
+/// Методы делегата периферийного устройства (прием данных)
 extension FlClassicViewModel: FlClassicPeripheralDelegate {
     
     func getPrimaryColor(_ color: UIColor) {
@@ -236,7 +267,7 @@ extension FlClassicViewModel: FlClassicPeripheralDelegate {
         updateCell(for: animationStepCell, with: .middle)
     }
     
-    // Unused
+    // Не используется
     func getAnimationOffSpeed(speed: Int) { }
 
 }

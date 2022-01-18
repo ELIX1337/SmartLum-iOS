@@ -9,8 +9,11 @@
 import CoreBluetooth
 import UIKit
 
+/// Делегат (ViewModel), который получит приведенные в нормальный вид данные с устройства
 protocol SlBasePeripheralDelegate: DistanceSensorPeripheralDelegate, LedPeripheralDelegate, AnimationPeripheralDelegate { }
 
+/// Конкретная реализация устройства SL-Base (контроллер освещения лестницы).
+/// Реализует управление датчиками дистанции, лентой, анимациями
 class SlBasePeripheral: BasePeripheral, DistanceSensorPeripheralProtocol, LedPeripheralProtocol, AnimationPeripheralProtocol {
     
     var delegate: SlBasePeripheralDelegate?
@@ -19,23 +22,23 @@ class SlBasePeripheral: BasePeripheral, DistanceSensorPeripheralProtocol, LedPer
         super.init(peripheral, manager)
     }
     
-    override func readData(data: Data, from characteristic: BluetoothEndpoint.Characteristic, in service: BluetoothEndpoint.Service, error: Error?) {
-        super.readData(data: data, from: characteristic, in: service, error: error)
+    /// Прием данных с устройства.
+    /// Вызываем super метод, чтобы он обработал чтение стандартных данных для всех устройств.
+    /// Делаем override чтобы обработать прием уже конкретных данных
+    override func dataReceived(data: Data, from characteristic: BluetoothEndpoint.Characteristic, in service: BluetoothEndpoint.Service, error: Error?) {
+        super.dataReceived(data: data, from: characteristic, in: service, error: error)
         switch (service, characteristic) {
         case (.sensor,.topSensorTriggerDistance):
             delegate?.getTopSensorTriggerDistance(distance: data.toInt())
-            print("READING TOP SENSOR - \(data.toInt())")
             break
         case (.sensor,.botSensorTriggerDistance):
             delegate?.getBotSensorTriggerDistance(distance: data.toInt())
-            print("READING BOT SENSOR - \(data.toInt())")
             break
         case (.led, .ledState):
             delegate?.getLedState(state: data.toBool())
             break
         case (.led, .ledBrightness):
             delegate?.getLedBrightness(brightness: data.toInt())
-            print("DECIMAL VALUE - \(data.toInt()) for CHARACTERISTIC - \(characteristic.uuidString)")
             break
         case (.led, .ledTimeout):
             delegate?.getLedTimeout(timeout: data.toInt())

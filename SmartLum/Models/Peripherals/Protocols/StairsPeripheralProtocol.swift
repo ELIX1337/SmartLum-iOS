@@ -8,6 +8,7 @@
 
 import CoreBluetooth
 
+// Протокол периферийного устройства со ступенями
 protocol StairsPeripheralProtocol {
     func writeStepsCount(_ count: Int)
     func writeStandbyState(_ state: Bool)
@@ -19,14 +20,30 @@ protocol StairsPeripheralProtocol {
     func writeBotSensorCount(_ count: Int)
 }
 
-extension StairsPeripheralProtocol where Self:BasePeripheralProtocol {
+extension StairsPeripheralProtocol where Self:PeripheralProtocol {
+    
+    /// Количество ступеней
     var stepsCountCharacteristic:        CBCharacteristic? { get { self.endpoints[[.stairs:.stepsCount]] } }
+    
+    /// Состояние дежурной подсветки (вкл или выкл)
     var standbyStateCharacteristic:      CBCharacteristic? { get { self.endpoints[[.stairs:.standbyState]] } }
+    
+    /// Яркость дежурной подсветки
     var standbyBrightnessCharacteristic: CBCharacteristic? { get { self.endpoints[[.stairs:.standbyBrightness]] } }
+    
+    /// Количество ступеней дежурной подсветки СВЕРХУ
     var standbyTopCountCharacteristic:   CBCharacteristic? { get { self.endpoints[[.stairs:.standbyTopCount]] } }
+    
+    /// Количество ступеней дежурной подсветки СНИЗУ
     var standbyBotCountCharacteristic:   CBCharacteristic? { get { self.endpoints[[.stairs:.standbyBotCount]] } }
+    
+    /// Режим работы (по датчикам или по времени)
     var stairsWorkModeChracteristic:     CBCharacteristic? { get { self.endpoints[[.stairs:.workMode]] } }
+    
+    /// Количество верхних датчиков
     var topSensorCountCharacteristic:    CBCharacteristic? { get { self.endpoints[[.stairs:.topSensorCount]] } }
+    
+    /// Количество нижних датчиков
     var botSensorCountCharacteristic:    CBCharacteristic? { get { self.endpoints[[.stairs:.botSensorCount]] } }
     
     func writeStepsCount(_ count: Int) {
@@ -62,6 +79,7 @@ extension StairsPeripheralProtocol where Self:BasePeripheralProtocol {
     
 }
 
+// Вызывается при чтении данных с устройства
 protocol StairsPeripheralDelegate {
     func getStepsCount(count: Int)
     func getStandbyState(state: Bool)

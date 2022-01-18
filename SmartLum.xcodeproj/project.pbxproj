@@ -26,6 +26,9 @@
 		2C2742F7278C159D00E338E1 /* SlStandartPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2742F6278C159D00E338E1 /* SlStandartPeripheral.swift */; };
 		2C2742F9278C177D00E338E1 /* SlStandartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2742F8278C177D00E338E1 /* SlStandartViewModel.swift */; };
 		2C2742FB278C1C8E00E338E1 /* SlStandartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2742FA278C1C8E00E338E1 /* SlStandartViewController.swift */; };
+		2C31D1B327915E6D00C8E226 /* CellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C31D1B227915E6D00C8E226 /* CellModel.swift */; };
+		2C31D1B52791619C00C8E226 /* SectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C31D1B42791619C00C8E226 /* SectionModel.swift */; };
+		2C31D1B8279196DC00C8E226 /* PeripheralProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C31D1B7279196DC00C8E226 /* PeripheralProtocol.swift */; };
 		2C41722C2718081F00F43EA2 /* DistanceSensorPeripheralProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C41722B2718081E00F43EA2 /* DistanceSensorPeripheralProtocol.swift */; };
 		2C41722E27180AF600F43EA2 /* SlBasePeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C41722D27180AF600F43EA2 /* SlBasePeripheral.swift */; };
 		2C4172302718100400F43EA2 /* SlBaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C41722F2718100400F43EA2 /* SlBaseViewModel.swift */; };
@@ -124,6 +127,9 @@
 		2C2742F6278C159D00E338E1 /* SlStandartPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlStandartPeripheral.swift; sourceTree = "<group>"; };
 		2C2742F8278C177D00E338E1 /* SlStandartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlStandartViewModel.swift; sourceTree = "<group>"; };
 		2C2742FA278C1C8E00E338E1 /* SlStandartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlStandartViewController.swift; sourceTree = "<group>"; };
+		2C31D1B227915E6D00C8E226 /* CellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellModel.swift; sourceTree = "<group>"; };
+		2C31D1B42791619C00C8E226 /* SectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionModel.swift; sourceTree = "<group>"; };
+		2C31D1B7279196DC00C8E226 /* PeripheralProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralProtocol.swift; sourceTree = "<group>"; };
 		2C41722B2718081E00F43EA2 /* DistanceSensorPeripheralProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceSensorPeripheralProtocol.swift; sourceTree = "<group>"; };
 		2C41722D27180AF600F43EA2 /* SlBasePeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlBasePeripheral.swift; sourceTree = "<group>"; };
 		2C41722F2718100400F43EA2 /* SlBaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlBaseViewModel.swift; sourceTree = "<group>"; };
@@ -255,6 +261,27 @@
 			path = NetworkAPI;
 			sourceTree = "<group>";
 		};
+		2C31D1B127915E5300C8E226 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				2C7202C626A848E20079BEEA /* TableViewModel.swift */,
+				2C31D1B227915E6D00C8E226 /* CellModel.swift */,
+				2C31D1B42791619C00C8E226 /* SectionModel.swift */,
+			);
+			path = TableView;
+			sourceTree = "<group>";
+		};
+		2C31D1B62791968300C8E226 /* Implementation */ = {
+			isa = PBXGroup;
+			children = (
+				22EB5D5325F23E79003FC31D /* FlClassicPeripheral.swift */,
+				2C41722D27180AF600F43EA2 /* SlBasePeripheral.swift */,
+				2CA36B44273A71450067E414 /* SlProPeripheral.swift */,
+				2C2742F6278C159D00E338E1 /* SlStandartPeripheral.swift */,
+			);
+			path = Implementation;
+			sourceTree = "<group>";
+		};
 		2C720285268F1C860079BEEA /* Pickers */ = {
 			isa = PBXGroup;
 			children = (
@@ -342,12 +369,10 @@
 		2CDE95D4268C722E0025276A /* Peripherals */ = {
 			isa = PBXGroup;
 			children = (
-				2CDE95D5268C72780025276A /* Protocols */,
+				2C31D1B7279196DC00C8E226 /* PeripheralProtocol.swift */,
 				2C9F9D80266A088F00CCF8E2 /* BasePeripheral.swift */,
-				22EB5D5325F23E79003FC31D /* FlClassicPeripheral.swift */,
-				2C41722D27180AF600F43EA2 /* SlBasePeripheral.swift */,
-				2CA36B44273A71450067E414 /* SlProPeripheral.swift */,
-				2C2742F6278C159D00E338E1 /* SlStandartPeripheral.swift */,
+				2CDE95D5268C72780025276A /* Protocols */,
+				2C31D1B62791968300C8E226 /* Implementation */,
 			);
 			path = Peripherals;
 			sourceTree = "<group>";
@@ -428,6 +453,7 @@
 		30B664791FCD722A003C8B55 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				2C31D1B127915E5300C8E226 /* TableView */,
 				2C72029F269D5D240079BEEA /* TableViewCells */,
 				2C7202942695888B0079BEEA /* ViewControllers */,
 			);
@@ -448,7 +474,6 @@
 				2CDE95D4268C722E0025276A /* Peripherals */,
 				2CA24A00272803AF0084F073 /* ViewModels */,
 				2CDE95CE268C70CD0025276A /* BluetoothEndpoint.swift */,
-				2C7202C626A848E20079BEEA /* TableViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -741,8 +766,10 @@
 				2C25026F272690DC00671C26 /* InfoTableViewCell.swift in Sources */,
 				2240D233260CAFC50037D304 /* WebURLs.swift in Sources */,
 				22A46D9525E1418E003F4200 /* FirmwareUpdateViewController.swift in Sources */,
+				2C31D1B327915E6D00C8E226 /* CellModel.swift in Sources */,
 				2C7202BB26A03CDF0079BEEA /* PeripheralData.swift in Sources */,
 				30B664851FCDA0FC003C8B55 /* ScannerTableViewCell.swift in Sources */,
+				2C31D1B52791619C00C8E226 /* SectionModel.swift in Sources */,
 				30B664831FCDA0EB003C8B55 /* ScannerTableViewController.swift in Sources */,
 				2C2742FB278C1C8E00E338E1 /* SlStandartViewController.swift in Sources */,
 				22A46DE225E91104003F4200 /* FirmwareDownloader.swift in Sources */,
@@ -751,6 +778,7 @@
 				2C7202A6269EE79C0079BEEA /* StepperTableViewCell.swift in Sources */,
 				2C7202CB26A854220079BEEA /* FlClassicViewModel.swift in Sources */,
 				2CA36B4327394F560067E414 /* StairsPeripheralProtocol.swift in Sources */,
+				2C31D1B8279196DC00C8E226 /* PeripheralProtocol.swift in Sources */,
 				2CDE95D7268C77D30025276A /* AdvertisedData.swift in Sources */,
 				30B664801FCD9638003C8B55 /* RootViewController.swift in Sources */,
 				2CAA8B192726EA9B00354FAB /* InfoDetailTableViewCell.swift in Sources */,

@@ -9,8 +9,11 @@
 import CoreBluetooth
 import UIKit
 
+/// Делегат (ViewModel), который получит приведенные в нормальный вид данные с устройства
 protocol FlClassicPeripheralDelegate: ColorPeripheralDelegate, AnimationPeripheralDelegate { }
 
+/// Конкретная реализация устройства FL-Classic (торшер).
+/// Реализует управление цветом и анимациями.
 class FlClassicPeripheral: BasePeripheral, ColorPeripheralProtocol, AnimationPeripheralProtocol {
     
     var delegate: FlClassicPeripheralDelegate?
@@ -19,8 +22,11 @@ class FlClassicPeripheral: BasePeripheral, ColorPeripheralProtocol, AnimationPer
         super.init(peripheral, manager)
     }
     
-    override func readData(data: Data, from characteristic: BluetoothEndpoint.Characteristic, in service: BluetoothEndpoint.Service, error: Error?) {
-        super.readData(data: data, from: characteristic, in: service, error: error)
+    /// Прием данных с устройства.
+    /// Вызываем super метод, чтобы он обработал чтение стандартных данных для всех устройств.
+    /// Делаем override чтобы обработать прием уже конкретных данных
+    override func dataReceived(data: Data, from characteristic: BluetoothEndpoint.Characteristic, in service: BluetoothEndpoint.Service, error: Error?) {
+        super.dataReceived(data: data, from: characteristic, in: service, error: error)
         switch (service, characteristic) {
         case (.color,.primaryColor):
             delegate?.getPrimaryColor(data.toUIColor())

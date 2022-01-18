@@ -8,6 +8,7 @@
 
 import CoreBluetooth
 
+/// Протокол периферийного устройства с возможностью управления анимациями
 protocol AnimationPeripheralProtocol {
     func writeAnimationMode(_ animation: PeripheralDataElement)
     func writeAnimationOnSpeed(_ speed: Int)
@@ -16,11 +17,21 @@ protocol AnimationPeripheralProtocol {
     func writeAnimationStep(_ step: Int)
 }
 
-extension AnimationPeripheralProtocol where Self:BasePeripheralProtocol {
+extension AnimationPeripheralProtocol where Self:PeripheralProtocol {
+    
+    /// Режим анимации
     var animationModeCharacteristic:      CBCharacteristic? { get { self.endpoints[[.animation:.animationMode]] } }
+    
+    /// Скорость анимации
     var animationOnSpeedCharacteristic:   CBCharacteristic? { get { self.endpoints[[.animation:.animationOnSpeed]] } }
+    
+    /// Скорость выключения анимации (нигде не реализовано)
     var animationOffSpeedCharacteristic:  CBCharacteristic? { get { self.endpoints[[.animation:.animationOffSpeed]] } }
+    
+    /// Направление анимации (есть не везде)
     var animationDirectionCharacteristic: CBCharacteristic? { get { self.endpoints[[.animation:.animationDirection]] } }
+    
+    /// Шаг анимации (есть не везде)
     var animationStepCharacteristic:      CBCharacteristic? { get { self.endpoints[[.animation:.animationStep]]}}
     
     func writeAnimationMode(_ animation: PeripheralDataElement) {
@@ -45,6 +56,7 @@ extension AnimationPeripheralProtocol where Self:BasePeripheralProtocol {
 
 }
 
+// Вызывается при чтении данных с устройства
 protocol AnimationPeripheralDelegate {
     func getAnimationMode(mode: PeripheralDataElement)
     func getAnimationOnSpeed(speed: Int)

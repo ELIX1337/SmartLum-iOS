@@ -8,15 +8,30 @@
 
 import CoreBluetooth
 
+/// Протокол периферийного устройства с возможностью управления лентой
 protocol LedPeripheralProtocol {
     func writeLedState(_ state: Bool)
+    func writeLedBrightness(_ brightness: Int)
+    func writeLedTimeout(_ timeout: Int)
+    func writeLedType(_ type: PeripheralDataElement)
+    func writeLedAdaptiveBrightnessState(_ mode: PeripheralDataElement)
 }
 
-extension LedPeripheralProtocol where Self:BasePeripheralProtocol {
+extension LedPeripheralProtocol where Self:PeripheralProtocol {
+    
+    /// Состояние светодиодной ленты (вкл или выкл)
     var ledStateCharacteristic: CBCharacteristic? { get { self.endpoints[[.led:.ledState]] } }
+    
+    /// Яркость светодиодной ленты
     var ledBrightnessCharacteristic: CBCharacteristic? { get { self.endpoints[[.led:.ledBrightness]] } }
+    
+    /// Таймаут выключения светодиодной ленты (есть не везде)
     var ledTimeoutCharacteristic: CBCharacteristic? { get { self.endpoints[[.led:.ledTimeout]] } }
+    
+    /// Тип светодиодной ленты (цветная или одноцветная,есть не везде)
     var ledTypeCharateristic: CBCharacteristic? { get { self.endpoints[[.led:.ledType]] } }
+    
+    /// Адаптивная яркость (есть не везде)
     var ledAdaptiveBrightnessCharateristic: CBCharacteristic? { get { self.endpoints[[.led:.ledAdaptiveBrightness]] } }
     
     func writeLedState(_ state: Bool) {
@@ -41,6 +56,7 @@ extension LedPeripheralProtocol where Self:BasePeripheralProtocol {
 
 }
 
+// Вызывается при чтении данных с устройства
 protocol LedPeripheralDelegate {
     func getLedState(state: Bool)
     func getLedBrightness(brightness: Int)
