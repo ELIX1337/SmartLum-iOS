@@ -8,6 +8,9 @@
 
 import UIKit
 
+/// ViewModel устройства SL-Standart.
+/// Она абсолютно идентична SlProViewModel.
+/// Различие лишь в том, что тут отсуствует управление цветом.
 class SlStandartViewModel: PeripheralViewModel {
     
     // LED section
@@ -452,7 +455,7 @@ class SlStandartViewModel: PeripheralViewModel {
 
 extension SlStandartViewModel: SlStandartPeripheralDelegate {
     
-    func getWorkMode(mode: PeripheralDataElement) {
+    func getWorkMode(mode: PeripheralDataModel) {
         dataModel.setValue(key: StairsControllerData.stairsWorkModeKey, value: mode.name)
         updateCell(for: stairsWorkModeCell, with: .middle)
     }
@@ -467,7 +470,7 @@ extension SlStandartViewModel: SlStandartPeripheralDelegate {
         updateCell(for: botSensorCountCell, with: .middle)
     }
     
-    func getLedAdaptiveBrightnessState(mode: PeripheralDataElement) {
+    func getLedAdaptiveBrightnessState(mode: PeripheralDataModel) {
         dataModel.setValue(key: StairsControllerData.ledAdaptiveModeKey, value: mode.name)
         updateCell(for: ledAdaptiveCell, with: .middle)
         handleAdaptiveMode(mode: mode as! PeripheralLedAdaptiveMode)
@@ -545,7 +548,7 @@ extension SlStandartViewModel: SlStandartPeripheralDelegate {
         updateCell(for: ledTimeoutCell, with: .middle)
     }
     
-    func getAnimationMode(mode: PeripheralDataElement) {
+    func getAnimationMode(mode: PeripheralDataModel) {
         dataModel.setValue(key: StairsControllerData.animationModeKey, value: mode.name)
         updateCell(for: animationModeCell, with: .middle)
     }
@@ -559,6 +562,6 @@ extension SlStandartViewModel: SlStandartPeripheralDelegate {
     func getSecondaryColor(_ color: UIColor) { }
     func getAnimationOffSpeed(speed: Int) { }
     func getAnimationStep(step: Int) { }
-    func getAnimationDirection(direction: PeripheralDataElement) { }
+    func getAnimationDirection(direction: PeripheralDataModel) { }
     
 }

@@ -9,6 +9,12 @@
 import UIKit
 import CoreBluetooth
 
+// Расширения для упрощения всякой работы.
+
+
+/// Эта функция не применяется в приложении.
+/// Используются ее аналоги.
+/// Должна конвертировать числа в байты для дальнейшей отправки по Bluetooth.
 func bytes<U: FixedWidthInteger,V: FixedWidthInteger>(
     of value    : U,
     to type     : V.Type,
@@ -38,6 +44,8 @@ func bytes<U: FixedWidthInteger,V: FixedWidthInteger>(
 
 extension String {
     
+    /// Ищет в Localizable нужную строку.
+    /// Работать нужно аккуратно, проверить что все сходится с Localizable (во всех языках) чтобы не было непонятного текста в приложении.
     var localized: String {
         return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
     }
@@ -49,6 +57,9 @@ extension String {
 }
 
 extension Data {
+    
+    /// Превращает Data в Int
+    /// Используется чтобы перевести полученные по Bluetooth данные в нормальный вид.
     func toInt() -> Int {
         let decimalValue = self.reduce(0) { v, byte in
             return v << 8 | Int(byte)
@@ -59,6 +70,8 @@ extension Data {
 
 extension UIColor {
     
+    /// Конвертирует UIColor в массив из байтов (3 байта RGB).
+    /// Используется чтобы отправить цвет по Bluetooth.
     func toData() -> Data {
         let packet: [UInt8] = [UInt8(self.rgb()!.red   * 255),
                                UInt8(self.rgb()!.green * 255),
@@ -66,6 +79,7 @@ extension UIColor {
         return Data(bytes: packet, count: packet.count)
     }
     
+    /// Переводит UIColor в RGB tuple
     func rgb() -> (red:Float, green:Float, blue:Float)? {
         var fRed   : CGFloat = 0
         var fGreen : CGFloat = 0
@@ -81,6 +95,8 @@ extension UIColor {
         }
     }
     
+    /// Принимает в себя 2 цвета (для светлой и темной темы).
+    /// В зависимости от того, какая тема стоит на устройстве, вернет нужный цвет.
     static func dynamicColor(light: UIColor, dark: UIColor) -> UIColor {
         if #available(iOS 13.0, *) {
             return UIColor { (traitCollection) -> UIColor in
@@ -100,6 +116,8 @@ extension UIColor {
 }
 
 extension Numeric {
+    
+    /// Переводит любое число (не только Int) в байты.
     func toData() -> Data {
         var source = self
         return .init(bytes: &source, count: MemoryLayout<Self>.size)
@@ -114,6 +132,7 @@ extension Numeric {
 }
 
 extension UnsignedInteger {
+    
     init(_ bytes: [UInt8]) {
         precondition(bytes.count <= MemoryLayout<Self>.size)
         var value: UInt64 = 0
@@ -128,6 +147,12 @@ extension UnsignedInteger {
 }
 
 extension Int {
+    
+    /// Переводит Integer в массив байтов, но динамического размера (1 или 2).
+    /// Дефолтные методы, в раширениях выше, создают массив из 8 байтов (именно столько памяти и нужно для хранения Integer),
+    /// Но, например, для числа 10, достаточно 1 байта (0-255), поэтому остальные 7 байтов не нужны.
+    /// Данный метод создаст столько, сколько нужно (максимум 2, так как больше и не понадобилось).
+    /// Сделано для оптимизации передачи данных по Bluetooth (меньший размер пакета для маленьких данных).
     func toDynamicSizeData() -> Data {
         if (0...255).contains(self) {
             var source = UInt8(self)
@@ -141,6 +166,9 @@ extension Int {
 }
 
 extension Bool {
+    
+    /// Переводит Bool в байты.
+    /// true - 1, false - 0.
     func toData() -> Data {
         var value = self ? Data([0x1]) : Data([0x0])
         return Data(bytes: &value, count: value.count)
@@ -148,16 +176,24 @@ extension Bool {
 }
 
 extension StringProtocol {
+    
+    /// Переводит строку в байты (UTF8). Не используется нигде.
     func toData() -> Data {
         return .init(utf8)
     }
 }
 
 extension DataProtocol {
+    
+    /// Переводит байты в строку по заданной кодировке.
+    /// Не используется нигде.
     func toString(encoding: String.Encoding?) -> String? {
         return String(bytes: self, encoding: encoding ?? .utf8)
     }
     
+    /// Переводит байты в UIColor.
+    /// Используется при получении цвета от устройства по Bluetooth.
+    /// Ожидает массив из 3 байт (RGB), иначе Exception.
     func toUIColor() -> UIColor {
 
         return UIColor(
@@ -167,16 +203,23 @@ extension DataProtocol {
             alpha: 1.0)
     }
     
-//    func toBool() -> Bool {
-//        return self[0 as! Self.Index] == 0x1
-//    }
-    
+    /// Переводит байты в Bool.
+    /// Если значение равно 0 - false, иначе true.
+    /// То есть может быть абсолютно любое число для true.
     func toBool() -> Bool {
         return self.toUInt8() != 0
     }
     
+    /// В этом варианте мы четко ждем 1 байт.
+    /// Если значение 1 - true, иначе false.
+    /// То есть тут условия жестче, для корректной работы нужно слать исключительно 1 или 0.
+//    func toBool() -> Bool {
+//        return self[0 as! Self.Index] == 0x1
+//    }
+    
     func value<N: Numeric>() -> N { .init(self) }
     
+    /// Это вроде нигде не используется, но лежит на всякий случай.
     func toInt() -> Int { value() }
     func toInt32() -> Int32 { value() }
     func toUInt8() -> UInt8 { value() }
@@ -187,6 +230,8 @@ extension DataProtocol {
 }
 
 extension Array where Element: Hashable {
+    
+    /// Ищет различия между массивами
     func difference(from other: [Element]) -> [Element] {
         let thisSet = Set(self)
         let otherSet = Set(other)
@@ -195,5 +240,18 @@ extension Array where Element: Hashable {
 }
 
 extension UIImage {
+    
+    /// Возвращает увеличенный вариант изображения.
+    /// Использутся для установки иконок для ячеек tableView.
     static var largeScale: SymbolConfiguration { UIImage.SymbolConfiguration(pointSize: 20, weight: .bold, scale: .large) }
+}
+
+extension UIViewController {
+    
+    /// Метод для быстрого вывода Alert для экрана
+    public func showErrorAlert(title: String, message: String) {
+        let alert = UIAlertController.init(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(.init(title: "Ok", style: .default, handler: { _ in alert.dismiss(animated: true, completion: nil) }))
+        self.present(alert, animated: true, completion: nil)
+    }
 }

@@ -46,7 +46,7 @@ enum CellModel: Equatable {
     }
     
     // Значение в ячейке (вроде нигде не используется, но по хорошему и не должно)
-    func cellValue(from model: PeripheralData) -> Any? {
+    func cellValue(from model: PeripheralDataStorage) -> Any? {
         return model.getValue(key: cellKey)
     }
     
@@ -93,7 +93,7 @@ enum CellModel: Equatable {
     // Функция, которая получает ячейку и конфигурирует ее в соответсвии с типой этой ячейки
     // data - это ключ-значение массив со всеми данными, ячейка получает необходимое ей значение по ее ключу,
     // т.е. ключ ячейки (key) соответствует определенному ключу в этом массиве
-    func configure(cell: BaseTableViewCell, with data: PeripheralData) {
+    func configure(cell: BaseTableViewCell, with data: PeripheralDataStorage) {
         switch self {
         case .sliderCell(key: let key, title: let title, initialValue: let initialValue, minValue: let minValue, maxValue: let maxValue, leftIcon: let leftIcon, rightIcon: let rightIcon, showValue: let showValue, callback: let callback):
             if let cell = cell as? SliderTableViewCell {

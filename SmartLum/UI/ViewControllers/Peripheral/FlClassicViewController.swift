@@ -9,14 +9,19 @@
 import UIKit
 import CoreBluetooth
 
+/// Конкретный класс реализующий экран устройства FL-Classic
 class FlClassicViewController: PeripheralViewController, PeripheralViewControllerProtocol {
         
+    /// Инициализируем ViewModel
+    /// Как можно заметить, нам приходится явно указывать тип ViewModel в каждом конкретном ViewController'e
+    /// Это тупо и должно быть автоматизировано, либо ViewModel должна быть одна на всех
     func viewModelInit(peripheral: BasePeripheral) {
         self.viewModel = FlClassicViewModel(tableView, peripheral, self) {
             self.onCellSelected(cell: $0)
         }
     }
     
+    /// Обрабатываем нажатия по ячейкам tableView (только необходимым)
     func onCellSelected(cell: CellModel) {
         if let mViewModel = viewModel as? FlClassicViewModel {
             switch cell {
@@ -47,3 +52,5 @@ class FlClassicViewController: PeripheralViewController, PeripheralViewControlle
     }
     
 }
+
+// У устройства нет настройки и поэтому тут только один экран.

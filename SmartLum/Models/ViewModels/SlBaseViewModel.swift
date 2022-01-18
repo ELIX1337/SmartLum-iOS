@@ -196,7 +196,8 @@ class SlBaseViewModel: PeripheralViewModel {
             // Инициализировано, отправляем данные на устройство (экран расширенных настроек)
             slBasePeripheral.writeTopSensorTriggerDistance(distance)
         } else {
-            // Не инициализировано - не пишем, отправка данных произойдет по кнопке "подтвердить", так что сидим и ждем
+            // Не инициализировано - не пишем, отправка данных произойдет по кнопке "подтвердить".
+            // Поэтому проверяем, готовы ли мы к отправке данных (смотреть метод requiresInit ниже)
             checkInitWrite()
         }
     }
@@ -214,9 +215,11 @@ class SlBaseViewModel: PeripheralViewModel {
     /// Переопределяем функцию.
     /// В теле указываем условие, при котором становится возможным запись данных при инициализации.
     /// В данном случае запись возможна, когда пользователь указал дистанции для верхнего и нижнего датчиков.
+    /// По сути тут мы просто указываем все настройки, которые есть на экране инициализации устройства.
     override func requiresInit() -> Bool {
         let first  = dataModel.getValue(key: StairsControllerData.botTriggerDistanceKey) as? Int != 0
         let second = dataModel.getValue(key: StairsControllerData.topTriggerDistanceKey) as? Int != 0
+        // Если обе переменные не пустые (в них записали данные)
         return first && second
     }
     
@@ -256,11 +259,11 @@ extension SlBaseViewModel: SlBasePeripheralDelegate {
     }
     
     // Не используется
-    func getAnimationMode(mode: PeripheralDataElement) { }
+    func getAnimationMode(mode: PeripheralDataModel) { }
     
     func getAnimationOffSpeed(speed: Int) { }
     
-    func getAnimationDirection(direction: PeripheralDataElement) { }
+    func getAnimationDirection(direction: PeripheralDataModel) { }
     
     func getAnimationStep(step: Int) { }
     

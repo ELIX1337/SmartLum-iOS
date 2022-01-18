@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Структура, используемая для работы с Picker'ами
 struct GenericRow<T> {
     let type: T
     let title: String

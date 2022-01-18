@@ -8,6 +8,8 @@
 
 import Foundation
 
+/// ВНИМАНИЕ: Этот код использовался при тестировании DFU. В продакшене он не применяется.
+/// Используется в DocumentPicker'е
 protocol ReadableError: Error {
     var title: String { get }
     var readableMessage: String { get }

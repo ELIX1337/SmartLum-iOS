@@ -246,7 +246,7 @@ extension FlClassicViewModel: FlClassicPeripheralDelegate {
         handleRandomColor(state: state)
     }
     
-    func getAnimationMode(mode: PeripheralDataElement) {
+    func getAnimationMode(mode: PeripheralDataModel) {
         dataModel.setValue(key: FlClassicData.animationModeKey, value: mode.name)
         updateCell(for: animationModeCell, with: .middle)
         handleAnimation(animation: mode as! FlClassicAnimations)
@@ -257,7 +257,7 @@ extension FlClassicViewModel: FlClassicPeripheralDelegate {
         updateCell(for: animationSpeedCell, with: .middle)
     }
         
-    func getAnimationDirection(direction: PeripheralDataElement) {
+    func getAnimationDirection(direction: PeripheralDataModel) {
         dataModel.setValue(key: FlClassicData.animationDirectionKey, value: direction.name)
         updateCell(for: animationDirectionCell, with: .middle)
     }

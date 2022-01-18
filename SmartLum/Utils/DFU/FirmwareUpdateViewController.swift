@@ -10,6 +10,11 @@ import UIKit
 import CoreBluetooth
 import iOSDFULibrary
 
+/// ВНИМАНИЕ: Этот код использовался при тестировании DFU. В продакшене он не применяется.
+/// Здесь происходит обновление прошивки устройства по Bluetooth.
+/// Подробную информацию лучше посмотреть у Nordic Semiconductor в их примерах.
+/// Обновляет прошивку только у микроконтроллеров Nordic.
+/// Работает четко и круто.
 class FirmwareUpdateViewController: UIViewController,
                                     CBCentralManagerDelegate,
                                     LoggerDelegate,

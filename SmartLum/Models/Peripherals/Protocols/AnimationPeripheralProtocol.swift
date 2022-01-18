@@ -10,10 +10,10 @@ import CoreBluetooth
 
 /// Протокол периферийного устройства с возможностью управления анимациями
 protocol AnimationPeripheralProtocol {
-    func writeAnimationMode(_ animation: PeripheralDataElement)
+    func writeAnimationMode(_ animation: PeripheralDataModel)
     func writeAnimationOnSpeed(_ speed: Int)
     func writeAnimationOffSpeed(_ speed: Int)
-    func writeAnimationDirection(_ direction: PeripheralDataElement)
+    func writeAnimationDirection(_ direction: PeripheralDataModel)
     func writeAnimationStep(_ step: Int)
 }
 
@@ -34,7 +34,7 @@ extension AnimationPeripheralProtocol where Self:PeripheralProtocol {
     /// Шаг анимации (есть не везде)
     var animationStepCharacteristic:      CBCharacteristic? { get { self.endpoints[[.animation:.animationStep]]}}
     
-    func writeAnimationMode(_ animation: PeripheralDataElement) {
+    func writeAnimationMode(_ animation: PeripheralDataModel) {
         writeWithoutResponse(value: animation.code.toDynamicSizeData(), to: animationModeCharacteristic)
     }
     
@@ -46,7 +46,7 @@ extension AnimationPeripheralProtocol where Self:PeripheralProtocol {
         writeWithoutResponse(value: speed.toDynamicSizeData(), to: animationOffSpeedCharacteristic)
     }
     
-    func writeAnimationDirection(_ direction: PeripheralDataElement) {
+    func writeAnimationDirection(_ direction: PeripheralDataModel) {
         writeWithoutResponse(value: direction.code.toDynamicSizeData(), to: animationDirectionCharacteristic)
     }
     
@@ -58,9 +58,9 @@ extension AnimationPeripheralProtocol where Self:PeripheralProtocol {
 
 // Вызывается при чтении данных с устройства
 protocol AnimationPeripheralDelegate {
-    func getAnimationMode(mode: PeripheralDataElement)
+    func getAnimationMode(mode: PeripheralDataModel)
     func getAnimationOnSpeed(speed: Int)
     func getAnimationOffSpeed(speed: Int)
-    func getAnimationDirection(direction: PeripheralDataElement)
+    func getAnimationDirection(direction: PeripheralDataModel)
     func getAnimationStep(step: Int)
 }

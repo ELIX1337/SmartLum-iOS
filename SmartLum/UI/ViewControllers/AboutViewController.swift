@@ -9,6 +9,7 @@
 import UIKit
 import AcknowList
 
+/// ViewController окна about
 class AboutViewController: UIViewController {
     
     @IBOutlet private weak var versionLabel: UILabel!
@@ -68,6 +69,7 @@ class AboutViewController: UIViewController {
         }
     }
     
+    /// Метод, который откроет ViewController со всеми используемыми библиотеками в приложении.
     private func showThirdPartyLibraries() {
         var vc = AcknowListViewController()
         let path = Bundle.main.path(forResource: "Pods-SmartLum-acknowledgements", ofType: "plist")

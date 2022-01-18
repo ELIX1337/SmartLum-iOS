@@ -7,6 +7,8 @@
 //
 import UIKit
 
+/// Модель ячейки для tableView
+/// На ее основе строятся конкретные ячейки.
 protocol BaseTableViewCell: UITableViewCell {
     static var nibName: String { get }
     static var reuseIdentifier: String { get }

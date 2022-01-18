@@ -15,7 +15,7 @@ protocol StairsPeripheralProtocol {
     func writeStandbyBrightness(_ brightness: Int)
     func writeStandbyTopCount(_ count: Int)
     func writeStandbyBotCount(_ count: Int)
-    func writeStairsWorkMode(_ mode: PeripheralDataElement)
+    func writeStairsWorkMode(_ mode: PeripheralDataModel)
     func writeTopSensorCount(_ count: Int)
     func writeBotSensorCount(_ count: Int)
 }
@@ -65,7 +65,7 @@ extension StairsPeripheralProtocol where Self:PeripheralProtocol {
         writeWithoutResponse(value: count.toDynamicSizeData(), to: standbyBotCountCharacteristic)
     }
     
-    func writeStairsWorkMode(_ mode: PeripheralDataElement) {
+    func writeStairsWorkMode(_ mode: PeripheralDataModel) {
         writeWithoutResponse(value: mode.code.toDynamicSizeData(), to: stairsWorkModeChracteristic)
     }
     
@@ -86,7 +86,7 @@ protocol StairsPeripheralDelegate {
     func getStandbyBrightness(brightness: Int)
     func getStandbyTopCount(count: Int)
     func getStandbyBotCount(count: Int)
-    func getWorkMode(mode: PeripheralDataElement)
+    func getWorkMode(mode: PeripheralDataModel)
     func getTopSensorCount(count: Int)
     func getBotSensorCount(count: Int)
 }

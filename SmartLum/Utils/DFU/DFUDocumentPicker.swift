@@ -9,7 +9,10 @@
 import UIKit
 import iOSDFULibrary
 
+/// ВНИМАНИЕ: Этот код использовался при тестировании DFU. В продакшене он не применяется.
+/// Этот класс используется для поиска файла прошивки на смартфоне.
 class DocumentPicker<T>: NSObject, UIDocumentPickerDelegate {
+    
     typealias Callback = (Result<T, Error>) -> ()
     private (set) var callback: Callback!
     let types: [String]
@@ -32,6 +35,7 @@ class DocumentPicker<T>: NSObject, UIDocumentPickerDelegate {
 }
 
 class DFUDocumentPicker: DocumentPicker<DFUFirmware> {
+    
     init() {
         super.init(documentTypes: ["com.pkware.zip-archive"])
     }

@@ -9,6 +9,7 @@
 import Foundation
 import CoreBluetooth
 
+/// Результат сканироваия Bluetooth (по сути найденное устройство).
 class AdvertisedData: NSObject {
     
     let centralManager: CBCentralManager
@@ -46,7 +47,7 @@ class AdvertisedData: NSObject {
         if let advUUID = advertisementDictionary[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID] {
             for uuid in advUUID {
                 if (UUIDs.advServices.keys.contains(uuid)) {
-                    return PeripheralProfile.getPeripheralType(uuid: uuid)
+                    return PeripheralProfile.getPeripheralProfile(uuid: uuid)
                 }
             }
         }

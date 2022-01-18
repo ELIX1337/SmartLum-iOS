@@ -71,7 +71,7 @@ protocol PeripheralViewModelDelegate {
     /// Здесь хранятся данные с устройства в формате ключ-значение.
     /// Ячейки tableView (CellModel) тоже имеют уникальные ключи, которые соответсвуют этим ключам (синхронизируется в классах-наследниках).
     /// При чтении-записи с устройства, данные обновляются и обновляются ячейки.
-    public var dataModel: PeripheralData!
+    public var dataModel: PeripheralDataStorage!
     
     /// Переменная хранящая состояние соединения с устройством
     public var isConnected: Bool { basePeripheral.isConnected }

@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Просто ссылки, которые используются в приложении
 struct WebURLs {
     public static let Instagram  = URL(string: "https://www.instagram.com/smartlum/")
     public static let VK         = URL(string: "https://vk.com/smartlum/")

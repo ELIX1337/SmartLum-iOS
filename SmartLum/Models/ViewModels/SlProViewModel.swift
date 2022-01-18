@@ -8,8 +8,15 @@
 
 import UIKit
 
+// ViewModel устройства SL-Pro
 class SlProViewModel: PeripheralViewModel {
     
+    // Делаем downcast BasePeripheral в SlProPeripheral
+    var slProPeripheral: SlProPeripheral! {
+        get { return (super.basePeripheral as! SlProPeripheral) }
+    }
+    
+    // Заранее декларируем ячейки для нашей tableView
     // Color section
     var primaryColorCell: CellModel!
     var randomColorCell: CellModel!
@@ -45,6 +52,8 @@ class SlProViewModel: PeripheralViewModel {
     // Factory section
     var resetToFactoryCell: CellModel!
     
+    // Публичные переменные для использования во ViewController'е
+    // Используются чтобы инициализировать ColorPicker
     var primaryColor: UIColor {
         get {
             if let color = self.dataModel.getValue(key: StairsControllerData.primaryColorKey) as? UIColor {
@@ -52,10 +61,6 @@ class SlProViewModel: PeripheralViewModel {
             }
             return UIColor.white
         }
-    }
-    
-    var slProPeripheral: SlProPeripheral! {
-        get { return (super.basePeripheral as! SlProPeripheral) }
     }
     
     override init(_ withTableView: UITableView,
@@ -76,6 +81,7 @@ class SlProViewModel: PeripheralViewModel {
         initSetupTableViewModel()
     }
     
+    // Аналогично остальным ViewModel
     private func initReadyTableViewModel() {
         readyTableViewModel = TableViewModel(
             sections: [
@@ -94,6 +100,7 @@ class SlProViewModel: PeripheralViewModel {
             ], type: .ready)
     }
     
+    // Аналогично остальным ViewModel
     private func initSettingsTableViewModel() {
         settingsTableViewModel = TableViewModel(
             sections: [
@@ -125,6 +132,7 @@ class SlProViewModel: PeripheralViewModel {
             ], type: .settings)
     }
     
+    // Аналогично остальным ViewModel
     private func initSetupTableViewModel() {
         setupTableViewModel = TableViewModel(
             sections: [
@@ -139,6 +147,7 @@ class SlProViewModel: PeripheralViewModel {
             ], type: .setup)
     }
     
+    // Аналогично остальным ViewModel
     private func initColorSection() {
         primaryColorCell = .colorCell(
             key: StairsControllerData.primaryColorKey,
@@ -150,7 +159,8 @@ class SlProViewModel: PeripheralViewModel {
             initialValue: false,
             callback: { self.writeRandomColor(state: $0) })
     }
-    
+
+    // Аналогично остальным ViewModel
     private func initLedSection() {
         ledStateCell = .switchCell(
             key: StairsControllerData.ledStateKey,
@@ -176,6 +186,7 @@ class SlProViewModel: PeripheralViewModel {
             callback: { self.writeLedTimeout(timeout: Int($0)) })
     }
     
+    // Аналогично остальным ViewModel
     private func initAnimationSection() {
         animationModeCell = .pickerCell(
             key: StairsControllerData.animationModeKey,
@@ -193,6 +204,7 @@ class SlProViewModel: PeripheralViewModel {
             callback: { self.writeAnimationSpeed(speed: Int($0)) })
     }
     
+    // Аналогично остальным ViewModel
     private func initSettingsSection() {
         topTriggerDistanceCell = .sliderCell(
             key: StairsControllerData.topTriggerDistanceKey,
@@ -328,6 +340,8 @@ class SlProViewModel: PeripheralViewModel {
             accessory: nil)
     }
     
+    /// Скрываем или показываем ячейки в зависмости от адаптивной яркости.
+    /// Аналогично обработки режима анимации во FlClassicViewModel - топорно, прямолинейно, но быстро.
     private func handleAdaptiveMode(mode: PeripheralLedAdaptiveMode) {
         switch mode {
         case .off:
@@ -341,6 +355,8 @@ class SlProViewModel: PeripheralViewModel {
         }
     }
     
+    /// Так же обрабатываем UI в зависимости от типа ленты.
+    /// Если лента цветная, то показываем ячейки для управлением цветом, если нет, то скрываем.
     private func handleLedType(type: SlProControllerType) {
         switch type {
         case .`default`:
@@ -352,6 +368,7 @@ class SlProViewModel: PeripheralViewModel {
         }
     }
     
+    // Публичные методы
     func writePrimaryColor(_ color: UIColor) {
         if (dataModel.getValue(key: StairsControllerData.primaryColorKey) as? UIColor != color) {
             slProPeripheral.writePrimaryColor(color)
@@ -400,6 +417,7 @@ class SlProViewModel: PeripheralViewModel {
         dataModel.setValue(key: StairsControllerData.ledAdaptiveModeKey, value: mode.name)
         slProPeripheral.writeLedAdaptiveBrightnessState(mode)
         updateCell(for: ledAdaptiveCell, with: .none)
+        // Обновляем UI
         handleAdaptiveMode(mode: mode)
     }
     
@@ -501,9 +519,10 @@ class SlProViewModel: PeripheralViewModel {
     
 }
 
+/// Методы делегата SlProPeripheral (прием данных)
 extension SlProViewModel: SlProPeripheralDelegate {
     
-    func getWorkMode(mode: PeripheralDataElement) {
+    func getWorkMode(mode: PeripheralDataModel) {
         dataModel.setValue(key: StairsControllerData.stairsWorkModeKey, value: mode.name)
         updateCell(for: stairsWorkModeCell, with: .middle)
     }
@@ -518,13 +537,13 @@ extension SlProViewModel: SlProPeripheralDelegate {
         updateCell(for: botSensorCountCell, with: .middle)
     }
     
-    func getLedType(type: PeripheralDataElement) {
+    func getLedType(type: PeripheralDataModel) {
         dataModel.setValue(key: StairsControllerData.controllerTypeKey, value: type.name)
         updateCell(for: controllerTypeCell, with: .middle)
         handleLedType(type: type as! SlProControllerType)
     }
     
-    func getLedAdaptiveBrightnessState(mode: PeripheralDataElement) {
+    func getLedAdaptiveBrightnessState(mode: PeripheralDataModel) {
         dataModel.setValue(key: StairsControllerData.ledAdaptiveModeKey, value: mode.name)
         updateCell(for: ledAdaptiveCell, with: .middle)
         handleAdaptiveMode(mode: mode as! PeripheralLedAdaptiveMode)
@@ -566,13 +585,11 @@ extension SlProViewModel: SlProPeripheralDelegate {
     }
     
     func getTopSensorCurrentLightness(lightness: Int) {
-        print("TOP CURRENT LIGHTNESS - \(lightness)")
         dataModel.setValue(key: StairsControllerData.topCurrentLightnessKey, value: lightness)
         updateCell(for: topCurrentLightnessCell, with: .none)
     }
     
     func getBotSensorCurrentLightness(lightness: Int) {
-        print("BOT CURRENT LIGHTNESS - \(lightness)")
         dataModel.setValue(key: StairsControllerData.botCurrentLightnessKey, value: lightness)
         updateCell(for: botCurrentLightnessCell, with: .none)
     }
@@ -612,7 +629,7 @@ extension SlProViewModel: SlProPeripheralDelegate {
         updateCell(for: ledTimeoutCell, with: .middle)
     }
     
-    func getAnimationMode(mode: PeripheralDataElement) {
+    func getAnimationMode(mode: PeripheralDataModel) {
         dataModel.setValue(key: StairsControllerData.animationModeKey, value: mode.name)
         updateCell(for: animationModeCell, with: .middle)
     }
@@ -622,10 +639,10 @@ extension SlProViewModel: SlProPeripheralDelegate {
         updateCell(for: animationSpeedCell, with: .middle)
     }
         
-    // Unused
+    // Не используется
     func getSecondaryColor(_ color: UIColor) { }
     func getAnimationOffSpeed(speed: Int) { }
     func getAnimationStep(step: Int) { }
-    func getAnimationDirection(direction: PeripheralDataElement) { }
+    func getAnimationDirection(direction: PeripheralDataModel) { }
     
 }

@@ -27,6 +27,9 @@ import Foundation
 ///
 /// For more background on this, see [Triggering the Local Network Privacy Alert](https://developer.apple.com/forums/thread/663768).
 
+/// ВНИМАНИЕ: Этот код использовался при тестировании DFU. В продакшене он не используется.
+/// Для того чтобы приложение имело доступ в интернет, нужно получить разрешения.
+/// Этот класс триггерит пустой интернет запрос для того, чтобы выскочило окно с разрешением.
 public final class NetworkPermissionTrigger {
     static func triggerPermission() {
         triggerLocalNetworkPrivacyAlert()

@@ -180,8 +180,8 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
     
     private func pushViewController(advertisedData: AdvertisedData) {
         if let type = advertisedData.peripheralType {
-            let vc = getPeripheralVC(peripheral: type)
-            let peripheral = getPeripheralType(profile: type, peripheral: advertisedData.peripheral, manager: centralManager)
+            let vc = PeripheralProfile.getPeripheralVC(peripheral: type)
+            let peripheral = type.getPeripheralType(peripheral: advertisedData.peripheral, manager: centralManager)
             peripheral.type = advertisedData.peripheralType
             vc.viewModelInit(peripheral: peripheral)
             navigationController?.pushViewController(vc as! UIViewController, animated: true)
