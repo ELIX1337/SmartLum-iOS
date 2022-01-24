@@ -132,29 +132,31 @@ class FlClassicViewModel: PeripheralViewModel {
         tableView.performBatchUpdates( {
             // Обнуляем скрытые ячейки
             showAllCells(inModel: readyTableViewModel!)
+            let randonColorState = dataModel.getValue(key: FlClassicData.randomColorKey) as! Bool
             // Перебираем
             switch animation {
             case .tetris:
                 hideCells(cells: [animationStepCell], inModel: readyTableViewModel!)
+                handleRandomColor(state: randonColorState)
                 break
             case .wave:
                 hideCells(cells: [randomColorCell], inModel: readyTableViewModel!)
                 break
             case .transfusion:
                 hideCells(cells: [animationStepCell, animationDirectionCell], inModel: readyTableViewModel!)
+                handleRandomColor(state: randonColorState)
                 break
             case .rainbowTransfusion:
-                hideCells(cells: [animationStepCell, animationDirectionCell], inModel: readyTableViewModel!)
+                hideCells(cells: [primaryColorCell, secondaryColorCell, randomColorCell, animationStepCell, animationDirectionCell], inModel: readyTableViewModel!)
                 break
             case .rainbow:
-                hideCells(cells: [animationStepCell], inModel: readyTableViewModel!)
+                hideCells(cells: [primaryColorCell, secondaryColorCell, randomColorCell, animationStepCell], inModel: readyTableViewModel!)
                 break
             case .static:
                 hideCells(cells: [animationStepCell, animationSpeedCell, animationDirectionCell, secondaryColorCell, randomColorCell], inModel: readyTableViewModel!)
                 break
             }
-            let randonColorState = dataModel.getValue(key: FlClassicData.randomColorKey) as! Bool
-            handleRandomColor(state: randonColorState)
+
         }, completion: nil)
     }
     
