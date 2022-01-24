@@ -139,7 +139,7 @@ class SlProViewModel: PeripheralViewModel {
                 SectionModel(
                     headerText: "peripheral_color_section_header".localized,
                     footerText: "peripheral_color_section_footer".localized,
-                    rows: [topTriggerDistanceCell, botTriggerLightnessCell]),
+                    rows: [topTriggerDistanceCell, botTriggerDistanceCell]),
                 SectionModel(
                     headerText: "peripheral_animation_section_header".localized,
                     footerText: "peripheral_animation_section_footer".localized,
@@ -253,7 +253,7 @@ class SlProViewModel: PeripheralViewModel {
             image: nil,
             accessory: nil)
         botCurrentDistanceCell = .infoCell(
-            key: StairsControllerData.topCurrentDistanceKey,
+            key: StairsControllerData.botCurrentDistanceKey,
             titleText: "peripheral_sl_pro_top_current_distance_cell_title".localized,
             detailText: "",
             image: nil,
@@ -577,11 +577,13 @@ extension SlProViewModel: SlProPeripheralDelegate {
     func getTopSensorTriggerLightness(lightness: Int) {
         dataModel.setValue(key: StairsControllerData.topTriggerLightnessKey, value: lightness)
         updateCell(for: topTriggerLightnessCell, with: .middle)
+        print("TOP TRIGGER LIGHTNESS- \(lightness) - \(dataModel.getValue(key: StairsControllerData.topTriggerLightnessKey))")
     }
     
     func getBotSensorTriggerLightness(lightness: Int) {
         dataModel.setValue(key: StairsControllerData.botTriggerLightnessKey, value: lightness)
         updateCell(for: botTriggerLightnessCell, with: .middle)
+        print("BOT TRIGGER LIGHTNESS- \(lightness) - \(dataModel.getValue(key: StairsControllerData.botTriggerLightnessKey))")
     }
     
     func getTopSensorCurrentLightness(lightness: Int) {
@@ -607,11 +609,13 @@ extension SlProViewModel: SlProPeripheralDelegate {
     func getTopSensorTriggerDistance(distance: Int) {
         dataModel.setValue(key: StairsControllerData.topTriggerDistanceKey, value: distance)
         updateCell(for: topTriggerDistanceCell, with: .middle)
+        print("TOP TRIGGER DISTANCE- \(distance) - \(dataModel.getValue(key: StairsControllerData.topTriggerDistanceKey))")
     }
     
     func getBotSensorTriggerDistance(distance: Int) {
         dataModel.setValue(key: StairsControllerData.botTriggerDistanceKey, value: distance)
         updateCell(for: botTriggerDistanceCell, with: .middle)
+        print("BOT TRIGGER DISTANCE- \(distance) - \(dataModel.getValue(key: StairsControllerData.botTriggerDistanceKey))")
     }
     
     func getLedState(state: Bool) {

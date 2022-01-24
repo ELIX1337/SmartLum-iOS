@@ -27,9 +27,9 @@ enum SlProControllerType: Int, CaseIterable, PeripheralDataModel {
 enum SlProAnimations: Int, CaseIterable, PeripheralDataModel {
     
     //case tetris
-    case off        = 0
-    case stepByStep = 1
-    case sharp      = 2
+    case off        = 1
+    case stepByStep = 2
+    case sharp      = 3
     
     var name: String {
         switch self {
