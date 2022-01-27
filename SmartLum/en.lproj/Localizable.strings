@@ -87,7 +87,7 @@
     "peripheral_error_cell_code_prefix" = "Details";
     "peripheral_error_description_cell_title" = "Error - Code ";
 
-    "peripheral_sl_pro_color_cell_title" = "";
+    "peripheral_sl_pro_color_cell_title" = "Color";
     "peripheral_sl_pro_controller_type_cell_title" = "Controller type";
     "peripheral_sl_pro_top_sensor_trigger_distance_cell_title" = "Top sensor";
     "peripheral_sl_pro_bot_sensor_trigger_distance_cell_title" = "Bottom sensor";

@@ -54,7 +54,8 @@ class FlClassicViewModel: PeripheralViewModel {
         super.init(withTableView, withPeripheral, delegate, selected)
         peripheral.delegate = self
         // dataModel - хранит значения полученные с устройства в формате ключ-значение
-        dataModel = FlClassicData.init(values: [:])
+        //dataModel = FlClassicData.init(values: [:])
+        dataModel = PeripheralData.init(values: [:], peripheralType: .FlClassic)
         initColorSection()
         initAnimationSection()
         // Инициализируем нашу TableView в родительском классе

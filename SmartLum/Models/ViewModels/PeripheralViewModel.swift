@@ -71,7 +71,8 @@ protocol PeripheralViewModelDelegate {
     /// Здесь хранятся данные с устройства в формате ключ-значение.
     /// Ячейки tableView (CellModel) тоже имеют уникальные ключи, которые соответсвуют этим ключам (синхронизируется в классах-наследниках).
     /// При чтении-записи с устройства, данные обновляются и обновляются ячейки.
-    public var dataModel: PeripheralDataStorage!
+    /// Можно допилить до Generic типа, ибо сейчас в приходится делать касты в классах наследниках чтобы получить доступ к полям.
+    public var dataModel: PeripheralData!
     
     /// Переменная хранящая состояние соединения с устройством
     public var isConnected: Bool { basePeripheral.isConnected }
@@ -130,17 +131,30 @@ protocol PeripheralViewModelDelegate {
     }
     
     /// Проверяет, готово ли устройство для записи данных для первичной настройки (инициализации).
+    /// Присваивает observable переменной соответствующее значение.
     /// Так как запись этих данных происходит по кнопке "Подтвердить", которая активна только тогда, когда пользователь указал все данные,
     /// то нужно мониторить момент, когда это становится возможным
-    internal func checkInitWrite() {
-        readyToWriteInitData = requiresInit()
+    internal func isInitWriteAvailable() {
+        readyToWriteInitData = isInitDataAvailable()
     }
     
-    /// Функция, которая говорит, требует ли устройство первичной настройки (инициализации).
-    /// По дефолту не требует.
-    /// Если требует, то должна переопределиться в классе-наследнике.
-    internal func requiresInit() -> Bool {
+    /// Функция, которая сообщает, готовы ли данные для настройки к отправке.
+    /// Должна переопределиться в классе-наследнике.
+    internal func isInitDataAvailable() -> Bool {
         return false
+    }
+    
+    /// Функция, которая вызовится при нажати кнопки "Подтвердить" на экране первичной настройки (инициализации).
+    /// Возвращает успешно ли прошла проверка данных.
+    /// Реализуется в классах-наследниках.
+    public func writeInitData() -> Bool {
+        return false
+    }
+    
+    /// Функция, которая включает notify на заданных характеристиках.
+    /// Пока не нашла применения.
+    internal func enableNotifications() -> [BluetoothEndpoint.Service : BluetoothEndpoint.Characteristic]? {
+        return nil
     }
     
     /// Обновляет ячейку в таблице
@@ -498,6 +512,7 @@ extension PeripheralViewModel: BasePeripheralDelegate {
     /// Если устройство не инициализировано, то вставит ячейку с этой информацией в setupTableViewModel.
     /// В этом случае на экран выскочит PeripheralSetupViewController с setupTableViewModel.
     func peripheralInitState(isInitialized: Bool) {
+        print("INIT STATE - \(isInitialized)")
         if !isInitialized {
             if setupTableViewModel != nil {
                 tableView.beginUpdates()
@@ -531,6 +546,9 @@ extension PeripheralViewModel: BasePeripheralDelegate {
     /// Вызывается когда все настройки с устройства были считаны и оно готово к работе
     func peripheralIsReady() {
         delegate.peripheralIsReady()
+        // Когда все успешно, начинаем прием notify (например текущей дистанции на датчиках)
+        // Если включить notify сразу во время инициализации стека, то это сильно замедлит процесс
+        basePeripheral.enableAllNotifications()
     }
     
     /// Получение версии прошивки устройства

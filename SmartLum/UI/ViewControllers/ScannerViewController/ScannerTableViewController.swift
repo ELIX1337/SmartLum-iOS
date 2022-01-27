@@ -182,7 +182,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
         if let type = advertisedData.peripheralType {
             let vc = PeripheralProfile.getPeripheralVC(peripheral: type)
             let peripheral = type.getPeripheralType(peripheral: advertisedData.peripheral, manager: centralManager)
-            peripheral.type = advertisedData.peripheralType
+            peripheral.deviceType = type
             vc.viewModelInit(peripheral: peripheral)
             navigationController?.pushViewController(vc as! UIViewController, animated: true)
         }

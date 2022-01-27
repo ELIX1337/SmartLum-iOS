@@ -86,7 +86,7 @@
     "peripheral_error_cell_code_prefix" = "Подробнее";
     "peripheral_error_description_cell_title" = "Ошибка - Код ";
 
-    "peripheral_sl_pro_color_cell_title" = "";
+    "peripheral_sl_pro_color_cell_title" = "Цвет";
     "peripheral_sl_pro_controller_type_cell_title" = "Тип контроллера";
     "peripheral_sl_pro_top_sensor_trigger_distance_cell_title" = "Верхний датчик";
     "peripheral_sl_pro_bot_sensor_trigger_distance_cell_title" = "Нижний датчик";

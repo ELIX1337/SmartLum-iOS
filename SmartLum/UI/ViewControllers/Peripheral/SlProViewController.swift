@@ -22,12 +22,12 @@ class SlProViewController: PeripheralViewController, PeripheralViewControllerPro
             self.onCellSelected(model:$0)
             guard let vm = self.viewModel as? SlProViewModel else { return }
             switch $0.cellKey {
-            case StairsControllerData.stairsWorkModeKey:
+            case PeripheralData.stairsWorkModeKey:
                 self.pushPicker(PeripheralStairsWorkMode.allCases) { mode in
                     vm.writeStairsWorkMode(mode: mode)
                 }
                 break
-            case StairsControllerData.ledAdaptiveModeKey:
+            case PeripheralData.ledAdaptiveModeKey:
                 self.pushPicker(PeripheralLedAdaptiveMode.allCases) { mode in
                     vm.writeLedAdaptiveBrightnessMode(mode: mode)
                 }
@@ -70,8 +70,8 @@ class SlProSetupViewController: PeripheralSetupViewController {
     /// Задаем действие на кнопку "Подтвердить".
     /// В данном случае мы пишем дистанцию срабатывания датчиков.
     /// На самом деле тоже можно все автоматизировать чтобы не писать реализацию в каждом классе-наследнике.
-    override func confirmAction(_ sender: UIButton!) {
-        confirmButton.isEnabled = !(viewModel as! SlBaseViewModel).writeInitDistance()
-    }
+//    override func confirmAction(_ sender: UIButton!) {
+//        confirmButton.isEnabled = !(viewModel as! SlBaseViewModel).writeInitDistance()
+//    }
 }
 

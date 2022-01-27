@@ -14,6 +14,7 @@ protocol PeripheralProtocol {
     var endpoints: [[BluetoothEndpoint.Service:BluetoothEndpoint.Characteristic] : CBCharacteristic] { get set }
     func writeWithoutResponse(value: Data, to characteristic: CBCharacteristic?)
     func writeWithResponse(value: Data, to characteristic: CBCharacteristic?)
+    func enableNotifications(forCharacterictic: BluetoothEndpoint.Characteristic, inService: BluetoothEndpoint.Service)
     func setFactorySettings()
 }
 

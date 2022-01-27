@@ -44,13 +44,13 @@ enum PeripheralLedAdaptiveMode: Int, CaseIterable, PeripheralDataModel {
 /// таймер - выключится по таймеру.
 enum PeripheralStairsWorkMode: Int, CaseIterable, PeripheralDataModel {
     
-    case bySensors = 0
-    case byTimer = 1
+    case byTimer = 0
+    case bySensors = 1
     
     var name: String {
         switch self {
-        case .bySensors: return "peripheral_stairs_work_mode_by_sensor".localized
         case .byTimer: return "peripheral_stairs_work_mode_by_timer".localized
+        case .bySensors: return "peripheral_stairs_work_mode_by_sensor".localized
         }
     }
 }

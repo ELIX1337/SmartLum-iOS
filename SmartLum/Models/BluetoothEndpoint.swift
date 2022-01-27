@@ -31,6 +31,7 @@ struct BluetoothEndpoint {
         case flClassic
         case flMini
         case slBase
+        case slStandart
         case slPro
         
         var uuidString: String {
@@ -38,6 +39,7 @@ struct BluetoothEndpoint {
             case .flClassic:  return UUIDs.FL_CLASSIC_ADVERTISING_UUID.uuidString
             case .flMini:     return UUIDs.FL_MINI_ADVERTISING_UUID.uuidString
             case .slBase:     return UUIDs.SL_BASE_ADVERTISING_UUID.uuidString
+            case .slStandart: return UUIDs.SL_STANDART_ADVERTISING_UUID.uuidString
             case .slPro:      return UUIDs.SL_PRO_ADVERTISING_UUID.uuidString
             }
         }

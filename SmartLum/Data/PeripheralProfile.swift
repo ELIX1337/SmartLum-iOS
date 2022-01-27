@@ -17,6 +17,7 @@ enum PeripheralProfile {
     case FlClassic
     case FlMini
     case SlBase
+    case SLStandart
     case SlPro
     
     var uuid: CBUUID {
@@ -24,6 +25,7 @@ enum PeripheralProfile {
         case .FlClassic:  return UUIDs.FL_CLASSIC_ADVERTISING_UUID
         case .FlMini:     return UUIDs.FL_MINI_ADVERTISING_UUID
         case .SlBase:     return UUIDs.SL_BASE_ADVERTISING_UUID
+        case .SLStandart: return UUIDs.SL_STANDART_ADVERTISING_UUID
         case .SlPro:      return UUIDs.SL_PRO_ADVERTISING_UUID
         }
     }
@@ -31,10 +33,11 @@ enum PeripheralProfile {
     /// Определяет тип устройства по рекламному UUID
     static func getPeripheralProfile(uuid: CBUUID) -> Self? {
         switch uuid {
-        case UUIDs.FL_CLASSIC_ADVERTISING_UUID: return Self.FlClassic
-        case UUIDs.FL_MINI_ADVERTISING_UUID:    return Self.FlMini
-        case UUIDs.SL_BASE_ADVERTISING_UUID:    return Self.SlBase
-        case UUIDs.SL_PRO_ADVERTISING_UUID:     return Self.SlPro
+        case UUIDs.FL_CLASSIC_ADVERTISING_UUID:  return Self.FlClassic
+        case UUIDs.FL_MINI_ADVERTISING_UUID:     return Self.FlMini
+        case UUIDs.SL_BASE_ADVERTISING_UUID:     return Self.SlBase
+        case UUIDs.SL_STANDART_ADVERTISING_UUID: return Self.SLStandart
+        case UUIDs.SL_PRO_ADVERTISING_UUID:      return Self.SlPro
         default: return nil
         }
     }
@@ -45,6 +48,7 @@ enum PeripheralProfile {
         case .FlClassic:  return FlClassicPeripheral.init(peripheral, manager)
         case .FlMini:     return FlClassicPeripheral.init(peripheral, manager)
         case .SlBase:     return SlBasePeripheral.init(peripheral, manager)
+        case .SLStandart: return SlProPeripheral.init(peripheral, manager)
         case .SlPro:      return SlProPeripheral.init(peripheral, manager)
         }
     }
@@ -56,15 +60,8 @@ enum PeripheralProfile {
         case .FlClassic:  return FlClassicViewController()
         case .FlMini:     return FlClassicViewController()
         case .SlBase:     return SlBaseViewController()
+        case .SLStandart: return SlProViewController()
         case .SlPro:      return SlProViewController()
-        }
-    }
-
-    /// Вернет соответствующий SetupViewController для устройства
-    static func getPeripheralSetupVC(peripheral: BasePeripheral) -> PeripheralSetupViewController? {
-        switch peripheral {
-        case is SlBasePeripheral: return SlBaseSetupViewController()
-        default: return nil
         }
     }
     

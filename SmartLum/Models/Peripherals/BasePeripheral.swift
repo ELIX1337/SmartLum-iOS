@@ -18,12 +18,20 @@ class BasePeripheral: NSObject,
                       PeripheralProtocol {
     
     let centralManager: CBCentralManager
+    
     var peripheral: CBPeripheral
-    var type: PeripheralProfile?
+    
+    /// Тип устройства. Инициализируется в сканнере.
+    var deviceType: PeripheralProfile!
+    
     var name: String
+    
     var endpoints: [[BluetoothEndpoint.Service : BluetoothEndpoint.Characteristic] : CBCharacteristic] = [:]
+    
     public var isConnected: Bool { peripheral.state == .connected }
+    
     var baseDelegate: BasePeripheralDelegate?
+    
     var lastService: CBUUID?
     
     init(_ peripheral: CBPeripheral, _ manager: CBCentralManager) {
@@ -42,7 +50,7 @@ class BasePeripheral: NSObject,
         print("Connecting to \(name)")
         
         // Таймаут
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 15) {
             if (!self.isConnected) {
                 self.centralManager.cancelPeripheralConnection(self.peripheral)
             }
@@ -93,6 +101,46 @@ class BasePeripheral: NSObject,
             peripheral.setNotifyValue(true, for: characteristic)
         } else {
             print("No NOTIFY property in \(characteristic.uuid)")
+        }
+    }
+    
+    // Выключает уведомления (notifications) для характеристики
+    private func disableNotifications(for characteristic: CBCharacteristic) {
+        if characteristic.properties.contains(.notify) {
+            print("Disabling notifications for \(characteristic.uuid)")
+            peripheral.setNotifyValue(false, for: characteristic)
+        } else {
+            print("No NOTIFY property in \(characteristic.uuid)")
+        }
+    }
+    
+    /// Включает notify для всех поддерживаемых характеристик
+    public func enableAllNotifications() {
+        peripheral.services?.forEach { service in
+            service.characteristics?.forEach { characteristic in
+                if characteristic.properties.contains(.notify) {
+                    peripheral.setNotifyValue(true, for: characteristic)
+                    print("ALL NOTIFY: Enabled notifications for \(characteristic.uuid)")
+                }
+            }
+        }
+    }
+    
+    /// Публичная функция чтобы включать notify извне
+    public func enableNotifications(forCharacterictic: BluetoothEndpoint.Characteristic, inService: BluetoothEndpoint.Service) {
+        if let char = endpoints[[inService:forCharacterictic]] {
+            enableNotifications(for: char)
+        } else {
+            print("Can't find characteristic for notifying")
+        }
+    }
+    
+    /// Публичная функция чтобы выключать notify извне
+    public func disableNotifications(forCharacterictic: BluetoothEndpoint.Characteristic, inService: BluetoothEndpoint.Service) {
+        if let char = endpoints[[inService:forCharacterictic]] {
+            disableNotifications(for: char)
+        } else {
+            print("Can't find characteristic for disabling notify")
         }
     }
     
@@ -160,7 +208,9 @@ class BasePeripheral: NSObject,
                 for characteristic in characteristics {
                     
                     // Включаем уведомления в характеристике
-                    enableNotifications(for: characteristic)
+                    // Перенес вызов этой функции 
+
+                    // enableNotifications(for: characteristic)
                     
                     // Считываем значение с характеристики
                     peripheral.readValue(for: characteristic)

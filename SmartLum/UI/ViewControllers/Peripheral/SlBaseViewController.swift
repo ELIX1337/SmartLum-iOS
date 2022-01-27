@@ -40,7 +40,7 @@ class SlBaseSetupViewController: PeripheralSetupViewController {
     /// Задаем действие на кнопку "Подтвердить".
     /// В данном случае мы пишем дистанцию срабатывания датчиков.
     /// На самом деле тоже можно все автоматизировать чтобы не писать реализацию в каждом классе-наследнике.
-    override func confirmAction(_ sender: UIButton!) {
-        confirmButton.isEnabled = !(viewModel as! SlBaseViewModel).writeInitDistance()
-    }
+//    override func confirmAction(_ sender: UIButton!) {
+//        confirmButton.isEnabled = !(viewModel as! SlBaseViewModel).writeInitDistance()
+//    }
 }

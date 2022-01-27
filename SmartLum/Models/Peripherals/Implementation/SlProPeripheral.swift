@@ -26,6 +26,7 @@ class SlProPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSensorP
     /// Делаем override чтобы обработать прием уже конкретных данных
     override func dataReceived(data: Data, from characteristic: BluetoothEndpoint.Characteristic, in service: BluetoothEndpoint.Service, error: Error?) {
         super.dataReceived(data: data, from: characteristic, in: service, error: error)
+        print("RECEIVED - \(characteristic) - \(data)")
         switch (service, characteristic) {
         case (.led, .ledBrightness),
             (.led, .ledState),
@@ -189,6 +190,9 @@ class SlProPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSensorP
         switch setting {
         case .animationMode:
             delegate?.getAnimationMode(mode: SlProAnimations(rawValue: value.toInt()) ?? .off)
+            break
+        case .animationOnSpeed:
+            delegate?.getAnimationOnSpeed(speed: value.toInt())
             break
         default:
             break

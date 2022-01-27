@@ -15,19 +15,21 @@ import UIKit
 /// Обновлять значения тут нужно при получении данных с устройства и при записи на устройство.
 protocol PeripheralDataStorage {
     
-    var values: [String:Any] { get set }
+    var values: [String : Any]? { get set }
+    
     func getValue(key: String) -> Any?
+    
     mutating func setValue(key: String, value: Any)
 }
 
 extension PeripheralDataStorage {
     
     func getValue(key: String) -> Any? {
-        return values[key]
+        return values?[key]
     }
     
     mutating func setValue(key: String, value: Any) {
-        values[key] = value
+        values?[key] = value
     }
 }
 
@@ -40,9 +42,11 @@ struct BasePeripheralData {
     static var factoryResetKey:    String { "PeripheralFactoryReset" }
 }
 
-/// Данные присущие устройствам SL-Base, SL-Pro, SL-Standart.
-struct StairsControllerData: PeripheralDataStorage {
-    var values: [String : Any]
+struct PeripheralData: PeripheralDataStorage {
+    
+    var values: [String : Any]?
+    
+    var peripheralType: PeripheralProfile
     
     static let primaryColorKey        = "PrimaryColorKey"
     static let randomColorKey         = "RandomColorKey"
@@ -71,53 +75,91 @@ struct StairsControllerData: PeripheralDataStorage {
     static let topSensorCountKey      = "TopSensorCountKey"
     static let botSensorCountKey      = "BotSensorCountKey"
     
-    // Тут описано, какие значения могут принимать те или иные настройки устройства SL-Base.
-    static let slBaseLedMinBrightness = 1
-    static let slBaseLedMaxBrightness = 100
-    static let slBaseLedMinTimeout    = 1
-    static let slBaseLedMaxTimeout    = 120
-    static let slBaseSensorMinDistance = 20
-    static let slBaseSensorMaxDistance = 200
-    static let slBaseAnimationMinSpeed = 1
-    static let slBaseAnimationMaxSpeed = 100
-
-    // Тут описано, какие значения могут принимать те или иные настройки устройства SL-Pro.
-    static let slProLedMinBrightness  = 1
-    static let slProLedMaxBrightness  = 255
-    static let slProLedMinTimeout     = 1
-    static let slProLedMaxTimeout     = 120
-    static let slProSensorMinDistance = 20
-    static let slProSensorMaxDistance = 200
-    static let slProAnimationMinSpeed = 1
-    static let slProAnimationMaxSpeed = 100
-    static let slProStepsMinCount     = 2
-    static let slProStepsMaxCount     = 26
-    static let slProSensorMinCount    = 1
-    static let slProSensorMaxCount    = 2
-    static let slProStandbyMinCount   = 1
-    static let slProStandbyMaxCount   = slProStepsMaxCount / 2
+    // Диапазон поддерживаемых данных у различных устройств
     
-    // Тут описано, какие значения могут принимать те или иные настройки устройства SL-Standart.
-    static let slStandartLedMinBrightness  = 1
-    static let slStandartLedMaxBrightness  = 255
-    static let slStandartLedMinTimeout     = 1
-    static let slStandartLedMaxTimeout     = 120
-    static let slStandartSensorMinDistance = 20
-    static let slStandartSensorMaxDistance = 200
-    static let slStandartAnimationMinSpeed = 1
-    static let slStandartAnimationMaxSpeed = 100
-    static let slStandartStepsMinCount     = 2
-    static let slStandartStepsMaxCount     = 26
-    static let slStandartSensorMinCount    = 1
-    static let slStandartSensorMaxCount    = 2
-    static let slStandartStandbyMinCount   = 1
-    static let slStandartStandbyMaxCount   = slStandartStepsMaxCount / 2
-
+    /// Значения яркости светодиодной ленты.
+    var ledBrightness : (min: Int, max: Int) {
+        switch peripheralType {
+        case .FlClassic:  return (1, 1) // Настройка не поддерживается устройством
+        case .FlMini:     return (1, 1) // Настройка не поддерживается устройством
+        case .SlBase:     return (1, 100)
+        case .SLStandart: return (1, 255)
+        case .SlPro:      return (1, 255)
+        }
+    }
+    
+    /// Значения таймаута отключения подстветки.
+    var ledTimeout : (min: Int, max: Int) {
+        switch peripheralType {
+        case .FlClassic:  return (1, 1) // Настройка не поддерживается устройством
+        case .FlMini:     return (1, 1) // Настройка не поддерживается устройством
+        case .SlBase:     return (1, 120)
+        case .SLStandart: return (1, 120)
+        case .SlPro:      return (1, 120)
+        }
+    }
+    
+    /// Значения диапазона работы датчиков расстояния.
+    var sensorDistance : (min: Int, max: Int) {
+        switch peripheralType {
+        case .FlClassic:  return (1 , 1) // Настройка не поддерживается устройством
+        case .FlMini:     return (1 , 1) // Настройка не поддерживается устройством
+        case .SlBase:     return (20, 200)
+        case .SLStandart: return (20, 200)
+        case .SlPro:      return (20, 200)
+        }
+    }
+    
+    /// Значения скорости анимации.
+    var animationSpeed : (min: Int, max: Int) {
+        switch peripheralType {
+        case .FlClassic:  return (0, 30)
+        case .FlMini:     return (0, 30)
+        case .SlBase:     return (1, 100)
+        case .SLStandart: return (1, 255)
+        case .SlPro:      return (1, 255)
+        }
+    }
+    
+    /// Значения количества ступеней
+    var stepsCount : (min: Int, max: Int) {
+        switch peripheralType {
+        case .FlClassic:  return (1, 1) // Настройка не поддерживается устройством
+        case .FlMini:     return (1, 1) // Настройка не поддерживается устройством
+        case .SlBase:     return (1, 1) // Настройка не поддерживается устройством
+        case .SLStandart: return (2, 18)
+        case .SlPro:      return (2, 24)
+        }
+    }
+    
+    /// Значения количества сенсоров на ОДИН пролет
+    var sensorCount : (min: Int, max: Int) {
+        switch peripheralType {
+        case .FlClassic:  return (1, 1) // Настройка не поддерживается устройством
+        case .FlMini:     return (1, 1) // Настройка не поддерживается устройством
+        case .SlBase:     return (1, 1) // Настройка не поддерживается устройством
+        case .SLStandart: return (1, 1)
+        case .SlPro:      return (1, 2)
+        }
+    }
+    
+    /// Значения количества ступеней дежурной подсветки
+    var standbyСount : (min: Int, max: Int) {
+        switch peripheralType {
+        case .FlClassic:  return (1, 1) // Настройка не поддерживается устройством
+        case .FlMini:     return (1, 1) // Настройка не поддерживается устройством
+        case .SlBase:     return (1, 1) // Настройка не поддерживается устройством
+        case .SLStandart: return (1, stepsCount.max / 2)
+        case .SlPro:      return (1, stepsCount.max / 2)
+        }
+    }
+    
 }
 
 /// Данные для устройства FL-Classic
 struct FlClassicData: PeripheralDataStorage {
-    var values: [String : Any]
+    
+    var values: [String : Any]?
     
     static let primaryColorKey       = "PrimaryColorKey"
     static let secondaryColorKey     = "SecondaryColorKey"

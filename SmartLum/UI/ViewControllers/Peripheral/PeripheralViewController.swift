@@ -188,10 +188,12 @@ extension PeripheralViewController: PeripheralViewModelDelegate {
     /// Устройство подключилось, данные считаны. Все готово к работе
     func peripheralIsReady() {
         hideConnectionAlert()
+        print("GGG")
         /// Если устройство не настроено (инициализировано),
         /// то выводим на экран setupViewController
         if !viewModel.isInitialized {
-            if let setupViewController = PeripheralProfile.getPeripheralSetupVC(peripheral: viewModel.basePeripheral) {
+            //if let setupViewController = PeripheralProfile.getPeripheralSetupVC(peripheral: viewModel.basePeripheral) {
+            let setupViewController = PeripheralSetupViewController()
                 setupViewController.viewModel = viewModel
                 
                 /// Callback который вызывается при закрытии setupViewController.
@@ -211,7 +213,7 @@ extension PeripheralViewController: PeripheralViewModelDelegate {
                 navigationController?.present(setupViewController, animated: true, completion: nil)
                 /// Чисто на всякий случай
                 tableView.reloadData()
-            }
+            //}
         }
     }
     
@@ -329,7 +331,9 @@ class PeripheralSetupViewController: PeripheralViewController {
     }
     
     /// Реализация происходит в классах наследниках
-    @objc func confirmAction(_ sender:UIButton!) { }
+    @objc func confirmAction(_ sender:UIButton!) {
+        confirmButton.isEnabled = viewModel.writeInitData()
+    }
     
     @objc func cancelAction(_ sender:UIButton!) {
         self.dismiss(animated: true, completion: nil)
