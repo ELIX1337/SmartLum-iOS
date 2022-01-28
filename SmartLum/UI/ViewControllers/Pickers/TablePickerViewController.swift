@@ -69,16 +69,23 @@ extension Array where Element: Equatable {
 class TablePickerViewDataSource<T>: NSObject, UITableViewDelegate, UITableViewDataSource {
     
     public var originalItems: [T]
+    
     public var items: [GenericRow<T>]
+    
     public var selected: (T) -> Void
+    
+    private var pickerTitle: String?
+    
     //private var selectedIndexPath:IndexPath = IndexPath.init(row: 0, section: 0)
     #warning("TODO: FIX SELECTION")
     
     public init(withItems originalItems: [T],
                 withSelection: T,
                 withRowTitle generateRowTitile: (T) -> String,
+                pickerTitle: String?,
                 didSelect selected: @escaping (T) -> Void) {
         self.originalItems = originalItems
+        self.pickerTitle = pickerTitle
         self.selected = selected
         self.items = originalItems.map {
             GenericRow<T>(type: $0, title: generateRowTitile($0))
@@ -128,5 +135,10 @@ class TablePickerViewDataSource<T>: NSObject, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath as IndexPath)?.accessoryType = .none
     }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return pickerTitle
+    }
+    
     
 }

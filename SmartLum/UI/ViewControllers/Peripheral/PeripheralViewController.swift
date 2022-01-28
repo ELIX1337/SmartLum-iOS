@@ -93,22 +93,22 @@ class PeripheralViewController: UIViewController {
     /// Инициализируем picker.
     /// Принимает в себя массив данных, из которых будет происходить выбор.
     /// Аргумент withSelection не работает, по идее должна была быть галочка рядом с текущим выбранным элементом, но руки не дошли это реализовать
-    func initPickerDataSource<T: PeripheralDataModel>(with elements: [T], callback: @escaping (T) -> Void) {
-        self.pickerDataSource = TablePickerViewDataSource<PeripheralDataModel>(withItems: elements, withSelection: FlClassicAnimations.rainbow, withRowTitle: { $0.name.localized })
+    func initPickerDataSource<T: PeripheralDataModel>(with elements: [T], title: String?, callback: @escaping (T) -> Void) {
+        self.pickerDataSource = TablePickerViewDataSource<PeripheralDataModel>(withItems: elements, withSelection: FlClassicAnimations.rainbow, withRowTitle: { $0.name.localized }, pickerTitle: title)
         {
             // Возвращаем выбранный элемент
             callback($0 as! T)
         }
     }
     
-    func pushPicker<T: PeripheralDataModel>(_ dataArray: [T], _ callback: @escaping (T) -> Void) {
+    func pushPicker<T: PeripheralDataModel>(_ dataArray: [T], title: String?, _ callback: @escaping (T) -> Void) {
         
         /// Picker вылезет снизу экрана поверх текущего, но по идее это отдельный ViewController с прозрачным фоном.
         /// Можно использовать WheelPickerViewController
         let vc = TablePickerViewController()
         
         /// Создаем DataSource  для Picker'а
-        initPickerDataSource(with: dataArray, callback: callback)
+        initPickerDataSource(with: dataArray, title: title, callback: callback)
         
         /// Назначаем делегата и dataSource
         vc.delegate = pickerDataSource

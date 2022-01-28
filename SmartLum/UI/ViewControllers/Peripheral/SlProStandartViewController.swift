@@ -26,12 +26,12 @@ class SlProStandartViewController: PeripheralViewController, PeripheralViewContr
             
             switch $0.cellKey {
             case PeripheralData.stairsWorkModeKey:
-                self.pushPicker(PeripheralStairsWorkMode.allCases) { mode in
+                self.pushPicker(PeripheralStairsWorkMode.allCases, title: "peripheral_sl_pro_stairs_work_mode_cell_title".localized) { mode in
                     vm.writeStairsWorkMode(mode: mode)
                 }
                 break
             case PeripheralData.ledAdaptiveModeKey:
-                self.pushPicker(PeripheralLedAdaptiveMode.allCases) { mode in
+                self.pushPicker(PeripheralLedAdaptiveMode.allCases, title: "peripheral_sl_pro_adaptive_brightness_cell_title".localized) { mode in
                     vm.writeLedAdaptiveBrightnessMode(mode: mode)
                 }
                 break
@@ -56,7 +56,7 @@ class SlProStandartViewController: PeripheralViewController, PeripheralViewContr
                 }
                 break
             case mViewModel.animationModeCell:
-                pushPicker(SlProStandartAnimations.allCases) { selection in
+                pushPicker(SlProStandartAnimations.allCases, title: "peripheral_animation_mode_cell_title".localized) { selection in
                     mViewModel.writeAnimationMode(mode: selection)
                 }
                 break

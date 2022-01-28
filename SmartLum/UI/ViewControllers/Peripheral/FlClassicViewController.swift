@@ -36,12 +36,12 @@ class FlClassicViewController: PeripheralViewController, PeripheralViewControlle
                 }
                 break
             case mViewModel.animationModeCell:
-                pushPicker(FlClassicAnimations.allCases) {
+                pushPicker(FlClassicAnimations.allCases, title: "peripheral_animation_mode_cell_title".localized) {
                     mViewModel.writeAnimationMode(mode: $0)
                 }
                 break
             case mViewModel.animationDirectionCell:
-                pushPicker(PeripheralAnimationDirections.allCases) {
+                pushPicker(PeripheralAnimationDirections.allCases, title: "peripheral_animation_direction_cell_title".localized) {
                     mViewModel.writeAnimationDirection(direction: $0)
                 }
                 break
