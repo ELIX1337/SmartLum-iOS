@@ -29,7 +29,7 @@ class FlClassicViewModel: PeripheralViewModel {
     // Используются чтобы инициализировать ColorPicker
     var primaryColor: UIColor {
         get {
-            if let color = dataModel.getValue(key: FlClassicData.primaryColorKey) as? UIColor {
+            if let color = dataModel.getValue(key: PeripheralData.primaryColorKey) as? UIColor {
                 return color
             }
             // Дефолтное значение
@@ -39,7 +39,7 @@ class FlClassicViewModel: PeripheralViewModel {
     
     var secondaryColor: UIColor {
         get {
-            if let color = dataModel.getValue(key: FlClassicData.secondaryColorKey) as? UIColor {
+            if let color = dataModel.getValue(key: PeripheralData.secondaryColorKey) as? UIColor {
                 return color
             }
             // Дефолтное значение
@@ -54,7 +54,7 @@ class FlClassicViewModel: PeripheralViewModel {
         super.init(withTableView, withPeripheral, delegate, selected)
         peripheral.delegate = self
         // dataModel - хранит значения полученные с устройства в формате ключ-значение
-        //dataModel = FlClassicData.init(values: [:])
+        //dataModel = PeripheralData.init(values: [:])
         dataModel = PeripheralData.init(values: [:], peripheralType: .FlClassic)
         initColorSection()
         initAnimationSection()
@@ -75,53 +75,53 @@ class FlClassicViewModel: PeripheralViewModel {
     // Функция инициализации секции с цветами
     private func initColorSection() {
         primaryColorCell = .colorCell(
-            key: FlClassicData.primaryColorKey,
+            key: PeripheralData.primaryColorKey,
             title: "peripheral_primary_color_cell_title".localized,
             initialValue: primaryColor,
             // callBack пустой, так как он обрабатывается во ViewController'e
             callback: { _ in })
         secondaryColorCell = .colorCell(
-            key: FlClassicData.secondaryColorKey,
+            key: PeripheralData.secondaryColorKey,
             title: "peripheral_secondary_color_cell_title".localized,
-            initialValue: dataModel.getValue(key: FlClassicData.secondaryColorKey) as? UIColor ?? UIColor.SLWhite,
+            initialValue: dataModel.getValue(key: PeripheralData.secondaryColorKey) as? UIColor ?? UIColor.SLWhite,
             // callBack пустой, так как он обрабатывается во ViewController'e
             callback: { _ in })
         randomColorCell = .switchCell(
-            key: FlClassicData.randomColorKey,
+            key: PeripheralData.randomColorKey,
             title: "peripheral_random_color_cell_title".localized,
-            initialValue: dataModel.getValue(key: FlClassicData.randomColorKey) as? Bool ?? false,
+            initialValue: dataModel.getValue(key: PeripheralData.randomColorKey) as? Bool ?? false,
             callback: { self.writeRandomColor(state: $0) })
     }
     
     // Функция инициализации секции с анимациями
     private func initAnimationSection() {
         animationModeCell = .pickerCell(
-            key: FlClassicData.animationModeKey,
+            key: PeripheralData.animationModeKey,
             title: "peripheral_animation_mode_cell_title".localized,
             initialValue: "")
         animationSpeedCell = .sliderCell(
-            key: FlClassicData.animationSpeedKey,
+            key: PeripheralData.animationSpeedKey,
             title: "peripheral_animation_speed_cell_title".localized,
-            initialValue: Float(dataModel.getValue(key: FlClassicData.animationSpeedKey) as? Int ?? 0),
-            minValue: Float(FlClassicData.animationMinSpeed),
-            maxValue: Float(FlClassicData.animationMaxSpeed),
+            initialValue: Float(dataModel.getValue(key: PeripheralData.animationSpeedKey) as? Int ?? 0),
+            minValue: Float(dataModel.animationSpeed.min),
+            maxValue: Float(dataModel.animationSpeed.max),
             leftIcon: nil,
             rightIcon: nil,
             showValue: false,
             callback: { speed in
                 self.writeAnimationOnSpeed(speed: Int(speed))
-                self.dataModel.setValue(key: FlClassicData.animationSpeedKey, value: Int(speed))
+                self.dataModel.setValue(key: PeripheralData.animationSpeedKey, value: Int(speed))
             })
         animationDirectionCell = .pickerCell(
-            key: FlClassicData.animationDirectionKey,
+            key: PeripheralData.animationDirectionKey,
             title: "peripheral_animation_direction_cell_title".localized,
             initialValue: "")
         animationStepCell = .stepperCell(
-            key: FlClassicData.animationStepKey,
+            key: PeripheralData.animationStepKey,
             title: "peripheral_animation_step_cell_title".localized,
-            initialValue: Double(FlClassicData.animationMinStep),
-            minValue: Double(FlClassicData.animationMinStep),
-            maxValue: Double(FlClassicData.animationMaxStep),
+            initialValue: Double(dataModel.animationStep.min),
+            minValue: Double(dataModel.animationStep.min),
+            maxValue: Double(dataModel.animationStep.max),
             callback: { self.writeAnimationStep(step: Int($0)) })
     }
     
@@ -133,7 +133,7 @@ class FlClassicViewModel: PeripheralViewModel {
         tableView.performBatchUpdates( {
             // Обнуляем скрытые ячейки
             showAllCells(inModel: readyTableViewModel!)
-            let randonColorState = dataModel.getValue(key: FlClassicData.randomColorKey) as! Bool
+            let randonColorState = dataModel.getValue(key: PeripheralData.randomColorKey) as! Bool
             // Перебираем
             switch animation {
             case .tetris:
@@ -171,7 +171,7 @@ class FlClassicViewModel: PeripheralViewModel {
     public func writePrimaryColor(color: UIColor) {
         peripheral.writePrimaryColor(color)
         // Обновляем данные в dataModel
-        dataModel.setValue(key: FlClassicData.primaryColorKey, value: color)
+        dataModel.setValue(key: PeripheralData.primaryColorKey, value: color)
         // Перезагружаем соответствующую ячейку
         updateCell(for: primaryColorCell, with: .none)
     }
@@ -180,7 +180,7 @@ class FlClassicViewModel: PeripheralViewModel {
     public func writeSecondaryColor(color: UIColor) {
         peripheral.writeSecondaryColor(color)
         // Обновляем данные в dataModel
-        dataModel.setValue(key: FlClassicData.secondaryColorKey, value: color)
+        dataModel.setValue(key: PeripheralData.secondaryColorKey, value: color)
         // Перезагружаем соответствующую ячейку
         updateCell(for: secondaryColorCell, with: .none)
     }
@@ -189,7 +189,7 @@ class FlClassicViewModel: PeripheralViewModel {
     public func writeRandomColor(state: Bool) {
         peripheral.writeRandomColor(state)
         // Обновляем данные в dataModel
-        dataModel.setValue(key: FlClassicData.randomColorKey, value: state)
+        dataModel.setValue(key: PeripheralData.randomColorKey, value: state)
         // Перезагружаем соответствующую ячейку
         updateCell(for: randomColorCell, with: .none)
         // Скрываем или показываем primaryColor и secondaryColor
@@ -198,11 +198,11 @@ class FlClassicViewModel: PeripheralViewModel {
     
     /// Публичный метод для записи режима анимации
     public func writeAnimationMode(mode: FlClassicAnimations) {
-        guard mode.name != dataModel.getValue(key: FlClassicData.animationModeKey) as! String else {
+        guard mode.name != dataModel.getValue(key: PeripheralData.animationModeKey) as! String else {
             return
         }
         peripheral.writeAnimationMode(mode)
-        dataModel.setValue(key: FlClassicData.animationModeKey, value: mode.name)
+        dataModel.setValue(key: PeripheralData.animationModeKey, value: mode.name)
         updateCell(for: animationModeCell, with: .none)
         handleAnimation(animation: mode)
     }
@@ -210,21 +210,21 @@ class FlClassicViewModel: PeripheralViewModel {
     /// Публичный метод для направления анимации
     public func writeAnimationDirection(direction: PeripheralAnimationDirections) {
         peripheral.writeAnimationDirection(direction)
-        dataModel.setValue(key: FlClassicData.animationDirectionKey, value: direction)
+        dataModel.setValue(key: PeripheralData.animationDirectionKey, value: direction)
         updateCell(for: animationDirectionCell, with: .none)
     }
     
     /// Публичный метод для записи скорости анимации
     public func writeAnimationOnSpeed(speed: Int) {
         peripheral.writeAnimationOnSpeed(speed)
-        dataModel.setValue(key: FlClassicData.animationSpeedKey, value: speed)
+        dataModel.setValue(key: PeripheralData.animationSpeedKey, value: speed)
         updateCell(for: animationSpeedCell, with: .none)
     }
     
     /// Публичный метод для записи шага анимации
     public func writeAnimationStep(step: Int) {
         peripheral.writeAnimationStep(step)
-        dataModel.setValue(key: FlClassicData.animationStepKey, value: step)
+        dataModel.setValue(key: PeripheralData.animationStepKey, value: step)
         updateCell(for: animationStepCell, with: .none)
     }
     
@@ -234,39 +234,39 @@ class FlClassicViewModel: PeripheralViewModel {
 extension FlClassicViewModel: FlClassicPeripheralDelegate {
     
     func getPrimaryColor(_ color: UIColor) {
-        dataModel.setValue(key: FlClassicData.primaryColorKey, value: color)
+        dataModel.setValue(key: PeripheralData.primaryColorKey, value: color)
         updateCell(for: primaryColorCell, with: .middle)
     }
     
     func getSecondaryColor(_ color: UIColor) {
-        dataModel.setValue(key: FlClassicData.secondaryColorKey, value: color)
+        dataModel.setValue(key: PeripheralData.secondaryColorKey, value: color)
         updateCell(for: secondaryColorCell, with: .middle)
     }
     
     func getRandomColor(_ state: Bool) {
-        dataModel.setValue(key: FlClassicData.randomColorKey, value: state)
+        dataModel.setValue(key: PeripheralData.randomColorKey, value: state)
         updateCell(for: randomColorCell, with: .middle)
         handleRandomColor(state: state)
     }
     
     func getAnimationMode(mode: PeripheralDataModel) {
-        dataModel.setValue(key: FlClassicData.animationModeKey, value: mode.name)
+        dataModel.setValue(key: PeripheralData.animationModeKey, value: mode.name)
         updateCell(for: animationModeCell, with: .middle)
         handleAnimation(animation: mode as! FlClassicAnimations)
     }
     
     func getAnimationOnSpeed(speed: Int) {
-        dataModel.setValue(key: FlClassicData.animationSpeedKey, value: speed)
+        dataModel.setValue(key: PeripheralData.animationSpeedKey, value: speed)
         updateCell(for: animationSpeedCell, with: .middle)
     }
         
     func getAnimationDirection(direction: PeripheralDataModel) {
-        dataModel.setValue(key: FlClassicData.animationDirectionKey, value: direction.name)
+        dataModel.setValue(key: PeripheralData.animationDirectionKey, value: direction.name)
         updateCell(for: animationDirectionCell, with: .middle)
     }
     
     func getAnimationStep(step: Int) {
-        dataModel.setValue(key: FlClassicData.animationStepKey, value: step)
+        dataModel.setValue(key: PeripheralData.animationStepKey, value: step)
         updateCell(for: animationStepCell, with: .middle)
     }
     
