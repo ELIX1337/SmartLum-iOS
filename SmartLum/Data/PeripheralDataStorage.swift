@@ -15,7 +15,7 @@ import UIKit
 /// Обновлять значения тут нужно при получении данных с устройства и при записи на устройство.
 protocol PeripheralDataStorage {
     
-    var values: [String : Any]? { get set }
+    var values: [String : Any] { get set }
     
     func getValue(key: String) -> Any?
     
@@ -25,11 +25,11 @@ protocol PeripheralDataStorage {
 extension PeripheralDataStorage {
     
     func getValue(key: String) -> Any? {
-        return values?[key]
+        return values[key]
     }
     
     mutating func setValue(key: String, value: Any) {
-        values?[key] = value
+        values[key] = value
     }
 }
 
@@ -44,11 +44,12 @@ struct BasePeripheralData {
 
 struct PeripheralData: PeripheralDataStorage {
     
-    var values: [String : Any]?
+    var values: [String : Any] = [:]
     
     var peripheralType: PeripheralProfile
     
     static let primaryColorKey        = "PrimaryColorKey"
+    static let secondaryColorKey      = "SecondaryColorKey"
     static let randomColorKey         = "RandomColorKey"
     static let ledStateKey            = "LedStateKey"
     static let ledBrightnessKey       = "LedBrightnessKey"
@@ -66,6 +67,7 @@ struct PeripheralData: PeripheralDataStorage {
     static let animationModeKey       = "AnimationModeKey"
     static let animationSpeedKey      = "AnimationSpeedKey"
     static let animationDirectionKey  = "AnimationDirectionKey"
+    static let animationStepKey       = "AnimationStepKey"
     static let stepsCountKey          = "StepsCountKey"
     static let standbyStateKey        = "StandbyStateKey"
     static let standbyBrightnessKey   = "StandbyBrightnessKey"
@@ -121,6 +123,17 @@ struct PeripheralData: PeripheralDataStorage {
         }
     }
     
+    /// Значения шага  анимации.
+    var animationStep : (min: Int, max: Int) {
+        switch peripheralType {
+        case .FlClassic:  return (1, 10)
+        case .FlMini:     return (1, 10)
+        case .SlBase:     return (1, 1) // Настройка не поддерживается устройством
+        case .SLStandart: return (1, 1) // Настройка не поддерживается устройством
+        case .SlPro:      return (1, 1) // Настройка не поддерживается устройством
+        }
+    }
+    
     /// Значения количества ступеней
     var stepsCount : (min: Int, max: Int) {
         switch peripheralType {
@@ -155,23 +168,3 @@ struct PeripheralData: PeripheralDataStorage {
     }
     
 }
-
-/// Данные для устройства FL-Classic
-struct FlClassicData: PeripheralDataStorage {
-    
-    var values: [String : Any]?
-    
-    static let primaryColorKey       = "PrimaryColorKey"
-    static let secondaryColorKey     = "SecondaryColorKey"
-    static let randomColorKey        = "RandomColorKey"
-    static let animationModeKey      = "AnimationModeKey"
-    static let animationSpeedKey     = "AnimationSpeedKey"
-    static let animationDirectionKey = "AnimationDirectionKey"
-    static let animationStepKey      = "AnimationStepKey"
-    
-    static let animationMinSpeed = 0
-    static let animationMaxSpeed = 30
-    static let animationMinStep  = 1
-    static let animationMaxStep  = 10
-}
-
