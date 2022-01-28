@@ -64,8 +64,14 @@ class AboutViewController: UIViewController {
 
     
     private func openURL(url: URL?) {
-        if let site = url {
-            UIApplication.shared.open(site)
+        if let site = url,
+            UIApplication.shared.canOpenURL(site) {
+            
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(site)
+            } else {
+                UIApplication.shared.openURL(site)
+            }
         }
     }
     

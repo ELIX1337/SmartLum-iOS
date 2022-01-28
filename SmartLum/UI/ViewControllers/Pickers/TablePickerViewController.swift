@@ -84,9 +84,11 @@ class TablePickerViewDataSource<T>: NSObject, UITableViewDelegate, UITableViewDa
                 withRowTitle generateRowTitile: (T) -> String,
                 pickerTitle: String?,
                 didSelect selected: @escaping (T) -> Void) {
+        
         self.originalItems = originalItems
         self.pickerTitle = pickerTitle
         self.selected = selected
+        
         self.items = originalItems.map {
             GenericRow<T>(type: $0, title: generateRowTitile($0))
         }

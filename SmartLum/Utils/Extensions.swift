@@ -118,6 +118,8 @@ extension UIColor {
 extension Numeric {
     
     /// Переводит любое число (не только Int) в байты.
+    /// ОСТОРОЖНО: Работает не так как toDynamicSizeData()&
+    /// Не используется.
     func toData() -> Data {
         var source = self
         return .init(bytes: &source, count: MemoryLayout<Self>.size)

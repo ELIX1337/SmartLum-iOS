@@ -261,11 +261,13 @@ extension SlBaseViewModel: SlBasePeripheralDelegate {
     func getTopSensorTriggerDistance(distance: Int) {
         dataModel.setValue(key: PeripheralData.topTriggerDistanceKey, value: distance)
         updateCell(for: topTriggerDistanceCell, with: .middle)
+        print("TOP TRIGGER - \(distance)")
     }
     
     func getBotSensorTriggerDistance(distance: Int) {
         dataModel.setValue(key: PeripheralData.botTriggerDistanceKey, value: distance)
         updateCell(for: botTriggerDistanceCell, with: .middle)
+        print("BOT TRIGGER - \(distance)")
     }
     
     // Не используется
