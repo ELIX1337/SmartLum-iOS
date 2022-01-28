@@ -48,8 +48,8 @@ enum PeripheralProfile {
         case .FlClassic:  return FlClassicPeripheral.init(peripheral, manager)
         case .FlMini:     return FlClassicPeripheral.init(peripheral, manager)
         case .SlBase:     return SlBasePeripheral.init(peripheral, manager)
-        case .SLStandart: return SlProPeripheral.init(peripheral, manager)
-        case .SlPro:      return SlProPeripheral.init(peripheral, manager)
+        case .SLStandart: return SlProStandartPeripheral.init(peripheral, manager)
+        case .SlPro:      return SlProStandartPeripheral.init(peripheral, manager)
         }
     }
     
@@ -60,8 +60,8 @@ enum PeripheralProfile {
         case .FlClassic:  return FlClassicViewController()
         case .FlMini:     return FlClassicViewController()
         case .SlBase:     return SlBaseViewController()
-        case .SLStandart: return SlProViewController()
-        case .SlPro:      return SlProViewController()
+        case .SLStandart: return SlProStandartViewController()
+        case .SlPro:      return SlProStandartViewController()
         }
     }
     

@@ -149,11 +149,11 @@ public struct UUIDs: Error {
 /// Значения на самом деле не нужны и можно все привести к обычному массиву, просто было лень рефакторить.
 extension UUIDs {
     
-    static let advServices:[CBUUID:BasePeripheral.Type] = [
-        BluetoothEndpoint.AdvertisingServices.flClassic.uuid  : FlClassicPeripheral.self,
-        BluetoothEndpoint.AdvertisingServices.flMini.uuid     : FlClassicPeripheral.self,
-        BluetoothEndpoint.AdvertisingServices.slBase.uuid     : SlBasePeripheral.self,
-        BluetoothEndpoint.AdvertisingServices.slStandart.uuid : SlProPeripheral.self,
-        BluetoothEndpoint.AdvertisingServices.slPro.uuid      : SlProPeripheral.self
+    static let advServices:[CBUUID] = [
+        BluetoothEndpoint.AdvertisingServices.flClassic.uuid,
+        BluetoothEndpoint.AdvertisingServices.flMini.uuid,
+        BluetoothEndpoint.AdvertisingServices.slBase.uuid,
+        BluetoothEndpoint.AdvertisingServices.slStandart.uuid,
+        BluetoothEndpoint.AdvertisingServices.slPro.uuid
     ]
 }

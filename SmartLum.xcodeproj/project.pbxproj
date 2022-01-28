@@ -23,9 +23,6 @@
 		22EB5D8425FB5077003FC31D /* TablePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB5D8325FB5077003FC31D /* TablePickerViewController.swift */; };
 		2C25026F272690DC00671C26 /* InfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C25026D272690DC00671C26 /* InfoTableViewCell.swift */; };
 		2C250270272690DC00671C26 /* InfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C25026E272690DC00671C26 /* InfoTableViewCell.xib */; };
-		2C2742F7278C159D00E338E1 /* SlStandartPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2742F6278C159D00E338E1 /* SlStandartPeripheral.swift */; };
-		2C2742F9278C177D00E338E1 /* SlStandartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2742F8278C177D00E338E1 /* SlStandartViewModel.swift */; };
-		2C2742FB278C1C8E00E338E1 /* SlStandartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2742FA278C1C8E00E338E1 /* SlStandartViewController.swift */; };
 		2C31D1B327915E6D00C8E226 /* CellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C31D1B227915E6D00C8E226 /* CellModel.swift */; };
 		2C31D1B52791619C00C8E226 /* SectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C31D1B42791619C00C8E226 /* SectionModel.swift */; };
 		2C31D1B8279196DC00C8E226 /* PeripheralProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C31D1B7279196DC00C8E226 /* PeripheralProtocol.swift */; };
@@ -58,9 +55,9 @@
 		2C7202CF26A985BC0079BEEA /* ColorTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C7202CD26A985BC0079BEEA /* ColorTableViewCell.xib */; };
 		2CA36B41273944AE0067E414 /* LightnessSensorPeripheralProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA36B40273944AE0067E414 /* LightnessSensorPeripheralProtocol.swift */; };
 		2CA36B4327394F560067E414 /* StairsPeripheralProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA36B4227394F560067E414 /* StairsPeripheralProtocol.swift */; };
-		2CA36B45273A71450067E414 /* SlProPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA36B44273A71450067E414 /* SlProPeripheral.swift */; };
-		2CA36B47273A7DF50067E414 /* SlProViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA36B46273A7DF50067E414 /* SlProViewModel.swift */; };
-		2CA36B49273A82D30067E414 /* SlProViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA36B48273A82D30067E414 /* SlProViewController.swift */; };
+		2CA36B45273A71450067E414 /* SlProStandartPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA36B44273A71450067E414 /* SlProStandartPeripheral.swift */; };
+		2CA36B47273A7DF50067E414 /* SlProStandartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA36B46273A7DF50067E414 /* SlProStandartViewModel.swift */; };
+		2CA36B49273A82D30067E414 /* SlProStandartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA36B48273A82D30067E414 /* SlProStandartViewController.swift */; };
 		2CA9976C2796D528004724DC /* PeripheralDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA9976B2796D528004724DC /* PeripheralDataModel.swift */; };
 		2CA9976F2796D693004724DC /* PeripheralError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA9976E2796D693004724DC /* PeripheralError.swift */; };
 		2CA997712796D6AD004724DC /* FlClassicDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA997702796D6AD004724DC /* FlClassicDataModel.swift */; };
@@ -128,9 +125,6 @@
 		22EB5D8325FB5077003FC31D /* TablePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TablePickerViewController.swift; sourceTree = "<group>"; };
 		2C25026D272690DC00671C26 /* InfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewCell.swift; sourceTree = "<group>"; };
 		2C25026E272690DC00671C26 /* InfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoTableViewCell.xib; sourceTree = "<group>"; };
-		2C2742F6278C159D00E338E1 /* SlStandartPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlStandartPeripheral.swift; sourceTree = "<group>"; };
-		2C2742F8278C177D00E338E1 /* SlStandartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlStandartViewModel.swift; sourceTree = "<group>"; };
-		2C2742FA278C1C8E00E338E1 /* SlStandartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlStandartViewController.swift; sourceTree = "<group>"; };
 		2C31D1B227915E6D00C8E226 /* CellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellModel.swift; sourceTree = "<group>"; };
 		2C31D1B42791619C00C8E226 /* SectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionModel.swift; sourceTree = "<group>"; };
 		2C31D1B7279196DC00C8E226 /* PeripheralProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralProtocol.swift; sourceTree = "<group>"; };
@@ -164,9 +158,9 @@
 		2C9F9D80266A088F00CCF8E2 /* BasePeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePeripheral.swift; sourceTree = "<group>"; };
 		2CA36B40273944AE0067E414 /* LightnessSensorPeripheralProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightnessSensorPeripheralProtocol.swift; sourceTree = "<group>"; };
 		2CA36B4227394F560067E414 /* StairsPeripheralProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StairsPeripheralProtocol.swift; sourceTree = "<group>"; };
-		2CA36B44273A71450067E414 /* SlProPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlProPeripheral.swift; sourceTree = "<group>"; };
-		2CA36B46273A7DF50067E414 /* SlProViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlProViewModel.swift; sourceTree = "<group>"; };
-		2CA36B48273A82D30067E414 /* SlProViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlProViewController.swift; sourceTree = "<group>"; };
+		2CA36B44273A71450067E414 /* SlProStandartPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlProStandartPeripheral.swift; sourceTree = "<group>"; };
+		2CA36B46273A7DF50067E414 /* SlProStandartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlProStandartViewModel.swift; sourceTree = "<group>"; };
+		2CA36B48273A82D30067E414 /* SlProStandartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlProStandartViewController.swift; sourceTree = "<group>"; };
 		2CA9976B2796D528004724DC /* PeripheralDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralDataModel.swift; sourceTree = "<group>"; };
 		2CA9976E2796D693004724DC /* PeripheralError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralError.swift; sourceTree = "<group>"; };
 		2CA997702796D6AD004724DC /* FlClassicDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlClassicDataModel.swift; sourceTree = "<group>"; };
@@ -284,8 +278,7 @@
 			children = (
 				22EB5D5325F23E79003FC31D /* FlClassicPeripheral.swift */,
 				2C41722D27180AF600F43EA2 /* SlBasePeripheral.swift */,
-				2CA36B44273A71450067E414 /* SlProPeripheral.swift */,
-				2C2742F6278C159D00E338E1 /* SlStandartPeripheral.swift */,
+				2CA36B44273A71450067E414 /* SlProStandartPeripheral.swift */,
 			);
 			path = Implementation;
 			sourceTree = "<group>";
@@ -345,8 +338,7 @@
 				2C7202C826A84D120079BEEA /* PeripheralViewModel.swift */,
 				2C7202CA26A854220079BEEA /* FlClassicViewModel.swift */,
 				2C41722F2718100400F43EA2 /* SlBaseViewModel.swift */,
-				2CA36B46273A7DF50067E414 /* SlProViewModel.swift */,
-				2C2742F8278C177D00E338E1 /* SlStandartViewModel.swift */,
+				2CA36B46273A7DF50067E414 /* SlProStandartViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -380,8 +372,7 @@
 				2CD2C7C52719859C00B7E2E0 /* PeripheralViewController.swift */,
 				2C4172332718218100F43EA2 /* SlBaseViewController.swift */,
 				2C7202952695ADA10079BEEA /* FlClassicViewController.swift */,
-				2CA36B48273A82D30067E414 /* SlProViewController.swift */,
-				2C2742FA278C1C8E00E338E1 /* SlStandartViewController.swift */,
+				2CA36B48273A82D30067E414 /* SlProStandartViewController.swift */,
 			);
 			path = Peripheral;
 			sourceTree = "<group>";
@@ -794,7 +785,6 @@
 				2C31D1B52791619C00C8E226 /* SectionModel.swift in Sources */,
 				2CA9976F2796D693004724DC /* PeripheralError.swift in Sources */,
 				30B664831FCDA0EB003C8B55 /* ScannerTableViewController.swift in Sources */,
-				2C2742FB278C1C8E00E338E1 /* SlStandartViewController.swift in Sources */,
 				22A46DE225E91104003F4200 /* FirmwareDownloader.swift in Sources */,
 				22EB5D5425F23E79003FC31D /* FlClassicPeripheral.swift in Sources */,
 				2C4172322718171F00F43EA2 /* LedPeripheralProtocol.swift in Sources */,
@@ -810,9 +800,8 @@
 				2CDE95D1268C71760025276A /* ColorPeripheralProtocol.swift in Sources */,
 				2C720284268F1A190079BEEA /* UUIDs.swift in Sources */,
 				22EB5D4F25F23012003FC31D /* NetworkPermissionTrigger.swift in Sources */,
-				2CA36B45273A71450067E414 /* SlProPeripheral.swift in Sources */,
+				2CA36B45273A71450067E414 /* SlProStandartPeripheral.swift in Sources */,
 				2C720282268F191F0079BEEA /* BasePeripheral.swift in Sources */,
-				2C2742F9278C177D00E338E1 /* SlStandartViewModel.swift in Sources */,
 				2C720287268F259A0079BEEA /* GenericRow.swift in Sources */,
 				2C72028B269434180079BEEA /* WheelPickerViewController.swift in Sources */,
 				22A46DD225E7A931003F4200 /* DFUDocumentPicker.swift in Sources */,
@@ -825,9 +814,9 @@
 				2CDE95CF268C70CE0025276A /* BluetoothEndpoint.swift in Sources */,
 				2C72029D269D5D1A0079BEEA /* PickerTableViewCell.swift in Sources */,
 				2CA36B41273944AE0067E414 /* LightnessSensorPeripheralProtocol.swift in Sources */,
-				2CA36B49273A82D30067E414 /* SlProViewController.swift in Sources */,
+				2CA36B49273A82D30067E414 /* SlProStandartViewController.swift in Sources */,
 				2C7202CE26A985BC0079BEEA /* ColorTableViewCell.swift in Sources */,
-				2CA36B47273A7DF50067E414 /* SlProViewModel.swift in Sources */,
+				2CA36B47273A7DF50067E414 /* SlProStandartViewModel.swift in Sources */,
 				22DCAD4025FF392300BB30D3 /* ColorPickerViewController.swift in Sources */,
 				2CD2C7C62719859C00B7E2E0 /* PeripheralViewController.swift in Sources */,
 				2C41722E27180AF600F43EA2 /* SlBasePeripheral.swift in Sources */,
@@ -836,7 +825,6 @@
 				2240D22D260CAF490037D304 /* AboutViewController.swift in Sources */,
 				22EB5D8425FB5077003FC31D /* TablePickerViewController.swift in Sources */,
 				2C4172302718100400F43EA2 /* SlBaseViewModel.swift in Sources */,
-				2C2742F7278C159D00E338E1 /* SlStandartPeripheral.swift in Sources */,
 				52FB0AF022131B7D00B1E575 /* Extensions.swift in Sources */,
 				2C7202962695ADA10079BEEA /* FlClassicViewController.swift in Sources */,
 				2C4172342718218100F43EA2 /* SlBaseViewController.swift in Sources */,

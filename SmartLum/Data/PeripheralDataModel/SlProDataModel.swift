@@ -8,8 +8,8 @@
 
 import Foundation
 
-/// Тип контроллера SL-Pro.
-enum SlProControllerType: Int, CaseIterable, PeripheralDataModel {
+/// Тип контроллеров SL-Pro и SL-Standart (одноцветный или многоцветный).
+enum SlProStandartControllerType: Int, CaseIterable, PeripheralDataModel {
        
     case `default` = 0
     case rgb = 1
@@ -23,8 +23,8 @@ enum SlProControllerType: Int, CaseIterable, PeripheralDataModel {
     
 }
 
-/// Анимации устройства SL-Pro
-enum SlProAnimations: Int, CaseIterable, PeripheralDataModel {
+/// Анимации устройств SL-Pro и SL-Standart
+enum SlProStandartAnimations: Int, CaseIterable, PeripheralDataModel {
     
     //case tetris
     case off        = 1

@@ -40,7 +40,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
         centralManager.delegate = self
         if centralManager.state == .poweredOn {
             activityIndicator.startAnimating()
-            centralManager.scanForPeripherals(withServices: Array(UUIDs.advServices.keys),
+            centralManager.scanForPeripherals(withServices: Array(UUIDs.advServices),
                                               options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
         }
     }
@@ -144,7 +144,7 @@ class ScannerTableViewController: UITableViewController, CBCentralManagerDelegat
             print("Central is not powered on")
         } else {
             activityIndicator.startAnimating()
-            centralManager.scanForPeripherals(withServices: Array(UUIDs.advServices.keys),
+            centralManager.scanForPeripherals(withServices: Array(UUIDs.advServices),
                                               options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
         }
     }

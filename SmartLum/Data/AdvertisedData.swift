@@ -46,7 +46,7 @@ class AdvertisedData: NSObject {
     private func getAdvertisedService(_ advertisementDictionary: [String : Any]) -> PeripheralProfile? {
         if let advUUID = advertisementDictionary[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID] {
             for uuid in advUUID {
-                if (UUIDs.advServices.keys.contains(uuid)) {
+                if (UUIDs.advServices.contains(uuid)) {
                     return PeripheralProfile.getPeripheralProfile(uuid: uuid)
                 }
             }

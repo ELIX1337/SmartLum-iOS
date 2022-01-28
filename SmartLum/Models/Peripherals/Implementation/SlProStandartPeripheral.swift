@@ -1,19 +1,21 @@
 //
-//  SlStandartPeripheral.swift
+//  SlProPeripheral.swift
 //  SmartLum
 //
-//  Created by ELIX on 10.01.2022.
-//  Copyright © 2022 SmartLum. All rights reserved.
+//  Created by ELIX on 09.11.2021.
+//  Copyright © 2021 SmartLum. All rights reserved.
 //
 
 import CoreBluetooth
 
 /// Делегат (ViewModel), который получит приведенные в нормальный вид данные с устройства
-protocol SlStandartPeripheralDelegate: StairsPeripheralDelegate, DistanceSensorPeripheralDelegate, LightnessSensorPeripheralDelegate, LedPeripheralDelegate, AnimationPeripheralDelegate { }
+protocol SlProPeripheralDelegate: StairsPeripheralDelegate, DistanceSensorPeripheralDelegate, LightnessSensorPeripheralDelegate, LedPeripheralDelegate, AnimationPeripheralDelegate, ColorPeripheralDelegate { }
 
-class SlStandartPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSensorPeripheralProtocol, LightnessSensorPeripheralProtocol, LedPeripheralProtocol, AnimationPeripheralProtocol {
+/// Конкретная реализация устройства SL-Pro (контроллер освещения лестницы).
+/// Реализует управление ступенями, датчиками дистанции, датчиками освещенности, лентой, анимациями, цветами
+class SlProStandartPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSensorPeripheralProtocol, LightnessSensorPeripheralProtocol, LedPeripheralProtocol, AnimationPeripheralProtocol, ColorPeripheralProtocol {
     
-    var delegate: SlStandartPeripheralDelegate?
+    var delegate: SlProPeripheralDelegate?
     
     override init(_ peripheral: CBPeripheral, _ manager: CBCentralManager) {
         super.init(peripheral, manager)
@@ -24,6 +26,7 @@ class SlStandartPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSe
     /// Делаем override чтобы обработать прием уже конкретных данных
     override func dataReceived(data: Data, from characteristic: BluetoothEndpoint.Characteristic, in service: BluetoothEndpoint.Service, error: Error?) {
         super.dataReceived(data: data, from: characteristic, in: service, error: error)
+        print("RECEIVED - \(characteristic) - \(data)")
         switch (service, characteristic) {
         case (.led, .ledBrightness),
             (.led, .ledState),
@@ -55,6 +58,11 @@ class SlStandartPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSe
             (.sensor, .topSensorCurrentLightness),
             (.sensor, .botSensorCurrentLightness):
             handleLightnessSettings(characteristic, data)
+            break
+        case (.color, .primaryColor),
+            (.color, .secondaryColor),
+            (.color, .randomColor):
+            handleColorSettings(characteristic, data)
             break
         case (.animation, .animationMode),
             (.animation, .animationDirection),
@@ -98,10 +106,10 @@ class SlStandartPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSe
             break
         case .ledTimeout:
             delegate?.getLedTimeout(timeout: value.toInt())
-            delegate?.getLedType(type: SlProControllerType.default)
+            delegate?.getLedType(type: SlProStandartControllerType.default)
             break
         case .ledType:
-            delegate?.getLedType(type: SlProControllerType(rawValue: value.toInt()) ?? .default)
+            delegate?.getLedType(type: SlProStandartControllerType(rawValue: value.toInt()) ?? .default)
             break
         case .ledAdaptiveBrightness:
             delegate?.getLedAdaptiveBrightnessState(mode: PeripheralLedAdaptiveMode(rawValue: value.toInt()) ?? .off)
@@ -142,7 +150,7 @@ class SlStandartPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSe
             break
         default:
             break
-            // TODO: - Current
+        // TODO: - Current
         }
     }
     
@@ -166,11 +174,25 @@ class SlStandartPeripheral: BasePeripheral, StairsPeripheralProtocol, DistanceSe
         }
     }
     
+    /// Обрабатывает данные связанные с цветом ленты
+    func handleColorSettings(_ setting: BluetoothEndpoint.Characteristic, _ value: Data) {
+        switch setting {
+        case .primaryColor:
+            delegate?.getPrimaryColor(value.toUIColor())
+            break
+        default:
+            break
+        }
+    }
+    
     /// Обрабатывает данные связанные с анимациями
     func handleAnimationSettings(_ setting: BluetoothEndpoint.Characteristic, _ value: Data) {
         switch setting {
         case .animationMode:
-            delegate?.getAnimationMode(mode: SlProAnimations(rawValue: value.toInt()) ?? .off)
+            delegate?.getAnimationMode(mode: SlProStandartAnimations(rawValue: value.toInt()) ?? .off)
+            break
+        case .animationOnSpeed:
+            delegate?.getAnimationOnSpeed(speed: value.toInt())
             break
         default:
             break

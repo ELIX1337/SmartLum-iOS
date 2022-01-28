@@ -1,5 +1,5 @@
 //
-//  SlProViewModel.swift
+//  SlProStandartViewModel.swift
 //  SmartLum
 //
 //  Created by ELIX on 09.11.2021.
@@ -8,12 +8,12 @@
 
 import UIKit
 
-// ViewModel устройства SL-Pro
-class SlProViewModel: PeripheralViewModel {
+// ViewModel устройства SL-Pro и SL-Standart
+class SlProStandartViewModel: PeripheralViewModel {
     
     // Делаем downcast BasePeripheral в SlProPeripheral
-    var slProPeripheral: SlProPeripheral! {
-        get { return (super.basePeripheral as! SlProPeripheral) }
+    var slPeripheral: SlProStandartPeripheral! {
+        get { return (super.basePeripheral as! SlProStandartPeripheral) }
     }
     
     // Заранее декларируем ячейки для нашей tableView
@@ -72,13 +72,11 @@ class SlProViewModel: PeripheralViewModel {
                   _ withPeripheral: BasePeripheral,
                   _ delegate: PeripheralViewModelDelegate,
                   _ selected: @escaping (CellModel) -> Void) {
-        super.init(withTableView, withPeripheral as! SlProPeripheral, delegate, selected)
+        super.init(withTableView, withPeripheral as! SlProStandartPeripheral, delegate, selected)
         
-        slProPeripheral.delegate = self
+        slPeripheral.delegate = self
         self.tableView = withTableView
         self.onCellSelected = selected
-        
-        // Нужно было делать дженериком, из-за такой реализации в методах ниже приходится постоянно кастовать через "as!"
         self.dataModel = PeripheralData(peripheralType: withPeripheral.deviceType)
         
         initColorSection()
@@ -88,10 +86,9 @@ class SlProViewModel: PeripheralViewModel {
         initReadyTableViewModel()
         initSettingsTableViewModel()
         initSetupTableViewModel()
-        
     }
     
-    // Аналогично остальным ViewModel
+    // Инициализируем главный экран
     private func initReadyTableViewModel() {
         readyTableViewModel = TableViewModel(
             sections: [
@@ -110,7 +107,7 @@ class SlProViewModel: PeripheralViewModel {
             ], type: .ready)
     }
     
-    // Аналогично остальным ViewModel
+    // Инициализируем экран расширенных настроекй
     private func initSettingsTableViewModel() {
         settingsTableViewModel = TableViewModel(
             sections: [
@@ -141,14 +138,22 @@ class SlProViewModel: PeripheralViewModel {
             ], type: .settings)
     }
     
-    // Аналогично остальным ViewModel
+    // Инициализируем экран первичной настройки
     private func initSetupTableViewModel() {
+        
+        var stepsRows: [CellModel] = [stepsCountCell]
+        
+        if dataModel.peripheralType == .SlPro {
+            stepsRows.append(topSensorCountCell)
+            stepsRows.append(botSensorCountCell)
+        }
+        
         setupTableViewModel = TableViewModel(
             sections: [
                 SectionModel(
                     headerText: "peripheral_sl_pro_steps_settings_section_header".localized,
                     footerText: "peripheral_sl_pro_steps_settings_section_footer".localized,
-                    rows: [stepsCountCell, topSensorCountCell, botSensorCountCell]),
+                    rows: stepsRows),
                 SectionModel(
                     headerText: "peripheral_sl_pro_sensor_trigger_distance_section_header".localized,
                     footerText: "peripheral_sl_pro_sensor_trigger_distance_section_footer".localized,
@@ -156,12 +161,13 @@ class SlProViewModel: PeripheralViewModel {
             ], type: .setup)
     }
     
-    // Аналогично остальным ViewModel
+    // Инициализируем ячейки для секции управления цветом
     private func initColorSection() {
         primaryColorCell = .colorCell(
             key: PeripheralData.primaryColorKey,
             title: "peripheral_sl_pro_color_cell_title".localized,
-            initialValue: UIColor.white, callback: { _ in })
+            initialValue: UIColor.white,
+            callback: { _ in })
         randomColorCell = .switchCell(
             key: PeripheralData.randomColorKey,
             title: "peripheral_sl_pro_random_color_cell_title".localized,
@@ -169,7 +175,7 @@ class SlProViewModel: PeripheralViewModel {
             callback: { self.writeRandomColor(state: $0) })
     }
 
-    // Аналогично остальным ViewModel
+    // Инициализируем ячейки для секции управления лентой
     private func initLedSection() {
         ledStateCell = .switchCell(
             key: PeripheralData.ledStateKey,
@@ -195,7 +201,7 @@ class SlProViewModel: PeripheralViewModel {
             callback: { self.writeLedTimeout(timeout: Int($0)) })
     }
     
-    // Аналогично остальным ViewModel
+    // Инициализируем ячейки для секции с анимациями
     private func initAnimationSection() {
         animationModeCell = .pickerCell(
             key: PeripheralData.animationModeKey,
@@ -213,7 +219,7 @@ class SlProViewModel: PeripheralViewModel {
             callback: { self.writeAnimationSpeed(speed: Int($0)) })
     }
     
-    // Аналогично остальным ViewModel
+    // Инициализируем ячейки для экрана расширенных настроек
     private func initSettingsSection() {
         topTriggerDistanceCell = .sliderCell(
             key: PeripheralData.topTriggerDistanceKey,
@@ -366,7 +372,7 @@ class SlProViewModel: PeripheralViewModel {
     
     /// Так же обрабатываем UI в зависимости от типа ленты.
     /// Если лента цветная, то показываем ячейки для управлением цветом, если нет, то скрываем.
-    private func handleLedType(type: SlProControllerType) {
+    private func handleLedType(type: SlProStandartControllerType) {
         switch type {
         case .`default`:
             hideCells(cells: [primaryColorCell, randomColorCell], inModel: readyTableViewModel!)
@@ -377,10 +383,22 @@ class SlProViewModel: PeripheralViewModel {
         }
     }
     
+    private func handleSensorCount() {
+        switch dataModel.peripheralType {
+        case .SlPro:
+            showCells(cells: [topSensorCountCell, botSensorCountCell], inModel: settingsTableViewModel!)
+            break
+        case .SLStandart:
+            hideCells(cells: [topSensorCountCell, botSensorCountCell], inModel: settingsTableViewModel!)
+            break
+        default: break
+        }
+    }
+    
     // Публичные методы
     func writePrimaryColor(_ color: UIColor) {
         if (dataModel.getValue(key: PeripheralData.primaryColorKey) as? UIColor != color) {
-            slProPeripheral.writePrimaryColor(color)
+            slPeripheral.writePrimaryColor(color)
             dataModel.setValue(key: PeripheralData.primaryColorKey, value: color)
             updateCell(for: primaryColorCell, with: .none)
         }
@@ -388,43 +406,43 @@ class SlProViewModel: PeripheralViewModel {
     
     func writeRandomColor(state: Bool) {
         dataModel.setValue(key: PeripheralData.randomColorKey, value: state)
-        slProPeripheral.writeRandomColor(state)
+        slPeripheral.writeRandomColor(state)
     }
     
-    func writeAnimationMode(mode: SlProAnimations) {
+    func writeAnimationMode(mode: SlProStandartAnimations) {
         guard mode.name != dataModel.getValue(key: PeripheralData.animationModeKey) as! String else { return }
         dataModel.setValue(key: PeripheralData.animationModeKey, value: mode.name)
-        slProPeripheral.writeAnimationMode(mode)
+        slPeripheral.writeAnimationMode(mode)
         updateCell(for: animationModeCell, with: .none)
     }
     
-    func writeLedType(type: SlProControllerType) {
+    func writeLedType(type: SlProStandartControllerType) {
         dataModel.setValue(key: PeripheralData.controllerTypeKey, value: type)
-        slProPeripheral.writeLedType(type)
+        slPeripheral.writeLedType(type)
         updateCell(for: controllerTypeCell, with: .none)
         handleLedType(type: type)
     }
     
     func writeLedState(state: Bool) {
         dataModel.setValue(key: PeripheralData.ledStateKey, value: state)
-        slProPeripheral.writeLedState(state)
+        slPeripheral.writeLedState(state)
     }
     
     func writeLedBrightness(value: Int) {
         if (dataModel.getValue(key: PeripheralData.ledBrightnessKey) as? Int != value) {
             dataModel.setValue(key: PeripheralData.ledBrightnessKey, value: value)
-            slProPeripheral.writeLedBrightness(value)
+            slPeripheral.writeLedBrightness(value)
         }
     }
     
     func writeLedTimeout(timeout: Int) {
         dataModel.setValue(key: PeripheralData.ledTimeoutKey, value: timeout)
-        slProPeripheral.writeLedTimeout(Int(timeout))
+        slPeripheral.writeLedTimeout(Int(timeout))
     }
     
     func writeLedAdaptiveBrightnessMode(mode: PeripheralLedAdaptiveMode) {
         dataModel.setValue(key: PeripheralData.ledAdaptiveModeKey, value: mode.name)
-        slProPeripheral.writeLedAdaptiveBrightnessState(mode)
+        slPeripheral.writeLedAdaptiveBrightnessState(mode)
         updateCell(for: ledAdaptiveCell, with: .none)
         // Обновляем UI
         handleAdaptiveMode(mode: mode)
@@ -433,7 +451,7 @@ class SlProViewModel: PeripheralViewModel {
     func writeAnimationSpeed(speed: Int) {
         if (dataModel.getValue(key: PeripheralData.animationSpeedKey) as? Int != speed) {
             dataModel.setValue(key: PeripheralData.animationSpeedKey, value: speed)
-            slProPeripheral.writeAnimationOnSpeed(speed)
+            slPeripheral.writeAnimationOnSpeed(speed)
             print("SPEED - \(speed)")
         }
     }
@@ -443,7 +461,7 @@ class SlProViewModel: PeripheralViewModel {
         if (dataModel.getValue(key: PeripheralData.topTriggerDistanceKey) as? Int != value) {
             dataModel.setValue(key: PeripheralData.topTriggerDistanceKey, value: value)
             if isInitialized {
-                slProPeripheral.writeTopSensorTriggerDistance(value)
+                slPeripheral.writeTopSensorTriggerDistance(value)
             } else {
                 isInitWriteAvailable()
             }
@@ -451,37 +469,39 @@ class SlProViewModel: PeripheralViewModel {
     }
     
     func writeBotTriggerDistance(value: Int) {
-        // Делаем дополнительную проверку на слайдер чтобы не отправлять одинаковые значения и не перегружать устройство
+        // Делаем дополнительную проверку чтобы не отправлять повторяющиеся значения и не перегружать устройство
         if (dataModel.getValue(key: PeripheralData.botTriggerDistanceKey) as? Int != value) {
             dataModel.setValue(key: PeripheralData.botTriggerDistanceKey, value: value)
+            
             if isInitialized {
-                slProPeripheral.writeBotSensorTriggerDistance(value)
+                slPeripheral.writeBotSensorTriggerDistance(value)
             } else {
                 isInitWriteAvailable()
             }
+            
         }
     }
     
     func writeTopTriggerLightness(value: Int) {
         dataModel.setValue(key: PeripheralData.topTriggerLightnessKey, value: value)
-        slProPeripheral.writeTopSensorLightness(value)
+        slPeripheral.writeTopSensorLightness(value)
     }
     
     func writeBotTriggerLightness(value: Int) {
         dataModel.setValue(key: PeripheralData.botTriggerLightnessKey, value: value)
-        slProPeripheral.writeBotSensorLightness(value)
+        slPeripheral.writeBotSensorLightness(value)
     }
     
     func writeStairsWorkMode(mode: PeripheralStairsWorkMode) {
         dataModel.setValue(key: PeripheralData.stairsWorkModeKey, value: mode.name)
-        slProPeripheral.writeStairsWorkMode(mode)
+        slPeripheral.writeStairsWorkMode(mode)
         updateCell(for: stairsWorkModeCell, with: .none)
     }
     
     func writeStepsCount(count: Int) {
         dataModel.setValue(key: PeripheralData.stepsCountKey, value: count)
         if isInitialized {
-            slProPeripheral.writeStepsCount(count)
+            slPeripheral.writeStepsCount(count)
         } else {
             isInitWriteAvailable()
         }
@@ -490,7 +510,7 @@ class SlProViewModel: PeripheralViewModel {
     func writeTopSensorCount(count: Int) {
         dataModel.setValue(key: PeripheralData.topSensorCountKey, value: count)
         if isInitialized {
-            slProPeripheral.writeTopSensorCount(count)
+            slPeripheral.writeTopSensorCount(count)
         } else {
             isInitWriteAvailable()
         }
@@ -499,7 +519,7 @@ class SlProViewModel: PeripheralViewModel {
     func writeBotSensorCount(count: Int) {
         dataModel.setValue(key: PeripheralData.botSensorCountKey, value: count)
         if isInitialized {
-            slProPeripheral.writeBotSensorCount(count)
+            slPeripheral.writeBotSensorCount(count)
         } else {
             isInitWriteAvailable()
         }
@@ -507,24 +527,24 @@ class SlProViewModel: PeripheralViewModel {
     
     func writeStandbyState(state: Bool) {
         dataModel.setValue(key: PeripheralData.standbyStateKey, value: state)
-        slProPeripheral.writeStandbyState(state)
+        slPeripheral.writeStandbyState(state)
     }
     
     func writeStandbyBrightness(value: Int) {
         if (dataModel.getValue(key: PeripheralData.standbyBrightnessKey) as? Int != value) {
             dataModel.setValue(key: PeripheralData.standbyBrightnessKey, value: value)
-            slProPeripheral.writeStandbyBrightness(value)
+            slPeripheral.writeStandbyBrightness(value)
         }
     }
     
     func writeStandbyTopCount(count: Int) {
         dataModel.setValue(key: PeripheralData.standbyTopCountKey, value: count)
-        slProPeripheral.writeStandbyTopCount(count)
+        slPeripheral.writeStandbyTopCount(count)
     }
     
     func writeStandbyBotCount(count: Int) {
         dataModel.setValue(key: PeripheralData.standbyBotCountKey, value: count)
-        slProPeripheral.writeStandbyBotCount(count)
+        slPeripheral.writeStandbyBotCount(count)
     }
     
     override func isInitDataAvailable() -> Bool {
@@ -547,11 +567,11 @@ class SlProViewModel: PeripheralViewModel {
            let stepsCount = dataModel.getValue(key: PeripheralData.stepsCountKey),
            let topSens = dataModel.getValue(key: PeripheralData.topSensorCountKey),
            let botSens = dataModel.getValue(key: PeripheralData.botSensorCountKey) {
-            slProPeripheral.writeTopSensorTriggerDistance(topDist as! Int)
-            slProPeripheral.writeBotSensorTriggerDistance(botDist as! Int)
-            slProPeripheral.writeStepsCount(stepsCount as! Int)
-            slProPeripheral.writeTopSensorCount(topSens as! Int)
-            slProPeripheral.writeBotSensorCount(botSens as! Int)
+            slPeripheral.writeTopSensorTriggerDistance(topDist as! Int)
+            slPeripheral.writeBotSensorTriggerDistance(botDist as! Int)
+            slPeripheral.writeStepsCount(stepsCount as! Int)
+            slPeripheral.writeTopSensorCount(topSens as! Int)
+            slPeripheral.writeBotSensorCount(botSens as! Int)
             return true
         }
         return false
@@ -570,7 +590,7 @@ class SlProViewModel: PeripheralViewModel {
 }
 
 /// Методы делегата SlProPeripheral (прием данных)
-extension SlProViewModel: SlProPeripheralDelegate {
+extension SlProStandartViewModel: SlProPeripheralDelegate {
     
     func getWorkMode(mode: PeripheralDataModel) {
         dataModel.setValue(key: PeripheralData.stairsWorkModeKey, value: mode.name)
@@ -580,17 +600,19 @@ extension SlProViewModel: SlProPeripheralDelegate {
     func getTopSensorCount(count: Int) {
         dataModel.setValue(key: PeripheralData.topSensorCountKey, value: count)
         updateCell(for: topSensorCountCell, with: .middle)
+        handleSensorCount()
     }
     
     func getBotSensorCount(count: Int) {
         dataModel.setValue(key: PeripheralData.botSensorCountKey, value: count)
         updateCell(for: botSensorCountCell, with: .middle)
+        handleSensorCount()
     }
     
     func getLedType(type: PeripheralDataModel) {
         dataModel.setValue(key: PeripheralData.controllerTypeKey, value: type.name)
         updateCell(for: controllerTypeCell, with: .middle)
-        handleLedType(type: type as! SlProControllerType)
+        handleLedType(type: type as! SlProStandartControllerType)
     }
     
     func getLedAdaptiveBrightnessState(mode: PeripheralDataModel) {
