@@ -109,12 +109,20 @@ class SlProStandartViewModel: PeripheralViewModel {
     
     // Инициализируем экран расширенных настроекй
     private func initSettingsTableViewModel() {
+        
+        var stepsRows: [CellModel] = [controllerTypeCell, ledAdaptiveCell, stairsWorkModeCell, stepsCountCell]
+        
+        if dataModel.peripheralType == .SlPro {
+            stepsRows.append(topSensorCountCell)
+            stepsRows.append(botSensorCountCell)
+        }
+        
         settingsTableViewModel = TableViewModel(
             sections: [
                 SectionModel(
                     headerText: "peripheral_sl_pro_steps_settings_section_header".localized,
                     footerText: "peripheral_sl_pro_steps_settings_section_footer".localized,
-                    rows: [controllerTypeCell, ledAdaptiveCell, stairsWorkModeCell, stepsCountCell, topSensorCountCell, botSensorCountCell]),
+                    rows: stepsRows),
                 SectionModel(
                     headerText: "peripheral_sl_pro_standby_section_header".localized,
                     footerText: "peripheral_sl_pro_standby_section_footer".localized,
@@ -383,18 +391,6 @@ class SlProStandartViewModel: PeripheralViewModel {
         }
     }
     
-    private func handleSensorCount() {
-        switch dataModel.peripheralType {
-        case .SlPro:
-            showCells(cells: [topSensorCountCell, botSensorCountCell], inModel: settingsTableViewModel!)
-            break
-        case .SLStandart:
-            hideCells(cells: [topSensorCountCell, botSensorCountCell], inModel: settingsTableViewModel!)
-            break
-        default: break
-        }
-    }
-    
     // Публичные методы
     func writePrimaryColor(_ color: UIColor) {
         if (dataModel.getValue(key: PeripheralData.primaryColorKey) as? UIColor != color) {
@@ -600,13 +596,11 @@ extension SlProStandartViewModel: SlProPeripheralDelegate {
     func getTopSensorCount(count: Int) {
         dataModel.setValue(key: PeripheralData.topSensorCountKey, value: count)
         updateCell(for: topSensorCountCell, with: .middle)
-        handleSensorCount()
     }
     
     func getBotSensorCount(count: Int) {
         dataModel.setValue(key: PeripheralData.botSensorCountKey, value: count)
         updateCell(for: botSensorCountCell, with: .middle)
-        handleSensorCount()
     }
     
     func getLedType(type: PeripheralDataModel) {
