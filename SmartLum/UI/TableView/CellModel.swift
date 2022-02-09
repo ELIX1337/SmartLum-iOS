@@ -146,16 +146,15 @@ enum CellModel: Equatable {
             }
         case .infoCell(key: let key, titleText: let titleText, detailText: let detailText, image: let image, accessory: let accessory):
             if let cell = cell as? InfoTableViewCell {
-                let value = data.getValue(key: key)
                 if #available(iOS 14.0, *) {
                     var content = cell.defaultContentConfiguration()
                     content.image = image
                     content.text = titleText
-                    content.secondaryText = String(describing: value ?? detailText ?? "")
+                    content.secondaryText = String(describing: detailText ?? "")
                     cell.contentConfiguration = content
                 } else {
                     cell.textLabel?.text =  titleText
-                    cell.detailTextLabel?.text = String(describing: value ?? detailText ?? "")
+                    cell.detailTextLabel?.text = String(describing: detailText ?? "")
                     cell.imageView?.image = image
                 }
                 cell.accessoryType = accessory ?? .none
