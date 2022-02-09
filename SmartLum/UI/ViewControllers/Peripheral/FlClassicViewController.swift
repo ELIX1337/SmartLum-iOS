@@ -9,29 +9,22 @@
 import UIKit
 import CoreBluetooth
 
-/// Конкретный класс реализующий экран устройства FL-Classic
-class FlClassicViewController: PeripheralViewController, PeripheralViewControllerProtocol {
+/// Конкретный класс реализующий экран устройства FL-Classic.
+/// По факту тупо добавляет обработку на нажатия по ячейкам таблицы
+class FlClassicViewController: PeripheralViewController {
         
-    /// Инициализируем ViewModel
-    /// Как можно заметить, нам приходится явно указывать тип ViewModel в каждом конкретном ViewController'e
-    /// Это тупо и должно быть автоматизировано, либо ViewModel должна быть одна на всех
-    func viewModelInit(peripheral: BasePeripheral) {
-        self.viewModel = FlClassicViewModel(tableView, peripheral, self) {
-            self.onCellSelected(cell: $0)
-        }
-    }
-    
     /// Обрабатываем нажатия по ячейкам tableView (только необходимым)
-    func onCellSelected(cell: CellModel) {
+    override func onCellSelected(model: CellModel) {
+        super.onCellSelected(model: model)
         if let mViewModel = viewModel as? FlClassicViewModel {
-            switch cell {
+            switch model {
             case mViewModel.primaryColorCell:
-                pushColorPicker(cell, initColor: mViewModel.primaryColor) { color, _ in
+                pushColorPicker(model, initColor: mViewModel.primaryColor) { color, _ in
                     mViewModel.writePrimaryColor(color: color)
                 }
                 return
             case mViewModel.secondaryColorCell:
-                pushColorPicker(cell, initColor: mViewModel.secondaryColor) { color, _ in
+                pushColorPicker(model, initColor: mViewModel.secondaryColor) { color, _ in
                     mViewModel.writeSecondaryColor(color: color)
                 }
                 break

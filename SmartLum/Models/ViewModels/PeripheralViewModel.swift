@@ -27,6 +27,26 @@ protocol PeripheralViewModelDelegate {
     func peripheralOnDFUMode()
 }
 
+/// Фабрика для получения соответствующей ViewModel для устройства.
+/// Раньше ViewModel создавались во ViewController'ах устройств.
+/// Теперь это реализуется "автоматически" в родительском ViewController'e.
+/// Это позволило добавить дефолтную реализацию некоторых вещей (например, навигацию в настройки при клике на ошибку и сброс до заводских).
+/// По идее можно вообще использовать один ViewController для всех устройств, но было лень допиливать.
+class PeripheralViewModelFactory {
+    
+    static func getViewModel(forPeripheral: BasePeripheral, withTableView: UITableView, delegate: PeripheralViewModelDelegate, selectedCell: @escaping (CellModel) -> Void ) -> PeripheralViewModel {
+        switch forPeripheral.deviceType {
+        case .FlClassic:  return FlClassicViewModel(withTableView, forPeripheral, delegate, selectedCell)
+        case .FlMini:     return FlClassicViewModel(withTableView, forPeripheral, delegate, selectedCell)
+        case .SlBase:     return SlBaseViewModel(withTableView, forPeripheral, delegate, selectedCell)
+        case .SLStandart: return SlProStandartViewModel(withTableView, forPeripheral, delegate, selectedCell)
+        case .SlPro:      return SlProStandartViewModel(withTableView, forPeripheral, delegate, selectedCell)
+        case .none:       fatalError("ViewModelFactory: Unknown device")
+        }
+    }
+    
+}
+
 /// Базовая ViewModel периферийного устройства.
 /// Он нее наследуются ViewModel для конкретных устройств, в которых описываются UI (TableView) и методы чтения записи для конкретных устройств.
 /// Примечание: Хотел реализовать автосборку UI в зависимости от Bluetooth стэка устройства чтобы не кодить на каждое устройство интерфейс, который по факту повторяется

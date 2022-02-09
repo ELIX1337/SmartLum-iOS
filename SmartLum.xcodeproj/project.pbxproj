@@ -30,7 +30,6 @@
 		2C41722E27180AF600F43EA2 /* SlBasePeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C41722D27180AF600F43EA2 /* SlBasePeripheral.swift */; };
 		2C4172302718100400F43EA2 /* SlBaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C41722F2718100400F43EA2 /* SlBaseViewModel.swift */; };
 		2C4172322718171F00F43EA2 /* LedPeripheralProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4172312718171F00F43EA2 /* LedPeripheralProtocol.swift */; };
-		2C4172342718218100F43EA2 /* SlBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4172332718218100F43EA2 /* SlBaseViewController.swift */; };
 		2C4172372718274200F43EA2 /* PeripheralProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4172362718274200F43EA2 /* PeripheralProfile.swift */; };
 		2C720282268F191F0079BEEA /* BasePeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F9D80266A088F00CCF8E2 /* BasePeripheral.swift */; };
 		2C720284268F1A190079BEEA /* UUIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C720283268F1A190079BEEA /* UUIDs.swift */; };
@@ -132,7 +131,6 @@
 		2C41722D27180AF600F43EA2 /* SlBasePeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlBasePeripheral.swift; sourceTree = "<group>"; };
 		2C41722F2718100400F43EA2 /* SlBaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlBaseViewModel.swift; sourceTree = "<group>"; };
 		2C4172312718171F00F43EA2 /* LedPeripheralProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LedPeripheralProtocol.swift; sourceTree = "<group>"; };
-		2C4172332718218100F43EA2 /* SlBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlBaseViewController.swift; sourceTree = "<group>"; };
 		2C4172362718274200F43EA2 /* PeripheralProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralProfile.swift; sourceTree = "<group>"; };
 		2C41FC2F265BC68000B81197 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2C720283268F1A190079BEEA /* UUIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDs.swift; sourceTree = "<group>"; };
@@ -370,7 +368,6 @@
 			isa = PBXGroup;
 			children = (
 				2CD2C7C52719859C00B7E2E0 /* PeripheralViewController.swift */,
-				2C4172332718218100F43EA2 /* SlBaseViewController.swift */,
 				2C7202952695ADA10079BEEA /* FlClassicViewController.swift */,
 				2CA36B48273A82D30067E414 /* SlProStandartViewController.swift */,
 			);
@@ -827,7 +824,6 @@
 				2C4172302718100400F43EA2 /* SlBaseViewModel.swift in Sources */,
 				52FB0AF022131B7D00B1E575 /* Extensions.swift in Sources */,
 				2C7202962695ADA10079BEEA /* FlClassicViewController.swift in Sources */,
-				2C4172342718218100F43EA2 /* SlBaseViewController.swift in Sources */,
 				2C41722C2718081F00F43EA2 /* DistanceSensorPeripheralProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -59,7 +59,7 @@ enum PeripheralProfile {
         switch peripheral {
         case .FlClassic:  return FlClassicViewController()
         case .FlMini:     return FlClassicViewController()
-        case .SlBase:     return SlBaseViewController()
+        case .SlBase:     return PeripheralViewController() // Используем дефолтный VC так как ничего не нужно переопределять
         case .SLStandart: return SlProStandartViewController()
         case .SlPro:      return SlProStandartViewController()
         }

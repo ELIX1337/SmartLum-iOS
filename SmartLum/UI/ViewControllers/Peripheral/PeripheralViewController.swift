@@ -21,7 +21,7 @@ extension PeripheralViewControllerProtocol {
 
 /// Главный ViewController устройства.
 /// В нем происходит основная работа с устройством.
-class PeripheralViewController: UIViewController {
+class PeripheralViewController: UIViewController, PeripheralViewControllerProtocol {
     
     @objc var viewModel: PeripheralViewModel!
     
@@ -44,6 +44,28 @@ class PeripheralViewController: UIViewController {
         }
         
         addTableViewConstraints(tableView: self.tableView)
+    }
+    
+    /// Инициализируем ViewModel
+    /// Как можно заметить, нам приходится явно указывать тип ViewModel в каждом конкретном ViewController'e
+    /// Это тупо и должно быть автоматизировано, либо ViewModel должна быть одна на всех
+    func viewModelInit(peripheral: BasePeripheral) {
+        self.viewModel = PeripheralViewModelFactory.getViewModel(forPeripheral: peripheral, withTableView: tableView, delegate: self) {
+            self.onCellSelected(model: $0)
+        }
+    }
+    
+    /// Обрабатываем нажатия по ячейкам tableView (только необходимым)
+    func onCellSelected(model: CellModel) {
+        switch model.cellKey {
+        case BasePeripheralData.errorKey:
+            openPeripheralSettings()
+            break
+        case BasePeripheralData.factoryResetKey:
+            showResetAlert()
+            break
+        default: break
+        }
     }
     
     /// Располагаем tableView на экране
