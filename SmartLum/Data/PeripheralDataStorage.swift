@@ -36,6 +36,7 @@ extension PeripheralDataStorage {
 /// Стандартные данные, которые есть на всех устройствах
 struct BasePeripheralData {
     static var firmwareVersionKey: String { "PeripheralFirmwareVersion" }
+    static var serialNumberKey:    String { "PeripheralSerialNumber" }
     static var initStateKey:       String { "PeripheralInitState" }
     static var errorKey:           String { "PeripheralError" }
     static var errorDetailKey:     String { "PeripheralErrorDetail" }

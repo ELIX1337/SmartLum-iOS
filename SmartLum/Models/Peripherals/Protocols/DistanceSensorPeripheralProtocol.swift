@@ -36,4 +36,6 @@ extension DistanceSensorPeripheralProtocol where Self:PeripheralProtocol {
 protocol DistanceSensorPeripheralDelegate {
     func getTopSensorTriggerDistance(distance: Int)
     func getBotSensorTriggerDistance(distance: Int)
+    func getTopSensorCurrentDistance(distance: Int)
+    func getBotSensorCurrentDistance(distance: Int)
 }

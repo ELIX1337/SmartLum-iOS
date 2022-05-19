@@ -576,6 +576,11 @@ extension PeripheralViewModel: BasePeripheralDelegate {
         dataModel.setValue(key: BasePeripheralData.firmwareVersionKey, value: version)
     }
     
+    /// Получение серийного номера устройства
+    func peripheralSerialNumber(_ number: String) {
+        dataModel.setValue(key: BasePeripheralData.serialNumberKey, value: number)
+    }
+    
     /// Вызывается когда устройство переходит в режим обновления прошивки (не реализовано)
     func peripheralOnDFUMode() {
         delegate.peripheralOnDFUMode()

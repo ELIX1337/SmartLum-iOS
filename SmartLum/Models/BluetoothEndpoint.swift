@@ -90,6 +90,7 @@ struct BluetoothEndpoint {
     /// Характеристики которые используют устройства SmartLum.
     enum Characteristic: CaseIterable {
         case firmwareVersion
+        case serialNumber
         case factorySettings
         case initState
         case dfu
@@ -135,6 +136,9 @@ struct BluetoothEndpoint {
             case .firmwareVersion:
                 return legacy ? UUIDs.Legacy.DEVICE_FIRMWARE_VERSION_CHARACTERISTIC_UUID.uuidString :
                                 UUIDs.DEVICE_FIRMWARE_VERSION_CHARACTERISTIC_UUID.uuidString
+            case .serialNumber:
+                return legacy ? UUIDs.Legacy.DEVICE_SERIAL_NUMBER_CHARACTERISTIC_UUID.uuidString :
+                                UUIDs.DEVICE_SERIAL_NUMBER_CHARACTERISTIC_UUID.uuidString
             case .factorySettings:
                 return legacy ? UUIDs.Legacy.FACTORY_SETTINGS_CHARACTERISTIC_UUID.uuidString :
                                 UUIDs.FACTORY_SETTINGS_CHARACTERISTIC_UUID.uuidString

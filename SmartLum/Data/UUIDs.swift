@@ -36,7 +36,8 @@ public struct UUIDs: Error {
     public static let DEVICE_DFU_CHARACTERISTIC_UUID              = CBUUID(string: "FFFD")
     public static let FACTORY_SETTINGS_CHARACTERISTIC_UUID        = CBUUID(string: "FFFC")
     public static let DEVICE_INIT_STATE_CHARACTERISTIC_UUID       = CBUUID(string: "FFFB")
-    public static let DEVICE_DEMO_MODE_STATE_CHARACTERISTIC_UUID  = CBUUID(string: "FFFF")
+    public static let DEVICE_DEMO_MODE_STATE_CHARACTERISTIC_UUID  = CBUUID(string: "FFFA")
+    public static let DEVICE_SERIAL_NUMBER_CHARACTERISTIC_UUID    = CBUUID(string: "FFF0")
     
     // Event service
     public static let EVENT_ERROR_CHARACTERISTIC_UUID = CBUUID.init(string: "0E01")
@@ -98,6 +99,7 @@ public struct UUIDs: Error {
         public static let FACTORY_SETTINGS_CHARACTERISTIC_UUID        = CBUUID(string: "BB93FFFC-3CE1-4720-A753-28C0159DC777")
         public static let DEVICE_INIT_STATE_CHARACTERISTIC_UUID       = CBUUID(string: "BB93FFFB-3CE1-4720-A753-28C0159DC777")
         public static let DEVICE_DEMO_MODE_STATE_CHARACTERISTIC_UUID  = CBUUID(string: "BB93FFFA-3CE1-4720-A753-28C0159DC777")
+        public static let DEVICE_SERIAL_NUMBER_CHARACTERISTIC_UUID    = CBUUID(string: "BB93FFF0-3CE1-4720-A753-28C0159DC777")
         
         // Event service
         public static let EVENT_ERROR_CHARACTERISTIC_UUID = CBUUID(string: "BB930E01-3CE1-4720-A753-28C0159DC777")

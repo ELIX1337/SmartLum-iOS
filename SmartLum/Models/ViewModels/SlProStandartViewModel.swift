@@ -43,6 +43,8 @@ class SlProStandartViewModel: PeripheralViewModel {
     // Stairs section
     var stairsWorkModeCell: CellModel!
     var controllerTypeCell: CellModel!
+    var peripheralFirmwareVersionCell: CellModel!
+    var peripheralSerialNumberCell: CellModel!
     var ledAdaptiveCell: CellModel!
     var stepsCountCell: CellModel!
     var topSensorCountCell: CellModel!
@@ -83,6 +85,7 @@ class SlProStandartViewModel: PeripheralViewModel {
         initLedSection()
         initAnimationSection()
         initSettingsSection()
+        
         initReadyTableViewModel()
         initSettingsTableViewModel()
         initSetupTableViewModel()
@@ -110,7 +113,7 @@ class SlProStandartViewModel: PeripheralViewModel {
     // Инициализируем экран расширенных настроекй
     private func initSettingsTableViewModel() {
         
-        var stepsRows: [CellModel] = [controllerTypeCell, ledAdaptiveCell, stairsWorkModeCell, stepsCountCell]
+        var stepsRows: [CellModel] = [ledAdaptiveCell, stairsWorkModeCell, stepsCountCell]
         
         if dataModel.peripheralType == .SlPro {
             stepsRows.append(topSensorCountCell)
@@ -119,6 +122,10 @@ class SlProStandartViewModel: PeripheralViewModel {
         
         settingsTableViewModel = TableViewModel(
             sections: [
+                SectionModel(
+                    headerText: "peripheral_device_info_header".localized,
+                    footerText: "",
+                    rows: [peripheralSerialNumberCell, peripheralFirmwareVersionCell, controllerTypeCell]),
                 SectionModel(
                     headerText: "peripheral_sl_pro_steps_settings_section_header".localized,
                     footerText: "peripheral_sl_pro_steps_settings_section_footer".localized,
@@ -131,6 +138,10 @@ class SlProStandartViewModel: PeripheralViewModel {
                     headerText: "peripheral_sl_pro_sensor_trigger_distance_section_header".localized,
                     footerText: "peripheral_sl_pro_sensor_trigger_distance_section_footer".localized,
                     rows: [topTriggerDistanceCell, botTriggerDistanceCell]),
+                SectionModel(
+                    headerText: "peripheral_sl_pro_sensor_current_distance_section_header".localized,
+                    footerText: "peripheral_sl_pro_sensor_current_distance_section_footer".localized,
+                    rows: [topCurrentDistanceCell, botCurrentDistanceCell]),
                 SectionModel(
                     headerText: "peripheral_sl_pro_sensor_trigger_lightness_section_header".localized,
                     footerText: "peripheral_sl_pro_sensor_trigger_lightness_section_footer".localized,
@@ -165,7 +176,11 @@ class SlProStandartViewModel: PeripheralViewModel {
                 SectionModel(
                     headerText: "peripheral_sl_pro_sensor_trigger_distance_section_header".localized,
                     footerText: "peripheral_sl_pro_sensor_trigger_distance_section_footer".localized,
-                    rows: [topTriggerDistanceCell, botTriggerDistanceCell])
+                    rows: [topTriggerDistanceCell, botTriggerDistanceCell]),
+                SectionModel(
+                    headerText: "peripheral_sl_pro_sensor_current_distance_section_header".localized,
+                    footerText: "peripheral_sl_pro_sensor_current_distance_section_footer".localized,
+                    rows: [topCurrentDistanceCell, botCurrentDistanceCell]),
             ], type: .setup)
     }
     
@@ -277,7 +292,7 @@ class SlProStandartViewModel: PeripheralViewModel {
             accessory: nil)
         botCurrentDistanceCell = .infoCell(
             key: PeripheralData.botCurrentDistanceKey,
-            titleText: "peripheral_sl_pro_top_current_distance_cell_title".localized,
+            titleText: "peripheral_sl_pro_bot_current_distance_cell_title".localized,
             detailText: "",
             image: nil,
             accessory: nil)
@@ -289,6 +304,18 @@ class SlProStandartViewModel: PeripheralViewModel {
             key: PeripheralData.controllerTypeKey,
             titleText: "peripheral_sl_pro_controller_type_cell_title".localized,
             detailText: "",
+            image: nil,
+            accessory: UITableViewCell.AccessoryType.none)
+        peripheralSerialNumberCell = .infoCell(
+            key: BasePeripheralData.serialNumberKey,
+            titleText: "peripheral_serial_number_cell_title".localized,
+            detailText: "-",
+            image: nil,
+            accessory: UITableViewCell.AccessoryType.none)
+        peripheralFirmwareVersionCell = .infoCell(
+            key: BasePeripheralData.firmwareVersionKey,
+            titleText: "peripheral_firmware_version_cell_title".localized,
+            detailText: "-",
             image: nil,
             accessory: UITableViewCell.AccessoryType.none)
         ledAdaptiveCell = .pickerCell(
@@ -682,6 +709,16 @@ extension SlProStandartViewModel: SlProPeripheralDelegate {
         dataModel.setValue(key: PeripheralData.botTriggerDistanceKey, value: distance)
         updateCell(for: botTriggerDistanceCell, with: .middle)
         print("BOT TRIGGER DISTANCE- \(distance) - \(dataModel.getValue(key: PeripheralData.botTriggerDistanceKey))")
+    }
+    
+    func getTopSensorCurrentDistance(distance: Int) {
+        dataModel.setValue(key: PeripheralData.topCurrentDistanceKey, value: distance)
+        updateCell(for: topCurrentDistanceCell, with: .none)
+    }
+    
+    func getBotSensorCurrentDistance(distance: Int) {
+        dataModel.setValue(key: PeripheralData.botCurrentDistanceKey, value: distance)
+        updateCell(for: botCurrentDistanceCell, with: .none)
     }
     
     func getLedState(state: Bool) {

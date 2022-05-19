@@ -26,6 +26,7 @@
 // Peripheral tableView
     // Sections
     "scanner_section_header" = "Found devices";
+    "peripheral_device_info_header" = "About device";
     "peripheral_led_state_section_header" = "LED state";
     "peripheral_led_state_section_footer" = "Will be applied after disconnecting from the device";
     "peripheral_led_brightness_section_header" = "Brightness";
@@ -52,9 +53,11 @@
     "peripheral_sl_pro_sensor_trigger_distance_section_header" = "Sensors trigger distance";
     "peripheral_sl_pro_sensor_trigger_distance_section_footer" = "Values in centimeters";
     "peripheral_sl_pro_sensor_trigger_lightness_section_header" = "Sensors trigger lightness";
-    "peripheral_sl_pro_sensor_trigger_lightness_section_footer" = "The value at which the device switches to night mode";
+    "peripheral_sl_pro_sensor_trigger_lightness_section_footer" = "The value (%) at which the device switches to night mode";
+    "peripheral_sl_pro_sensor_current_distance_section_header" = "Current distance";
+    "peripheral_sl_pro_sensor_current_distance_section_footer" = "Values in cm";
     "peripheral_sl_pro_sensor_current_lightness_section_header" = "Current lightness";
-    "peripheral_sl_pro_sensor_current_lightness_section_footer" = "";
+    "peripheral_sl_pro_sensor_current_lightness_section_footer" = "Values in percents (%)";
     "peripheral_sl_pro_steps_settings_section_header" = "Steps settings";
     "peripheral_sl_pro_steps_settings_section_footer" = "";
     "peripheral_sl_pro_standby_section_header" = "Standby lighting";
@@ -70,6 +73,8 @@
     "peripheral_sl_pro_controller_type_rgb" = "RGB";
 
     // Cells
+    "peripheral_serial_number_cell_title" = "Serial number";
+    "peripheral_firmware_version_cell_title" = "Firmware version";
     "peripheral_primary_color_cell_title" = "Primary";
     "peripheral_secondary_color_cell_title" = "Secondary";
     "peripheral_random_color_cell_title" = "Random color";
@@ -93,6 +98,8 @@
     "peripheral_sl_pro_bot_sensor_trigger_distance_cell_title" = "Bottom sensor";
     "peripheral_sl_pro_top_sensor_trigger_lightness_cell_title" = "Top sensor";
     "peripheral_sl_pro_bot_sensor_trigger_lightness_cell_title" = "Bottom sensor";
+    "peripheral_sl_pro_top_current_distance_cell_title" = "Top sensor";
+    "peripheral_sl_pro_bot_current_distance_cell_title" = "Bottom sensor";
     "peripheral_sl_pro_steps_count_cell" = "Steps count";
     "peripheral_sl_pro_standby_state" = "On/Off";
     "peripheral_sl_pro_standby_brightness" = "Brightness";

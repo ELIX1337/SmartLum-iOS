@@ -84,6 +84,11 @@ class BasePeripheral: NSObject,
         case (.info, .firmwareVersion):
             baseDelegate?.peripheralFirmwareVersion(data.toInt())
             break
+        case (.info, .serialNumber):
+            let combined = data.toArray().map { String(describing: $0) }
+            baseDelegate?.peripheralSerialNumber(combined.joined(separator: ""))
+            
+            break
         case (.info, .demoMode):
             baseDelegate?.peripheralDemoMode(state: data.toBool())
             break

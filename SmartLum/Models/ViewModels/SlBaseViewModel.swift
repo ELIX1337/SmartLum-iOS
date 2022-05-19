@@ -279,6 +279,11 @@ extension SlBaseViewModel: SlBasePeripheralDelegate {
     
     func getAnimationStep(step: Int) { }
     
+    func getTopSensorCurrentDistance(distance: Int) { }
+    
+    func getBotSensorCurrentDistance(distance: Int) { }
+
+    
 }
 
 

@@ -146,15 +146,17 @@ enum CellModel: Equatable {
             }
         case .infoCell(key: let key, titleText: let titleText, detailText: let detailText, image: let image, accessory: let accessory):
             if let cell = cell as? InfoTableViewCell {
+                // Govnocode
+                // Если данные статичные, то используй detailText, иначе будет брать через ключ
                 if #available(iOS 14.0, *) {
                     var content = cell.defaultContentConfiguration()
                     content.image = image
                     content.text = titleText
-                    content.secondaryText = String(describing: detailText ?? "")
+                    content.secondaryText = String(describing: data.getValue(key: key) ?? detailText)
                     cell.contentConfiguration = content
                 } else {
                     cell.textLabel?.text =  titleText
-                    cell.detailTextLabel?.text = String(describing: detailText ?? "")
+                    cell.detailTextLabel?.text = String(describing: data.getValue(key: key) ?? detailText)
                     cell.imageView?.image = image
                 }
                 cell.accessoryType = accessory ?? .none

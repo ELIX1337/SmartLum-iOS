@@ -81,6 +81,9 @@ protocol BasePeripheralDelegate {
     // Сообщает версию прошивки устройства
     func peripheralFirmwareVersion(_ version: Int)
     
+    // Сообщает cерийный номер устройства
+    func peripheralSerialNumber(_ number: String)
+    
     // Вызывается когда устройство перешло в режим обновления прошивки (пока не реализовано)
     /// Device Firmware Update
     func peripheralOnDFUMode()

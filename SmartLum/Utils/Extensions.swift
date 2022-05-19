@@ -66,6 +66,11 @@ extension Data {
         }
         return decimalValue
     }
+    
+    func toArray() -> [UInt8] {
+        return Array(self)
+    }
+    
 }
 
 extension UIColor {

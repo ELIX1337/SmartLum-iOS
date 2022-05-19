@@ -148,9 +148,14 @@ class SlProStandartPeripheral: BasePeripheral, StairsPeripheralProtocol, Distanc
         case .botSensorTriggerDistance:
             delegate?.getBotSensorTriggerDistance(distance: value.toInt())
             break
+        case .topSensorCurrentDistance:
+            delegate?.getTopSensorCurrentDistance(distance: value.toInt())
+            break
+        case .botSensorCurrentDistance:
+            delegate?.getBotSensorCurrentDistance(distance: value.toInt())
+            break
         default:
             break
-        // TODO: - Current
         }
     }
     
@@ -179,6 +184,9 @@ class SlProStandartPeripheral: BasePeripheral, StairsPeripheralProtocol, Distanc
         switch setting {
         case .primaryColor:
             delegate?.getPrimaryColor(value.toUIColor())
+            break
+        case .randomColor:
+            delegate?.getRandomColor(value.toBool())
             break
         default:
             break
