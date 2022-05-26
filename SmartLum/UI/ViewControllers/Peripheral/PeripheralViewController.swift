@@ -37,6 +37,7 @@ class PeripheralViewController: UIViewController, PeripheralViewControllerProtoc
         super.viewDidLoad()
         self.title = viewModel?.peripheralName
         self.navigationItem.largeTitleDisplayMode = .always
+        self.tableView.backgroundColor =  UIColor.SLDarkBlue
         
         /// Если устройство еще не подключилось, то показываем alert
         if (!viewModel.isConnected) {
@@ -270,6 +271,7 @@ class PeripheralSetupViewController: PeripheralViewController {
     var initSuccessObserve: NSKeyValueObservation?
     
     override func viewDidLoad() {
+        self.view.backgroundColor = UIColor.SLBlue
         tableView = UITableView.init(frame: .zero, style: .insetGrouped)
         /// Задаем тип tableView, в зависимости от него, TableViewDataSource будет использовать соответствующую TableViewModel
         tableView.tableViewType = .setup
@@ -368,6 +370,7 @@ class PeripheralSettingsViewController: PeripheralViewController {
             
     override func viewWillAppear(_ animated: Bool) {
         self.title = "peripheral_settings_window_title".localized
+        self.view.backgroundColor = UIColor.SLBlue
         
         /// Говорим ViewModel, что теперь она работает с новой tableView
         viewModel.resetTableView(tableView: tableView, delegate: self, tableViewType: .settings)

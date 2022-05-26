@@ -58,6 +58,7 @@ class SlProStandartViewModel: PeripheralViewModel {
     
     // Factory section
     var resetToFactoryCell: CellModel!
+    var advancedSettingsCell: CellModel!
     
     // Публичные переменные для использования во ViewController'е
     // Используются чтобы инициализировать ColorPicker
@@ -102,18 +103,22 @@ class SlProStandartViewModel: PeripheralViewModel {
                 SectionModel(
                     headerText: "peripheral_sl_pro_led_section_header".localized,
                     footerText: "peripheral_sl_pro_led_section_footer".localized,
-                    rows: [ledStateCell, ledBrightnessCell, ledTimeoutCell]),
+                    rows: [ledStateCell, ledBrightnessCell]),
                 SectionModel(
                     headerText: "peripheral_animation_section_header".localized,
                     footerText: "peripheral_animation_section_footer".localized,
-                    rows: [animationModeCell, animationSpeedCell])
+                    rows: [animationModeCell, animationSpeedCell]),
+                SectionModel(
+                    headerText: "",
+                    footerText: "",
+                    rows: [advancedSettingsCell])
             ], type: .ready)
     }
     
     // Инициализируем экран расширенных настроекй
     private func initSettingsTableViewModel() {
         
-        var stepsRows: [CellModel] = [ledAdaptiveCell, stairsWorkModeCell, stepsCountCell]
+        var stepsRows: [CellModel] = [ledAdaptiveCell, stairsWorkModeCell, stepsCountCell, ledTimeoutCell]
         
         if dataModel.peripheralType == .SlPro {
             stepsRows.append(topSensorCountCell)
@@ -125,7 +130,7 @@ class SlProStandartViewModel: PeripheralViewModel {
                 SectionModel(
                     headerText: "peripheral_device_info_header".localized,
                     footerText: "",
-                    rows: [peripheralSerialNumberCell, peripheralFirmwareVersionCell, controllerTypeCell]),
+                    rows: [controllerTypeCell]),
                 SectionModel(
                     headerText: "peripheral_sl_pro_steps_settings_section_header".localized,
                     footerText: "peripheral_sl_pro_steps_settings_section_footer".localized,
@@ -153,7 +158,7 @@ class SlProStandartViewModel: PeripheralViewModel {
                 SectionModel(
                     headerText: "peripheral_factory_settings_section_header".localized,
                     footerText: "peripheral_factory_settings_section_footer".localized,
-                    rows: [resetToFactoryCell]),
+                    rows: [peripheralSerialNumberCell, peripheralFirmwareVersionCell, resetToFactoryCell]),
             ], type: .settings)
     }
     
@@ -372,10 +377,6 @@ class SlProStandartViewModel: PeripheralViewModel {
             minValue: Double(dataModel.standbyСount.min),
             maxValue: Double(dataModel.standbyСount.max),
             callback: { self.writeStandbyBotCount(count: Int($0)) })
-        resetToFactoryCell = .buttonCell(
-            key: BasePeripheralData.factoryResetKey,
-            title: "peripheral_reset_to_factory_cell_title".localized,
-            callback: { self.onCellSelected(self.resetToFactoryCell) })
         topCurrentLightnessCell = .infoCell(
             key: PeripheralData.topCurrentLightnessKey,
             titleText: "peripheral_sl_pro_top_current_lightness_cell_title".localized,
@@ -388,6 +389,14 @@ class SlProStandartViewModel: PeripheralViewModel {
             detailText: nil,
             image: nil,
             accessory: nil)
+        resetToFactoryCell = .buttonCell(
+            key: BasePeripheralData.factoryResetKey,
+            title: "peripheral_reset_to_factory_cell_title".localized,
+            callback: { self.onCellSelected(self.resetToFactoryCell) })
+        advancedSettingsCell = .buttonCell(
+            key: "nil",
+            title: "peripheral_advanced_settings_cell_title".localized,
+            callback: { self.onCellSelected(self.advancedSettingsCell) })
     }
     
     /// Скрываем или показываем ячейки в зависмости от адаптивной яркости.
@@ -415,6 +424,26 @@ class SlProStandartViewModel: PeripheralViewModel {
         case .rgb:
             showCells(cells: [primaryColorCell, randomColorCell], inModel: readyTableViewModel!)
             break
+        }
+    }
+    
+    /// Обрабатываем UI в завистимости о режима работы
+    private func handleWorkMode(mode: PeripheralStairsWorkMode) {
+        switch mode {
+        case .bySensors:
+            hideCells(cells: [ledTimeoutCell], inModel: settingsTableViewModel!)
+            break
+        case .byTimer:
+            showCells(cells: [ledTimeoutCell], inModel: settingsTableViewModel!)
+            break
+        }
+    }
+    
+    private func handleStandbyMode(state: Bool) {
+        if state {
+            showCells(cells: [standbyBrightnessCell, standbyBotCountCell, standbyTopCountCell], inModel: settingsTableViewModel!)
+        } else {
+            hideCells(cells: [standbyBrightnessCell, standbyBotCountCell, standbyTopCountCell], inModel: settingsTableViewModel!)
         }
     }
     
@@ -519,6 +548,7 @@ class SlProStandartViewModel: PeripheralViewModel {
         dataModel.setValue(key: PeripheralData.stairsWorkModeKey, value: mode.name)
         slPeripheral.writeStairsWorkMode(mode)
         updateCell(for: stairsWorkModeCell, with: .none)
+        handleWorkMode(mode: mode)
     }
     
     func writeStepsCount(count: Int) {
@@ -551,6 +581,7 @@ class SlProStandartViewModel: PeripheralViewModel {
     func writeStandbyState(state: Bool) {
         dataModel.setValue(key: PeripheralData.standbyStateKey, value: state)
         slPeripheral.writeStandbyState(state)
+        handleStandbyMode(state: state)
     }
     
     func writeStandbyBrightness(value: Int) {
@@ -618,6 +649,7 @@ extension SlProStandartViewModel: SlProPeripheralDelegate {
     func getWorkMode(mode: PeripheralDataModel) {
         dataModel.setValue(key: PeripheralData.stairsWorkModeKey, value: mode.name)
         updateCell(for: stairsWorkModeCell, with: .middle)
+        handleWorkMode(mode: mode as! PeripheralStairsWorkMode)
     }
     
     func getTopSensorCount(count: Int) {
@@ -650,6 +682,7 @@ extension SlProStandartViewModel: SlProPeripheralDelegate {
     func getStandbyState(state: Bool) {
         dataModel.setValue(key: PeripheralData.standbyStateKey, value: state)
         updateCell(for: standbyStateCell, with: .middle)
+        handleStandbyMode(state: state)
     }
     
     func getStandbyBrightness(brightness: Int) {

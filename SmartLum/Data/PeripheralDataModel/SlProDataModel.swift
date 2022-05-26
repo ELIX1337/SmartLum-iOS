@@ -27,14 +27,14 @@ enum SlProStandartControllerType: Int, CaseIterable, PeripheralDataModel {
 enum SlProStandartAnimations: Int, CaseIterable, PeripheralDataModel {
     
     //case tetris
-    case off        = 1
-    case stepByStep = 2
+    //case off        = 1
+    case smooth     = 2
     case sharp      = 3
     
     var name: String {
         switch self {
-        case .off:          return "sl_pro_animations_off".localized
-        case .stepByStep:   return "sl_pro_animations_stepByStep".localized
+        //case .off:          return "sl_pro_animations_off".localized
+        case .smooth:       return "sl_pro_animations_stepByStep".localized
         case .sharp:        return "sl_pro_animations_sharp".localized
         }
     }

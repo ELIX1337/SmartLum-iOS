@@ -38,6 +38,9 @@ class SlProStandartViewController: PeripheralViewController {
                     mViewModel.writeLedAdaptiveBrightnessMode(mode: mode)
                 }
                 break
+            case mViewModel.advancedSettingsCell:
+                openPeripheralSettings()
+                break
             default:
                 return
             }

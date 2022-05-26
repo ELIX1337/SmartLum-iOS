@@ -52,13 +52,13 @@
     "peripheral_sl_pro_sensor_trigger_distance_section_header" = "Дистанция срабатывания датчиков";
     "peripheral_sl_pro_sensor_trigger_distance_section_footer" = "Значения в сантиметрах";
     "peripheral_sl_pro_sensor_trigger_lightness_section_header" = "Пороговое значение освещенности";
-    "peripheral_sl_pro_sensor_trigger_lightness_section_footer" = "Значение (%) при котором устройство перейдет в ночной режим работы";
+    "peripheral_sl_pro_sensor_trigger_lightness_section_footer" = "Значение (%) при котором устройство перейдет в ночной режим работы. Выставьте 0% чтобы отключить ночной режим";
     "peripheral_sl_pro_sensor_current_distance_section_header" = "Текущая дистанция";
     "peripheral_sl_pro_sensor_current_distance_section_footer" = "Значения в сантиметрах";
     "peripheral_sl_pro_sensor_current_lightness_section_header" = "Текущая освещенность";
     "peripheral_sl_pro_sensor_current_lightness_section_footer" = "Значения в процентах (%)";
     "peripheral_sl_pro_steps_settings_section_header" = "Настройки лестницы";
-    "peripheral_sl_pro_steps_settings_section_footer" = "";
+    "peripheral_sl_pro_steps_settings_section_footer" = "При включении адаптивного режима, настройка яркости вручную недоступна.";
     "peripheral_sl_pro_standby_section_header" = "Дежурное освещение";
     "peripheral_sl_pro_standby_section_footer" = "";
     "peripheral_sl_pro_random_color_cell_title" = "Случайный цвет";
@@ -87,6 +87,7 @@
     "peripheral_top_sensor_cell_title" = "Верхний датчик";
     "peripheral_bot_sensor_cell_title" = "Нижний датчик";
     "peripheral_reset_to_factory_cell_title" = "Сброс до заводских настроек";
+    "peripheral_advanced_settings_cell_title" = "Расширенные настройки";
     "peripheral_error_cell_title" = "Обнаружена ошибка";
     "peripheral_error_cell_code_prefix" = "Подробнее";
     "peripheral_error_description_cell_title" = "Ошибка - Код ";

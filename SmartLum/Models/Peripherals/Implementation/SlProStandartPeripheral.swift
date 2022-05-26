@@ -197,7 +197,7 @@ class SlProStandartPeripheral: BasePeripheral, StairsPeripheralProtocol, Distanc
     func handleAnimationSettings(_ setting: BluetoothEndpoint.Characteristic, _ value: Data) {
         switch setting {
         case .animationMode:
-            delegate?.getAnimationMode(mode: SlProStandartAnimations(rawValue: value.toInt()) ?? .off)
+            delegate?.getAnimationMode(mode: SlProStandartAnimations(rawValue: value.toInt()) ?? .sharp)
             break
         case .animationOnSpeed:
             delegate?.getAnimationOnSpeed(speed: value.toInt())

@@ -53,13 +53,13 @@
     "peripheral_sl_pro_sensor_trigger_distance_section_header" = "Sensors trigger distance";
     "peripheral_sl_pro_sensor_trigger_distance_section_footer" = "Values in centimeters";
     "peripheral_sl_pro_sensor_trigger_lightness_section_header" = "Sensors trigger lightness";
-    "peripheral_sl_pro_sensor_trigger_lightness_section_footer" = "The value (%) at which the device switches to night mode";
+    "peripheral_sl_pro_sensor_trigger_lightness_section_footer" = "The value (%) at which the device switches to night mode. Set to 0% to disable night mode.";
     "peripheral_sl_pro_sensor_current_distance_section_header" = "Current distance";
     "peripheral_sl_pro_sensor_current_distance_section_footer" = "Values in cm";
     "peripheral_sl_pro_sensor_current_lightness_section_header" = "Current lightness";
     "peripheral_sl_pro_sensor_current_lightness_section_footer" = "Values in percents (%)";
     "peripheral_sl_pro_steps_settings_section_header" = "Steps settings";
-    "peripheral_sl_pro_steps_settings_section_footer" = "";
+    "peripheral_sl_pro_steps_settings_section_footer" = "When adaptive mode is enabled, manual brightness adjustment is not available.";
     "peripheral_sl_pro_standby_section_header" = "Standby lighting";
     "peripheral_sl_pro_standby_section_footer" = "";
     "peripheral_sl_pro_random_color_cell_title" = "Random color";
@@ -88,6 +88,7 @@
     "peripheral_top_sensor_cell_title" = "Top sensor";
     "peripheral_bot_sensor_cell_title" = "Bottom sensor";
     "peripheral_reset_to_factory_cell_title" = "Reset to factory";
+    "peripheral_advanced_settings_cell_title" = "Advanced settings";
     "peripheral_error_cell_title" = "Error detected";
     "peripheral_error_cell_code_prefix" = "Details";
     "peripheral_error_description_cell_title" = "Error - Code ";
