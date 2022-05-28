@@ -37,7 +37,7 @@ class PeripheralViewController: UIViewController, PeripheralViewControllerProtoc
         super.viewDidLoad()
         self.title = viewModel?.peripheralName
         self.navigationItem.largeTitleDisplayMode = .always
-        self.tableView.backgroundColor =  UIColor.SLDarkBlue
+        self.tableView.backgroundColor =  UIColor.dynamicColor(light: UIColor.systemBackground, dark: UIColor.SLDarkBlue)
         
         /// Если устройство еще не подключилось, то показываем alert
         if (!viewModel.isConnected) {
